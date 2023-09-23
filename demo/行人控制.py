@@ -4,9 +4,6 @@ import sys
 import time
 import grpc
 
-sys.path.append('./')
-sys.path.append('../')
-
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
@@ -72,7 +69,9 @@ def clean_walkers(scene_id=0):
 def walker_test(scene_id=0):
     add_walker(scene_id)
     control_walkers(scene_id)
+    print(sim_client.Observe(GrabSim_pb2.SceneID(value=scene_id)).walkers)
     remove_walkers(scene_id)
+    print(sim_client.Observe(GrabSim_pb2.SceneID(value=scene_id)).walkers)
     clean_walkers(scene_id)
     return
 

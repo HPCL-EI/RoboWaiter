@@ -50,8 +50,6 @@ def LoadSubTree(path: str) -> py_trees.behaviour.Behaviour:
 if __name__ == '__main__':
     btree = LoadMainTree()
 
-    print(123)
-
 
     def print_tree(tree):
         print(py_trees.display.unicode_tree(root=tree.root, show_status=True))

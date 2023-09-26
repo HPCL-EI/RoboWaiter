@@ -1,3 +1,4 @@
+import time
 import gym
 import grpc
 from proto import GrabSim_pb2
@@ -15,6 +16,7 @@ stub = GrabSim_pb2_grpc.GrabSimStub(channel)
 
 def init_world(scene_num, mapID):
     stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
+    time.sleep(3)  # wait for the map to load
 
 
 class Scene:
@@ -33,7 +35,6 @@ class Scene:
 
     def __init__(self, sceneID):
         self.sceneID = sceneID
-        self.walkerID_set = set()
         self.reset()
 
     @property
@@ -67,28 +68,29 @@ class Scene:
 
     def add_walker(self, X, Y, Yaw):
         if self.reachable_check(X, Y, Yaw):
-            walkerID = 0 if not self.walkerID_set else max(self.walkerID_set) + 1
             stub.AddWalker(
                 GrabSim_pb2.WalkerList(
                     walkers=[
                         GrabSim_pb2.WalkerList.Walker(
-                            id=walkerID, pose=GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw)
+                            id=0,
+                            pose=GrabSim_pb2.Pose(
+                                X=X, Y=Y, Yaw=Yaw
+                            ),  # Parameter id is useless
                         )
                     ],
                     scene=self.sceneID,
                 )
             )
-            self.walkerID_set.add(walkerID)
-            return walkerID
-        else:
-            return None
 
-    def remove_walker(self, *args):
+    def remove_walker(self, *args):  # take single walkerID or a list of walkerIDs
         remove_list = []
-        for walkerID in args:
-            if walkerID in self.walkerID_set:
+        if isinstance(args[0], list):
+            remove_list = args[0]
+        else:
+            for walkerID in args:
+                # walkerID is the index of the walker in status.walkers.
+                # Since status.walkers is a list, some walkerIDs would change after removing a walker.
                 remove_list.append(walkerID)
-                self.walkerID_set.remove(walkerID)
         stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
 
     def clean_walker(self):
@@ -126,3 +128,15 @@ class Scene:
             )
         )
 
+    def remove_object(self, *args):  # refer to remove_walker
+        remove_list = []
+        if isinstance(args[0], list):
+            remove_list = args[0]
+        else:
+            for objectID in args:
+                remove_list.append(objectID)
+        stub.RemoveObjects(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
+
+    def clean_object(self):
+        stub.CleanObjects(GrabSim_pb2.SceneID(value=self.sceneID))
+        

@@ -10,14 +10,11 @@ else:
 
 def serializedATN():
     return [
-        4,1,5,25,2,0,7,0,2,1,7,1,1,0,1,0,4,0,7,8,0,11,0,12,0,8,1,0,4,0,12,
-        8,0,11,0,12,0,13,1,0,4,0,17,8,0,11,0,12,0,18,3,0,21,8,0,1,1,1,1,
-        1,1,0,0,2,0,2,0,1,1,0,1,4,26,0,20,1,0,0,0,2,22,1,0,0,0,4,6,3,2,1,
-        0,5,7,5,5,0,0,6,5,1,0,0,0,7,8,1,0,0,0,8,6,1,0,0,0,8,9,1,0,0,0,9,
-        21,1,0,0,0,10,12,3,2,1,0,11,10,1,0,0,0,12,13,1,0,0,0,13,11,1,0,0,
-        0,13,14,1,0,0,0,14,16,1,0,0,0,15,17,5,5,0,0,16,15,1,0,0,0,17,18,
-        1,0,0,0,18,16,1,0,0,0,18,19,1,0,0,0,19,21,1,0,0,0,20,4,1,0,0,0,20,
-        11,1,0,0,0,21,1,1,0,0,0,22,23,7,0,0,0,23,3,1,0,0,0,4,8,13,18,20
+        4,1,5,14,2,0,7,0,2,1,7,1,1,0,1,0,1,0,4,0,8,8,0,11,0,12,0,9,1,1,1,
+        1,1,1,0,0,2,0,2,0,1,1,0,1,4,13,0,4,1,0,0,0,2,11,1,0,0,0,4,7,3,2,
+        1,0,5,8,5,5,0,0,6,8,3,0,0,0,7,5,1,0,0,0,7,6,1,0,0,0,8,9,1,0,0,0,
+        9,7,1,0,0,0,9,10,1,0,0,0,10,1,1,0,0,0,11,12,7,0,0,0,12,3,1,0,0,0,
+        2,7,9
     ]
 
 class ptmlParser ( Parser ):
@@ -64,11 +61,8 @@ class ptmlParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def internal_node(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(ptmlParser.Internal_nodeContext)
-            else:
-                return self.getTypedRuleContext(ptmlParser.Internal_nodeContext,i)
+        def internal_node(self):
+            return self.getTypedRuleContext(ptmlParser.Internal_nodeContext,0)
 
 
         def Names(self, i:int=None):
@@ -76,6 +70,13 @@ class ptmlParser ( Parser ):
                 return self.getTokens(ptmlParser.Names)
             else:
                 return self.getToken(ptmlParser.Names, i)
+
+        def tree(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(ptmlParser.TreeContext)
+            else:
+                return self.getTypedRuleContext(ptmlParser.TreeContext,i)
+
 
         def getRuleIndex(self):
             return ptmlParser.RULE_tree
@@ -95,57 +96,35 @@ class ptmlParser ( Parser ):
 
         localctx = ptmlParser.TreeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_tree)
-        self._la = 0 # Token type
         try:
-            self.state = 20
+            self.enterOuterAlt(localctx, 1)
+            self.state = 4
+            self.internal_node()
+            self.state = 7 
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
-            if la_ == 1:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 4
-                self.internal_node()
-                self.state = 6 
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                while True:
-                    self.state = 5
-                    self.match(ptmlParser.Names)
-                    self.state = 8 
+            _alt = 1
+            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
+                    self.state = 7
                     self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if not (_la==5):
-                        break
+                    token = self._input.LA(1)
+                    if token in [5]:
+                        self.state = 5
+                        self.match(ptmlParser.Names)
+                        pass
+                    elif token in [1, 2, 3, 4]:
+                        self.state = 6
+                        self.tree()
+                        pass
+                    else:
+                        raise NoViableAltException(self)
 
-                pass
 
-            elif la_ == 2:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 11 
+                else:
+                    raise NoViableAltException(self)
+                self.state = 9 
                 self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                while True:
-                    self.state = 10
-                    self.internal_node()
-                    self.state = 13 
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 30) != 0)):
-                        break
-
-                self.state = 16 
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                while True:
-                    self.state = 15
-                    self.match(ptmlParser.Names)
-                    self.state = 18 
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if not (_la==5):
-                        break
-
-                pass
-
+                _alt = self._interp.adaptivePredict(self._input,1,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -185,7 +164,7 @@ class ptmlParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 22
+            self.state = 11
             _la = self._input.LA(1)
             if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 30) != 0)):
                 self._errHandler.recoverInline(self)

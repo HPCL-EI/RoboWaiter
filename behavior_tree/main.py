@@ -47,8 +47,10 @@ def LoadSubTree(path: str) -> py_trees.behaviour.Behaviour:
     pass
 
 
-if '__name__' == '__main__':
+if __name__ == '__main__':
     btree = LoadMainTree()
+
+    print(123)
 
 
     def print_tree(tree):

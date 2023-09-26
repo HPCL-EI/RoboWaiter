@@ -13,7 +13,7 @@ from py_trees.common import Status
 ##############################################################
 
 class IsChatting(py_trees.behaviour.Behaviour):
-    def __init__(self, name: str):
+    def __init__(self, name: str = ""):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:
@@ -31,7 +31,7 @@ class IsChatting(py_trees.behaviour.Behaviour):
     
 
 class IsTakingAction(py_trees.behaviour.Behaviour):
-    def __init__(self, name: str):
+    def __init__(self, name: str = ""):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:
@@ -49,7 +49,7 @@ class IsTakingAction(py_trees.behaviour.Behaviour):
     
 
 class IsSomethingMore(py_trees.behaviour.Behaviour):
-    def __init__(self, name: str):
+    def __init__(self, name: str = ""):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:
@@ -71,7 +71,7 @@ class IsSomethingMore(py_trees.behaviour.Behaviour):
 ##############################################################
 
 class Chatting(py_trees.behaviour.Behaviour):
-    def __init__(self, name: str):
+    def __init__(self, name: str = ""):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:
@@ -89,7 +89,7 @@ class Chatting(py_trees.behaviour.Behaviour):
     
 
 class TakingAction(py_trees.behaviour.Behaviour):
-    def __init__(self, name: str):
+    def __init__(self, name: str = ""):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:
@@ -107,7 +107,7 @@ class TakingAction(py_trees.behaviour.Behaviour):
     
 
 class TakingMoreAction(py_trees.behaviour.Behaviour):
-    def __init__(self, name: str):
+    def __init__(self, name: str = ""):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:

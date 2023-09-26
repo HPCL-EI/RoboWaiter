@@ -24,7 +24,7 @@ class IsChatting(py_trees.behaviour.Behaviour):
     
     def update(self) -> Status:
         print('Start checking IsChatting...')
-        return True
+        return common.Status.SUCCESS
     
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
@@ -42,7 +42,7 @@ class IsTakingAction(py_trees.behaviour.Behaviour):
     
     def update(self) -> Status:
         print('Start checking IsTakingAction...')
-        return True
+        return common.Status.SUCCESS
     
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
@@ -60,7 +60,7 @@ class IsSomethingMore(py_trees.behaviour.Behaviour):
     
     def update(self) -> Status:
         print('Start checking IsSomethingMore...')
-        return True
+        return common.Status.SUCCESS
     
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
@@ -82,7 +82,7 @@ class Chatting(py_trees.behaviour.Behaviour):
     
     def update(self) -> Status:
         print('Start executing Chatting...')
-        return True
+        return common.Status.SUCCESS
     
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
@@ -100,7 +100,7 @@ class TakingAction(py_trees.behaviour.Behaviour):
     
     def update(self) -> Status:
         print('Start executing TakingAction...')
-        return True
+        return common.Status.SUCCESS
     
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
@@ -118,7 +118,7 @@ class TakingMoreAction(py_trees.behaviour.Behaviour):
     
     def update(self) -> Status:
         print('Start executing TakingMoreAction...')
-        return True
+        return common.Status.SUCCESS
     
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)

@@ -1,3 +1,3 @@
 grammar ptml;
 
-tree :
+tree : t

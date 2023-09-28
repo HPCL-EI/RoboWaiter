@@ -1,0 +1,13 @@
+sequence:
+    select:
+        CoffeeCupFound
+        FindCoffeeCup
+    select:
+        CoffeeCupGrasped
+        GraspCoffeeCup
+    select:
+        DestinationAReached
+        ReachDestinationA
+    select:
+        CoffeeCupPlaced
+        PlaceCoffeeCup

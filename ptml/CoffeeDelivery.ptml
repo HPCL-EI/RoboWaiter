@@ -1,13 +1,13 @@
 sequence:
     select:
-        CoffeeCupFound
-        FindCoffeeCup
+        cond CoffeeCupFound()
+        act FindCoffeeCup()
     select:
-        CoffeeCupGrasped
-        GraspCoffeeCup
+        cond CoffeeCupGrasped()
+        act GraspCoffeeCup()
     select:
-        DestinationAReached
-        ReachDestinationA
+        cond DestinationAReached()
+        act ReachDestinationA()
     select:
-        CoffeeCupPlaced
-        PlaceCoffeeCup
+        cond CoffeeCupPlaced()
+        act PlaceCoffeeCup()

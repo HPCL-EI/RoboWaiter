@@ -10,27 +10,27 @@ else:
 
 def serializedATN():
     return [
-        4,1,20,65,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,21,65,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,1,0,1,0,1,0,1,0,4,0,19,8,0,11,0,12,0,20,1,0,1,0,1,1,1,1,1,1,1,
         1,1,1,3,1,30,8,1,1,2,1,2,1,2,1,2,3,2,36,8,2,1,2,1,2,1,3,1,3,1,3,
         1,3,3,3,44,8,3,1,3,1,3,1,3,1,3,1,3,3,3,51,8,3,5,3,53,8,3,10,3,12,
         3,56,9,3,1,4,1,4,1,4,1,5,1,5,1,6,1,6,1,6,0,0,7,0,2,4,6,8,10,12,0,
-        2,1,0,10,13,1,0,14,15,70,0,14,1,0,0,0,2,29,1,0,0,0,4,31,1,0,0,0,
-        6,43,1,0,0,0,8,57,1,0,0,0,10,60,1,0,0,0,12,62,1,0,0,0,14,15,3,2,
-        1,0,15,18,5,1,0,0,16,19,3,4,2,0,17,19,3,0,0,0,18,16,1,0,0,0,18,17,
-        1,0,0,0,19,20,1,0,0,0,20,18,1,0,0,0,20,21,1,0,0,0,21,22,1,0,0,0,
-        22,23,5,0,0,1,23,1,1,0,0,0,24,30,5,2,0,0,25,30,5,3,0,0,26,27,5,4,
-        0,0,27,30,5,17,0,0,28,30,5,5,0,0,29,24,1,0,0,0,29,25,1,0,0,0,29,
-        26,1,0,0,0,29,28,1,0,0,0,30,3,1,0,0,0,31,32,5,6,0,0,32,33,5,16,0,
-        0,33,35,5,7,0,0,34,36,3,6,3,0,35,34,1,0,0,0,35,36,1,0,0,0,36,37,
-        1,0,0,0,37,38,5,8,0,0,38,5,1,0,0,0,39,44,3,8,4,0,40,44,5,17,0,0,
-        41,44,5,18,0,0,42,44,3,12,6,0,43,39,1,0,0,0,43,40,1,0,0,0,43,41,
-        1,0,0,0,43,42,1,0,0,0,44,54,1,0,0,0,45,50,5,9,0,0,46,51,3,8,4,0,
-        47,51,5,17,0,0,48,51,5,18,0,0,49,51,3,12,6,0,50,46,1,0,0,0,50,47,
-        1,0,0,0,50,48,1,0,0,0,50,49,1,0,0,0,51,53,1,0,0,0,52,45,1,0,0,0,
-        53,56,1,0,0,0,54,52,1,0,0,0,54,55,1,0,0,0,55,7,1,0,0,0,56,54,1,0,
-        0,0,57,58,3,10,5,0,58,59,5,16,0,0,59,9,1,0,0,0,60,61,7,0,0,0,61,
-        11,1,0,0,0,62,63,7,1,0,0,63,13,1,0,0,0,7,18,20,29,35,43,50,54
+        3,1,0,6,7,1,0,11,14,1,0,15,16,70,0,14,1,0,0,0,2,29,1,0,0,0,4,31,
+        1,0,0,0,6,43,1,0,0,0,8,57,1,0,0,0,10,60,1,0,0,0,12,62,1,0,0,0,14,
+        15,3,2,1,0,15,18,5,1,0,0,16,19,3,4,2,0,17,19,3,0,0,0,18,16,1,0,0,
+        0,18,17,1,0,0,0,19,20,1,0,0,0,20,18,1,0,0,0,20,21,1,0,0,0,21,22,
+        1,0,0,0,22,23,5,0,0,1,23,1,1,0,0,0,24,30,5,2,0,0,25,30,5,3,0,0,26,
+        27,5,4,0,0,27,30,5,18,0,0,28,30,5,5,0,0,29,24,1,0,0,0,29,25,1,0,
+        0,0,29,26,1,0,0,0,29,28,1,0,0,0,30,3,1,0,0,0,31,32,7,0,0,0,32,33,
+        5,17,0,0,33,35,5,8,0,0,34,36,3,6,3,0,35,34,1,0,0,0,35,36,1,0,0,0,
+        36,37,1,0,0,0,37,38,5,9,0,0,38,5,1,0,0,0,39,44,3,8,4,0,40,44,5,18,
+        0,0,41,44,5,19,0,0,42,44,3,12,6,0,43,39,1,0,0,0,43,40,1,0,0,0,43,
+        41,1,0,0,0,43,42,1,0,0,0,44,54,1,0,0,0,45,50,5,10,0,0,46,51,3,8,
+        4,0,47,51,5,18,0,0,48,51,5,19,0,0,49,51,3,12,6,0,50,46,1,0,0,0,50,
+        47,1,0,0,0,50,48,1,0,0,0,50,49,1,0,0,0,51,53,1,0,0,0,52,45,1,0,0,
+        0,53,56,1,0,0,0,54,52,1,0,0,0,54,55,1,0,0,0,55,7,1,0,0,0,56,54,1,
+        0,0,0,57,58,3,10,5,0,58,59,5,17,0,0,59,9,1,0,0,0,60,61,7,1,0,0,61,
+        11,1,0,0,0,62,63,7,2,0,0,63,13,1,0,0,0,7,18,20,29,35,43,50,54
     ]
 
 class ptmlParser ( Parser ):
@@ -44,14 +44,16 @@ class ptmlParser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "':'", "'sequence'", "'selector'", "'parallel'", 
-                     "'decorator'", "'act'", "'('", "')'", "','", "'int'", 
-                     "'float'", "'bool'", "'string'", "'True'", "'False'" ]
+                     "'decorator'", "'act'", "'cond'", "'('", "')'", "','", 
+                     "'int'", "'float'", "'bool'", "'string'", "'True'", 
+                     "'False'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "Names", "Integer", "Float", "LINE_COMMENT", "WS" ]
+                      "<INVALID>", "Names", "Integer", "Float", "LINE_COMMENT", 
+                      "WS" ]
 
     RULE_tree = 0
     RULE_internal_node = 1
@@ -80,11 +82,12 @@ class ptmlParser ( Parser ):
     T__12=13
     T__13=14
     T__14=15
-    Names=16
-    Integer=17
-    Float=18
-    LINE_COMMENT=19
-    WS=20
+    T__15=16
+    Names=17
+    Integer=18
+    Float=19
+    LINE_COMMENT=20
+    WS=21
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -155,7 +158,7 @@ class ptmlParser ( Parser ):
                 self.state = 18
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [6]:
+                if token in [6, 7]:
                     self.state = 16
                     self.action_sign()
                     pass
@@ -169,7 +172,7 @@ class ptmlParser ( Parser ):
                 self.state = 20 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 124) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 252) != 0)):
                     break
 
             self.state = 22
@@ -285,21 +288,26 @@ class ptmlParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 31
-            self.match(ptmlParser.T__5)
+            _la = self._input.LA(1)
+            if not(_la==6 or _la==7):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
             self.state = 32
             self.match(ptmlParser.Names)
             self.state = 33
-            self.match(ptmlParser.T__6)
+            self.match(ptmlParser.T__7)
             self.state = 35
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 457728) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 915456) != 0):
                 self.state = 34
                 self.action_parm()
 
 
             self.state = 37
-            self.match(ptmlParser.T__7)
+            self.match(ptmlParser.T__8)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -366,19 +374,19 @@ class ptmlParser ( Parser ):
             self.state = 43
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [10, 11, 12, 13]:
+            if token in [11, 12, 13, 14]:
                 self.state = 39
                 self.var_decls()
                 pass
-            elif token in [17]:
+            elif token in [18]:
                 self.state = 40
                 self.match(ptmlParser.Integer)
                 pass
-            elif token in [18]:
+            elif token in [19]:
                 self.state = 41
                 self.match(ptmlParser.Float)
                 pass
-            elif token in [14, 15]:
+            elif token in [15, 16]:
                 self.state = 42
                 self.boolean()
                 pass
@@ -388,25 +396,25 @@ class ptmlParser ( Parser ):
             self.state = 54
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==9:
+            while _la==10:
                 self.state = 45
-                self.match(ptmlParser.T__8)
+                self.match(ptmlParser.T__9)
                 self.state = 50
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [10, 11, 12, 13]:
+                if token in [11, 12, 13, 14]:
                     self.state = 46
                     self.var_decls()
                     pass
-                elif token in [17]:
+                elif token in [18]:
                     self.state = 47
                     self.match(ptmlParser.Integer)
                     pass
-                elif token in [18]:
+                elif token in [19]:
                     self.state = 48
                     self.match(ptmlParser.Float)
                     pass
-                elif token in [14, 15]:
+                elif token in [15, 16]:
                     self.state = 49
                     self.boolean()
                     pass
@@ -504,7 +512,7 @@ class ptmlParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 60
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 15360) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 30720) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -549,7 +557,7 @@ class ptmlParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 62
             _la = self._input.LA(1)
-            if not(_la==14 or _la==15):
+            if not(_la==15 or _la==16):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)

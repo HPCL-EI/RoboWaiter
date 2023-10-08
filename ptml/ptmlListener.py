@@ -53,24 +53,6 @@ class ptmlListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ptmlParser#var_decls.
-    def enterVar_decls(self, ctx:ptmlParser.Var_declsContext):
-        pass
-
-    # Exit a parse tree produced by ptmlParser#var_decls.
-    def exitVar_decls(self, ctx:ptmlParser.Var_declsContext):
-        pass
-
-
-    # Enter a parse tree produced by ptmlParser#var_type.
-    def enterVar_type(self, ctx:ptmlParser.Var_typeContext):
-        pass
-
-    # Exit a parse tree produced by ptmlParser#var_type.
-    def exitVar_type(self, ctx:ptmlParser.Var_typeContext):
-        pass
-
-
     # Enter a parse tree produced by ptmlParser#boolean.
     def enterBoolean(self, ctx:ptmlParser.BooleanContext):
         pass

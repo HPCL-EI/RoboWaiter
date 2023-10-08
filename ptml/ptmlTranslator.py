@@ -1,5 +1,7 @@
 import os
 import sys
+import uuid
+
 project_path = "/home/wu/RoboWaiter/ptml"
 sys.path.append(project_path)
 
@@ -41,8 +43,19 @@ class ptmlTranslator(ptmlListener):
 
     # Enter a parse tree produced by ptmlParser#internal_node.
     def enterInternal_node(self, ctx:ptmlParser.Internal_nodeContext):
+        
+        tag = str(uuid.uuid4())
+        self.stack.append(tag)
+        
         type = str(ctx.children[0])
-        print(type)
+        if type == 'sequence':
+            self.api.newSequenceNode(tag)
+        elif type == 'selector':
+            self.api.newSelectorNode(tag)
+        elif type == 'parallel':
+            self.api.newParallelNode(tag, threshold=int(ctx.children[1]))
+        elif type == 'decorator':
+            self.api.newDecoratorNode(tag)
 
     # Exit a parse tree produced by ptmlParser#internal_node.
     def exitInternal_node(self, ctx:ptmlParser.Internal_nodeContext):
@@ -51,7 +64,20 @@ class ptmlTranslator(ptmlListener):
 
     # Enter a parse tree produced by ptmlParser#action_sign.
     def enterAction_sign(self, ctx:ptmlParser.Action_signContext):
-        pass
+        # cond / task
+        type = str(ctx.children[0])
+        name = str(ctx.Names())
+        
+        if len(ctx.children) > 4:
+            # have params
+            args = ctx.action_parm()
+        
+        if type == 'cond':
+            self.api.newBehaviourNode(name, cond=True)
+        else:
+            self.api.newBehaviourNode(name, cond=False)
+        
+    
 
     # Exit a parse tree produced by ptmlParser#action_sign.
     def exitAction_sign(self, ctx:ptmlParser.Action_signContext):

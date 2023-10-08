@@ -1,8 +1,10 @@
 grammar ptml;
 
-tree    		: internal_node ':' (action_sign|tree)+ EOF;
+root            : tree+ EOF;
+
+tree    		: internal_node ':' (action_sign|tree)+ ;
 internal_node   : 'sequence' | 'selector' | 'parallel' Integer | 'decorator' ;
-action_sign     : ('act'|'cond') Names '(' action_parm? ')';
+action_sign     : ('task'|'cond') Names '(' action_parm? ')';
 action_parm     : (var_decls|Integer|Float|boolean) (',' (var_decls|Integer|Float|boolean))* ;
 var_decls		: var_type Names ;
 var_type		: 'int' | 'float' | 'bool' | 'string' ;

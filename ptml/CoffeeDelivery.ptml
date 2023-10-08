@@ -1,13 +1,16 @@
 sequence:
-    select:
+    selector:
         cond CoffeeCupFound()
-        act FindCoffeeCup()
-    select:
+        task FindCoffeeCup()
+        sequence:
+            cond SeqTest()
+            task Move()
+    selector:
         cond CoffeeCupGrasped()
-        act GraspCoffeeCup()
-    select:
+        task GraspCoffeeCup()
+    selector:
         cond DestinationAReached()
-        act ReachDestinationA()
-    select:
+        task ReachDestinationA()
+    selector:
         cond CoffeeCupPlaced()
-        act PlaceCoffeeCup()
+        task PlaceCoffeeCup()

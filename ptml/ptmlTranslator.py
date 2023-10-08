@@ -1,6 +1,12 @@
+import os
+import sys
+project_path = "/home/wu/RoboWaiter/ptml"
+sys.path.append(project_path)
+
 from antlr4 import *
-from .ptmlListener import ptmlListener
-from .ptmlParser import ptmlParser
+from ptmlListener import ptmlListener
+from ptmlParser import ptmlParser
+from BT_api import BTAPI
 
 class ptmlTranslator(ptmlListener):
     """Translate the ptml language to BT.
@@ -11,6 +17,17 @@ class ptmlTranslator(ptmlListener):
     
     def __init__(self) -> None:
         super().__init__()
+        self.stack = []
+        self.api = BTAPI()
+        
+        
+    # Enter a parse tree produced by ptmlParser#root.
+    def enterRoot(self, ctx:ptmlParser.RootContext):
+        pass
+
+    # Exit a parse tree produced by ptmlParser#root.
+    def exitRoot(self, ctx:ptmlParser.RootContext):
+        pass
         
         
     # Enter a parse tree produced by ptmlParser#tree.
@@ -24,7 +41,8 @@ class ptmlTranslator(ptmlListener):
 
     # Enter a parse tree produced by ptmlParser#internal_node.
     def enterInternal_node(self, ctx:ptmlParser.Internal_nodeContext):
-        pass
+        type = str(ctx.children[0])
+        print(type)
 
     # Exit a parse tree produced by ptmlParser#internal_node.
     def exitInternal_node(self, ctx:ptmlParser.Internal_nodeContext):
@@ -74,3 +92,12 @@ class ptmlTranslator(ptmlListener):
     # Exit a parse tree produced by ptmlParser#boolean.
     def exitBoolean(self, ctx:ptmlParser.BooleanContext):
         pass
+    
+    
+class BtNode():
+    """
+    
+    """
+    def __init__(self, type:str='BtNode') -> None:
+        self.type = type
+        self.name:str = ''

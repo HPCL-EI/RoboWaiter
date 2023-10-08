@@ -8,6 +8,15 @@ else:
 # This class defines a complete listener for a parse tree produced by ptmlParser.
 class ptmlListener(ParseTreeListener):
 
+    # Enter a parse tree produced by ptmlParser#root.
+    def enterRoot(self, ctx:ptmlParser.RootContext):
+        pass
+
+    # Exit a parse tree produced by ptmlParser#root.
+    def exitRoot(self, ctx:ptmlParser.RootContext):
+        pass
+
+
     # Enter a parse tree produced by ptmlParser#tree.
     def enterTree(self, ctx:ptmlParser.TreeContext):
         pass

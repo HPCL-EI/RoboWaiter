@@ -16,7 +16,7 @@ class PyTreesAPI():
         
     def prepare(self) -> None:
         # import libraries
-        self.pystr += 'import py_trees\n'
+        self.pystr += 'import py_trees as tree\n'
         
         self.pystr += '\n' * 2
         

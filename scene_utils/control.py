@@ -1,6 +1,8 @@
 import time
 import gym
 import grpc
+import numpy as np
+
 from proto import GrabSim_pb2
 from proto import GrabSim_pb2_grpc
 
@@ -13,10 +15,28 @@ channel = grpc.insecure_channel(
 )
 stub = GrabSim_pb2_grpc.GrabSimStub(channel)
 
+animation_step = [4, 5, 7, 3, 3]
+
 
 def init_world(scene_num, mapID):
     stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
     time.sleep(3)  # wait for the map to load
+
+
+def walker_control_generator(walkerID, autowalk, speed, X, Y, Yaw):
+    return GrabSim_pb2.WalkerControls.WControl(
+        id=walkerID,
+        autowalk=autowalk,
+        speed=speed,
+        pose=GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw),
+    )
+
+
+def image_extract(camera_data):
+    image = camera_data.images[0]
+    return np.frombuffer(image.data, dtype=image.dtype).reshape(
+        (image.height, image.width, image.channels)
+    )
 
 
 class Scene:
@@ -96,14 +116,6 @@ class Scene:
     def clean_walker(self):
         stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
 
-    def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):
-        return GrabSim_pb2.WalkerControls.WControl(
-            id=walkerID,
-            autowalk=autowalk,
-            speed=speed,
-            pose=GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw),
-        )
-
     def control_walker(self, control_list):
         stub.ControlWalkers(
             GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
@@ -139,4 +151,68 @@ class Scene:
 
     def clean_object(self):
         stub.CleanObjects(GrabSim_pb2.SceneID(value=self.sceneID))
-        
+
+    def grasp(self, handID, objectID):
+        stub.Do(
+            GrabSim_pb2.Action(
+                scene=self.sceneID,
+                action=GrabSim_pb2.Action.ActionType.Grasp,
+                values=[handID, objectID],
+            )
+        )
+
+    def release(self, handID):
+        stub.Do(
+            GrabSim_pb2.Action(
+                scene=self.sceneID,
+                action=GrabSim_pb2.Action.ActionType.Release,
+                values=[handID],
+            )
+        )
+
+    def get_camera_color(self):
+        camera_data = stub.Capture(
+            GrabSim_pb2.CameraList(
+                cameras=[GrabSim_pb2.CameraName.Head_Color], scene=self.sceneID
+            )
+        )
+        return image_extract(camera_data)
+
+    def get_camera_depth(self):
+        camera_data = stub.Capture(
+            GrabSim_pb2.CameraList(
+                cameras=[GrabSim_pb2.CameraName.Head_Depth], scene=self.sceneID
+            )
+        )
+        return image_extract(camera_data)
+
+    def get_camera_segment(self):
+        camera_data = stub.Capture(
+            GrabSim_pb2.CameraList(
+                cameras=[GrabSim_pb2.CameraName.Head_Segment], scene=self.sceneID
+            )
+        )
+        return image_extract(camera_data)
+
+    def chat_bubble(self, message):
+        stub.ControlRobot(
+            GrabSim_pb2.ControlInfo(
+                scene=self.sceneID, type=0, action=1, content=message
+            )
+        )
+
+    def animation_control(self, animation_type):
+        # animation_type: 1:make coffee 2: pour water 3: grab food 4: mop floor 5: clean table
+        scene = stub.ControlRobot(
+            GrabSim_pb2.ControlInfo(scene=self.sceneID, type=animation_type, action=1)
+        )
+        if scene.info == "action success":
+            for i in range(2, animation_step[animation_type - 1] + 1):
+                stub.ControlRobot(
+                    GrabSim_pb2.ControlInfo(
+                        scene=self.sceneID, type=animation_type, action=i
+                    )
+                )
+
+    def animation_reset(self):
+        stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))

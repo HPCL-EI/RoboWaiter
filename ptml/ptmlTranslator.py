@@ -43,19 +43,23 @@ class ptmlTranslator(ptmlListener):
 
     # Enter a parse tree produced by ptmlParser#internal_node.
     def enterInternal_node(self, ctx:ptmlParser.Internal_nodeContext):
-        
-        tag = str(uuid.uuid4())
-        self.stack.append(tag)
-        
         type = str(ctx.children[0])
-        if type == 'sequence':
-            self.api.newSequenceNode(tag)
-        elif type == 'selector':
-            self.api.newSelectorNode(tag)
-        elif type == 'parallel':
-            self.api.newParallelNode(tag, threshold=int(ctx.children[1]))
-        elif type == 'decorator':
-            self.api.newDecoratorNode(tag)
+        
+        match type:
+            case 'sequence':
+                tag = self.api.newSequenceNode()
+            case 'selector':
+                tag = self.api.newSelectorNode()
+            case 'parallel':
+                tag = self.api.newParallelNode(threshold=int(ctx.children[1]))
+            case 'decorator':
+                tag = self.api.newDecoratorNode()
+            case _:
+                raise TypeError(
+                    ''
+                )
+        self.stack.append(tag)
+                        
 
     # Exit a parse tree produced by ptmlParser#internal_node.
     def exitInternal_node(self, ctx:ptmlParser.Internal_nodeContext):
@@ -68,16 +72,21 @@ class ptmlTranslator(ptmlListener):
         type = str(ctx.children[0])
         name = str(ctx.Names())
         
+        # if have params
         if len(ctx.children) > 4:
-            # have params
             args = ctx.action_parm()
             print(args.Float())
-        
-        if type == 'cond':
-            self.api.newBehaviourNode(name, isCond=True)
         else:
-            self.api.newBehaviourNode(name, isCond=False)
+            args = []
         
+        # 
+        if type == 'cond':
+            behav_tag = self.api.newBehaviourNode(name, args, isCond=True)
+        else:
+            behav_tag = self.api.newBehaviourNode(name, args, isCond=False)
+        # connect
+        parent_tag = self.stack[-1]
+        self.api.connect_to_parent(behav_tag, parent_tag)        
     
 
     # Exit a parse tree produced by ptmlParser#action_sign.

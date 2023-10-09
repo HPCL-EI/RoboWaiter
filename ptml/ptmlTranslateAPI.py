@@ -44,9 +44,12 @@ class PyTreesAPI():
         with open(filepath, 'w') as file:
             file.write(self.pystr)
             
-    def run() -> None:
+    def run(self) -> None:
         """_summary_
         """
+        self.write_to_file()
+        out = os.popen('python ./auto_generate.py')
+        print(out.read())
         
     
     def newTree(self) -> None:

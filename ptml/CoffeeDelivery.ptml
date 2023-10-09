@@ -13,4 +13,4 @@ sequence:
         task ReachDestinationA()
     selector:
         cond CoffeeCupPlaced()
-        task PlaceCoffeeCup()
+        task PlaceCoffeeCup(1.2)

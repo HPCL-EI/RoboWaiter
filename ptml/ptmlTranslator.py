@@ -8,7 +8,7 @@ sys.path.append(project_path)
 from antlr4 import *
 from ptmlListener import ptmlListener
 from ptmlParser import ptmlParser
-from BT_api import BTAPI
+from ptml.ptmlTranslateAPI import PyTreesAPI
 
 class ptmlTranslator(ptmlListener):
     """Translate the ptml language to BT.
@@ -20,7 +20,7 @@ class ptmlTranslator(ptmlListener):
     def __init__(self) -> None:
         super().__init__()
         self.stack = []
-        self.api = BTAPI()
+        self.api = PyTreesAPI()
         
         
     # Enter a parse tree produced by ptmlParser#root.
@@ -71,11 +71,12 @@ class ptmlTranslator(ptmlListener):
         if len(ctx.children) > 4:
             # have params
             args = ctx.action_parm()
+            print(args.Float())
         
         if type == 'cond':
-            self.api.newBehaviourNode(name, cond=True)
+            self.api.newBehaviourNode(name, isCond=True)
         else:
-            self.api.newBehaviourNode(name, cond=False)
+            self.api.newBehaviourNode(name, isCond=False)
         
     
 
@@ -93,24 +94,6 @@ class ptmlTranslator(ptmlListener):
         pass
 
 
-    # Enter a parse tree produced by ptmlParser#var_decls.
-    def enterVar_decls(self, ctx:ptmlParser.Var_declsContext):
-        pass
-
-    # Exit a parse tree produced by ptmlParser#var_decls.
-    def exitVar_decls(self, ctx:ptmlParser.Var_declsContext):
-        pass
-
-
-    # Enter a parse tree produced by ptmlParser#var_type.
-    def enterVar_type(self, ctx:ptmlParser.Var_typeContext):
-        pass
-
-    # Exit a parse tree produced by ptmlParser#var_type.
-    def exitVar_type(self, ctx:ptmlParser.Var_typeContext):
-        pass
-
-
     # Enter a parse tree produced by ptmlParser#boolean.
     def enterBoolean(self, ctx:ptmlParser.BooleanContext):
         pass
@@ -119,11 +102,3 @@ class ptmlTranslator(ptmlListener):
     def exitBoolean(self, ctx:ptmlParser.BooleanContext):
         pass
     
-    
-class BtNode():
-    """
-    
-    """
-    def __init__(self, type:str='BtNode') -> None:
-        self.type = type
-        self.name:str = ''

@@ -2,8 +2,8 @@ grammar ptml;
 
 root            : tree+ EOF;
 
-tree    		: internal_node ':' (action_sign|tree)+ ;
-internal_node   : 'sequence' | 'selector' | 'parallel' Integer | 'decorator' ;
+tree    		: internal_node '{' (action_sign|tree)+ '}' ;
+internal_node   : 'sequence' | 'selector' | 'parallel' Integer ;
 action_sign     : ('task'|'cond') Names '(' action_parm? ')';
 action_parm     : (Integer|Float|boolean) (',' (Integer|Float|boolean))* ;
 // var_decls		: var_type Names ;

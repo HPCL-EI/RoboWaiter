@@ -1,25 +1,18 @@
 import os
-import sys
-project_path = "/home/wu/RoboWaiter/ptml"
-sys.path.append(project_path)
+import py_trees as ptree
 
-from antlr4 import *
-from ptmlTranslator import ptmlTranslator
-from ptmlParser import ptmlParser as Parser
-from ptmlLexer import ptmlLexer as Lexer
+from ptmlCompiler import load
 
 
 if __name__ == '__main__':
+
+    project_path = "/home/wu/RoboWaiter/ptml"
     
-    text_path = os.path.join(project_path, 'CoffeeDelivery.ptml')
-    input_stream = FileStream(text_path, encoding='utf-8')
-    
-    # testing lexer & parser
-    lexer = Lexer(input_stream)
-    stream = CommonTokenStream(lexer)
-    parser = Parser(stream)
-    tree = parser.root()
-    
-    walker = ParseTreeWalker()
-    ptml = ptmlTranslator() # listener mode
-    walker.walk(ptml, tree)
+    ptml_path = os.path.join(project_path, 'CoffeeDelivery.ptml')
+    behavior_lib_path = os.path.join(project_path, 'behaviour_lib')
+    # load
+    bt = load(ptml_path, behavior_lib_path)
+    # ptree.display.render_dot_tree(bt)
+    # build and tick
+    bt = ptree.trees.BehaviourTree(bt)
+    # todo: tick this bt

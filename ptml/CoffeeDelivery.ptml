@@ -1,16 +1,35 @@
-sequence:
-    selector:
+//sequence:
+//    act action1()
+//    act action2(2, 2.3, True)
+//
+//    parallel 2:
+//        act action3(int a, float b)
+//        act action4()
+        
+sequence{
+    selector{
         cond CoffeeCupFound()
         task FindCoffeeCup()
-        sequence:
+        sequence{
             cond SeqTest()
-            task Move()
-    selector:
+            task Move(1.2, 2, 2.3, True)
+            task Grasp()
+            parallel 3 {
+                cond Istask()
+                task TestTask()
+            }
+        }
+    }
+    selector{
         cond CoffeeCupGrasped()
         task GraspCoffeeCup()
-    selector:
+    }
+    selector{
         cond DestinationAReached()
         task ReachDestinationA()
-    selector:
+    }
+    selector{
         cond CoffeeCupPlaced()
-        task PlaceCoffeeCup(1.2)
+        task PlaceCoffeeCup()
+    }
+}

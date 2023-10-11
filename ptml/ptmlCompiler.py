@@ -1,8 +1,16 @@
 import os
 from antlr4 import *
-from ptmlTranslator import ptmlTranslator
-from ptmlParser import ptmlParser as Parser
-from ptmlLexer import ptmlLexer as Lexer
+
+if "." in __name__:
+    from .ptmlTranslator import ptmlTranslator
+    from .ptmlParser import ptmlParser as Parser
+    from .ptmlLexer import ptmlLexer as Lexer
+
+else:
+    from ptmlTranslator import ptmlTranslator
+    from ptmlParser import ptmlParser as Parser
+    from ptmlLexer import ptmlLexer as Lexer
+
 
 def load(ptml_path: str, behaviour_lib_path: str):
     """_summary_
@@ -17,24 +25,22 @@ def load(ptml_path: str, behaviour_lib_path: str):
     """
     # error handle
     if not os.path.exists(ptml_path):
-        raise FileNotFoundError(
-            'Given a fault ptml path: {}'.format(ptml_path)
-        )
+        raise FileNotFoundError("Given a fault ptml path: {}".format(ptml_path))
     if not os.path.exists(behaviour_lib_path):
         raise FileNotFoundError(
-            'Given a fault behaviour library path: {}'.format(behaviour_lib_path)
+            "Given a fault behaviour library path: {}".format(behaviour_lib_path)
         )
-    
+
     # noting fault, go next
-    input_stream = FileStream(ptml_path, encoding='utf-8')
+    input_stream = FileStream(ptml_path, encoding="utf-8")
 
     lexer = Lexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = Parser(stream)
     tree = parser.root()
-    
+
     walker = ParseTreeWalker()
-    ptml = ptmlTranslator() # listener mode
+    ptml = ptmlTranslator()  # listener mode
     walker.walk(ptml, tree)
 
     return ptml.bt_root

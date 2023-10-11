@@ -6,6 +6,8 @@ import numpy as np
 from proto import GrabSim_pb2
 from proto import GrabSim_pb2_grpc
 
+from ptml import ptmlCompiler
+
 channel = grpc.insecure_channel(
     "localhost:30001",
     options=[
@@ -55,6 +57,7 @@ class Scene:
 
     def __init__(self, sceneID):
         self.sceneID = sceneID
+        self.BT = None
         self.reset()
 
     @property
@@ -216,3 +219,6 @@ class Scene:
 
     def animation_reset(self):
         stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))
+
+    def load_BT(self, ptml_path):
+        self.BT = ptmlCompiler.load(ptml_path, "ptml/behaviour_lib")

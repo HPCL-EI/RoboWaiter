@@ -6,7 +6,7 @@ from ptmlCompiler import load
 
 if __name__ == '__main__':
 
-    project_path = "/home/wu/RoboWaiter/ptml"
+    project_path = "."
     
     ptml_path = os.path.join(project_path, 'CoffeeDelivery.ptml')
     behavior_lib_path = os.path.join(project_path, 'behaviour_lib')

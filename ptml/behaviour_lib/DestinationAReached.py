@@ -3,7 +3,7 @@ from typing import Any
 
 class DestinationAReached(ptree.behaviour.Behaviour):
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, scene):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:

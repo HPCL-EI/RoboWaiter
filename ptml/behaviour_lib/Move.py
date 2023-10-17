@@ -3,7 +3,7 @@ from typing import Any
 
 class Move(ptree.behaviour.Behaviour):
 
-    def __init__(self, name: str, a, b, c, d):
+    def __init__(self, name: str, scene, a, b, c, d):
         super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:

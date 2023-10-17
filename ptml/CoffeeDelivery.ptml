@@ -5,7 +5,7 @@
 //    parallel 2:
 //        act action3(int a, float b)
 //        act action4()
-        
+
 sequence{
     selector{
         cond CoffeeCupFound()

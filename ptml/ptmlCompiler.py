@@ -12,7 +12,7 @@ else:
     from ptmlLexer import ptmlLexer as Lexer
 
 
-def load(ptml_path: str, behaviour_lib_path: str):
+def load(scene, ptml_path: str, behaviour_lib_path: str):
     """_summary_
 
     Args:
@@ -40,7 +40,7 @@ def load(ptml_path: str, behaviour_lib_path: str):
     tree = parser.root()
 
     walker = ParseTreeWalker()
-    ptml = ptmlTranslator()  # listener mode
+    ptml = ptmlTranslator(scene, behaviour_lib_path)  # listener mode
     walker.walk(ptml, tree)
 
     return ptml.bt_root

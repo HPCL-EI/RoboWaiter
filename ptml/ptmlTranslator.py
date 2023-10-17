@@ -20,10 +20,12 @@ class ptmlTranslator(ptmlListener):
         ptmlListener (_type_): _description_
     """
 
-    def __init__(self) -> None:
+    def __init__(self, scene, behaviour_lib_path) -> None:
         super().__init__()
         self.bt_root = None
         self.stack = []
+        self.scene = scene
+        self.behaviour_lib_path = behaviour_lib_path
 
     # Enter a parse tree produced by ptmlParser#root.
     def enterRoot(self, ctx: ptmlParser.RootContext):
@@ -91,24 +93,20 @@ class ptmlTranslator(ptmlListener):
 
         args = "".join(args)
 
-        # dynamic import
-        if "." in __name__:  # in package
-            behaviour_lib_config = "ptml/behaviour_lib"
-        else:
-            behaviour_lib_config = "./behaviour_lib"
-
         import sys
 
-        sys.path.append(behaviour_lib_config)
+        sys.path.append(self.behaviour_lib_path)
+
         exec("from {} import {}".format(name, name))
         #
         tag = "cond_" + short_uuid() if node_type == "cond" else "task_" + short_uuid()
-        node = None
-        node = eval("{}('{}', {})".format(name, tag, args))
+
+        node = eval(
+            "{}('{}', scene, {})".format(name, tag, args), {"scene": self.scene, **locals()}
+        )
 
         # connect
         self.stack[-1].add_child(node)
-        # print(self.stack)
 
     # Exit a parse tree produced by ptmlParser#action_sign.
     def exitAction_sign(self, ctx: ptmlParser.Action_signContext):

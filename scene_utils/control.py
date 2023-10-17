@@ -18,20 +18,12 @@ channel = grpc.insecure_channel(
 stub = GrabSim_pb2_grpc.GrabSimStub(channel)
 
 animation_step = [4, 5, 7, 3, 3]
+loc_offset = [-700, -1400]
 
 
 def init_world(scene_num, mapID):
     stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
     time.sleep(3)  # wait for the map to load
-
-
-def walker_control_generator(walkerID, autowalk, speed, X, Y, Yaw):
-    return GrabSim_pb2.WalkerControls.WControl(
-        id=walkerID,
-        autowalk=autowalk,
-        speed=speed,
-        pose=GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw),
-    )
 
 
 def image_extract(camera_data):
@@ -55,10 +47,10 @@ class Scene:
         collision: str, info: str
     """
 
-    def __init__(self, sceneID):
+    def __init__(self, sceneID=0):
         self.sceneID = sceneID
+        self.use_offset = True
         self.BT = None
-        self.reset()
 
     @property
     def status(self):
@@ -67,7 +59,19 @@ class Scene:
     def reset(self):
         stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
 
-    def walk_to(self, X, Y, Yaw, velocity, dis_limit):
+    def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):
+        if self.use_offset:
+            X, Y = X + loc_offset[0], Y + loc_offset[1]
+        return GrabSim_pb2.WalkerControls.WControl(
+            id=walkerID,
+            autowalk=autowalk,
+            speed=speed,
+            pose=GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw),
+        )
+
+    def walk_to(self, X, Y, Yaw, velocity=150, dis_limit=100):
+        if self.use_offset:
+            X, Y = X + loc_offset[0], Y + loc_offset[1]
         stub.Do(
             GrabSim_pb2.Action(
                 scene=self.sceneID,
@@ -77,6 +81,8 @@ class Scene:
         )
 
     def reachable_check(self, X, Y, Yaw):
+        if self.use_offset:
+            X, Y = X + loc_offset[0], Y + loc_offset[1]
         navigation_info = stub.Do(
             GrabSim_pb2.Action(
                 scene=self.sceneID,
@@ -90,6 +96,8 @@ class Scene:
             return True
 
     def add_walker(self, X, Y, Yaw):
+        if self.use_offset:
+            X, Y = X + loc_offset[0], Y + loc_offset[1]
         if self.reachable_check(X, Y, Yaw):
             stub.AddWalker(
                 GrabSim_pb2.WalkerList(
@@ -133,7 +141,9 @@ class Scene:
             )
         )
 
-    def add_object(self, X, Y, Yaw, Z, type):
+    def add_object(self, type, X, Y, Z, Yaw=0):
+        if self.use_offset:
+            X, Y = X + loc_offset[0], Y + loc_offset[1]
         stub.AddObjects(
             GrabSim_pb2.ObjectList(
                 objects=[
@@ -173,29 +183,38 @@ class Scene:
             )
         )
 
-    def get_camera_color(self):
+    def get_camera_color(self, image_only=True):
         camera_data = stub.Capture(
             GrabSim_pb2.CameraList(
                 cameras=[GrabSim_pb2.CameraName.Head_Color], scene=self.sceneID
             )
         )
-        return image_extract(camera_data)
+        if image_only:
+            return image_extract(camera_data)
+        else:
+            return camera_data
 
-    def get_camera_depth(self):
+    def get_camera_depth(self, image_only=True):
         camera_data = stub.Capture(
             GrabSim_pb2.CameraList(
                 cameras=[GrabSim_pb2.CameraName.Head_Depth], scene=self.sceneID
             )
         )
-        return image_extract(camera_data)
+        if image_only:
+            return image_extract(camera_data)
+        else:
+            return camera_data
 
-    def get_camera_segment(self):
+    def get_camera_segment(self, image_only=True):
         camera_data = stub.Capture(
             GrabSim_pb2.CameraList(
                 cameras=[GrabSim_pb2.CameraName.Head_Segment], scene=self.sceneID
             )
         )
-        return image_extract(camera_data)
+        if image_only:
+            return image_extract(camera_data)
+        else:
+            return camera_data
 
     def chat_bubble(self, message):
         stub.ControlRobot(
@@ -220,5 +239,5 @@ class Scene:
     def animation_reset(self):
         stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))
 
-    def load_BT(self, ptml_path):
-        self.BT = ptmlCompiler.load(ptml_path, "ptml/behaviour_lib")
+    def load_BT(self, ptml_path, behaviour_lib_path):
+        self.BT = ptmlCompiler.load(self, ptml_path, behaviour_lib_path)

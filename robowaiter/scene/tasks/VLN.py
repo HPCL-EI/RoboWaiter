@@ -12,13 +12,13 @@ class SceneVLN(Scene):
     def __init__(self, robot):
         super().__init__(robot)
 
-    def reset(self):
+    def _reset(self):
         self.reset_sim()
 
         self.add_walker(1085, 2630, 220)
         self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
 
-    def run(self):
+    def _run(self):
         # 实现单顾客领位
         self.add_walker(1085, 2630, 220)
         self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
@@ -37,3 +37,6 @@ class SceneVLN(Scene):
             self.chat_bubble("请问您想喝点什么？")
 
         print(self.status.walkers)
+
+    def _step(self):
+        pass

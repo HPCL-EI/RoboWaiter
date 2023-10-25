@@ -15,14 +15,17 @@ class SceneGQA(Scene):
     def __init__(self, robot):
         super().__init__(robot)
 
-    def reset(self):
-        self.reset_sim()
-
+    def _reset(self):
         self.add_walker(1085, 2630, 220)
         self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
 
 
-    def run(self):
-        self.chat_bubble("顾客说：123546567")
+    def _run(self):
+        pass
 
+    def _step(self):
 
+        if int(self.time)% 5 == 0:
+            print("顾客说：请问你们这里有哪些咖啡")
+            self.chat_bubble('顾客说：请问你们这里有哪些咖啡')
+            self.state['chat_list'].append('请问你们这里有哪些咖啡')

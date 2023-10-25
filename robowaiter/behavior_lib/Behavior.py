@@ -14,9 +14,14 @@ class Bahavior(ptree.behaviour.Behaviour):
     def initialise(self) -> None:
         return super().initialise()
 
+    def _update(self) -> ptree.common.Status:
+        print("this is just a base behavior node.")
+
+
     def update(self) -> ptree.common.Status:
-        print("this is a base behavior node.")
-        return ptree.common.Status.SUCCESS
+        re = self._update()
+        print(f"{self.__class__.__name__}: {re.value}")
+        return re
 
     def terminate(self, new_status: ptree.common.Status) -> None:
         return super().terminate(new_status)

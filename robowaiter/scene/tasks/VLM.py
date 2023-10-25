@@ -11,13 +11,13 @@ class SceneVLM(Scene):
     def __init__(self, robot):
         super().__init__(robot)
 
-    def reset(self):
+    def _reset(self):
         self.reset_sim()
 
         self.add_walker(1085, 2630, 220)
         self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
 
-    def run(self):
+    def _run(self):
         # 空调操作
         self.walk_to(950, 1260, 90)  # 没法转向？
         # todo: 手臂操作
@@ -34,3 +34,6 @@ class SceneVLM(Scene):
         """
         scene.release(1)
         """
+
+    def _step(self):
+        pass

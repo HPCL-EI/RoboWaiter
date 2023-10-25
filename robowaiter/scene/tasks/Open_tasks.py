@@ -16,16 +16,14 @@ class SceneOT(Scene):
     def __init__(self, robot):
         super().__init__(robot)
 
-    def reset(self):
+    def _reset(self):
         self.reset_sim()
 
         self.add_walker(1085, 2630, 220)
         self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
 
+    def _run(self):
+        pass
 
-    def run(self):
-        self.chat_bubble("顾客说：请给我一杯咖啡")
-        
-
-
-
+    def _step(self):
+        pass

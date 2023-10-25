@@ -1,7 +1,7 @@
 import py_trees as ptree
 from typing import Any
 
-class Move(ptree.behaviour.Behaviour):
+class MoveTo(ptree.behaviour.Behaviour):
 
     def __init__(self, name: str, scene, a, b, c, d):
         super().__init__(name)
@@ -12,7 +12,7 @@ class Move(ptree.behaviour.Behaviour):
     def initialise(self) -> None:
         return super().initialise()
     
-    def update(self) -> ptree.common.Status:
+    def _update(self) -> ptree.common.Status:
         print('Start checking IsChatting...')
         return ptree.common.Status.SUCCESS
     

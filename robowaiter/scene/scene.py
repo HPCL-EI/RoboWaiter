@@ -62,6 +62,8 @@ class Scene:
     def __init__(self,robot, sceneID=0):
         self.sceneID = sceneID
         self.use_offset = True
+        self.start_time = time.time()
+        self.time = 0
 
         # init robot
         robot.set_scene(self)
@@ -69,8 +71,48 @@ class Scene:
         self.robot = robot
 
 
-    def run(self):
+
+    def _reset(self):
+        # 场景自定义的reset
         pass
+
+    def _run(self):
+        # 场景自定义的run
+        pass
+
+    def _step(self):
+        # 场景自定义的step
+        pass
+
+
+    def reset(self):
+        # 基类reset，默认执行仿真器初始化操作
+        self.reset_sim()
+
+        # reset state
+        self.state = {
+            "chat_list": []
+        }
+        print("场景初始化完成")
+        self._reset()
+
+        self.running = True
+
+    def run(self):
+        # 基类run
+
+        self._run()
+
+        # 运行并由robot打印每步信息
+        while True:
+            self.step()
+
+    def step(self):
+        # 基类step，默认执行行为树tick操作
+        self.time = time.time() - self.start_time
+
+        self._step()
+        self.robot.step()
 
 
     @property
@@ -83,15 +125,7 @@ class Scene:
         # reset world
         init_world()
 
-        # reset state
-        self.state = {
-            "chatting_list": []
-        }
 
-
-
-    def reset(self):
-        self.reset_sim()
 
     def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):
         if self.use_offset:

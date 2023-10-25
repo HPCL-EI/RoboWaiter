@@ -12,7 +12,7 @@ class Grasp(ptree.behaviour.Behaviour):
     def initialise(self) -> None:
         return super().initialise()
     
-    def update(self) -> ptree.common.Status:
+    def _update(self) -> ptree.common.Status:
         print('Start checking IsChatting...')
         return ptree.common.Status.SUCCESS
     

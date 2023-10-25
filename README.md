@@ -166,3 +166,10 @@ Scene是场景基类，task_map返回的任务场景都继承于Scene。
 | 253 | Roof                 |
 | 254 | Wall                 |
 注意：78及以后无法使用add_object方法生成
+
+# 调用大模型接口
+运行llm_client.py文件调用大模型进行多轮对话。
+```shell
+python llm_client.py
+```
+输入字符即可等待回答，输入end表示对话结束。

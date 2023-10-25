@@ -1,12 +1,10 @@
 import time
-import gym
 import grpc
 import numpy as np
 
-from proto import GrabSim_pb2
-from proto import GrabSim_pb2_grpc
+from robowaiter.proto import GrabSim_pb2
+from robowaiter.proto import GrabSim_pb2_grpc
 
-from ptml import ptmlCompiler
 
 channel = grpc.insecure_channel(
     "localhost:30001",
@@ -21,7 +19,7 @@ animation_step = [4, 5, 7, 3, 3]
 loc_offset = [-700, -1400]
 
 
-def init_world(scene_num, mapID):
+def init_world(scene_num=1, mapID=3):
     stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
     time.sleep(3)  # wait for the map to load
 
@@ -34,7 +32,21 @@ def image_extract(camera_data):
 
 
 class Scene:
+    robot = None
+    state = {}
     """
+    # 当前场景的状态
+    state: {
+        "chat_pool": [    #未处理的顾客的对话池
+            {
+                "pos": 顾客的位置,
+                "chat": 顾客对话的内容
+            }
+        ],
+        
+        "status":   # 仿真器中的观测信息，见下方详细解释
+    }
+    
     status:
         location: Dict[X: float, Y: float]
         rotation: Dict[Yaw: float]
@@ -47,17 +59,39 @@ class Scene:
         collision: str, info: str
     """
 
-    def __init__(self, sceneID=0):
+    def __init__(self,robot, sceneID=0):
         self.sceneID = sceneID
         self.use_offset = True
-        self.BT = None
+
+        # init robot
+        robot.set_scene(self)
+        robot.load_BT()
+        self.robot = robot
+
+
+    def run(self):
+        pass
+
 
     @property
     def status(self):
         return stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
 
-    def reset(self):
+    def reset_sim(self):
         stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
+
+        # reset world
+        init_world()
+
+        # reset state
+        self.state = {
+            "chatting_list": []
+        }
+
+
+
+    def reset(self):
+        self.reset_sim()
 
     def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):
         if self.use_offset:
@@ -239,5 +273,3 @@ class Scene:
     def animation_reset(self):
         stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))
 
-    def load_BT(self, ptml_path, behaviour_lib_path):
-        self.BT = ptmlCompiler.load(self, ptml_path, behaviour_lib_path)

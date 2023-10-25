@@ -1,0 +1,8 @@
+antlr4-python3-runtime
+py_trees
+shortuuid
+protobuf==3.20.0
+gym==0.21.0
+grpcio==1.53.0
+requests
+urllib3

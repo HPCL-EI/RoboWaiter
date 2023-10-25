@@ -1,15 +1,65 @@
 # RoboWaiter
 大模型具身智能比赛-机器人控制端
 
-### 机器人控制
-1. 加载场景
-```python
-from scene_utils import control
-control.init_world(scene_num=1, mapID=3)
-```
-当前只有一个咖啡馆场景。加载操作只需要执行一遍，当引擎进入相应场景后，可以用`control.reset()`重置场景。
+# 项目安装（必看）
+## 环境要求
+Python=3.10
 
-2. 物品类别
+### 安装步骤
+```shell
+cd RoboWaiter
+pip install -e .
+```
+以上步骤将完成robowaiter项目以及相关依赖库的安装
+
+### 快速入门
+1. 安装UE及Harix插件，打开默认项目并运行
+2. 运行 run_robowaiter.py 文件即可实现机器人控制端与仿真器的交互
+
+
+# 运行流程介绍
+run_robowaiter.py 入口文件如下：
+```python
+import os
+from robowaiter import Robot, task_map
+
+TASK_NAME = 'GQA'
+
+# create robot
+project_path = "./robowaiter"
+ptml_path = os.path.join(project_path, 'robot/Default.ptml')
+behavior_lib_path = os.path.join(project_path, 'behavior_lib')
+
+robot = Robot(ptml_path,behavior_lib_path)
+
+# create task
+task = task_map[TASK_NAME](robot)
+task.reset()
+task.run()
+```
+
+## Robot 
+Robot是机器人类，包括从ptml加载行为树的方法，以及执行行为树的方法等
+
+
+## task_map
+task_map是任务字典，通过任务缩写来返回相应的场景类。
+
+| 缩写 | 任务      |
+|----|---------|
+| AEM  | 主动探索和记忆 |
+| GQA  | 具身多轮对话  |
+| VLN  | 视觉语言导航  |
+| VLM  | 视觉语言操作  |
+| OT  | 复杂开放任务   |
+| AT  | 自主任务    |
+
+
+## Scene
+Scene是场景基类，task_map返回的任务场景都继承于Scene。
+该类实现了一些通用的场景操作接口。
+
+### 场景中物品类别
 
 | ID  | Item                 |
 |-----|----------------------|
@@ -116,3 +166,10 @@ control.init_world(scene_num=1, mapID=3)
 | 253 | Roof                 |
 | 254 | Wall                 |
 注意：78及以后无法使用add_object方法生成
+
+# 调用大模型接口
+运行llm_client.py文件调用大模型进行多轮对话。
+```shell
+python llm_client.py
+```
+输入字符即可等待回答，输入end表示对话结束。

@@ -1,10 +1,10 @@
 import py_trees as ptree
 from typing import Any
+from robowaiter.behavior_lib.Behavior import Bahavior
 
-
-class CoffeeCupFound(ptree.behaviour.Behaviour):
+class CoffeeCupFound(Bahavior):
     def __init__(self, name: str, scene):
-        super().__init__(name)
+        super().__init__(name, scene)
 
     def setup(self, **kwargs: Any) -> None:
         return super().setup(**kwargs)

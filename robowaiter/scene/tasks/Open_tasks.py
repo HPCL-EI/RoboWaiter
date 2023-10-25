@@ -8,12 +8,24 @@
 
 """
 
-from scene_utils import control
-
-# control.init_world(1, 3)
-
-scene = control.Scene(sceneID=0)
-
-scene.reset()
-
 # todo: 接收点单信息，大模型生成任务规划
+
+from robowaiter.scene.scene import Scene
+
+class SceneOT(Scene):
+    def __init__(self, robot):
+        super().__init__(robot)
+
+    def reset(self):
+        self.reset_sim()
+
+        self.add_walker(1085, 2630, 220)
+        self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
+
+
+    def run(self):
+        self.chat_bubble("顾客说：请给我一杯咖啡")
+        
+
+
+

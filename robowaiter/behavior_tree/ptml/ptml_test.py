@@ -1,16 +1,16 @@
 import os
 import py_trees as ptree
 
-from scene_utils import control
+from scene import scene
 from ptmlCompiler import load
 
 
 if __name__ == '__main__':
 
-    project_path = "."
-    
+    project_path = ""
+
     ptml_path = os.path.join(project_path, 'CoffeeDelivery.ptml')
-    behavior_lib_path = os.path.join(project_path, 'behaviour_lib')
+    behavior_lib_path = os.path.join(project_path, '../../behavior_lib')
 
     scene = control.Scene(sceneID=0)
     # load

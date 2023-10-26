@@ -1,0 +1,1 @@
+{pre: 1, 2, 3}{action: moveTo(s)}{add: 4}{del: 2, 3}

@@ -85,6 +85,10 @@ def MoveBtoB ():
 ```
 
 ### 5. `opt_bt_exp_main.py` 为主函数，在此演示如何调用最优行为树扩展算法得到完全扩展最优行为树
+
+初始化的时候：传入 actions (包含 pre,add,del,cost).
+调用的时候，传入 goal 状态集合 (set类型)，返回完全最优扩展行为树的 ptml 形式 (string类型)
+
 ```python
 actions=[
     Action(name='PutDown(Table,Coffee)', pre={'Holding(Coffee)','At(Robot,Table)'}, add={'At(Table,Coffee)','NotHolding'}, del_set={'Holding(Coffee)'}, cost=1)

@@ -102,13 +102,13 @@ print(ptml_string)
 ```python
 # 判断初始状态能否到达目标状态
 start = {'At(Robot,Bar)', 'Holding(VacuumCup)', 'Available(Table)', 'Available(CoffeeMachine)','Available(FrontDesk)'}
+
 # 方法一：算法返回所有可能的初始状态，在里面看看有没有对应的初始状态
 right_bt = algo.find_all_leaf_states_contain_start(start)
 if not right_bt:
     print("ERROR1: The current state cannot reach the goal state!")
 else:
     print("Right1: The current state can reach the goal state!")
-
 
 # 方法二：预先跑一边行为树，看能否到达目标状态
 right_bt2 = algo.run_bt_from_start(goal,start)

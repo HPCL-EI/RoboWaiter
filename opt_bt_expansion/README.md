@@ -53,7 +53,7 @@ iters= 10
 BTTest(seed=seed,literals_num=literals_num,depth=depth,iters=iters)
 ```
 
-### 4. `example.py` 中设计规划案例 goals, start,actions
+### 4. `example.py` 中设计规划案例 goals, start, actions
 
 ```python
 def MoveBtoB ():

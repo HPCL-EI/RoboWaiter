@@ -14,8 +14,14 @@ class SceneVLM(Scene):
         pass
 
     def _run(self, op_type=1):
+        # 12个操作顺序测试
+        # for i in range(1,13):
+        #     if i<=10:
+        #         self.move_task_area(i)
+        #     self.op_task_execute(i)
 
-        self.move_task_area(op_type)
+        if op_type<=10:
+            self.move_task_area(op_type)
         self.op_task_execute(op_type)
 
     def _step(self):

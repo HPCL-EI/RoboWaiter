@@ -348,7 +348,6 @@ class Scene:
             result = self.control_robot_action(op_type, 1)    #
         self.control_robot_action(0, 2)
         if result:
-            print("op_num:",self.op_act_num[op_type])
             if self.op_act_num[op_type]>0:
                 for i in range(2,2+self.op_act_num[op_type]):
                     self.control_robot_action(op_type,i)

@@ -36,6 +36,11 @@ def ask_llm(question):
 
 
 if __name__ == '__main__':
-    question = "假设你是一个咖啡厅的机器人服务员，有一个顾客的请求是'请给我一杯咖啡'，请生成对应的行为树来控制机器人完成该动作"
+    question = '''
+    以下是环境信息，请回答对话和目标状态
+    [环境信息]
+    State: {At(Robot, Table), NotHolding, Available(SpongeGourd)}
+    chat_list: [(Customer, "桌子有点脏，能帮我擦一下吗？")]
+    '''
 
     print(ask_llm(question))

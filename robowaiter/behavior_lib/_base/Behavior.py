@@ -17,11 +17,13 @@ class Status(enum.Enum):
 
 # _base Behavior
 class Bahavior(ptree.behaviour.Behaviour):
+    can_be_expanded = False
     num_params = 0
     valid_params='''
         None
         '''
     scene = None
+    print_name_prefix = ""
 
     def __init__(self,*args):
         name = self.__class__.__name__
@@ -34,6 +36,10 @@ class Bahavior(ptree.behaviour.Behaviour):
     def _update(self) -> ptree.common.Status:
         print("this is just a _base behavior node.")
         return Status.INVALID
+
+    @property
+    def print_name(self):
+        return f'{self.print_name_prefix}{self.name}'
 
     # let behavior node interact with the scene
     def set_scene(self, scene):

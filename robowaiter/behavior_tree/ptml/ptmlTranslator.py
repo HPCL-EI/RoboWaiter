@@ -1,6 +1,6 @@
 import shortuuid
 import py_trees as ptree
-
+from robowaiter.behavior_lib._base import Selector, Sequence
 from antlr4 import *
 
 if "." in __name__:
@@ -41,11 +41,9 @@ class ptmlTranslator(ptmlListener):
 
         match type:
             case "sequence":
-                tag = "sequence_" + short_uuid()
-                node = ptree.composites.Sequence(name=tag, memory=False)
+                node = Sequence(name="Sequence", memory=False)
             case "selector":
-                tag = "selector_" + short_uuid()
-                node = ptree.composites.Selector(name=tag, memory=False)
+                node = Selector(name="Selector", memory=False)
             case "parallel":
                 tag = "parallel_" + short_uuid()
                 # threshold = int(ctx.children[1])

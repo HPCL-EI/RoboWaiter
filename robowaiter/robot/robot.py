@@ -1,7 +1,7 @@
 import os
 import py_trees as ptree
 
-from robowaiter.behavior_tree import load_bt_from_ptml
+from robowaiter.behavior_tree.utils import load_bt_from_ptml,find_node_by_name,print_tree_from_root
 
 class Robot(object):
     scene = None
@@ -19,6 +19,9 @@ class Robot(object):
 
     def load_BT(self):
         self.bt = load_bt_from_ptml(self.scene, self.ptml_path,self.behavior_lib_path)
+        sub_task_seq = find_node_by_name(self.bt.root,"SubTaskPlaceHolder").parent
+        sub_task_seq.children.pop()
+        print(sub_task_seq.children)
 
     def step(self):
         if self.scene.time > self.next_response_time:
@@ -30,8 +33,6 @@ class Robot(object):
             self.bt.tick()
 
             print("\n")
-
-
 
 if __name__ == '__main__':
     pass

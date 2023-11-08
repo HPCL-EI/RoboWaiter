@@ -2,17 +2,9 @@ import py_trees as ptree
 from typing import Any
 from robowaiter.behavior_lib._base.Cond import Cond
 
-class At(Cond):
-    can_be_expanded = True
-    num_params = 2
-    valid_params = '''
-        Coffee, Table
-    '''
-
-    def __init__(self,*args):
-        super().__init__(*args)
-
-
+class HasSubTask(Cond):
+    def __init__(self):
+        super().__init__()
 
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?

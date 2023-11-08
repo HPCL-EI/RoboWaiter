@@ -1,0 +1,9 @@
+selector
+{
+    sequence
+{
+        cond Chatting()
+        act DealChat()
+
+}    act At(Coffee,Table)
+}

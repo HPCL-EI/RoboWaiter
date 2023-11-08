@@ -1,8 +1,8 @@
 import os
 import py_trees as ptree
 
-from robowaiter.scene.scene import Scene
-from robowaiter.behavior_tree.ptml.ptmlCompiler import load
+# from robowaiter.scene.scene import Scene
+# from robowaiter.behavior_tree.ptml.ptmlCompiler import load
 
 import os
 from robowaiter import Robot, task_map
@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     # create robot
     project_path = "../../../"
-    ptml_path = os.path.join(project_path, 'behavior_tree/ptml/test/Test.ptml')
+    ptml_path = os.path.join(project_path, 'behavior_tree/ptml/test/tab_test.ptml')
     behavior_lib_path = os.path.join(project_path, 'behavior_lib')
 
     robot = Robot(ptml_path, behavior_lib_path)

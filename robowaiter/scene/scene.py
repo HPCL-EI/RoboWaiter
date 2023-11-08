@@ -341,7 +341,6 @@ class Scene:
             return False
 
     def op_task_execute(self,op_type):
-        print("type:",self.op_typeToAct[op_type][0],"action:",self.op_typeToAct[op_type][1])
         self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
         if op_type>=8:
             result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])

@@ -1,0 +1,15 @@
+digraph pastafarianism {
+ordering=out;
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+selector_4aUN4FAA [fillcolor=cyan, fontcolor=black, fontsize=9, label=selector_4aUN4FAA, shape=octagon, style=filled];
+sequence_BNun8ZFM [fillcolor=orange, fontcolor=black, fontsize=9, label=sequence_BNun8ZFM, shape=box, style=filled];
+selector_4aUN4FAA -> sequence_BNun8ZFM;
+Chatting [fillcolor=gray, fontcolor=black, fontsize=9, label=Chatting, shape=ellipse, style=filled];
+sequence_BNun8ZFM -> Chatting;
+DealChat [fillcolor=gray, fontcolor=black, fontsize=9, label=DealChat, shape=ellipse, style=filled];
+sequence_BNun8ZFM -> DealChat;
+"At(Coffee,Table)" [fillcolor=gray, fontcolor=black, fontsize=9, label="At(Coffee,Table)", shape=ellipse, style=filled];
+selector_4aUN4FAA -> "At(Coffee,Table)";
+}

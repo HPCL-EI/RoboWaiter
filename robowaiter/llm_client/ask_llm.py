@@ -10,17 +10,27 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def ask_llm(question):
-    url = "https://45.125.46.134:25344/v1/completions"
+    url = "https://45.125.46.134:25344/v1/chat/completions"
     headers = {"Content-Type": "application/json"}
     data = {
-        "prompt": question
-    }
+        "model": "RoboWaiter",
+        "messages": [
+          {
+            "role": "system",
+            "content": "你是一个机器人服务员：RoboWaiter. 你的职责是为顾客提供对话及具身服务。"
+          },
+          {
+            "role": "user",
+            "content": question
+          }
+        ]
+      }
 
     response = requests.post(url, headers=headers, json=data, verify=False)
 
     if response.status_code == 200:
         result = response.json()
-        return result['choices'][0]['text']
+        return result['choices'][0]['message']['content']
     else:
         return "大模型请求失败:", response.status_code
 

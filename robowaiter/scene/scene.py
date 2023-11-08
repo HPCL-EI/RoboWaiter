@@ -308,3 +308,42 @@ class Scene:
     def animation_reset(self):
         stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))
 
+    def control_robot_action(self, type=0, action=0, message="你好"):
+        scene = stub.ControlRobot(
+            GrabSim_pb2.ControlInfo(
+                scene=self.sceneID, type=type, action=action, content=message
+            )
+        )
+        if str(scene.info).find("Action Success") > -1:
+            print(scene.info)
+            return True
+        else:
+            print(scene.info)
+            return False
+
+    def op_task_execute(self,task_type):
+        self.control_robot_action(0, 1, "开始"+self.op_dialog[task_type])   # 开始制作咖啡
+        result = self.control_robot_action(task_type, 1)    #
+        self.control_robot_action(0, 2)
+        if result:
+            if self.op_act_num[task_type]>0:
+                for i in range(2,2+self.op_act_num[task_type]):
+                    self.control_robot_action(task_type,i)
+                    self.control_robot_action(0, 2)
+                self.control_robot_action(0, 1, "成功"+self.op_dialog[task_type])
+        else:
+            self.control_robot_action(0, 1, self.op_dialog[task_type]+"失败")
+
+    def move_task_area(self,op_type=0):
+        scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+
+        walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
+        print("------------------move_task_area----------------------")
+        print("position:", walk_value,"开始任务:",self.op_dialog[op_type])
+        for walk_v in self.op_v_list[op_type]:
+            walk_v = walk_v + [scene.rotation.Yaw, 60, 0]
+            action = GrabSim_pb2.Action(
+                scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
+            )
+            scene = stub.Do(action)
+

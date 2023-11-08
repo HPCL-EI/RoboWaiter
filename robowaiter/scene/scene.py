@@ -19,7 +19,7 @@ animation_step = [4, 5, 7, 3, 3]
 loc_offset = [-700, -1400]
 
 
-def init_world(scene_num=1, mapID=3):
+def init_world(scene_num=1, mapID=11):
     stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
     time.sleep(3)  # wait for the map to load
 
@@ -33,20 +33,17 @@ def image_extract(camera_data):
 
 class Scene:
     robot = None
-    state = {}
-    """
-    # 当前场景的状态
-    state: {
-        "chat_pool": [    #未处理的顾客的对话池
-            {
-                "pos": 顾客的位置,
-                "chat": 顾客对话的内容
-            }
-        ],
-        
-        "status":   # 仿真器中的观测信息，见下方详细解释
+
+    default_state = {
+        "map": {
+            "2d": None,
+            "obj_pos": {}
+        },
+        "chat_list": [],  # 未处理的顾客的对话, (顾客的位置,顾客对话的内容)
+        "sub_goal_list": [],  # 子目标列表
+        "status": None,  # 仿真器中的观测信息，见下方详细解释
     }
-    
+    """
     status:
         location: Dict[X: float, Y: float]
         rotation: Dict[Yaw: float]
@@ -70,7 +67,7 @@ class Scene:
             robot.set_scene(self)
             robot.load_BT()
         self.robot = robot
-
+        self.sub_task_seq = None
 
 
     def _reset(self):
@@ -91,9 +88,7 @@ class Scene:
         self.reset_sim()
 
         # reset state
-        self.state = {
-            "chat_list": []
-        }
+        self.state = self.default_state
         print("场景初始化完成")
         self._reset()
 

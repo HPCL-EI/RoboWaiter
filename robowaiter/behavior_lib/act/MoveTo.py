@@ -1,7 +1,8 @@
 import py_trees as ptree
 from typing import Any
+from robowaiter.behavior_lib._base.Act import Act
 
-class MoveTo(ptree.behaviour.Behaviour):
+class MoveTo(Act):
 
     def __init__(self, name: str, scene, a, b, c, d):
         super().__init__(name)

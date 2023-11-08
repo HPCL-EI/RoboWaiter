@@ -2,7 +2,7 @@ grammar ptml;
 
 root            : tree+ EOF;
 
-tree    		: internal_node '{' (action_sign|tree)+ '}' ;
+tree    		: internal_node '{' (action_sign|tree)* '}' ;
 internal_node   : 'sequence' | 'selector' | 'parallel' Integer ;
 action_sign     : ('act'|'cond') String '(' action_parm? ')';
 action_parm     : (Integer|Float|boolean|String) (',' (Integer|Float|boolean|String))* ;

@@ -1,4 +1,4 @@
-# Generated from E:/Projects/UE5/HARIX_RDKSim/Plugins/HarixSim/Python/ptml/ptml.g4 by ANTLR 4.13.1
+# Generated from ptml.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .ptmlParser import ptmlParser

@@ -1,11 +1,10 @@
 import py_trees as ptree
 from typing import Any
-from robowaiter.behavior_lib.Behavior import Bahavior
 
-class CoffeeCupGrasped(Bahavior):
+class Grasp(ptree.behaviour.Behaviour):
+
     def __init__(self, name: str, scene):
-        super().__init__(name, scene)
-
+        super().__init__(name)
 
     def setup(self, **kwargs: Any) -> None:
         return super().setup(**kwargs)
@@ -13,7 +12,7 @@ class CoffeeCupGrasped(Bahavior):
     def initialise(self) -> None:
         return super().initialise()
     
-    def update(self) -> ptree.common.Status:
+    def _update(self) -> ptree.common.Status:
         print('Start checking IsChatting...')
         return ptree.common.Status.SUCCESS
     

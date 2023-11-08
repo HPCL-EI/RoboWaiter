@@ -1,7 +1,4 @@
-from opt_bt_expansion.BehaviorTree import Leaf,ControlBT # 行为结点类：叶子结点和非叶子节点
-from opt_bt_expansion.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm,state_transition # 调用最优行为树扩展算法
-from opt_bt_expansion.tools import print_action_data_table,BTTest
-from opt_bt_expansion.examples import MoveBtoB_num,MoveBtoB,Cond2BelongsToCond3 # 导入三个例子
+from zoo.opt_bt_expansion.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm,state_transition # 调用最优行为树扩展算法
 from opt_bt_expansion.examples import *
 
 

@@ -76,9 +76,9 @@ class ptmlTranslator(ptmlListener):
 
     # Enter a parse tree produced by ptmlParser#action_sign.
     def enterAction_sign(self, ctx: ptmlParser.Action_signContext):
-        # cond / task
+        # cond / act
         node_type = str(ctx.children[0])
-        name = str(ctx.Names())
+        name = str(ctx.String())
 
         # if have params
         args = []
@@ -88,22 +88,21 @@ class ptmlTranslator(ptmlListener):
             for i in params.children:
                 if isinstance(i, ptmlParser.BooleanContext):
                     args.append(str(i.children[0]))
+                elif str(i)==',':
+                    args.append(',')
                 else:
-                    args.append(str(i))
+                    args.append(f"'{i}'")
 
         args = "".join(args)
 
-        import sys
 
-        sys.path.append(self.behaviour_lib_path)
-
-        exec("from {} import {}".format(name, name))
+        exec(f"from {name} import {name}")
         #
-        tag = "cond_" + short_uuid() if node_type == "cond" else "task_" + short_uuid()
+        # tag = "cond_" + short_uuid() if node_type == "cond" else "task_" + short_uuid()
 
-        node = eval(
-            "{}('{}', scene, {})".format(name, tag, args), {"scene": self.scene, **locals()}
-        )
+        print(f'create node: {name}({args})')
+        node = eval(f"{name}({args})")
+        node.set_scene(self.scene)
 
         # connect
         self.stack[-1].add_child(node)

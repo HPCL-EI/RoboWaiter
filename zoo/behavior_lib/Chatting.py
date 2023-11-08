@@ -1,8 +1,8 @@
 import py_trees as ptree
 from typing import Any
-from robowaiter.behavior_lib.Behavior import Bahavior
+from robowaiter.behavior_lib._base.Behavior import Bahavior
 
-class CoffeeCupFound(Bahavior):
+class Chatting(Bahavior):
     def __init__(self, name: str, scene):
         super().__init__(name, scene)
 
@@ -12,9 +12,12 @@ class CoffeeCupFound(Bahavior):
     def initialise(self) -> None:
         return super().initialise()
 
-    def update(self) -> ptree.common.Status:
-        print("Start checking IsChatting...")
-        return ptree.common.Status.SUCCESS
+    def _update(self) -> ptree.common.Status:
+        # if self.scene.status?
+        if self.scene.state['chat_list'] == []:
+            return ptree.common.Status.FAILURE
+        else:
+            return ptree.common.Status.SUCCESS
 
     def terminate(self, new_status: ptree.common.Status) -> None:
         return super().terminate(new_status)

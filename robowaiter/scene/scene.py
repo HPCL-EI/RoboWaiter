@@ -59,15 +59,16 @@ class Scene:
         collision: str, info: str
     """
 
-    def __init__(self,robot, sceneID=0):
+    def __init__(self,robot=None, sceneID=0):
         self.sceneID = sceneID
         self.use_offset = True
         self.start_time = time.time()
         self.time = 0
 
         # init robot
-        robot.set_scene(self)
-        robot.load_BT()
+        if robot:
+            robot.set_scene(self)
+            robot.load_BT()
         self.robot = robot
 
 

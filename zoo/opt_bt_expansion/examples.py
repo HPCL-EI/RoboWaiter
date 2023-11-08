@@ -1,5 +1,5 @@
 
-from opt_bt_expansion.OptimalBTExpansionAlgorithm import Action
+from zoo.opt_bt_expansion.OptimalBTExpansionAlgorithm import Action
 
 
 

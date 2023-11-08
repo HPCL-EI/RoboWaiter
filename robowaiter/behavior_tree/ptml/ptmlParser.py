@@ -1,4 +1,4 @@
-# Generated from E:/Projects/UE5/HARIX_RDKSim/Plugins/HarixSim/Python/ptml/ptml.g4 by ANTLR 4.13.1
+# Generated from ptml.g4 by ANTLR 4.13.1
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -10,26 +10,27 @@ else:
 
 def serializedATN():
     return [
-        4,1,17,62,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,1,0,4,
+        4,1,17,64,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,1,0,4,
         0,14,8,0,11,0,12,0,15,1,0,1,0,1,1,1,1,1,1,1,1,4,1,24,8,1,11,1,12,
         1,25,1,1,1,1,1,2,1,2,1,2,1,2,3,2,34,8,2,1,3,1,3,1,3,1,3,3,3,40,8,
-        3,1,3,1,3,1,4,1,4,1,4,3,4,47,8,4,1,4,1,4,1,4,1,4,3,4,53,8,4,5,4,
-        55,8,4,10,4,12,4,58,9,4,1,5,1,5,1,5,0,0,6,0,2,4,6,8,10,0,2,1,0,6,
-        7,1,0,11,12,66,0,13,1,0,0,0,2,19,1,0,0,0,4,33,1,0,0,0,6,35,1,0,0,
-        0,8,46,1,0,0,0,10,59,1,0,0,0,12,14,3,2,1,0,13,12,1,0,0,0,14,15,1,
-        0,0,0,15,13,1,0,0,0,15,16,1,0,0,0,16,17,1,0,0,0,17,18,5,0,0,1,18,
-        1,1,0,0,0,19,20,3,4,2,0,20,23,5,1,0,0,21,24,3,6,3,0,22,24,3,2,1,
-        0,23,21,1,0,0,0,23,22,1,0,0,0,24,25,1,0,0,0,25,23,1,0,0,0,25,26,
-        1,0,0,0,26,27,1,0,0,0,27,28,5,2,0,0,28,3,1,0,0,0,29,34,5,3,0,0,30,
-        34,5,4,0,0,31,32,5,5,0,0,32,34,5,14,0,0,33,29,1,0,0,0,33,30,1,0,
-        0,0,33,31,1,0,0,0,34,5,1,0,0,0,35,36,7,0,0,0,36,37,5,13,0,0,37,39,
-        5,8,0,0,38,40,3,8,4,0,39,38,1,0,0,0,39,40,1,0,0,0,40,41,1,0,0,0,
-        41,42,5,9,0,0,42,7,1,0,0,0,43,47,5,14,0,0,44,47,5,15,0,0,45,47,3,
-        10,5,0,46,43,1,0,0,0,46,44,1,0,0,0,46,45,1,0,0,0,47,56,1,0,0,0,48,
-        52,5,10,0,0,49,53,5,14,0,0,50,53,5,15,0,0,51,53,3,10,5,0,52,49,1,
-        0,0,0,52,50,1,0,0,0,52,51,1,0,0,0,53,55,1,0,0,0,54,48,1,0,0,0,55,
-        58,1,0,0,0,56,54,1,0,0,0,56,57,1,0,0,0,57,9,1,0,0,0,58,56,1,0,0,
-        0,59,60,7,1,0,0,60,11,1,0,0,0,8,15,23,25,33,39,46,52,56
+        3,1,3,1,3,1,4,1,4,1,4,1,4,3,4,48,8,4,1,4,1,4,1,4,1,4,1,4,3,4,55,
+        8,4,5,4,57,8,4,10,4,12,4,60,9,4,1,5,1,5,1,5,0,0,6,0,2,4,6,8,10,0,
+        2,1,0,6,7,1,0,11,12,70,0,13,1,0,0,0,2,19,1,0,0,0,4,33,1,0,0,0,6,
+        35,1,0,0,0,8,47,1,0,0,0,10,61,1,0,0,0,12,14,3,2,1,0,13,12,1,0,0,
+        0,14,15,1,0,0,0,15,13,1,0,0,0,15,16,1,0,0,0,16,17,1,0,0,0,17,18,
+        5,0,0,1,18,1,1,0,0,0,19,20,3,4,2,0,20,23,5,1,0,0,21,24,3,6,3,0,22,
+        24,3,2,1,0,23,21,1,0,0,0,23,22,1,0,0,0,24,25,1,0,0,0,25,23,1,0,0,
+        0,25,26,1,0,0,0,26,27,1,0,0,0,27,28,5,2,0,0,28,3,1,0,0,0,29,34,5,
+        3,0,0,30,34,5,4,0,0,31,32,5,5,0,0,32,34,5,14,0,0,33,29,1,0,0,0,33,
+        30,1,0,0,0,33,31,1,0,0,0,34,5,1,0,0,0,35,36,7,0,0,0,36,37,5,13,0,
+        0,37,39,5,8,0,0,38,40,3,8,4,0,39,38,1,0,0,0,39,40,1,0,0,0,40,41,
+        1,0,0,0,41,42,5,9,0,0,42,7,1,0,0,0,43,48,5,14,0,0,44,48,5,15,0,0,
+        45,48,3,10,5,0,46,48,5,13,0,0,47,43,1,0,0,0,47,44,1,0,0,0,47,45,
+        1,0,0,0,47,46,1,0,0,0,48,58,1,0,0,0,49,54,5,10,0,0,50,55,5,14,0,
+        0,51,55,5,15,0,0,52,55,3,10,5,0,53,55,5,13,0,0,54,50,1,0,0,0,54,
+        51,1,0,0,0,54,52,1,0,0,0,54,53,1,0,0,0,55,57,1,0,0,0,56,49,1,0,0,
+        0,57,60,1,0,0,0,58,56,1,0,0,0,58,59,1,0,0,0,59,9,1,0,0,0,60,58,1,
+        0,0,0,61,62,7,1,0,0,62,11,1,0,0,0,8,15,23,25,33,39,47,54,58
     ]
 
 class ptmlParser ( Parser ):
@@ -43,13 +44,13 @@ class ptmlParser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "'{'", "'}'", "'sequence'", "'selector'", 
-                     "'parallel'", "'task'", "'cond'", "'('", "')'", "','", 
+                     "'parallel'", "'act'", "'cond'", "'('", "')'", "','", 
                      "'True'", "'False'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "Names", "Integer", "Float", "LINE_COMMENT", 
+                      "<INVALID>", "String", "Integer", "Float", "LINE_COMMENT", 
                       "WS" ]
 
     RULE_root = 0
@@ -75,7 +76,7 @@ class ptmlParser ( Parser ):
     T__9=10
     T__10=11
     T__11=12
-    Names=13
+    String=13
     Integer=14
     Float=15
     LINE_COMMENT=16
@@ -304,8 +305,8 @@ class ptmlParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def Names(self):
-            return self.getToken(ptmlParser.Names, 0)
+        def String(self):
+            return self.getToken(ptmlParser.String, 0)
 
         def action_parm(self):
             return self.getTypedRuleContext(ptmlParser.Action_parmContext,0)
@@ -340,13 +341,13 @@ class ptmlParser ( Parser ):
                 self._errHandler.reportMatch(self)
                 self.consume()
             self.state = 36
-            self.match(ptmlParser.Names)
+            self.match(ptmlParser.String)
             self.state = 37
             self.match(ptmlParser.T__7)
             self.state = 39
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 55296) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 63488) != 0):
                 self.state = 38
                 self.action_parm()
 
@@ -388,6 +389,12 @@ class ptmlParser ( Parser ):
                 return self.getTypedRuleContext(ptmlParser.BooleanContext,i)
 
 
+        def String(self, i:int=None):
+            if i is None:
+                return self.getTokens(ptmlParser.String)
+            else:
+                return self.getToken(ptmlParser.String, i)
+
         def getRuleIndex(self):
             return ptmlParser.RULE_action_parm
 
@@ -409,7 +416,7 @@ class ptmlParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 46
+            self.state = 47
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [14]:
@@ -424,34 +431,42 @@ class ptmlParser ( Parser ):
                 self.state = 45
                 self.boolean()
                 pass
+            elif token in [13]:
+                self.state = 46
+                self.match(ptmlParser.String)
+                pass
             else:
                 raise NoViableAltException(self)
 
-            self.state = 56
+            self.state = 58
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==10:
-                self.state = 48
+                self.state = 49
                 self.match(ptmlParser.T__9)
-                self.state = 52
+                self.state = 54
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [14]:
-                    self.state = 49
+                    self.state = 50
                     self.match(ptmlParser.Integer)
                     pass
                 elif token in [15]:
-                    self.state = 50
+                    self.state = 51
                     self.match(ptmlParser.Float)
                     pass
                 elif token in [11, 12]:
-                    self.state = 51
+                    self.state = 52
                     self.boolean()
+                    pass
+                elif token in [13]:
+                    self.state = 53
+                    self.match(ptmlParser.String)
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 58
+                self.state = 60
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -493,7 +508,7 @@ class ptmlParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 59
+            self.state = 61
             _la = self._input.LA(1)
             if not(_la==11 or _la==12):
                 self._errHandler.recoverInline(self)

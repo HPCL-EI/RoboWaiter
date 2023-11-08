@@ -1,4 +1,5 @@
 import os
+import sys
 from antlr4 import *
 
 if "." in __name__:
@@ -40,6 +41,11 @@ def load(scene, ptml_path: str, behaviour_lib_path: str):
     tree = parser.root()
 
     walker = ParseTreeWalker()
+
+
+    sys.path.append(os.path.join(behaviour_lib_path,"cond"))
+    sys.path.append(os.path.join(behaviour_lib_path,"act"))
+
     ptml = ptmlTranslator(scene, behaviour_lib_path)  # listener mode
     walker.walk(ptml, tree)
 

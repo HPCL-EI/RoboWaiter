@@ -9,27 +9,27 @@
 sequence{
     selector{
         cond CoffeeCupFound()
-        task FindCoffeeCup()
+        act FindCoffeeCup()
         sequence{
             cond SeqTest()
-            task Move(1.2, 2, 2.3, True)
-            task Grasp()
+            act Move(1.2, 2, 2.3, True)
+            act Grasp()
             parallel 3 {
-                cond Istask()
-                task TestTask()
+                cond Isact()
+                act Testact()
             }
         }
     }
     selector{
         cond CoffeeCupGrasped()
-        task GraspCoffeeCup()
+        act GraspCoffeeCup()
     }
     selector{
         cond DestinationAReached()
-        task ReachDestinationA()
+        act ReachDestinationA()
     }
     selector{
         cond CoffeeCupPlaced()
-        task PlaceCoffeeCup()
+        act PlaceCoffeeCup()
     }
 }

@@ -6,3 +6,4 @@ gym==0.21.0
 grpcio==1.53.0
 requests
 urllib3
+tabulate

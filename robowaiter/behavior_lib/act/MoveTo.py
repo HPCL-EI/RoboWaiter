@@ -4,8 +4,8 @@ from robowaiter.behavior_lib._base.Act import Act
 
 class MoveTo(Act):
 
-    def __init__(self, name: str, scene, a, b, c, d):
-        super().__init__(name)
+    def __init__(self, *args):
+        super().__init__(*args)
 
     def setup(self, **kwargs: Any) -> None:
         return super().setup(**kwargs)

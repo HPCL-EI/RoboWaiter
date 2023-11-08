@@ -1,10 +1,11 @@
 import py_trees as ptree
 from typing import Any
+from robowaiter.behavior_lib._base.Act import Act
 
-class Grasp(ptree.behaviour.Behaviour):
+class ExploreEnv(Act):
 
-    def __init__(self, name: str, scene):
-        super().__init__(name)
+    def __init__(self, *args):
+        super().__init__(*args)
 
     def setup(self, **kwargs: Any) -> None:
         return super().setup(**kwargs)

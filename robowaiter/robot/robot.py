@@ -21,7 +21,8 @@ class Robot(object):
         self.bt = load_bt_from_ptml(self.scene, self.ptml_path,self.behavior_lib_path)
         sub_task_seq = find_node_by_name(self.bt.root,"SubTaskPlaceHolder").parent
         sub_task_seq.children.pop()
-        print(sub_task_seq.children)
+        self.scene.sub_task_seq = sub_task_seq
+
 
     def step(self):
         if self.scene.time > self.next_response_time:

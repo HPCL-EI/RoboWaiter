@@ -1,4 +1,8 @@
 selector{
+    selector{
+        cond HasMap()
+        act ExploreEnv
+    }
     sequence{
         cond Chatting()
         act DealChat()

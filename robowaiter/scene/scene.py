@@ -33,6 +33,7 @@ def image_extract(camera_data):
 
 class Scene:
     robot = None
+    event_list = []
 
     default_state = {
         "map": {
@@ -107,9 +108,26 @@ class Scene:
         # 基类step，默认执行行为树tick操作
         self.time = time.time() - self.start_time
 
+        self.deal_event()
         self._step()
         self.robot.step()
 
+    def deal_event(self):
+        if len(self.event_list)>0:
+            next_event = self.event_list[0]
+            t,func = next_event
+            if self.time >= t:
+                print(f'event: {t}, {func.__name__}')
+                self.event_list.pop(0)
+                func()
+
+    def create_chat_event(self,sentence):
+        def customer_say():
+            print(f'顾客说：{sentence}')
+            self.chat_bubble(f'顾客说：{sentence}')
+            self.state['chat_list'].append(f'{sentence}')
+
+        return customer_say
 
     @property
     def status(self):
@@ -120,7 +138,6 @@ class Scene:
 
         # reset world
         init_world()
-
 
 
     def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):

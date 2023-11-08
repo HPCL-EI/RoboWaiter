@@ -2,11 +2,17 @@ selector
 //    selector
 //        cond HasMap()
 //        act ExploreEnv()
+{
     sequence
+{
         cond Chatting()
         act DealChat()
-    sequence
+
+}    sequence
+{
         cond HasSubTask()
         sequence
+{
             act SubTaskPlaceHolder()
-        cond At(Talb,ea)
+
+}        cond At(Talb,ea)}

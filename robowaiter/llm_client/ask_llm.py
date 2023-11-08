@@ -30,7 +30,7 @@ def ask_llm(question):
 
     if response.status_code == 200:
         result = response.json()
-        return result['choices'][0]['message']['content']
+        return result['choices'][0]['message']['content'].strip()
     else:
         return "大模型请求失败:", response.status_code
 

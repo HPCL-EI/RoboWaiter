@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     # create robot
     project_path = "../../../"
-    ptml_path = os.path.join(project_path, 'behavior_tree/ptml/test/tab_test.ptml')
+    ptml_path = os.path.join(project_path, 'behavior_tree/ptml/test/Default.ptml')
     behavior_lib_path = os.path.join(project_path, 'behavior_lib')
 
     robot = Robot(ptml_path, behavior_lib_path)

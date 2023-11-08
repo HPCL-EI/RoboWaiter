@@ -1,20 +1,12 @@
 selector
-{
     selector
-{
         cond HasMap()
         act ExploreEnv()
-
-}    sequence
-{
+    sequence
         cond Chatting()
         act DealChat()
-
-}    sequence
-{
+    sequence
         cond HasSubTask()
         sequence
-{
             cond At(Robot,Table)
-
-}        cond At(Robot,Table)}
+        cond At(Robot,Table)

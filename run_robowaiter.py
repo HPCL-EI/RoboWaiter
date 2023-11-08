@@ -1,7 +1,7 @@
 import os
 from robowaiter import Robot, task_map
 
-TASK_NAME = 'OT'
+TASK_NAME = 'GQA'
 
 # create robot
 project_path = "./robowaiter"

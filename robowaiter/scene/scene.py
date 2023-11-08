@@ -19,7 +19,7 @@ animation_step = [4, 5, 7, 3, 3]
 loc_offset = [-700, -1400]
 
 
-def init_world(scene_num=1, mapID=3):
+def init_world(scene_num=1, mapID=11):
     stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
     time.sleep(3)  # wait for the map to load
 

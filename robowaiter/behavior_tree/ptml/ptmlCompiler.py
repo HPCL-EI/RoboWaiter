@@ -93,15 +93,21 @@ def format_trans_to_bracket(file_path: str) -> str:
 
         level = 0
         for i in ptml_tab:
+
+            if i.startswith('//'):
+                continue
+
             new_level = counter_(i) // 4
             if new_level == level:
                 ptml_new += i
             elif new_level > level:
                 ptml_new += '{\n' + i
+                level += 1
             elif new_level < level:
                 ptml_new += '\n}' + i
-            level = new_level
-        ptml_new += '}'
+                level -= 1
+        for i in range(level):
+            ptml_new += '}'
 
     import re
     new_path = re.sub('/[a-zA-Z0-9_]*\.ptml', '/bracket_ptml.ptml',file_path)

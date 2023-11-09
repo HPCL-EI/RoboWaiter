@@ -39,7 +39,8 @@ class DealChat(Act):
         else:
             answer = ask_llm(chat)
             print(f"机器人回答：{answer}")
-            self.scene.chat_bubble(f"机器人回答：{answer}")
+            if self.scene.show_bubble:
+                self.scene.chat_bubble(f"机器人回答：{answer}")
 
         return ptree.common.Status.RUNNING
 

@@ -1,18 +1,7 @@
 import py_trees as ptree
 from typing import Any
 import enum
-
-class Status(enum.Enum):
-    """An enumerator representing the status of a behavior."""
-
-    SUCCESS = ptree.common.Status.SUCCESS
-    """Behaviour check has passed, or execution of its action has finished with a successful result."""
-    FAILURE = ptree.common.Status.FAILURE
-    """Behaviour check has failed, or execution of its action finished with a failed result."""
-    RUNNING = ptree.common.Status.RUNNING
-    """Behaviour is in the middle of executing some action, result still pending."""
-    INVALID = ptree.common.Status.INVALID
-    """Behaviour is uninitialised and/or in an inactive state, i.e. not currently being ticked."""
+from py_trees.common import Status
 
 
 # _base Behavior
@@ -53,7 +42,6 @@ class Bahavior(ptree.behaviour.Behaviour):
 
     def update(self) -> Status:
         re = self._update()
-        print(f"{self.__class__.__name__}: {re.value}")
         return re
 
     def terminate(self, new_status: Status) -> None:

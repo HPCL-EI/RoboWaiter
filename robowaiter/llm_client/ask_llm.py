@@ -37,10 +37,7 @@ def ask_llm(question):
 
 if __name__ == '__main__':
     question = '''
-    以下是环境信息，请回答对话和目标状态
-    [环境信息]
-    State: {At(Robot, Table), NotHolding, Available(SpongeGourd)}
-    chat_list: [(Customer, "桌子有点脏，能帮我擦一下吗？")]
+    python中如何通过类名字符串的方式来代替isinstance的作用
     '''
 
     print(ask_llm(question))

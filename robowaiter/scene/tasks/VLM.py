@@ -24,9 +24,10 @@ class SceneVLM(Scene):
         #         self.move_task_area(i)
         #     self.op_task_execute(i)
 
-        if op_type<=10:
-            self.move_task_area(op_type)
-        self.op_task_execute(op_type)
-
+        # if op_type<=10:
+        #     self.move_task_area(op_type)
+        # self.op_task_execute(op_type)
+        pass
+    
     def _step(self):
         pass

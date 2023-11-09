@@ -1,8 +1,10 @@
 import io
 import contextlib
 
-from robowaiter.behavior_tree.utils import load_bt_from_ptml,find_node_by_name,print_tree_from_root
-from robowaiter.behavior_tree.obtea.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm,state_transition # 调用最优行为树扩展算法
+from robowaiter.utils.bt.load import load_bt_from_ptml,find_node_by_name,print_tree_from_root
+from robowaiter.utils.bt.visitor import StatusVisitor
+
+from robowaiter.behavior_tree.obtea.OptimalBTExpansionAlgorithm import Action  # 调用最优行为树扩展算法
 from robowaiter.behavior_tree.obtea.opt_bt_exp_main import BTOptExpInterface
 
 from robowaiter.behavior_lib.act.DelSubTree import DelSubTree
@@ -22,6 +24,7 @@ class Robot(object):
         self.last_tick_output = ""
         self.action_list = None
 
+
     def set_scene(self,scene):
         self.scene = scene
 
@@ -32,7 +35,10 @@ class Robot(object):
             sub_task_seq = sub_task_place_holder.parent
             sub_task_seq.children.pop()
             self.scene.sub_task_seq = sub_task_seq
-            print(self.scene.sub_task_seq)
+
+        self.bt_visitor = StatusVisitor()
+        self.bt.visitors.append(self.bt_visitor)
+
 
     def expand_sub_task_tree(self,goal):
         if self.action_list is None:
@@ -52,12 +58,12 @@ class Robot(object):
 
         # 加入删除子树的节点
         seq = Sequence(name="Sequence", memory=False)
-        seq.children.append(sub_task_bt.root)
+        seq.add_child(sub_task_bt.root)
         del_sub_tree = DelSubTree()
         del_sub_tree.set_scene(self.scene)
-        seq.children.append(del_sub_tree)
+        seq.add_child(del_sub_tree)
 
-        self.scene.sub_task_seq.children.append(seq)
+        self.scene.sub_task_seq.add_child(seq)
         print("当前行为树为：")
         print_tree_from_root(self.bt.root)
 
@@ -75,24 +81,16 @@ class Robot(object):
             self.next_response_time += self.response_frequency
             self.step_num += 1
 
-            # 创建一个StringIO对象
-            output = io.StringIO()
+            self.bt.tick()
+            bt_output = self.bt_visitor.output_str
 
-            # 将print输出重定向到StringIO对象
-            with contextlib.redirect_stdout(output):
-                self.bt.tick()
-
-            # 获取StringIO对象中的字符串值
-            contents = output.getvalue()
-            output.close()
-
-            if contents != self.last_tick_output:
+            if bt_output != self.last_tick_output:
                 print(f"==== time:{self.scene.time:f}s ======")
 
-                print(contents)
+                print(bt_output)
 
                 print("\n")
-                self.last_tick_output = contents
+                self.last_tick_output = bt_output
 
 if __name__ == '__main__':
     pass

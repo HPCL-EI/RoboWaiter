@@ -4,6 +4,7 @@ from robowaiter.behavior_lib._base.Behavior import Bahavior, Status
 
 class Cond(Bahavior):
     print_name_prefix = "cond "
+    type = 'Cond'
 
     def __init__(self,*args):
         super().__init__(*args)

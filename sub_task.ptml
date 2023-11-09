@@ -1,7 +1,7 @@
 selector{
-cond At(Robot,Table)
+cond At(Coffee,Bar)
 selector{
-cond At(Robot,Bar)
-act MoveTo(Table)
+cond At(Robot,CoffeeMachine)
+act MakeCoffee
 }
 }

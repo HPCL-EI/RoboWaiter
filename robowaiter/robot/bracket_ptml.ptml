@@ -1,7 +1,4 @@
 selector
-//    selector
-//        cond HasMap()
-//        act ExploreEnv()
 {
     sequence
 {
@@ -15,4 +12,4 @@ selector
 {
             act SubTaskPlaceHolder()
 
-}        cond At(Talb,ea)}
+}        cond At(Talb,ea)}}

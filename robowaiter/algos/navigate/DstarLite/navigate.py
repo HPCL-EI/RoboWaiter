@@ -59,10 +59,12 @@ class Navigator:
                 next_step = min(self.step_num, len(path))
                 (next_x, next_y) = path[next_step-1]
                 print('plan pos:', (next_x, next_y), end=' ')
-                self.scene.walk_to(next_x, next_y, yaw, velocity=self.v)
+                scene_info = self.scene.walk_to(next_x, next_y, yaw, velocity=self.v)
+                yaw = scene_info.rotation.Yaw
+
                 if animation:
                     self.planner.draw_graph(self.step_num)  # 画出搜索路径
-                time.sleep(self.step_time)
+                # time.sleep(self.step_time)
             pos = np.array((self.scene.status.location.X, self.scene.status.location.Y))
             print('reach pos:', pos)
 

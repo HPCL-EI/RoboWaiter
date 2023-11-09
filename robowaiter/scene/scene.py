@@ -34,6 +34,7 @@ def image_extract(camera_data):
 class Scene:
     robot = None
     event_list = []
+    show_bubble = False
 
     default_state = {
         "map": {
@@ -60,7 +61,7 @@ class Scene:
 
     def __init__(self,robot=None, sceneID=0):
         self.sceneID = sceneID
-        self.use_offset = True
+        self.use_offset = False
         self.start_time = time.time()
         self.time = 0
         self.sub_task_seq = None
@@ -132,7 +133,8 @@ class Scene:
     def create_chat_event(self,sentence):
         def customer_say():
             print(f'顾客说：{sentence}')
-            self.chat_bubble(f'顾客说：{sentence}')
+            if self.show_bubble:
+                self.chat_bubble(f'顾客说：{sentence}')
             self.state['chat_list'].append(f'{sentence}')
 
         return customer_say
@@ -161,13 +163,17 @@ class Scene:
     def walk_to(self, X, Y, Yaw, velocity=150, dis_limit=100):
         if self.use_offset:
             X, Y = X + loc_offset[0], Y + loc_offset[1]
-        stub.Do(
-            GrabSim_pb2.Action(
-                scene=self.sceneID,
-                action=GrabSim_pb2.Action.ActionType.WalkTo,
-                values=[X, Y, Yaw, velocity, dis_limit],
-            )
+
+        v = [X, Y, Yaw - 90, velocity, dis_limit]
+        print(v)
+        action = GrabSim_pb2.Action(
+            scene=self.sceneID,
+            action=GrabSim_pb2.Action.ActionType.WalkTo,
+            values=v
         )
+        scene_info = stub.Do(action)
+        return scene_info
+
 
     def reachable_check(self, X, Y, Yaw):
         if self.use_offset:
@@ -373,5 +379,15 @@ class Scene:
                 scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
             )
             scene = stub.Do(action)
+
+    def test_move(self):
+        v_list = [[0, 880], [250, 1200], [-55, 750], [70, -200]]
+        scene = self.status
+        for walk_v in v_list:
+            walk_v = walk_v + [scene.rotation.Yaw - 90, 600, 100]
+            print("walk_v", walk_v)
+            action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+            scene = stub.Do(action)
+            print(scene.info)
 
 

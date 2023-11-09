@@ -9,7 +9,7 @@ import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
-from dstar_lite import DStarLite
+from robowaiter.algos.navigate.DstarLite.dstar_lite import DStarLite
 
 class Navigator:
     '''

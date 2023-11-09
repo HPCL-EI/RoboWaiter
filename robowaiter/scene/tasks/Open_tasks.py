@@ -18,7 +18,7 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.event_list = [
-            (5,self.give_coffee)  # (事件发生的时间，事件函数)
+            (5,self.create_chat_event("给我做一杯咖啡"))  # (事件发生的时间，事件函数)
         ]
 
     def _reset(self):
@@ -30,8 +30,4 @@ class SceneOT(Scene):
     def _run(self):
         pass
 
-
-    def give_coffee(self):
-        self.chat_bubble('顾客说：给我一杯咖啡')
-        self.state['chat_list'].append('给我一杯咖啡')
 

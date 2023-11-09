@@ -14,6 +14,19 @@ def load_bt_from_ptml(scene, ptml_path, behavior_lib_path):
     # print(ptree.display.unicode_tree(root=bt.root, show_status=True))
     return bt
 
+def load_bt_from_ptml_str(scene, ptml_path, behavior_lib_path):
+    ptml_bt = ptmlCompiler.load(scene, ptml_path, behavior_lib_path)
+    bt =  ptree.trees.BehaviourTree(ptml_bt)
+
+    with open(ptml_path, 'r') as f:
+        ptml = f.read()
+
+    print(f'BT loaded:')
+    print_tree_from_root(bt.root)
+    # print(ptree.display.unicode_tree(root=bt.root, show_status=True))
+    return bt
+
+
 def print_tree_from_root(node, indent=0):
     """
     Recursively prints the tree, each child with increased indentation.

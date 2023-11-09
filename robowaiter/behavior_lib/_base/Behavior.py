@@ -58,3 +58,7 @@ class Bahavior(ptree.behaviour.Behaviour):
 
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
+
+    @property
+    def arg_str(self):
+        return ",".join(self.args)

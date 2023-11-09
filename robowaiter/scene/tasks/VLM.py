@@ -9,14 +9,18 @@ from robowaiter.scene.scene import Scene
 class SceneVLM(Scene):
     def __init__(self, robot):
         super().__init__(robot)
+        # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
+        self.event_list = [
+            (5, self.create_chat_event("测试VLM：做一杯咖啡")),
+        ]
 
     def _reset(self):
         pass
 
-    def _run(self, op_type=1):
-
-        self.move_task_area(op_type)
-        self.op_task_execute(op_type)
+    # def _run(self, op_type=1):
+    #     self.move_task_area(op_type)
+    #     self.op_task_execute(op_type)
 
     def _step(self):
         pass
+

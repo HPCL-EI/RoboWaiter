@@ -19,13 +19,13 @@ if __name__ == '__main__':
         with open(file_name, 'rb') as file:
             map = pickle.load(file)
 
-    init_world(1, 3)
+    init_world(1, 11)
     scene = Scene(sceneID=0)
 
     navigator = Navigator(scene=scene,  area_range=[-350, 600, -400, 1450], map=map)
 
     '''场景1: 无行人环境 robot到达指定目标'''
-    # goal = np.array((-100, 700))
+    goal = np.array((-100, 700))
 
 
     '''场景2: 静止行人环境 robot到达指定目标'''
@@ -35,12 +35,12 @@ if __name__ == '__main__':
     # goal = np.array((-100, 700))
 
     '''场景3: 移动行人环境 robot到达指定目标'''
-    scene.clean_walker()
-    scene.add_walker(50, 300, 0)
-    scene.add_walker(-50, 500, 0)
-    scene.control_walker([scene.walker_control_generator(walkerID=0, autowalk=False, speed=20, X=-50, Y=600, Yaw=0)])
-    scene.control_walker([scene.walker_control_generator(walkerID=1, autowalk=False, speed=20, X=100, Y=150, Yaw=0)])
-    goal = np.array((-100, 700))
+    # scene.clean_walker()
+    # scene.add_walker(50, 300, 0)
+    # scene.add_walker(-50, 500, 0)
+    # scene.control_walker([scene.walker_control_generator(walkerID=0, autowalk=False, speed=20, X=-50, Y=600, Yaw=0)])
+    # scene.control_walker([scene.walker_control_generator(walkerID=1, autowalk=False, speed=20, X=100, Y=150, Yaw=0)])
+    # goal = np.array((-100, 700))
 
     '''场景4: 行人自由移动 robot到达指定目标'''
     # # TODO: autowalk=True仿真器会闪退 ???

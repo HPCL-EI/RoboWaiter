@@ -1,0 +1,4 @@
+selector{
+cond At(Robot, Table)
+}
+}

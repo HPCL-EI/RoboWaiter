@@ -8,7 +8,7 @@ class HasSubTask(Cond):
 
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?
-        if self.scene.state['chat_list'] == []:
+        if self.scene.sub_task_seq.children == []:
             return ptree.common.Status.FAILURE
         else:
             return ptree.common.Status.SUCCESS

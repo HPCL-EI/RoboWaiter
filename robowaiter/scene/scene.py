@@ -43,6 +43,7 @@ class Scene:
         "chat_list": [],  # 未处理的顾客的对话, (顾客的位置,顾客对话的内容)
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
+        "condition_set": set()
     }
     """
     status:
@@ -62,13 +63,13 @@ class Scene:
         self.use_offset = True
         self.start_time = time.time()
         self.time = 0
+        self.sub_task_seq = None
 
         # init robot
         if robot:
             robot.set_scene(self)
             robot.load_BT()
         self.robot = robot
-        self.sub_task_seq = None
 
         # myx op
         self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","关闭窗帘","关筒灯","开大厅灯","搬椅子","打开窗帘","关大厅灯","开筒灯"]

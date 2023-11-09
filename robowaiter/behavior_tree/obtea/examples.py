@@ -1,5 +1,5 @@
 
-from zoo.opt_bt_expansion.OptimalBTExpansionAlgorithm import Action
+from robowaiter.behavior_tree.obtea.OptimalBTExpansionAlgorithm import Action
 
 
 

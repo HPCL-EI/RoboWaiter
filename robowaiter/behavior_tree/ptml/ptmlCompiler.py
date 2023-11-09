@@ -69,7 +69,13 @@ def format_trans_to_bracket(file_path: str) -> str:
 
     if not os.path.exists(file_path):
         raise FileNotFoundError("Given a fault ptml path: {}".format(file_path))
-    
+
+    with open(file_path, 'r') as file:
+        f = file.read()
+        if "{" in f:
+            return file_path
+
+
     def counter_(input:str) -> int:
         length = 0
         for i in range(len(input)):
@@ -79,6 +85,7 @@ def format_trans_to_bracket(file_path: str) -> str:
                 if length % 4 != 0:
                     raise TabError('Tab length in ptml file should be 4.')
                 return length
+
 
     with open(file_path, 'r') as file:
         ptml_new = ''

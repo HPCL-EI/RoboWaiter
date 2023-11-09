@@ -72,9 +72,11 @@ class Scene:
         self.robot = robot
 
         # myx op
-        self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","关闭窗帘","关筒灯","开大厅灯","搬椅子","打开窗帘","关大厅灯","开筒灯"]
-        self.op_act_num = [0,3,4,6,3,2,0,0,0,1,0,0,0]
-        self.op_v_list = [[[0.0,0.0]],[[250.0, 310.0]],[[-70.0, 480.0]],[[250.0, 630.0]],[[260.0, 1120.0]],[[300.0, -220.0]],[[0.0, -70.0]]]
+        # 1-7 正常执行, 8-10 移动到6, 11-12不需要移动
+        self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子","关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘"]
+        self.op_act_num = [0,3,4,6,3,2,0,1,0,0,0,0,0]
+        self.op_v_list = [[[0.0,0.0]],[[250.0, 310.0]],[[-70.0, 480.0]],[[250.0, 630.0]],[[-70.0, 740.0]],[[260.0, 1120.0]],[[300.0, -220.0]],[[0.0, -70.0]]]
+        self.op_typeToAct = {8:[6,2],9:[6,3],10:[6,4],11:[8,1],12:[8,2]}
 
 
     def _reset(self):
@@ -339,29 +341,37 @@ class Scene:
             print(scene.info)
             return False
 
-    def op_task_execute(self,task_type):
-        self.control_robot_action(0, 1, "开始"+self.op_dialog[task_type])   # 开始制作咖啡
-        result = self.control_robot_action(task_type, 1)    #
+    def op_task_execute(self,op_type):
+        self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
+        if op_type>=8:
+            result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
+        else:
+            result = self.control_robot_action(op_type, 1)    #
         self.control_robot_action(0, 2)
         if result:
-            if self.op_act_num[task_type]>0:
-                for i in range(2,2+self.op_act_num[task_type]):
-                    self.control_robot_action(task_type,i)
+            if self.op_act_num[op_type]>0:
+                for i in range(2,2+self.op_act_num[op_type]):
+                    self.control_robot_action(op_type,i)
                     self.control_robot_action(0, 2)
-                self.control_robot_action(0, 1, "成功"+self.op_dialog[task_type])
+            self.control_robot_action(0, 1, "成功"+self.op_dialog[op_type])
         else:
-            self.control_robot_action(0, 1, self.op_dialog[task_type]+"失败")
+            self.control_robot_action(0, 1, self.op_dialog[op_type]+"失败")
 
-    def move_task_area(self,op_type=0):
+    def move_task_area(self,op_type=1):
+        if op_type>=8 and op_type<=10:
+            v_list = self.op_v_list[6]
+        else:
+            v_list = self.op_v_list[op_type]
         scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
 
         walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
         print("------------------move_task_area----------------------")
         print("position:", walk_value,"开始任务:",self.op_dialog[op_type])
-        for walk_v in self.op_v_list[op_type]:
+        for walk_v in v_list:
             walk_v = walk_v + [scene.rotation.Yaw, 60, 0]
             action = GrabSim_pb2.Action(
                 scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
             )
             scene = stub.Do(action)
+
 

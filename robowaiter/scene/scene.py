@@ -144,10 +144,12 @@ class Scene:
         return stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
 
     def reset_sim(self):
-        stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
-
         # reset world
         init_world()
+        
+        stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
+
+
 
 
     def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):

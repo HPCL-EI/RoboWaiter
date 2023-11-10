@@ -1,8 +1,10 @@
 import py_trees as ptree
 from typing import Any
-from robowaiter.behavior_lib._base.Behavior import Bahavior
+from robowaiter.behavior_lib._base.Cond import Cond
 
-class Chatting(Bahavior):
+class Chatting(Cond):
+
+
     def __init__(self):
         super().__init__()
 

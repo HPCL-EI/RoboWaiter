@@ -19,7 +19,7 @@ animation_step = [4, 5, 7, 3, 3]
 loc_offset = [-700, -1400]
 
 
-def init_world(scene_num=1, mapID=3):
+def init_world(scene_num=1, mapID=11):
     stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
     time.sleep(3)  # wait for the map to load
 
@@ -33,20 +33,20 @@ def image_extract(camera_data):
 
 class Scene:
     robot = None
-    state = {}
-    """
-    # 当前场景的状态
-    state: {
-        "chat_pool": [    #未处理的顾客的对话池
-            {
-                "pos": 顾客的位置,
-                "chat": 顾客对话的内容
-            }
-        ],
-        
-        "status":   # 仿真器中的观测信息，见下方详细解释
+    event_list = []
+    show_bubble = False
+
+    default_state = {
+        "map": {
+            "2d": None,
+            "obj_pos": {}
+        },
+        "chat_list": [],  # 未处理的顾客的对话, (顾客的位置,顾客对话的内容)
+        "sub_goal_list": [],  # 子目标列表
+        "status": None,  # 仿真器中的观测信息，见下方详细解释
+        "condition_set": set()
     }
-    
+    """
     status:
         location: Dict[X: float, Y: float]
         rotation: Dict[Yaw: float]
@@ -61,9 +61,10 @@ class Scene:
 
     def __init__(self,robot=None, sceneID=0):
         self.sceneID = sceneID
-        self.use_offset = True
+        self.use_offset = False
         self.start_time = time.time()
         self.time = 0
+        self.sub_task_seq = None
 
         # init robot
         if robot:
@@ -71,6 +72,12 @@ class Scene:
             robot.load_BT()
         self.robot = robot
 
+        # myx op
+        # 1-7 正常执行, 8-10 移动到6, 11-12不需要移动
+        self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子","关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘"]
+        self.op_act_num = [0,3,4,6,3,2,0,1,0,0,0,0,0]
+        self.op_v_list = [[[0.0,0.0]],[[250.0, 310.0]],[[-70.0, 480.0]],[[250.0, 630.0]],[[-70.0, 740.0]],[[260.0, 1120.0]],[[300.0, -220.0]],[[0.0, -70.0]]]
+        self.op_typeToAct = {8:[6,2],9:[6,3],10:[6,4],11:[8,1],12:[8,2]}
 
 
     def _reset(self):
@@ -91,9 +98,7 @@ class Scene:
         self.reset_sim()
 
         # reset state
-        self.state = {
-            "chat_list": []
-        }
+        self.state = self.default_state
         print("场景初始化完成")
         self._reset()
 
@@ -112,19 +117,38 @@ class Scene:
         # 基类step，默认执行行为树tick操作
         self.time = time.time() - self.start_time
 
+        self.deal_event()
         self._step()
         self.robot.step()
 
+    def deal_event(self):
+        if len(self.event_list)>0:
+            next_event = self.event_list[0]
+            t,func = next_event
+            if self.time >= t:
+                print(f'event: {t}, {func.__name__}')
+                self.event_list.pop(0)
+                func()
+
+    def create_chat_event(self,sentence):
+        def customer_say():
+            print(f'顾客说：{sentence}')
+            if self.show_bubble:
+                self.chat_bubble(f'顾客说：{sentence}')
+            self.state['chat_list'].append(f'{sentence}')
+
+        return customer_say
 
     @property
     def status(self):
         return stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
 
     def reset_sim(self):
-        stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
-
         # reset world
         init_world()
+        
+        stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
+
 
 
 
@@ -141,13 +165,17 @@ class Scene:
     def walk_to(self, X, Y, Yaw, velocity=150, dis_limit=100):
         if self.use_offset:
             X, Y = X + loc_offset[0], Y + loc_offset[1]
-        stub.Do(
-            GrabSim_pb2.Action(
-                scene=self.sceneID,
-                action=GrabSim_pb2.Action.ActionType.WalkTo,
-                values=[X, Y, Yaw, velocity, dis_limit],
-            )
+
+        v = [X, Y, Yaw - 90, velocity, dis_limit]
+        print(v)
+        action = GrabSim_pb2.Action(
+            scene=self.sceneID,
+            action=GrabSim_pb2.Action.ActionType.WalkTo,
+            values=v
         )
+        scene_info = stub.Do(action)
+        return scene_info
+
 
     def reachable_check(self, X, Y, Yaw):
         if self.use_offset:
@@ -307,4 +335,61 @@ class Scene:
 
     def animation_reset(self):
         stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))
+
+    def control_robot_action(self, type=0, action=0, message="你好"):
+        scene = stub.ControlRobot(
+            GrabSim_pb2.ControlInfo(
+                scene=self.sceneID, type=type, action=action, content=message
+            )
+        )
+        if str(scene.info).find("Action Success") > -1:
+            print(scene.info)
+            return True
+        else:
+            print(scene.info)
+            return False
+
+    def op_task_execute(self,op_type):
+        self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
+        if op_type>=8:
+            result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
+        else:
+            result = self.control_robot_action(op_type, 1)    #
+        self.control_robot_action(0, 2)
+        if result:
+            if self.op_act_num[op_type]>0:
+                for i in range(2,2+self.op_act_num[op_type]):
+                    self.control_robot_action(op_type,i)
+                    self.control_robot_action(0, 2)
+            self.control_robot_action(0, 1, "成功"+self.op_dialog[op_type])
+        else:
+            self.control_robot_action(0, 1, self.op_dialog[op_type]+"失败")
+
+    def move_task_area(self,op_type=1):
+        if op_type>=8 and op_type<=10:
+            v_list = self.op_v_list[6]
+        else:
+            v_list = self.op_v_list[op_type]
+        scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+
+        walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
+        print("------------------move_task_area----------------------")
+        print("position:", walk_value,"开始任务:",self.op_dialog[op_type])
+        for walk_v in v_list:
+            walk_v = walk_v + [scene.rotation.Yaw, 60, 0]
+            action = GrabSim_pb2.Action(
+                scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
+            )
+            scene = stub.Do(action)
+
+    def test_move(self):
+        v_list = [[0, 880], [250, 1200], [-55, 750], [70, -200]]
+        scene = self.status
+        for walk_v in v_list:
+            walk_v = walk_v + [scene.rotation.Yaw - 90, 600, 100]
+            print("walk_v", walk_v)
+            action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+            scene = stub.Do(action)
+            print(scene.info)
+
 

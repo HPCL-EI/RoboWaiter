@@ -3,7 +3,7 @@
 from tabulate import tabulate
 import numpy as np
 import random
-from zoo.opt_bt_expansion.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm
+from robowaiter.behavior_tree.obtea.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm
 import time
 
 

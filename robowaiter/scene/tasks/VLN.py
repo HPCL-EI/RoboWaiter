@@ -4,6 +4,15 @@
 开始条件：监测到顾客靠近
 结束条件：完成领位，语音：“请问您想喝点什么？”，并等待下一步指令
 """
+import os
+import pickle
+import time
+import random
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from robowaiter.scene.scene import Scene,init_world  # TODO: 文件名改成Scene.py
 
 from robowaiter.scene.scene import Scene
 
@@ -11,32 +20,15 @@ from robowaiter.scene.scene import Scene
 class SceneVLN(Scene):
     def __init__(self, robot):
         super().__init__(robot)
+        # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
+        self.event_list = [
+            (5, self.create_chat_event("测试VLN：前往桌子")),
+        ]
 
     def _reset(self):
-        self.reset_sim()
+        file_name = './robowaiter/algos/navigate/DstarLite/map_5.pkl'
+        with open(file_name, 'rb') as file:
+            map = pickle.load(file)
 
-        self.add_walker(1085, 2630, 220)
-        self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
-
-    def _run(self):
-        # 实现单顾客领位
-        self.add_walker(1085, 2630, 220)
-        self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
-
-        # todo: 监测到顾客靠近，打招呼，对话，识别获取空闲餐桌位置
-        # 可以使用scene.chat_bubble(message)函数实现对话
-
-        """
-        scene.walk_to(your_free_table_location)
-        time.sleep(5)
-        scene.control_walker([scene.walker_control_generator(your_free_table_location)])
-        """
-
-        reach = True
-        if reach:
-            self.chat_bubble("请问您想喝点什么？")
-
-        print(self.status.walkers)
-
-    def _step(self):
-        pass
+        self.state['map']['2d'] = map
+        self.state['map']['obj_pos']['Table'] = np.array((-100, 700))

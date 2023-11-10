@@ -1,7 +1,6 @@
-from robowaiter.behavior_tree.obtea.BehaviorTree import Leaf,ControlBT # 行为结点类：叶子结点和非叶子节点
-from zoo.opt_bt_expansion.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm,state_transition # 调用最优行为树扩展算法
-from robowaiter.behavior_tree.obtea.tools import print_action_data_table,BTTest
-from robowaiter.behavior_tree.obtea.examples import MoveBtoB_num,MoveBtoB,Cond2BelongsToCond3 # 导入三个例子
+
+from robowaiter.behavior_tree.obtea.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm,state_transition # 调用最优行为树扩展算法
+
 from robowaiter.behavior_tree.obtea.examples import *
 
 
@@ -100,7 +99,7 @@ if __name__ == '__main__' :
     ptml_string = algo.process(goal)
     print(ptml_string)
 
-    file_name = "MakeCoffee"
+    file_name = "sub_task"
     with open(f'./{file_name}.ptml', 'w') as file:
         file.write(ptml_string)
 

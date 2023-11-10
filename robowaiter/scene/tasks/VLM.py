@@ -6,34 +6,28 @@
 import time
 from robowaiter.scene.scene import Scene
 
-
 class SceneVLM(Scene):
     def __init__(self, robot):
         super().__init__(robot)
+        # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
+        self.event_list = [
+            (5, self.create_chat_event("测试VLM：做一杯咖啡")),
+        ]
 
     def _reset(self):
-        self.reset_sim()
+        pass
 
-        self.add_walker(1085, 2630, 220)
-        self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
+    def _run(self, op_type=1):
+        # 12个操作顺序测试
+        # for i in range(1,13):
+        #     if i<=10:
+        #         self.move_task_area(i)
+        #     self.op_task_execute(i)
 
-    def _run(self):
-        # 空调操作
-        self.walk_to(950, 1260, 90)  # 没法转向？
-        # todo: 手臂操作
-        time.sleep(5)
-        self.walk_to(947, 1900, 0)
-        
-        # 物品挪动
-        # todo: 视觉导航至目标点，操作手臂至可抓位置
-        """
-        scene.grasp(1, your_objectID)
-        """
-
-        # todo: 视觉导航至目标点，找准释放位置
-        """
-        scene.release(1)
-        """
-
+        # if op_type<=10:
+        #     self.move_task_area(op_type)
+        # self.op_task_execute(op_type)
+        pass
+    
     def _step(self):
         pass

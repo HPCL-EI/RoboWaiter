@@ -14,6 +14,12 @@ from robowaiter.scene.scene import Scene
 class SceneGQA(Scene):
     def __init__(self, robot):
         super().__init__(robot)
+        # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
+        self.event_list = [
+            (5, self.create_chat_event("给我一杯咖啡")),
+            (20, self.create_chat_event("我要拿铁")),
+            (40, self.create_chat_event("再来一杯")),
+        ]
 
     def _reset(self):
         self.add_walker(1085, 2630, 220)
@@ -22,10 +28,3 @@ class SceneGQA(Scene):
 
     def _run(self):
         pass
-
-    def _step(self):
-
-        if int(self.time)% 5 == 0:
-            print("顾客说：请问你们这里有哪些咖啡")
-            self.chat_bubble('顾客说：请问你们这里有哪些咖啡')
-            self.state['chat_list'].append('请问你们这里有哪些咖啡')

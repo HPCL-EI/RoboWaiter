@@ -1,6 +1,6 @@
 import copy
 import random
-from opt_bt_expansion.BehaviorTree import Leaf,ControlBT
+from robowaiter.behavior_tree.obtea.BehaviorTree import Leaf,ControlBT
 
 class CondActPair:
     def __init__(self, cond_leaf,act_leaf):

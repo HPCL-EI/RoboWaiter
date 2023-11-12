@@ -17,16 +17,23 @@ class SceneVLM(Scene):
     def _reset(self):
         pass
 
-    def _run(self, op_type=1):
-        # 12个操作顺序测试
-        # for i in range(1,13):
-        #     if i<=10:
-        #         self.move_task_area(i)
-        #     self.op_task_execute(i)
+    def _run(self, op_type=2):
+        # 共17个操作
+        # "制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
+        # "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",            # 8-12
+        # "调整空调开关","调高空调温度","调低空调温度",                   # 13-15
+        # "抓握物体","放置物体"                                       # 16-17
 
-        # if op_type<=10:
+        # 16: 抓操作需要传入物品id，17: 放操作需要传入放置位置周围的空地区域(桌边而不是桌上)
+        # if op_type == 16:
+        #     self.gen_obj()
+        #     self.op_task_execute(op_type, obj_id=0)
+        # # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 70.0], 水杯桌:[-70.0, 500.0, 107]
+        # # 桌子1:[-55.0, 0.0, 107],桌子1:[-55.0, 150.0, 107]
+        # elif op_type == 17: self.op_task_execute(op_type, release_pos=[-55.0, 150.0, 107])
+        # else:
         #     self.move_task_area(op_type)
-        # self.op_task_execute(op_type)
+        #     self.op_task_execute(op_type)
         pass
     
     def _step(self):

@@ -1,0 +1,1402 @@
+[
+    {
+        "data_name": "100_data",
+        "id": 0,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"请问你们这里有咖啡吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Coffee, Table), At(Robot,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 1,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), Available(VacuumCup), Available(Table), Available(CoffeeMachine), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"你好，你能帮我拿一个保温杯吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我马上给您拿过来\nGoals: At(VacuumCup,Table), At(Robot,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 2,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"请问你们这里有面包吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Bread, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 3,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Bar),NotHodding}\nchat_list: [(Customer, \"你们这里有空位吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请跟我来\nGoals: At(Robot,Table), At(Customer,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 4,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Customer), At(Customer,Table), Available(ADMilk), Available(BottledDrink), Available(VacuumCup), Available(CocountWater),NotHodding}\nchat_list: [(Customer, \"服务员，我想要一份面包和一杯软饮料。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您拿来\nGoals: At(Bread, Table), At(Softdrink, Table), At(Robot,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 5,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), Available(VacuumCup), Available(Table), Available(CoffeeMachine), At(Customer,Bar),NotHodding}\nchat_list: [(Customer, \"你能帮我拿一下保温杯吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我马上给您拿过来\nGoals: At(VacuumCup,Bar), Holding(VacuumCup), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 6,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"太热了，你能帮我打开空调吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我马上为您打开空调\nGoals: AirConditionerOn, At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 7,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Table),TubeLightOn,NotHodding}\nchat_list: [(Customer, \"服务员，能帮我关一下筒灯吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您关掉\nGoals: Not(TubeLightOn), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 8,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"麻烦你帮我拉一下窗帘，谢谢。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，请稍等片刻\nGoals: CurtainsClosed, At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 9,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"服务员，可以帮我擦一下桌子吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，请稍等片刻\nGoals: Wiping"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 10,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"你能倒杯水给我吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，请稍等片刻\nGoals: At(Water,Table), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 11,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), Available(CoffeeMachine), At(Customer,Bar),NotHodding}\nchat_list: [(Customer, \"请问有空位吗？能帮我指引一下吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，请跟我来\nGoals: At(Robot,Table), At(Customer,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 12,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(ADMilk), Available(Yogurt),NotHodding}\nchat_list: [(Customer, \"服务员，你能帮我点一杯咖啡吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就帮您点一杯咖啡\nGoals: At(Coffee, Bar) At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 13,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, At(Customer,Bar),NotHodding}\nchat_list: [(Customer, \"请问这里有面包吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Bread, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 14,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(ADMilk), Available(Yogurt),NotHodding}\nchat_list: [(Customer, \"你们这里有ADMilk吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(ADMilk, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 15,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(VacuumCup), Available(Softdrink), Available(ADMilk), Available(Yogurt),NotHodding}\nchat_list: [(Customer, \"请问这里有保温杯吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(VacuumCup, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 16,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"服务员，你们这里有Bernachon巧克力吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 不好意思，我们这儿没有Bernachon巧克力\nGoals: At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 17,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(Softdrink), Available(ADMilk), Available(Yogurt),NotHodding}\nchat_list: [(Customer, \"请给我来一瓶饮料。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您准备一瓶饮料\nGoals: At(Softdrink, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 18,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Bar), Available(VacuumCup), Available(Softdrink), Available(ADMilk), Available(Yogurt),NotHodding}\nchat_list: [(Customer, \"你们这里有铅笔花瓶吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 非常抱歉，我们这里没有\nGoals: At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 19,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Bar), Available(MilkDrink), Available(Teacup), Available(Glass), Available(BottledDrink),NotHodding}\nchat_list: [(Customer, \"服务员，请给我来一只茶杯。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您准备一只茶杯\nGoals: At(Teacup, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 20,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Bar), Available(MilkDrink),NotHodding}\nchat_list: [(Customer, \"请问这里有奶饮料吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(MilkDrink, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 21,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Bar), Available(CocountWater), Available(ADMilk), Available(Yogurt),NotHodding}\nchat_list: [(Customer, \"你们这里有椰子水吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(CocountWater, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 22,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Bar), Available(GlueStick),NotHodding}\nchat_list: [(Customer, \"服务员，请给我一支胶棒。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您一支胶棒\nGoals: At(GlueStick, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 23,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Bar), Available(Orange),NotHodding}\nchat_list: [(Customer, \"请问你们这里有橙子吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Orange, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 24,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(Glass),NotHodding}\nchat_list: [(Customer, \"你们这里有玻璃杯吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Glass, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 25,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(NFCJuice),NotHodding}\nchat_list: [(Customer, \"请给我来一杯橙汁。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您准备一杯橙汁\nGoals: At(NFCJuice, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 26,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"请给我来一杯牛奶。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 抱歉，我们这没有牛奶了\nGoals: At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 27,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"请给我来一杯橙汁。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 不好意思，我们已经卖完了\nGoals: At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 28,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"你们这里有NFC果汁吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(NFCJuice, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 29,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(YogurtDrink), Available(CocountMilk), Available(Milk),NotHodding}\nchat_list: [(Customer, \"请问这里有牛奶吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Milk, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 30,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(YogurtDrink), Available(CocountMilk),NotHodding}\nchat_list: [(Customer, \"你们这里有椰奶吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(CocountMilk, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 31,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(YogurtDrink),NotHodding}\nchat_list: [(Customer, \"请给我来一瓶酸奶饮料。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您准备一瓶酸奶饮料\nGoals: At(YogurtDrink, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 32,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(YogurtDrink),NotHodding}\nchat_list: [(Customer, \"你们这里有酸奶饮料吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(YogurtDrink, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 33,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table), Available(YogurtDrink), Available(Drink),NotHodding}\nchat_list: [(Customer, \"服务员，请给我来几瓶饮料。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您准备几瓶饮料\nGoals: At(Drink, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 34,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"你们这里有饮料吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Drink, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 35,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar), NotHolding, Available(Table), At(Customer,Table),NotHodding}\nchat_list: [(Customer, \"请问这里有咖啡吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请稍等片刻\nGoals: At(Coffee, Bar), At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 36,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State：{At(Robot,Bar),Holding(VacuumCup),Available(Table),Available(CoffeeMachine),Available(Bar),At(Customer,Table),NotHodding}\nchat_list: [(Customer, “你好，可以给我来一杯咖啡吗？”)]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 没问题，请稍等\nGoals: At(Coffee,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 37,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar),NotHodding,Available(Customer),At(Customer, Table)}\nchat_list: [(Customer, “服务员，过来一下”)]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就过来\nGoals: At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 38,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar),Holding(VacuumCup),Available(Table),Available(CoffeeMachine),At(Customer,Bar),NotHodding}\nchat_list: [(Customer, “有酸奶吗？”)]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有，我这就去拿\nGoals: At(Yogurt,Bar),At(Robot,Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 39,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot,Bar),Available(Table),At(Customer,Bar),NotHodding}\nchat_list: [(Customer, “我天，今天人可真多，不知道有没有空的位置”)]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请跟我来\nGoals: At(Customer,Table),At(Robot,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 40,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), At(Customer, Table),Available(Water),Holding(Glass),NotHodding}\nchat_list: [(Customer, \"可以给我倒一杯水吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我给您倒一杯水。\nGoals: NotHolding, At(Water, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 41,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"这里太暗了，可以开一些灯吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 可以的，我这就去调整灯光。\nGoals: At(Robot, LightSwitchArea), HallLightOn"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 42,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, CoffeeMachineArea), NotHolding, At(Customer, Bar),HallLightOn,NotHodding}\nchat_list: [(Customer, \"太阳好大啊，有点晃眼\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 不好意思，我去拉一下窗帘\nGoals: CurtainsClosed"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 43,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"我有点头疼，可以帮我找点止疼药吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 很抱歉，我们不提供药物，但我可以为您找个安静的位置。\nGoals: At(Robot, Table), At(Customer, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 44,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, LightsOn,NotHodding}\nchat_list: [(Customer, \"你好，这里好暗，能帮我开一下灯吗？”)]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我马上为您开灯。\nGoals: HallLightOn"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 45,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar),  At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"我们想吃点心，可以拿来吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您拿过来。\nGoals: At(Snack, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 46,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar),  At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"给我来杯咖啡和面包，可以吗\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 没问题，我这就给您拿过来。\nGoals: At(Snack, Table),At(Coffee, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 47,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"你好，请给我来一杯可乐。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然，请稍等片刻。\nGoal: At(Softdrink, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 48,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"能帮我倒一杯咖啡吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我这就去帮您倒咖啡。\nGoal: NotHolding, At(Coffee, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 49,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(VacuumCup), Available(Table), Available(Bar), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"请问有面包吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 是的，我这就去拿给您。\nGoal: At(Bread, Table), At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 50,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Table), Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"服务员，我想点一份酸奶。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 没问题，我马上为您准备。\nGoal: At(Yogurt, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 51,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"请问还有空桌子吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 非常抱歉，目前所有桌子都已经被占用了。\nGoal: At(Robot, Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 52,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), At(Customer, Table), Available(Water), Holding(Glass),NotHodding}\nchat_list: [(Customer, \"能给我倒杯水吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我给您倒一杯水。\nGoal: NotHolding, At(Water, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 53,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"请问这里有冰咖啡吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 是的，我这就为您冲一杯冰咖啡。\nGoal: At(IcedCoffee, Table), At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 54,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), NotHolding, Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"服务员，能帮我把桌子擦一下吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，请稍等片刻。\nGoal: At(Robot, MopArea), At(Customer, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 55,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"请问洗手间在哪里？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 洗手间在餐厅的门口右边，请跟我来。\nGoal: At(Customer, Restroom), At(Robot, RestroomDoorway)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 56,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"你好，请告诉我怎么去卫生间。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然，请跟我来。\nGoal: At(Robot, Restroom), At(Customer, Restroom)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 57,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"服务员，可以帮我指引到空位吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，请跟我来。\nGoal: At(Customer, Table), At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 58,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"嘿，服务员！来点酷爽的软饮料吧！\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然，我会给你找一个能让你凉爽起来的软饮料。\nGoal: At(Softdrink, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 59,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"嗨，你能帮我调制一杯香醇的卡布奇诺吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我用我的魔法调制出一杯令人陶醉的卡布奇诺。\nGoal: NotHolding, At(Coffee, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 60,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(VacuumCup), Available(Table), Available(Bar), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"有没有新鲜出炉的面包？我想要一块。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 是的，我这就去找一块刚出炉的面包给您。\nGoal: At(Bread, Table), At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 61,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Table), Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"嘿，够呛，这里还能坐下一个吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 呃，不好意思，我们的座位已经快被抢光了。\nGoal: At(Robot, Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 62,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), At(Customer, Table), Available(Water), Holding(Glass),NotHodding}\nchat_list: [(Customer, \"请给我来一杯清凉的冰水。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然，请让我为您倾情倒上一杯冰凉解渴的水。\nGoal: NotHolding, At(Water, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 63,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"嘿，这里有没有冷冻咖啡？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然有！冷冻咖啡能帮你在炎热的夏日保持冷静。\nGoal: At(FrozenCoffee, Table), At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 64,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), NotHolding, Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"喂，服务员，能不能给我擦擦桌子？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我用魔法拂去桌面上的一切灰尘。\nGoal: At(Robot, MopArea), At(Customer, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 65,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"请问洗手间在哪里？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 如果您不知道如何找到洗手间，我可以引领您进入一个令人愉悦的世界。\nGoal: At(Customer, Restroom), At(Robot, Restroom)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 66,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"服务员，你能给我找个空座位吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 我是你的私人导航，让我带领您找一个舒适的座位，但请记得在我的引导下保持安全距离。\nGoal: At(Customer, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 67,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"我需要一杯浓郁的摩卡。你能帮我调制吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 绝对没问题！我将为您调制一杯令人难以抗拒的摩卡。\nGoal: NotHolding, At(Coffee, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 68,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(VacuumCup), Available(Table), Available(Bar), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"可以给我来一份椰子水吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我给您带来一份清凉解渴的椰子水。\nGoal: At(CocountWater, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 69,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), At(Customer, Table), Available(Water), Holding(Glass),NotHodding}\nchat_list: [(Customer, \"请给我来杯冷冻柠檬水。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我为您倒上一杯冰凉可口的冷冻柠檬水。\nGoal: NotHolding, At(LemonWater, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 70,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Bar),HallLightO,NotHodding}\nchat_list: [(Customer, \"你们这里的灯光太刺眼了，能不能调暗一点？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我把灯光调整到恰到好处的舒适亮度。\nGoal: At(Robot, LightSwitchArea)，Not(HallLightOn)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 71,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"嗨，有没有特殊口味的拿铁？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然有！让我为您调制出一杯独具风味的特色拿铁。\nGoal: At(Coffee, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 72,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), NotHolding, Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"服务员，这桌子上有点脏，请帮我擦一下。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，让我为您清扫一下，让桌子焕然一新。\nGoal: Wiping,At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 73,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"你好，请给我来一杯花式咖啡。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我为您展现一场关于咖啡的艺术表演。\nGoal: NotHolding, At(Coffee, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 74,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(VacuumCup), Available(Table), Available(Bar), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"我想要一个玻璃杯。你能给我找一个吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！请稍等片刻，我会找到一个精致的玻璃杯给您。\nGoal: At(Glass, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 75,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Table), Available(MilkDrink), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"你们这里有牛奶吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然有！我们的啤酒拥有丰富的口感和独特的风味。\nGoal: At(MilkDrink, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 76,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), At(Customer, Table), Available(Water), Holding(Glass),NotHodding}\nchat_list: [(Customer, \"请给我来一杯温水。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我为您倒上一杯舒适宜人的温水。\nGoal: NotHolding, At(Water, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 77,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Customer), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"你们的这里真漂亮，能不能调节一下气温？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我用魔法为您创造一个恰到好处的环境温度。\nGoal: At(Robot, AirConditionerArea)，AirConditionerOn"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 78,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), NotHolding, Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"喂，服务员，你们这里有甜点吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然有！我们的甜点会让您的味蕾跳动不已。\nGoal: At(Bread, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 79,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(VacuumCup), Available(Table), Available(NFCJuice), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"有没有新鲜挤的果汁？我想要一杯。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 是的，我们有新鲜挤的果汁供应。请稍等片刻，我会为您准备一杯口感极佳的果汁。\nGoal: At(NFCJuice, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 80,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Table), Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"嘿，这里有没有甜品？我想尝一下。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然有！我们的甜品将为您带来满足味蕾的愉悦体验。\nGoal: At(Bread, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 81,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), At(Customer, Table), Available(Water), Holding(Glass),NotHodding}\nchat_list: [(Customer, \"请给我来一杯柠檬茶。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以！让我为您倒上一杯清新爽口的柠檬茶。\nGoal: NotHolding, At(NFCJuice, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 82,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Holding(Mug), Available(Table), Available(CoffeeMachine), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"嗨，我需要一杯加冰的美式咖啡。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 没问题！让我为您准备一杯酷爽的加冰美式咖啡。\nGoal: NotHolding, At(Coffee, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 83,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Softdrink), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"请问这里有没有能量饮料？我需要提神一下。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然有！我们的能量饮料会为您注入活力和精力。\nGoal: At(Softdrink, Table)，At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 84,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), NotHolding, Available(Customer), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"服务员，你们这里有什么特色饮品推荐吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然有！我们的特色饮品将带您领略独特的口味体验。\nGoal: At(Coffee,Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 85,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), At(Glove, Bar), NotHolding, At(Customer, Entrance),NotHodding}\nchat_list: [(Customer, \"外面下雨了，你们有雨伞借一下吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，请等一下，我给您拿雨伞。\nGoal: At(Umbrella, Bar), At(Robot, Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 86,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), At(CoffeeMachine, Bar), At(Customer, Bar), NotHolding,NotHodding}\nchat_list: [(Customer, \"可以帮我冲一杯咖啡吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，您稍等一下。\nGoal: At(Coffee, Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 87,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), At(Cake, Bar), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"过来一下，我想要个蛋糕。\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，您想要什么口味的蛋糕？\nGoal: At(Robot, Table), At(Cake, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 88,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), At(Mug, Bar), NotHolding, Available(CoffeeMachine), At(Customer, Entrance),NotHodding}\nchat_list: [(Customer, \"我可以自己弄一杯咖啡吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，请让我带您到咖啡机旁边。\nGoal: At(Customer, CoffeeMachine), At(Robot, CoffeeMachine)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 89,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding,NotHodding}\nchat_list: [(Customer, \"我找不到洗手间，能带我去一下吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，请跟我来。\nGoal: At(Robot, Restroom), At(Customer, Restroom)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 90,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Table), At(Milk, Bar), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"小朋友想喝牛奶，可以拿一杯吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，马上为您拿来。\nGoal: At(Milk, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 91,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Gauze), At(Customer, Bar),NotHodding}\nchat_list: [(Customer, \"我手上划了一下，有纱布吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，我这就给您拿过来。\nGoal: At(Gauze, Bar)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 92,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Chess), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"我可以在休息区下一局棋吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然，我这就为您拿棋盘。\nGoal: At(Chess, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 93,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), At(Novel, Shelf), At(Customer, Table),NotHodding}\nchat_list: [(Customer, \"我可以借一本小说看看吗？\")]"
+            },
+            {
+                "role": "bot",
+                "content": "Response: 可以的，我帮您拿一本。\nGoal: At(Novel, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 94,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Available(Kettle), Available(Teacup), At(Customer, Table),NotHodding}\nchat_list: \"我能喝点热水吗？\""
+            },
+            {
+                "role": "bot",
+                "content": "Response: 好的，我这就给您倒。\nGoal: At(Kettle, Table), Holding(Robot, Teacup), At(Teacup, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 95,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, LightsOn, At(Customer, Bar),TubeLightOn,NotHodding}\nchat_list: \"这里太亮了，可以关一些灯吗？\""
+            },
+            {
+                "role": "bot",
+                "content": "Response: 可以的，我这就去调整灯光。\nGoal: Not(TubeLightOn)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 96,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), Available(Box), At(Customer, Table), NotHolding,NotHodding}\nchat_list: \"请问你们这里有纸巾吗？\""
+            },
+            {
+                "role": "bot",
+                "content": "Response: 有的，我现在就给您拿过去。\nGoal: At(Tissue, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 97,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, At(Customer, Bar),NotHodding}\nchat_list: \"我有点头疼，可以帮我找点止疼药吗？\""
+            },
+            {
+                "role": "bot",
+                "content": "Response: 很抱歉，我们不提供药物，但我可以为您找个安静的位置。\nGoal: At(Robot, Table), At(Customer, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 98,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Softdrink), At(Customer, Table),NotHodding}\nchat_list: \"这瓶饮料好像没有打开，你能帮我打开吗？\""
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我这就帮您。\nGoal: Holding(Robot,Softdrink),At(Robot, Table)"
+            }
+        ]
+    },
+    {
+        "data_name": "100_data",
+        "id": 99,
+        "chat_rounds": [
+            {
+                "role": "human",
+                "content": "State: {At(Robot, Bar), NotHolding, Available(Softdrink), At(Customer, Table),NotHodding}\nchat_list: \"这地板好脏啊，可以拖一下吗？\""
+            },
+            {
+                "role": "bot",
+                "content": "Response: 当然可以，我这就来扫地。\nGoal: Wiping,At(Robot, MopArea)"
+            }
+        ]
+    }
+]

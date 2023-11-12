@@ -37,7 +37,7 @@ def single_round(question):
 
 if __name__ == '__main__':
     question = '''
-    python中如何通过类名字符串的方式来代替isinstance的作用
+    给我一杯拿铁
     '''
 
     print(single_round(question))

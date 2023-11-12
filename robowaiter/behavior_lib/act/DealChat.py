@@ -11,27 +11,11 @@ class DealChat(Act):
         # if self.scene.status?
         chat = self.scene.state['chat_list'].pop()
 
-        # 判断是否是测试
-        # if chat in fixed_answers.keys():
-        #     sentence,goal = fixed_answers[chat].split("---")
-        #     sentence = sentence.strip()
-        #     goal = goal.strip()
-        #     print(f'机器人回答：{sentence}')
-        #     goal = eval(goal)
-        #     print(f'goal：{goal}')
-        #
-        #     self.create_sub_task(goal)
-        # else:
-        answer = ask_llm(chat)
-        answer_split = answer.split("---")
-        sentence = answer_split[0].strip()
-        goal = None
-        if len(answer_split) > 1:
-            goal = answer_split[1].strip()
+        res_dict = ask_llm(chat)
+        answer = res_dict["Answer"]
+        goal = eval(res_dict["Goal"])
 
-        print(f'{sentence}')
-        if goal:
-            goal = eval(goal)
+        if goal is not None:
             print(f'goal：{goal}')
 
             self.create_sub_task(goal)

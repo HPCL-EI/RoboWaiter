@@ -80,19 +80,6 @@ class Scene:
         self.op_typeToAct = {8:[6,2],9:[6,3],10:[6,4],11:[8,1],12:[8,2]}
 
 
-    def _reset(self):
-        # 场景自定义的reset
-        pass
-
-    def _run(self):
-        # 场景自定义的run
-        pass
-
-    def _step(self):
-        # 场景自定义的step
-        pass
-
-
     def reset(self):
         # 基类reset，默认执行仿真器初始化操作
         self.reset_sim()
@@ -149,6 +136,19 @@ class Scene:
         
         stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
 
+    def _reset(self):
+        # 场景自定义的reset
+        pass
+
+    def _run(self):
+        # 场景自定义的run
+        pass
+
+    def _step(self):
+        # 场景自定义的step
+        pass
+
+
 
 
 
@@ -162,9 +162,12 @@ class Scene:
             pose=GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw),
         )
 
-    def walk_to(self, X, Y, Yaw, velocity=150, dis_limit=100):
+    def walk_to(self, X, Y, Yaw=None, velocity=200, dis_limit=0):
         if self.use_offset:
             X, Y = X + loc_offset[0], Y + loc_offset[1]
+
+        if Yaw is None:
+            Yaw = self.status.rotation.Yaw
 
         v = [X, Y, Yaw - 90, velocity, dis_limit]
         print(v)

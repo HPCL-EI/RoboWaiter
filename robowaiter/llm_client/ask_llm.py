@@ -1,3 +1,4 @@
+import os
 
 import requests
 import urllib3
@@ -12,16 +13,19 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 root_path = get_root_path()
 # load test questions
+file_path = os.path.join(root_path,"robowaiter/llm_client/data/test_questions.txt")
 
+with open(file_path,'r',encoding="utf-8") as f:
+    test_questions_dict = eval(f.read())
 
 def ask_llm(question):
+    if question in test_questions_dict:
+        return test_questions_dict[question]
     ans = single_round(question)
     return ans
 
 
 if __name__ == '__main__':
-    question = '''
-    python中如何通过类名字符串的方式来代替isinstance的作用
-    '''
+    question = '''测试VLM：做一杯咖啡'''
 
     print(ask_llm(question))

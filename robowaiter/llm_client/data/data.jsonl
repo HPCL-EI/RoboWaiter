@@ -1,0 +1,3 @@
+{"Question": "测试VLM：做一杯咖啡", "Answer": " 测试VLM：做一杯咖啡", "Goal": "{\"At(Coffee,Bar)\"}"}
+{"Question": "Bob", "Answer": "30", "Goal": "San Francisco"}
+{"Question": "Charlie", "Answer": "18", "Goal": "Los Angeles"}

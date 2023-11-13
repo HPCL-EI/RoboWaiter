@@ -8,20 +8,6 @@ from robowaiter.scene.scene import Scene
 class SceneAEM(Scene):
     def __init__(self, robot):
         super().__init__(robot)
-
-        # control.init_world(1, 3)
-
-    def _reset(self):
-        self.add_object(0, 570, 1600, 85.5)  # type与物品编号对应，具体参考README.md
-        self.add_object(1, 570, 1630, 85.5)
-        self.add_object(2, 570, 1660, 85.5)
-        self.add_object(3, 580, 1680, 85.5)
-
-        # todo: 探索并获得语义地图
-        print(self.status.objects)  # 全部的物品信息，包括名称、位置等，与获得的语义地图进行对比
-
-    def _run(self):
-        pass
-
-    def _step(self):
-        pass
+        self.event_list = [
+            (5, self.create_chat_event("测试AEM")),
+        ]

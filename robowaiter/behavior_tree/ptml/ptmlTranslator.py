@@ -98,7 +98,6 @@ class ptmlTranslator(ptmlListener):
         #
         # tag = "cond_" + short_uuid() if node_type == "cond" else "task_" + short_uuid()
 
-        print(f'create node: {name}({args})')
         node = eval(f"{name}({args})")
         node.set_scene(self.scene)
 

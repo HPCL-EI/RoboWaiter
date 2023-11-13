@@ -1,6 +1,6 @@
 selector
-//    selector
-//        cond HasMap()
+//    sequence
+//        cond NeedExplore()
 //        act ExploreEnv()
     sequence
         cond Chatting()
@@ -9,4 +9,3 @@ selector
         cond HasSubTask()
         sequence
             act SubTaskPlaceHolder()
-        cond At(Talb,ea)

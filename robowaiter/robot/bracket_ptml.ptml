@@ -10,6 +10,4 @@ selector
         cond HasSubTask()
         sequence
 {
-            act SubTaskPlaceHolder()
-
-}        cond At(Talb,ea)}}
+            act SubTaskPlaceHolder()}}}

@@ -8,4 +8,9 @@ class ExploreEnv(Act):
         super().__init__(*args)
 
     def _update(self) -> ptree.common.Status:
-        return ptree.common.Status.SUCCESS
+        # explore algorithm
+
+
+        self.scene.state["condition_set"].add("EnvExplored()")
+
+        return ptree.common.Status.RUNNING

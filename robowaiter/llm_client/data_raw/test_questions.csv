@@ -1,3 +1,4 @@
 Question,Answer,Goal
 测试VLM：做一杯咖啡,测试VLM：做一杯咖啡,"{""At(Coffee,Bar)""}"
 测试VLN：前往桌子,测试VLN：前往桌子,"{""At(Robot,Table)""}"
+测试AEM,测试AEM,"{""EnvExplored()""}"

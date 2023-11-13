@@ -73,6 +73,8 @@ class Robot(object):
                    add={'At(Coffee,Bar)'}, del_set=set(), cost=1),
             Action(name='MoveTo(Table)', pre={'At(Robot,Bar)'},
                    add={'At(Robot,Table)'}, del_set=set(), cost=1),
+            Action(name='ExploreEnv()', pre={'At(Robot,Bar)'},
+                   add={'EnvExplored()'}, del_set=set(), cost=1),
         ]
         return action_list
 

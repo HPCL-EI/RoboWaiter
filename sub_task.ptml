@@ -1,7 +1,7 @@
 selector{
-cond At(Robot,Table)
+cond EnvExplored()
 selector{
 cond At(Robot,Bar)
-act MoveTo(Table)
+act ExploreEnv()
 }
 }

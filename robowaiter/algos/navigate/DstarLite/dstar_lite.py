@@ -23,7 +23,8 @@ def manhattan_distance(start, end):  # 曼哈顿距离
 
 def euclidean_distance(start, end):  # 欧式距离
     # return np.linalg.norm(start-end)
-    return math.sqrt((start[0] - end[0]) ** 2 + (start[1] - end[1]) ** 2)
+    # return math.sqrt((start[0] - end[0]) ** 2 + (start[1] - end[1]) ** 2)
+    return math.hypot(start[0] - end[0], start[1] - end[1])
 
 
 def heuristic(start, end, name='euclidean'):
@@ -115,9 +116,9 @@ class PriorityQueue:
 class DStarLite:
     def __init__(self,
                  map: np.array([int, int]),  # [X, Y]
-                 area_range,                 # [x_min, x_max, y_min, y_max] 实际坐标范围
-                 scale_ratio=5,              # 地图缩放率
-                 dyna_obs_radius=20          # dyna_obs实际身位半径
+                 area_range,  # [x_min, x_max, y_min, y_max] 实际坐标范围
+                 scale_ratio=5,  # 地图缩放率
+                 dyna_obs_radius=30,  # dyna_obs实际身位半径
                  ):
 
         # self.area_bounds = area
@@ -128,7 +129,7 @@ class DStarLite:
         (self.x_min, self.x_max, self.y_min, self.y_max) = area_range
         self.scale_ratio = scale_ratio
         self.dyna_obs_list = []  # 动态障碍物位置列表( 当前地图 ) [(x, y)]
-        self.dyna_obs_radius = math.ceil(dyna_obs_radius/scale_ratio)  # dyna_obs缩放后身位半径
+        self.dyna_obs_radius = math.ceil(dyna_obs_radius / scale_ratio)  # dyna_obs缩放后身位半径
 
         # free:0, obs:1, dyna_obs:2
         self.idx_to_object = {
@@ -140,7 +141,7 @@ class DStarLite:
         self.object_to_cost = {
             "free": 0,
             "obstacle": float('inf'),
-            "dynamic obstacle": 50
+            "dynamic obstacle": 100
         }
 
         self.compute_cost_map()
@@ -259,7 +260,7 @@ class DStarLite:
                             self.rhs[s] = min([self.c(s, s_) + self.g[s_] for s_ in succ])
                     self.update_vertex(s)
 
-    def _planning(self, s_start, s_goal, dyna_obs, step_num=None, debug=False):
+    def _planning(self, s_start, s_goal, dyna_obs, debug=False):
         '''
             规划路径(实际实现)
             Args:
@@ -268,7 +269,7 @@ class DStarLite:
         '''
         # 确保目标合法
         if not self.in_bounds_without_obstacle(s_goal):
-            return None
+            return []
         # 第一次规划需要初始化rhs并将goal加入队列，计算最短路径
         if self.s_goal is None:
             self.s_start = tuple(s_start)
@@ -281,7 +282,6 @@ class DStarLite:
         # 后续规划只更新起点，直接使用原路径(去掉已走过部分)
         else:
             self.s_start = tuple(s_start)
-            self.path = self.path[step_num:]
         # 根据obs更新map, cost_map, edge_cost
         changed_pos = self.update_map(dyna_obs=dyna_obs)
         if changed_pos:
@@ -299,17 +299,16 @@ class DStarLite:
         #     pass
         return self.path
 
-    def planning(self, s_start, s_goal, dyna_obs, step_num=None, debug=False):
+    def planning(self, s_start, s_goal, dyna_obs, debug=False):
         '''
             路径规划(供外部调用，处理实际坐标和地图坐标的转换)
         '''
         # 实际坐标 -> 地图坐标
         s_start = self.real2map(s_start)
         s_goal = self.real2map(s_goal)
-        for i in range(len(dyna_obs)):
-            dyna_obs[i] = self.real2map(dyna_obs[i])
+        dyna_obs = [self.real2map(obs) for obs in dyna_obs]
 
-        self._planning(s_start, s_goal, dyna_obs, step_num, debug)
+        self._planning(s_start, s_goal, dyna_obs, debug)
 
         # 地图坐标->实际坐标
         path = [self.map2real(node) for node in self.path]
@@ -319,7 +318,7 @@ class DStarLite:
         '''
             得到路径
             Args:
-                step_num: 路径步数 (None表示返回完整路径)
+                step_num: 路径步数
             return:
                 path: [(x, y), ...]
         '''
@@ -327,7 +326,6 @@ class DStarLite:
             return []
         path = []
         cur = self.s_start
-        # if step_num is None:  # 得到完整路径
         while cur != self.s_goal:
             succ = self.get_neighbors(cur)
             cur = succ[np.argmin([self.c(cur, s_) + self.g[s_] for s_ in succ])]
@@ -411,10 +409,13 @@ class DStarLite:
             根据dyna_obs中心位置，计算其占用的所有网格位置
         '''
         (x, y) = obs_pos
-        occupy_pos = []
-        for i in range(x-self.dyna_obs_radius, x+self.dyna_obs_radius+1):
-            for j in range(y-self.dyna_obs_radius, y+self.dyna_obs_radius+1):
-                occupy_pos.append((i, j))
+        # for i in range(x - self.dyna_obs_radius, x + self.dyna_obs_radius + 1):
+        #     for j in range(y - self.dyna_obs_radius, y + self.dyna_obs_radius + 1):
+        #         occupy_pos.append((i, j))
+        occupy_pos = [(i, j) for i in range(x - self.dyna_obs_radius, x + self.dyna_obs_radius + 1)
+                      for j in range(y - self.dyna_obs_radius, y + self.dyna_obs_radius + 1)
+                      if euclidean_distance((i, j), obs_pos) < self.dyna_obs_radius]
+
         occupy_pos = filter(self.in_bounds_without_obstacle, occupy_pos)  # 确保位置在地图范围内 且 不是静态障碍物
         return list(occupy_pos)
 
@@ -507,4 +508,4 @@ class DStarLite:
         plt.xlabel('y', loc='right')
         plt.ylabel('x', loc='top')
         plt.grid(color='black', linestyle='-', linewidth=0.5)
-        plt.pause(0.3)
+        plt.pause(0.2)

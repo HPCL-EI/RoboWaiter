@@ -12,12 +12,13 @@ class SceneVLM(Scene):
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
             (5, self.create_chat_event("测试VLM：做一杯咖啡")),
+            # (5, self.create_chat_event("测试VLM：倒一杯水")),
         ]
 
     def _reset(self):
         pass
 
-    def _run(self, op_type=2):
+    def _run(self, op_type=7):
         # 共17个操作
         # "制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
         # "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",            # 8-12
@@ -29,8 +30,8 @@ class SceneVLM(Scene):
         #     self.gen_obj()
         #     self.op_task_execute(op_type, obj_id=0)
         # # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 70.0], 水杯桌:[-70.0, 500.0, 107]
-        # # 桌子1:[-55.0, 0.0, 107],桌子1:[-55.0, 150.0, 107]
-        # elif op_type == 17: self.op_task_execute(op_type, release_pos=[-55.0, 150.0, 107])
+        # # 桌子1:[-55.0, 0.0, 107],桌子2:[-55.0, 150.0, 107]
+        # elif op_type == 17: self.op_task_execute(op_type, release_pos=[247.0, 520.0, 100.0])#[-55.0, 150.0, 107]
         # else:
         #     self.move_task_area(op_type)
         #     self.op_task_execute(op_type)

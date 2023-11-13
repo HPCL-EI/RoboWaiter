@@ -1,1 +1,2 @@
-{"测试VLM：做一杯咖啡": {"Answer": "测试VLM：做一杯咖啡", "Goal": "{\"At(Coffee,Bar)\"}"}, "测试VLN：前往桌子": {"Answer": "测试VLN：前往桌子", "Goal": "{\"At(Robot,Table)\"}"}, "测试AEM": {"Answer": "测试AEM", "Goal": "{\"EnvExplored()\"}"}}
+{"测试VLM：做一杯咖啡": {"Answer": "测试VLM：做一杯咖啡", "Goal": "{\"At(Coffee,Bar)\"}"}, "测试VLN：前往桌子": {"Answer": "测试VLN：前往桌子", "Goal": "{\"At(Robot,Table)\"}"}, "测试VLM：倒一杯水": {"Answer": "测试VLM：倒一杯水", "Goal": "{\"At(Water,WaterTable)\"}"}}
+

@@ -6,10 +6,8 @@ from robowaiter.algos.navigate.DstarLite.navigate import Navigator
 class MoveTo(Act):
     can_be_expanded = True
     num_args = 1
-    valid_args = (
-        "Bar",
-        "Table",
-    )
+    valid_args = Act.all_object | Act.all_place
+    valid_args.add('Customer')
 
     def __init__(self, target_place):
         super().__init__(target_place)
@@ -18,9 +16,9 @@ class MoveTo(Act):
 
     @classmethod
     def get_info(self,arg):
-        info = {
-            "add": {f'At(Robot,{arg})'},
-        }
+        info = {}
+        info["add"] = {f'At(Robot,{arg})'}
+        info["del"] = {f'At(Robot,{place})' for place in self.valid_args if place != arg}
         return info
 
 

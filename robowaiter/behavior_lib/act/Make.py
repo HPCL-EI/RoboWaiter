@@ -23,6 +23,7 @@ class Make(Act):
                 "add": {f'On(Coffee,Table)'},
             }
         return info
+
     def _update(self) -> ptree.common.Status:
         op_type = 1
         self.scene.move_task_area(op_type)

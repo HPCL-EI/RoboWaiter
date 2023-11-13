@@ -1,7 +1,7 @@
 import io
 import contextlib
 
-from robowaiter.utils.bt.load import load_bt_from_ptml,find_node_by_name,print_tree_from_root
+from robowaiter.utils.bt.load import load_bt_from_ptml, find_node_by_name, print_tree_from_root
 from robowaiter.utils.bt.visitor import StatusVisitor
 
 from robowaiter.behavior_tree.obtea.OptimalBTExpansionAlgorithm import Action  # 调用最优行为树扩展算法
@@ -15,7 +15,7 @@ class Robot(object):
     scene = None
     response_frequency = 1
 
-    def __init__(self,ptml_path,behavior_lib_path):
+    def __init__(self, ptml_path, behavior_lib_path):
         self.ptml_path = ptml_path
         self.behavior_lib_path = behavior_lib_path
 
@@ -24,13 +24,12 @@ class Robot(object):
         self.last_tick_output = ""
         self.action_list = None
 
-
-    def set_scene(self,scene):
+    def set_scene(self, scene):
         self.scene = scene
 
     def load_BT(self):
-        self.bt = load_bt_from_ptml(self.scene, self.ptml_path,self.behavior_lib_path)
-        sub_task_place_holder = find_node_by_name(self.bt.root,"SubTaskPlaceHolder")
+        self.bt = load_bt_from_ptml(self.scene, self.ptml_path, self.behavior_lib_path)
+        sub_task_place_holder = find_node_by_name(self.bt.root, "SubTaskPlaceHolder")
         if sub_task_place_holder:
             sub_task_seq = sub_task_place_holder.parent
             sub_task_seq.children.pop()
@@ -39,8 +38,7 @@ class Robot(object):
         self.bt_visitor = StatusVisitor()
         self.bt.visitors.append(self.bt_visitor)
 
-
-    def expand_sub_task_tree(self,goal):
+    def expand_sub_task_tree(self, goal):
         if self.action_list is None:
             self.action_list = self.collect_action_nodes()
             print(f"首次运行行为树扩展算法，收集到{len(self.action_list)}个有效动作")
@@ -54,7 +52,7 @@ class Robot(object):
         with open(file_path, 'w') as file:
             file.write(ptml_string)
 
-        sub_task_bt = load_bt_from_ptml(self.scene, file_path,self.behavior_lib_path)
+        sub_task_bt = load_bt_from_ptml(self.scene, file_path, self.behavior_lib_path)
 
         # 加入删除子树的节点
         seq = Sequence(name="Sequence", memory=False)
@@ -69,7 +67,7 @@ class Robot(object):
 
     def collect_action_nodes(self):
         action_list = [
-            Action(name='MakeCoffee', pre={'At(Robot,CoffeeMachine)'},
+            Action(name='MakeCoffee()', pre={'At(Robot,CoffeeMachine)'},
                    add={'At(Coffee,Bar)'}, del_set=set(), cost=1),
             Action(name='MoveTo(Table)', pre={'At(Robot,Bar)'},
                    add={'At(Robot,Table)'}, del_set=set(), cost=1),
@@ -93,6 +91,7 @@ class Robot(object):
 
                 print("\n")
                 self.last_tick_output = bt_output
+
 
 if __name__ == '__main__':
     pass

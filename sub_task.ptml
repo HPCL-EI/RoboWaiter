@@ -1,7 +1,7 @@
 selector{
-cond EnvExplored()
+cond At(Coffee,Bar)
 selector{
-cond At(Robot,Bar)
-act ExploreEnv()
+cond At(Robot,CoffeeMachine)
+act MakeCoffee()
 }
 }

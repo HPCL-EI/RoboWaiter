@@ -1,6 +1,11 @@
 selector
 {
-    sequence
+    selector
+{
+        cond HasMap()
+        act ExploreEnv()
+
+}    sequence
 {
         cond Chatting()
         act DealChat()
@@ -10,6 +15,6 @@ selector
         cond HasSubTask()
         sequence
 {
-            act SubTaskPlaceHolder()
+            cond At(Robot,Table)
 
-}        cond At(Talb,ea)}}
+}        // cond At(Robot,Table)}}

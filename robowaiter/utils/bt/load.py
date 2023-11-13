@@ -4,7 +4,7 @@ from robowaiter.behavior_tree.ptml import ptmlCompiler
 
 def load_bt_from_ptml(scene, ptml_path, behavior_lib_path):
     ptml_bt = ptmlCompiler.load(scene, ptml_path, behavior_lib_path)
-    bt =  ptree.trees.BehaviourTree(ptml_bt)
+    bt = ptree.trees.BehaviourTree(ptml_bt)
 
     with open(ptml_path, 'r') as f:
         ptml = f.read()
@@ -29,6 +29,7 @@ def print_tree_from_root(node, indent=0):
         for child in node.children:
             print_tree_from_root(child, indent + 1)
 
+
 def find_node_by_name(tree, name):
     """
     Find a node in the behavior tree with the specified name.
@@ -45,8 +46,6 @@ def find_node_by_name(tree, name):
             if result is not None:
                 return result
     return None
-
-
 
 # class BehaviorTree(ptree):
 #     def __init__(self):

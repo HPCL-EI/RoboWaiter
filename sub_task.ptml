@@ -1,11 +1,3 @@
 selector{
-cond At(Water,WaterTable)
-sequence{
-cond At(Robot,WaterTable)
-act PourWater()
-}
-sequence{
-cond 
-act MoveTo(WaterTable)
-}
+cond EnvExplored()
 }

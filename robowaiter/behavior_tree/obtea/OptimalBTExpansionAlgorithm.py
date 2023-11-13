@@ -185,10 +185,10 @@ class OptBTExpAlgorithm:
                 elif child.type == 'act':
                     self.ptml_string += 'act '+child.content.name+"\n"
             elif isinstance(child, ControlBT):
-                if parnode.type == '?':
+                if child.type == '?':
                     self.ptml_string += "selector{\n"
                     self.dfs_ptml(parnode=child)
-                elif parnode.type == '>':
+                elif child.type == '>':
                     self.ptml_string += "sequence{\n"
                     self.dfs_ptml( parnode=child)
                 self.ptml_string += '}\n'

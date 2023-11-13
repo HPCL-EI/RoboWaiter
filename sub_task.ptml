@@ -1,6 +1,6 @@
 selector{
 cond At(Coffee,Bar)
-selector{
+sequence{
 cond At(Robot,CoffeeMachine)
 act MakeCoffee()
 }

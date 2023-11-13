@@ -1,5 +1,7 @@
 import io
 import contextlib
+import os
+import importlib.util
 
 from robowaiter.utils.bt.load import load_bt_from_ptml,find_node_by_name,print_tree_from_root
 from robowaiter.utils.bt.visitor import StatusVisitor
@@ -9,7 +11,7 @@ from robowaiter.behavior_tree.obtea.opt_bt_exp_main import BTOptExpInterface
 
 from robowaiter.behavior_lib.act.DelSubTree import DelSubTree
 from robowaiter.behavior_lib._base.Sequence import Sequence
-
+from robowaiter.utils.bt.load import load_behavior_tree_lib
 
 class Robot(object):
     scene = None
@@ -67,15 +69,30 @@ class Robot(object):
         print("当前行为树为：")
         print_tree_from_root(self.bt.root)
 
+    # 获取所有action的pre,add,del列表
     def collect_action_nodes(self):
-        action_list = [
-            Action(name='MakeCoffee', pre={'At(Robot,CoffeeMachine)'},
-                   add={'At(Coffee,Bar)'}, del_set=set(), cost=1),
-            Action(name='MoveTo(Table)', pre={'At(Robot,Bar)'},
-                   add={'At(Robot,Table)'}, del_set=set(), cost=1),
-            Action(name='ExploreEnv()', pre={'At(Robot,Bar)'},
-                   add={'EnvExplored()'}, del_set=set(), cost=1),
-        ]
+        action_list = []
+        behavior_dict = load_behavior_tree_lib()
+        for cls in behavior_dict["act"].values():
+            if cls.can_be_expanded:
+                if cls.num_args == 0:
+                    action_list.append(Action(name=cls.__name__,**cls.get_info()))
+                if cls.num_args == 1:
+                    for arg in cls.valid_args:
+                        action_list.append(Action(name=cls.__name__, **cls.get_info(arg)))
+                if cls.num_args > 1:
+                    for args in cls.valid_args:
+                        action_list.append(Action(name=cls.__name__,**cls.get_info(*args)))
+
+        print(action_list)
+        # action_list = [
+        #     Action(name='MakeCoffee', pre={'At(Robot,CoffeeMachine)'},
+        #            add={'At(Coffee,Bar)'}, del_set=set(), cost=1),
+        #     Action(name='MoveTo(Table)', pre={'At(Robot,Bar)'},
+        #            add={'At(Robot,Table)'}, del_set=set(), cost=1),
+        #     Action(name='ExploreEnv()', pre=set(),
+        #            add={'EnvExplored()'}, del_set=set(), cost=1),
+        # ]
         return action_list
 
     def step(self):

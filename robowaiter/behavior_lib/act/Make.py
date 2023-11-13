@@ -3,17 +3,27 @@ from typing import Any
 from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.behavior_lib._base.Behavior import Status
 
-class MakeCoffee(Act):
+class Make(Act):
+    can_be_expanded = True
+    num_args = 1
+    valid_args = (
+        "Coffee",
+    )
 
     def __init__(self, *args):
         super().__init__(*args)
+        self.target_obj = self.args[0]
 
-    @property
-    def cond_sets(self):
-        pre = {"At(Robot,Bar)"}
-        add = {"At(Coffee,Bar)"}
-        de = {}
-        return pre,add,de
+
+    @classmethod
+    def get_info(cls,arg):
+        info = None
+        if arg == "Coffee":
+            info = {
+                "add": {f'On(Coffee,Table)'},
+            }
+        return info
+
 
     def _update(self) -> ptree.common.Status:
         op_type = 1

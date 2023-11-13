@@ -19,7 +19,13 @@ class Bahavior(ptree.behaviour.Behaviour):
         if len(args)>0:
             name = f'{name}({",".join(list(args))})'
         self.name = name
+        #get valid args
+        # self.valid_arg_list = []
+        # lines = self.valid_params.strip().splitlines()
+        # for line in lines:
+        #     self.valid_arg_list.append((x.strip for x in line.split(",")))
         self.args = args
+
         super().__init__(self.name)
 
     def _update(self) -> ptree.common.Status:

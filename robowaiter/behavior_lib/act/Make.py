@@ -27,6 +27,7 @@ class Make(Act):
         elif arg == "Dessert":
             info["add"] = {f'On(Dessert,Bar)'}
         return info
+
     def _update(self) -> ptree.common.Status:
         op_type = 1
         self.scene.move_task_area(op_type)

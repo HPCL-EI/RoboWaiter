@@ -45,7 +45,12 @@ class Robot(object):
     def expand_sub_task_tree(self,goal):
         if self.action_list is None:
             self.action_list = self.collect_action_nodes()
-            print(f"首次运行行为树扩展算法，收集到{len(self.action_list)}个有效动作")
+            print("\n--------------------")
+            print(f"首次运行行为树扩展算法，收集到{len(self.action_list)}个有效动作:")
+            for a in self.action_list:
+                print(a.name)
+            print("--------------------\n")
+
 
         algo = BTOptExpInterface(self.action_list)
 
@@ -76,13 +81,13 @@ class Robot(object):
         for cls in behavior_dict["act"].values():
             if cls.can_be_expanded:
                 if cls.num_args == 0:
-                    action_list.append(Action(name=cls.__name__,**cls.get_info()))
+                    action_list.append(Action(name=cls.get_ins_name(),**cls.get_info()))
                 if cls.num_args == 1:
                     for arg in cls.valid_args:
-                        action_list.append(Action(name=cls.__name__, **cls.get_info(arg)))
+                        action_list.append(Action(name=cls.get_ins_name(arg), **cls.get_info(arg)))
                 if cls.num_args > 1:
                     for args in cls.valid_args:
-                        action_list.append(Action(name=cls.__name__,**cls.get_info(*args)))
+                        action_list.append(Action(name=cls.get_ins_name(*args),**cls.get_info(*args)))
 
         print(action_list)
         # action_list = [

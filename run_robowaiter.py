@@ -1,7 +1,7 @@
 import os
 from robowaiter import Robot, task_map
 
-TASK_NAME = 'AEM'
+TASK_NAME = 'VLM'
 
 # create robot
 project_path = "./robowaiter"

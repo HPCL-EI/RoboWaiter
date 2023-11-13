@@ -1,11 +1,13 @@
 selector
-//    sequence
-//        cond NeedExplore()
-//        act ExploreEnv()
+{
     sequence
+{
         cond Chatting()
         act DealChat()
-    sequence
+
+}    sequence
+{
         cond HasSubTask()
         sequence
-            act SubTaskPlaceHolder()
+{
+            act SubTaskPlaceHolder()}}}

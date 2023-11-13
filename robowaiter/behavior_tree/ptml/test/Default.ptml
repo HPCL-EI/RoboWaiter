@@ -9,4 +9,4 @@ selector
         cond HasSubTask()
         sequence
             cond At(Robot,Table)
-        cond At(Robot,Table)
+        // cond At(Robot,Table)

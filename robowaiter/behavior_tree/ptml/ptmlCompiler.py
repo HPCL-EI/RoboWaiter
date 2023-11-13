@@ -34,6 +34,7 @@ def load(scene, ptml_path: str, behaviour_lib_path: str):
 
     # noting fault, go next
     ptml_path = format_trans_to_bracket(ptml_path)
+    # print(ptml_path)
     input_stream = FileStream(ptml_path, encoding="utf-8")
 
     lexer = Lexer(input_stream)
@@ -43,9 +44,8 @@ def load(scene, ptml_path: str, behaviour_lib_path: str):
 
     walker = ParseTreeWalker()
 
-
-    sys.path.append(os.path.join(behaviour_lib_path,"cond"))
-    sys.path.append(os.path.join(behaviour_lib_path,"act"))
+    sys.path.append(os.path.join(behaviour_lib_path, "cond"))
+    sys.path.append(os.path.join(behaviour_lib_path, "act"))
 
     ptml = ptmlTranslator(scene, behaviour_lib_path)  # listener mode
     walker.walk(ptml, tree)
@@ -75,8 +75,7 @@ def format_trans_to_bracket(file_path: str) -> str:
         if "{" in f:
             return file_path
 
-
-    def counter_(input:str) -> int:
+    def counter_(input: str) -> int:
         length = 0
         for i in range(len(input)):
             if input[i] == ' ':
@@ -85,7 +84,6 @@ def format_trans_to_bracket(file_path: str) -> str:
                 if length % 4 != 0:
                     raise TabError('Tab length in ptml file should be 4.')
                 return length
-
 
     with open(file_path, 'r') as file:
         ptml_new = ''
@@ -110,9 +108,9 @@ def format_trans_to_bracket(file_path: str) -> str:
             ptml_new += '}'
 
     import re
-    new_path = re.sub('/[a-zA-Z0-9_]*\.ptml', '/bracket_ptml.ptml',file_path)
+    new_path = re.sub('\\\[a-zA-Z0-9_]*\.ptml', '/bracket_ptml.ptml', file_path)
     with open(new_path, 'w+') as file:
         file.write(ptml_new)
     return new_path
 
-# format_trans_to_bracket('/home/wu/RoboWaiter/robowaiter/behavior_tree/ptml/test/tab_test.ptml')
+# format_trans_to_bracket('C:\\Users\\Estrella\\Desktop\\RoboWaiter\\robowaiter\\behavior_tree\\ptml\\test\\Default.ptml')

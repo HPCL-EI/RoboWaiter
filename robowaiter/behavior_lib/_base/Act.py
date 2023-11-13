@@ -8,7 +8,7 @@ class Act(Bahavior):
         super().__init__(*args)
 
     def get_conds(self):
-        pre = set()
-        add = set()
-        de = set()
-        return pre, add, de
+        self.pre = set()
+        self.add = set()
+        self.de = set()
+        return self.pre, self.add, self.de

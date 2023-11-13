@@ -11,7 +11,8 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
-            (5, self.create_chat_event("测试VLM：做一杯咖啡")),
+            # (5, self.create_chat_event("测试VLM：做一杯咖啡")),
+            (5, self.create_chat_event("测试VLM：倒一杯水")),
         ]
 
     def _reset(self):

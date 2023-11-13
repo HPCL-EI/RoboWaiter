@@ -69,10 +69,14 @@ class Robot(object):
         action_list = [
             Action(name='MakeCoffee()', pre={'At(Robot,CoffeeMachine)'},
                    add={'At(Coffee,Bar)'}, del_set=set(), cost=1),
-            Action(name='MoveTo(Table)', pre={'At(Robot,Bar)'},
+            Action(name='MoveTo(Table)', pre={''},
                    add={'At(Robot,Table)'}, del_set=set(), cost=1),
+            Action(name='MoveTo(WaterTable)', pre={''},
+                   add={'At(Robot,WaterTable)'}, del_set=set(), cost=1),
             Action(name='ExploreEnv()', pre={'At(Robot,Bar)'},
                    add={'EnvExplored()'}, del_set=set(), cost=1),
+            Action(name='PourWater()', pre={'At(Robot,WaterTable)'},
+                   add={'At(Water,WaterTable)'}, del_set=set(), cost=1),
         ]
         return action_list
 

@@ -94,10 +94,13 @@ class OptBTExpAlgorithm:
 
             # Mount the action node and extend BT. T = Eapand(T,c,A(c))
             if c!=goal:
-                sequence_structure = ControlBT(type='>')
-                sequence_structure.add_child(
-                    [copy.deepcopy(pair_node.cond_leaf), copy.deepcopy(pair_node.act_leaf)])
-                subtree.add_child([copy.deepcopy(sequence_structure)])  # subtree 是回不断变化的，它的父亲是self.bt
+                if c!=set():
+                    sequence_structure = ControlBT(type='>')
+                    sequence_structure.add_child(
+                        [copy.deepcopy(pair_node.cond_leaf), copy.deepcopy(pair_node.act_leaf)])
+                    subtree.add_child([copy.deepcopy(sequence_structure)])  # subtree 是回不断变化的，它的父亲是self.bt
+                else:
+                    subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
                 if self.verbose:
                     print("完成扩展 a_node= %s,对应的新条件 c_attr= %s,mincost=%d" \
                           % (cond_anc_pair.act_leaf.content.name, cond_anc_pair.cond_leaf.content,
@@ -183,7 +186,10 @@ class OptBTExpAlgorithm:
                     c_set_str = ', '.join(map(str, child.content)) + "\n"
                     self.ptml_string += c_set_str
                 elif child.type == 'act':
-                    self.ptml_string += 'act '+child.content.name+"\n"
+                    if '(' not in child.content.name:
+                        self.ptml_string += 'act '+child.content.name+"()\n"
+                    else:
+                        self.ptml_string += 'act ' + child.content.name + "\n"
             elif isinstance(child, ControlBT):
                 if child.type == '?':
                     self.ptml_string += "selector{\n"

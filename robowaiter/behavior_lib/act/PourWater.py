@@ -3,21 +3,21 @@ from typing import Any
 from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.behavior_lib._base.Behavior import Status
 
-class MakeCoffee(Act):
+class PourWater(Act):
 
     def __init__(self, *args):
         super().__init__(*args)
 
     @property
     def cond_sets(self):
-        pre = {"At(Robot,CoffeeMachine)","NotHolding"}
-        add = {"At(Coffee,Bar)"}
-        de = {}
-        return pre,add,de
+        self.pre = {"At(Robot,WaterTable)","NotHolding"}
+        self.add = {"On(Water,WaterTable)"}
+        self.de = {}
+        return self.pre,self.add,self.de
 
     def _update(self) -> ptree.common.Status:
-        op_type = 1
+        op_type = 2
         self.scene.move_task_area(op_type)
         self.scene.op_task_execute(op_type)
-        self.scene.state["condition_set"].add(self.add)
+        self.scene.state["condition_set"].update(self.add)
         return Status.RUNNING

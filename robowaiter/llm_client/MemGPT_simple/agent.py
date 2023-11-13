@@ -170,7 +170,8 @@ class Agent:
             )
         else:
             # Standard non-function reply
-            print("### Internal monologue: " + (response_message.content if response_message.content else ""))
+            # print("### Internal monologue: " + (response_message.content if response_message.content else ""))
+            print("### Internal monologue: " + (response_message['content'] if response_message['content'] else ""))
             messages.append(response_message)
             function_failed = None
 
@@ -178,13 +179,37 @@ class Agent:
 
     def step(self, user_message):
         input_message_sequence = self.messages + [{"role": "user", "content": user_message}]
-        response = openai.ChatCompletion.create(model=self.model, messages=input_message_sequence,
-                                                functions=self.functions_description, function_call="auto")
 
-        response_message = response.choices[0].message
-        response_message_copy = response_message.copy()
+        # 原来的通信方式
+        # response = openai.ChatCompletion.create(model=self.model, messages=input_message_sequence,
+        #                                         functions=self.functions_description, function_call="auto")
+        #
+        # response_message = response.choices[0].message
+        # response_message_copy = response_message.copy()
+
+        # ===我们的通信方式 "tools": self.functions_description 不起作用===
+        import requests
+        url = "https://45.125.46.134:25344/v1/chat/completions"
+        headers = {"Content-Type": "application/json"}
+        data = {
+            "model": "RoboWaiter",
+            "messages": input_message_sequence,
+            # "functions":self.functions_description,
+            # "function_call":"auto"
+            # "function_call":self.functions_description
+            "tools": self.functions_description
+        }
+        response = requests.post(url, headers=headers, json=data, verify=False)
+        if response.status_code == 200:
+            result = response.json()
+            response_message = result['choices'][0]['message']
+        else:
+            response_message = "大模型请求失败:"+ str(response.status_code)
+        response_message_copy = response_message
+        # ===我们的通信方式 "tools": self.functions_description 不起作用===
+
+
         all_response_messages, function_failed = self.handle_ai_response(response_message)
-
         assert "api_response" not in all_response_messages[0], f"api_response already in {all_response_messages[0]}"
         all_response_messages[0]["api_response"] = response_message_copy
         assert "api_args" not in all_response_messages[0], f"api_args already in {all_response_messages[0]}"

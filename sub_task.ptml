@@ -1,7 +1,11 @@
 selector{
-cond At(Coffee,Bar)
+cond At(Water,WaterTable)
 sequence{
-cond At(Robot,CoffeeMachine)
-act MakeCoffee()
+cond At(Robot,WaterTable)
+act PourWater()
+}
+sequence{
+cond 
+act MoveTo(WaterTable)
 }
 }

@@ -30,11 +30,10 @@ class SceneVLM(Scene):
         # 16: 抓操作需要传入物品id，17: 放操作需要传入放置位置周围的空地区域(桌边而不是桌上)
         # if op_type == 16:
         #     self.gen_obj()
-        #     self.op_task_execute(op_type, obj_id=1)
-        #     op_type = 17
+        #     self.op_task_execute(op_type, obj_id=0)
         # # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 70.0], 水杯桌:[-70.0, 500.0, 107]
-        # # 桌子1:[-55.0, 0.0, 107],桌子2:[-55.0, 150.0, 107], 抹布桌:[300.0, 935.0, 98.0]
-        # if op_type == 17: self.op_task_execute(op_type, release_pos=[300.0, 935.0, 98.0]) #[325.0, 860.0, 100]
+        # # 桌子1:[-55.0, 0.0, 107],桌子2:[-55.0, 150.0, 107], 抹布桌:[340.0, 900.0, 98.0]
+        # if op_type == 17: self.op_task_execute(op_type, release_pos=[340.0, 900.0, 99.0]) #[325.0, 860.0, 100]
         # if op_type not in [16,17]:
         #     self.move_task_area(op_type)
         #     self.op_task_execute(op_type)

@@ -32,9 +32,9 @@ class SceneVLM(Scene):
         #     self.gen_obj()
         #     self.op_task_execute(op_type, obj_id=0)
         # # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 70.0], 水杯桌:[-70.0, 500.0, 107]
-        # # 桌子1:[-55.0, 0.0, 107],桌子2:[-55.0, 150.0, 107]
-        # elif op_type == 17: self.op_task_execute(op_type, release_pos=[247.0, 520.0, 100.0])#[-55.0, 150.0, 107]
-        # else:
+        # # 桌子1:[-55.0, 0.0, 107],桌子2:[-55.0, 150.0, 107], 抹布桌:[340.0, 900.0, 98.0]
+        # if op_type == 17: self.op_task_execute(op_type, release_pos=[340.0, 900.0, 99.0]) #[325.0, 860.0, 100]
+        # if op_type not in [16,17]:
         #     self.move_task_area(op_type)
         #     self.op_task_execute(op_type)
         pass

@@ -13,14 +13,28 @@ class SceneVLM(Scene):
         self.event_list = [
             # (5, self.create_chat_event("测试VLM：做一杯咖啡")),
             # (5, self.create_chat_event("测试VLM：倒一杯水")),
-            (5, self.create_chat_event("测试VLM：开空调")),
+            # (5, self.create_chat_event("测试VLM：开空调")),
+            # (5, self.create_chat_event("测试VLM：关空调")),
+            # (5, self.create_chat_event("测试VLM：开大厅灯")),
+            (5, self.create_chat_event("测试VLM：拖地")),
+            # (5, self.create_chat_event("测试VLM：擦桌子")),
+            # (5, self.create_chat_event("测试VLM：整理椅子")),
+            # (5, self.create_chat_event("测试VLM：把冰红茶放到Table2")),
+            # (5, self.create_chat_event("测试VLM：关大厅灯"))
         ]
 
     def _reset(self):
-        self.state["condition_set"] = {'At(Robot,Bar)','Holding(Nothing)','Is(AC,Off)'}
+        self.state["condition_set"] = {'At(Robot,Bar)','Is(AC,Off)', 'Holding(Nothing)',  # 'Holding(Yogurt)', #'Holding(Nothing)',
+                                       'Is(HallLight,Off)','Is(TubeLight,On)','Is(Curtain,On)',
+                                       'Is(Table1,Dirty)','Is(Floor,Dirty)','Is(Chairs,Dirty)'}
+        # self.gen_obj(type=5)
+        # # self.gen_obj(type=9)
+        # self.op_task_execute(op_type=16, obj_id=0)
+        # self.move_task_area(op_type=4)
         pass
 
-    def _run(self, op_type=7):
+    def _run(self, op_type=10):
+
         # 共17个操作
         # "制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
         # "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",            # 8-12

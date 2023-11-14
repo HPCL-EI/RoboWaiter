@@ -422,7 +422,7 @@ class Scene:
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
         obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=9),
                     # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
-                    GrabSim_pb2.ObjectList.Object(x=300, y=935, z = 88, roll=0, pitch=0, yaw=0, type=7),
+                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=7),
                     ]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
@@ -477,14 +477,13 @@ class Scene:
     def release_obj(self,release_pos):
         print("------------------Move to Realese Position----------------------")
         walk_v = [release_pos[i] for i in range(2)] + [180,180,0]
-        if release_pos==[300.0, 935.0, 98.0]:
+        if release_pos==[340.0, 900.0, 99.0]:
             walk_v[2] = 130
-
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         print("------------------release_obj----------------------")
-        if release_pos==[300.0, 935.0, 98.0]:
-            self.ik_control_joints(2, release_pos[0], release_pos[1], release_pos[2])
+        if release_pos==[340.0, 900.0, 99.0]:
+            self.ik_control_joints(2, 300.0, 935, release_pos[2])
             time.sleep(2.0)
         else:
             self.ik_control_joints(2, release_pos[0] - 80, release_pos[1], release_pos[2])

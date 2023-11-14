@@ -64,50 +64,91 @@ def get_tools() -> dict:
 
 # Tool Definitions
 
+# @register_tool
+# def random_number_generator(
+#         seed: Annotated[int, 'The random seed used by the generator', True],
+#         range: Annotated[tuple[int, int], 'The range of the generated numbers', True],
+# ) -> int:
+#     """
+#     Generates a random number x, s.t. range[0] <= x < range[1]
+#     """
+#     if not isinstance(seed, int):
+#         raise TypeError("Seed must be an integer")
+#     if not isinstance(range, tuple):
+#         raise TypeError("Range must be a tuple")
+#     if not isinstance(range[0], int) or not isinstance(range[1], int):
+#         raise TypeError("Range must be a tuple of integers")
+#
+#     import random
+#     return random.Random(seed).randint(*range)
+
+
+# @register_tool
+# def get_weather(
+#         city_name: Annotated[str, 'The name of the city to be queried', True],
+# ) -> str:
+#     """
+#     Get the current weather for `city_name`
+#     """
+#
+#     if not isinstance(city_name, str):
+#         raise TypeError("City name must be a string")
+#
+#     key_selection = {
+#         "current_condition": ["temp_C", "FeelsLikeC", "humidity", "weatherDesc", "observation_time"],
+#     }
+#     import requests
+#     try:
+#         resp = requests.get(f"https://wttr.in/{city_name}?format=j1")
+#         resp.raise_for_status()
+#         resp = resp.json()
+#         ret = {k: {_v: resp[k][0][_v] for _v in v} for k, v in key_selection.items()}
+#     except:
+#         import traceback
+#         ret = "Error encountered while fetching weather data!\n" + traceback.format_exc()
+#
+#     return str(ret)
+
+
+# @register_tool
+# def add(
+#         a: Annotated[int, '需要相加的第1个数', True],
+#         b: Annotated[int, '需要相加的第2个数', True]
+# ) -> int:
+#     """
+#     获取 `a` + `b` 的值
+#     """
+#
+#     if (not isinstance(a, int)) or (not isinstance(b, int)):
+#         raise TypeError("相加的数必须为整数")
+#
+#     return int(a+b)
+
 @register_tool
-def random_number_generator(
-        seed: Annotated[int, 'The random seed used by the generator', True],
-        range: Annotated[tuple[int, int], 'The range of the generated numbers', True],
-) -> int:
-    """
-    Generates a random number x, s.t. range[0] <= x < range[1]
-    """
-    if not isinstance(seed, int):
-        raise TypeError("Seed must be an integer")
-    if not isinstance(range, tuple):
-        raise TypeError("Range must be a tuple")
-    if not isinstance(range[0], int) or not isinstance(range[1], int):
-        raise TypeError("Range must be a tuple of integers")
-
-    import random
-    return random.Random(seed).randint(*range)
-
-
-@register_tool
-def get_weather(
-        city_name: Annotated[str, 'The name of the city to be queried', True],
+def create_sub_task(
+        goal: Annotated[str, '用于子任务的目标状态集合', True]
 ) -> str:
     """
-    Get the current weather for `city_name`
+    当需要完成具身任务（如做咖啡，拿放物体，扫地，前往某位置）时，调用该函数，根据用户的提示进行意图理解，生成子任务的目标状态集合，以一阶逻辑的形式来表示，例如：前往桌子的目标状态为{At(Robot,Table)}，做咖啡的目标状态为{On(Coffee,Bar)}等
     """
 
-    if not isinstance(city_name, str):
-        raise TypeError("City name must be a string")
+    return goal
 
-    key_selection = {
-        "current_condition": ["temp_C", "FeelsLikeC", "humidity", "weatherDesc", "observation_time"],
-    }
-    import requests
-    try:
-        resp = requests.get(f"https://wttr.in/{city_name}?format=j1")
-        resp.raise_for_status()
-        resp = resp.json()
-        ret = {k: {_v: resp[k][0][_v] for _v in v} for k, v in key_selection.items()}
-    except:
-        import traceback
-        ret = "Error encountered while fetching weather data!\n" + traceback.format_exc()
+@register_tool
+def find_near_object(
+        object: Annotated[str, '需要判断所在位置的物体', True]
+) -> str:
+    """
+    在场景中找到相邻的物体，并说出 `object` 在输出物体的附近
+    """
+    near_object = None
+    if object == "Table":
+        near_object = "Bar"
+    if object == "洗手间":
+        near_object = "大门"
 
-    return str(ret)
+    return near_object
+
 
 
 if __name__ == "__main__":

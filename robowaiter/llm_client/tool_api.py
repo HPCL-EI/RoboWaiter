@@ -5,16 +5,14 @@ from colorama import init, Fore
 from loguru import logger
 
 from tool_register import get_tools, dispatch_tool
-
-init(autoreset=True)
-
-# 使用Python代码测返回
 import requests
 import json
 
 import urllib3
+init(autoreset=True)
+
 ########################################
-#   该文件实现了与大模型的简单通信
+#   该文件实现了与大模型的通信以及工具调用
 ########################################
 
 # 忽略https的安全性警告
@@ -77,10 +75,10 @@ if __name__ == "__main__":
 
 
 
-    query = "你是谁"
-    run_conversation(query, stream=False)
+    # query = "你是谁"
+    # run_conversation(query, stream=False)
+    #
+    # logger.info("\n=========== next conversation ===========")
 
-    logger.info("\n=========== next conversation ===========")
-
-    query = "帮我查询北京的天气怎么样"
+    query = "洗手间在哪儿"
     run_conversation(query, functions=functions, stream=False)

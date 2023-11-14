@@ -74,7 +74,6 @@ if __name__ == "__main__":
     # create_chat_completion("chatglm3-6b", chat_messages, use_stream=False)
 
 
-
     # query = "你是谁"
     # run_conversation(query, stream=False)
     #

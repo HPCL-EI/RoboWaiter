@@ -135,7 +135,7 @@ def create_sub_task(
     return goal
 
 @register_tool
-def find_near_object(
+def get_object_info(
         object: Annotated[str, '需要判断所在位置的物体', True]
 ) -> str:
     """

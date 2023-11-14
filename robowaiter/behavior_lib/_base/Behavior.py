@@ -44,7 +44,6 @@ class Bahavior(ptree.behaviour.Behaviour):
         #     self.valid_arg_list.append((x.strip for x in line.split(",")))
         self.args = args
 
-
         super().__init__(self.name)
 
     def _update(self) -> ptree.common.Status:

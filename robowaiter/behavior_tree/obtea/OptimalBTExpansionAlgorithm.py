@@ -183,7 +183,7 @@ class OptBTExpAlgorithm:
             if isinstance(child, Leaf):
                 if child.type == 'cond':
                     self.ptml_string += "cond "
-                    c_set_str = ', '.join(map(str, child.content)) + "\n"
+                    c_set_str = '\n cond '.join(map(str, child.content)) + "\n"
                     self.ptml_string += c_set_str
                 elif child.type == 'act':
                     if '(' not in child.content.name:

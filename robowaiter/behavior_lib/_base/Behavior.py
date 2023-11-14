@@ -24,10 +24,7 @@ class Bahavior(ptree.behaviour.Behaviour):
         return ins_name
 
     def __init__(self,*args):
-        name = self.__class__.__name__
-        if len(args)>0:
-            name = f'{name}({",".join(list(args))})'
-        self.name = name
+        self.name = Bahavior.get_ins_name(*args)
         #get valid args
         # self.valid_arg_list = []
         # lines = self.valid_params.strip().splitlines()

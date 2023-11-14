@@ -7,14 +7,15 @@ import grpc
 
 from explore import Explore
 
-sys.path.append('/')
-sys.path.append('../navigate/')
+sys.path.append('./')
+sys.path.append('../')
 
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from robowaiter.proto import GrabSim_pb2_grpc, GrabSim_pb2
+import GrabSim_pb2_grpc
+import GrabSim_pb2
 
 channel = grpc.insecure_channel('localhost:30001', options=[
     ('grpc.max_send_message_length', 1024 * 1024 * 1024),

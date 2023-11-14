@@ -1,7 +1,327 @@
 selector{
-cond Is(AC,On)
+cond Is(Floor,Clean)
 sequence{
-cond Is(AC,Off)
-act Turn(AC,On)
+cond Holding(Nothing)
+act Clean(Floor)
+}
+sequence{
+cond Holding(Milk), At(Robot,Table2)
+act PutDown(Milk,Table2)
+}
+sequence{
+cond Holding(Milk), At(Robot,WaterTable)
+act PutDown(Milk,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(Milk)
+act PutDown(Milk,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(Milk)
+act PutDown(Milk,Bar)
+}
+sequence{
+cond Holding(Milk), At(Robot,Table1)
+act PutDown(Milk,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(Milk)
+act PutDown(Milk,Table3)
+}
+sequence{
+cond Holding(Milk), At(Robot,Bar2)
+act PutDown(Milk,Bar2)
+}
+sequence{
+cond Holding(Coffee), At(Robot,Table2)
+act PutDown(Coffee,Table2)
+}
+sequence{
+cond At(Robot,WaterTable), Holding(Coffee)
+act PutDown(Coffee,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(Coffee)
+act PutDown(Coffee,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(Coffee)
+act PutDown(Coffee,Bar)
+}
+sequence{
+cond At(Robot,Table1), Holding(Coffee)
+act PutDown(Coffee,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(Coffee)
+act PutDown(Coffee,Table3)
+}
+sequence{
+cond At(Robot,Bar2), Holding(Coffee)
+act PutDown(Coffee,Bar2)
+}
+sequence{
+cond Holding(Softdrink), At(Robot,Table2)
+act PutDown(Softdrink,Table2)
+}
+sequence{
+cond Holding(Softdrink), At(Robot,WaterTable)
+act PutDown(Softdrink,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(Softdrink)
+act PutDown(Softdrink,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(Softdrink)
+act PutDown(Softdrink,Bar)
+}
+sequence{
+cond Holding(Softdrink), At(Robot,Table1)
+act PutDown(Softdrink,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(Softdrink)
+act PutDown(Softdrink,Table3)
+}
+sequence{
+cond Holding(Softdrink), At(Robot,Bar2)
+act PutDown(Softdrink,Bar2)
+}
+sequence{
+cond Holding(MilkDrink), At(Robot,Table2)
+act PutDown(MilkDrink,Table2)
+}
+sequence{
+cond Holding(MilkDrink), At(Robot,WaterTable)
+act PutDown(MilkDrink,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(MilkDrink)
+act PutDown(MilkDrink,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(MilkDrink)
+act PutDown(MilkDrink,Bar)
+}
+sequence{
+cond Holding(MilkDrink), At(Robot,Table1)
+act PutDown(MilkDrink,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(MilkDrink)
+act PutDown(MilkDrink,Table3)
+}
+sequence{
+cond Holding(MilkDrink), At(Robot,Bar2)
+act PutDown(MilkDrink,Bar2)
+}
+sequence{
+cond Holding(Water), At(Robot,Table2)
+act PutDown(Water,Table2)
+}
+sequence{
+cond Holding(Water), At(Robot,WaterTable)
+act PutDown(Water,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(Water)
+act PutDown(Water,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(Water)
+act PutDown(Water,Bar)
+}
+sequence{
+cond Holding(Water), At(Robot,Table1)
+act PutDown(Water,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(Water)
+act PutDown(Water,Table3)
+}
+sequence{
+cond Holding(Water), At(Robot,Bar2)
+act PutDown(Water,Bar2)
+}
+sequence{
+cond Holding(ADMilk), At(Robot,Table2)
+act PutDown(ADMilk,Table2)
+}
+sequence{
+cond At(Robot,WaterTable), Holding(ADMilk)
+act PutDown(ADMilk,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(ADMilk)
+act PutDown(ADMilk,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(ADMilk)
+act PutDown(ADMilk,Bar)
+}
+sequence{
+cond At(Robot,Table1), Holding(ADMilk)
+act PutDown(ADMilk,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(ADMilk)
+act PutDown(ADMilk,Table3)
+}
+sequence{
+cond At(Robot,Bar2), Holding(ADMilk)
+act PutDown(ADMilk,Bar2)
+}
+sequence{
+cond At(Robot,Table2), Holding(VacuumCup)
+act PutDown(VacuumCup,Table2)
+}
+sequence{
+cond At(Robot,WaterTable), Holding(VacuumCup)
+act PutDown(VacuumCup,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(VacuumCup)
+act PutDown(VacuumCup,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(VacuumCup)
+act PutDown(VacuumCup,Bar)
+}
+sequence{
+cond At(Robot,Table1), Holding(VacuumCup)
+act PutDown(VacuumCup,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(VacuumCup)
+act PutDown(VacuumCup,Table3)
+}
+sequence{
+cond At(Robot,Bar2), Holding(VacuumCup)
+act PutDown(VacuumCup,Bar2)
+}
+sequence{
+cond Holding(BottledDrink), At(Robot,Table2)
+act PutDown(BottledDrink,Table2)
+}
+sequence{
+cond Holding(BottledDrink), At(Robot,WaterTable)
+act PutDown(BottledDrink,WaterTable)
+}
+sequence{
+cond At(Robot,CoffeeTable), Holding(BottledDrink)
+act PutDown(BottledDrink,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(BottledDrink)
+act PutDown(BottledDrink,Bar)
+}
+sequence{
+cond Holding(BottledDrink), At(Robot,Table1)
+act PutDown(BottledDrink,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(BottledDrink)
+act PutDown(BottledDrink,Table3)
+}
+sequence{
+cond Holding(BottledDrink), At(Robot,Bar2)
+act PutDown(BottledDrink,Bar2)
+}
+sequence{
+cond Holding(Dessert), At(Robot,Table2)
+act PutDown(Dessert,Table2)
+}
+sequence{
+cond Holding(Dessert), At(Robot,WaterTable)
+act PutDown(Dessert,WaterTable)
+}
+sequence{
+cond Holding(Dessert), At(Robot,CoffeeTable)
+act PutDown(Dessert,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(Dessert)
+act PutDown(Dessert,Bar)
+}
+sequence{
+cond Holding(Dessert), At(Robot,Table1)
+act PutDown(Dessert,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(Dessert)
+act PutDown(Dessert,Table3)
+}
+sequence{
+cond Holding(Dessert), At(Robot,Bar2)
+act PutDown(Dessert,Bar2)
+}
+sequence{
+cond Holding(Yogurt), At(Robot,Table2)
+act PutDown(Yogurt,Table2)
+}
+sequence{
+cond Holding(Yogurt), At(Robot,WaterTable)
+act PutDown(Yogurt,WaterTable)
+}
+sequence{
+cond Holding(Yogurt), At(Robot,CoffeeTable)
+act PutDown(Yogurt,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar), Holding(Yogurt)
+act PutDown(Yogurt,Bar)
+}
+sequence{
+cond Holding(Yogurt), At(Robot,Table1)
+act PutDown(Yogurt,Table1)
+}
+sequence{
+cond At(Robot,Table3), Holding(Yogurt)
+act PutDown(Yogurt,Table3)
+}
+sequence{
+cond Holding(Yogurt), At(Robot,Bar2)
+act PutDown(Yogurt,Bar2)
+}
+sequence{
+cond Holding(Milk)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(Coffee)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(Softdrink)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(MilkDrink)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(Water)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(ADMilk)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(VacuumCup)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(BottledDrink)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(Dessert)
+act MoveTo(Table2)
+}
+sequence{
+cond Holding(Yogurt)
+act MoveTo(Table2)
 }
 }

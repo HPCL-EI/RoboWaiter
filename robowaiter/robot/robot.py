@@ -48,7 +48,8 @@ class Robot(object):
             print("\n--------------------")
             print(f"首次运行行为树扩展算法，收集到{len(self.action_list)}个有效动作:")
             for a in self.action_list:
-                print(a.name)
+                if "Turn" in a.name:
+                    print(a.name)
             print("--------------------\n")
 
 

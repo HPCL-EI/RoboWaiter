@@ -108,7 +108,7 @@ def enumerate_goal_states(total: int):
     if count_vln < point_15:
         list_vln *= point_15 // count_vln
         for i in range(0, point_15 - len(list_vln)):
-            list_vln.append(single_predict_generation(['Robot'], Place, 'at'))
+            list_vln.append('{%s}' % single_predict_generation(['Robot'], Place, 'at'))
     # print(f'VLN 任务的目标状态数：{count_vln}')
     res += list_vln
 
@@ -118,7 +118,7 @@ def enumerate_goal_states(total: int):
     if count_vlm_1 < point_15:
         list_vlm_1 *= point_15 // count_vlm_1
         for i in range(0, point_15 - len(list_vlm_1)):
-            list_vlm_1.append(single_predict_generation(Object, Place, 'on'))
+            list_vlm_1.append('{%s}' % (single_predict_generation(Object, Place, 'on')))
     res += list_vlm_1
 
     # goal states for VLM-2, 0.15
@@ -127,7 +127,7 @@ def enumerate_goal_states(total: int):
     if count_vlm_2 < point_15:
         list_vlm_2 *= point_15 // count_vlm_2
         for i in range(0, point_15 - len(list_vlm_2)):
-            list_vlm_2.append(single_predict_generation(Operable, ['0', '1'], 'is'))
+            list_vlm_2.append('{%s}' % single_predict_generation(Operable, ['0', '1'], 'is'))
     res += list_vlm_2
 
     # goal states for VLM-3, 0.1
@@ -136,7 +136,7 @@ def enumerate_goal_states(total: int):
     if count_vlm_3 < point_10:
         list_vlm_3 *= point_10 // count_vlm_3
         for i in range(0, point_10 - len(list_vlm_3)):
-            list_vlm_3.append(single_predict_generation(Object, None, 'hold'))
+            list_vlm_3.append('{%s}' % single_predict_generation(Object, None, 'hold'))
     res += list_vlm_3
 
     # goal states for OT, 0.15
@@ -145,7 +145,7 @@ def enumerate_goal_states(total: int):
     if count_ot < point_15:
         list_ot *= point_15 // count_ot
         for i in range(0, point_15 - len(list_ot)):
-            list_ot.append(single_predict_generation(Cookable, Place, 'on'))
+            list_ot.append('{%s}' % single_predict_generation(Cookable, Place, 'on'))
     res += list_ot
 
     # goal states for compound-1, 0.1

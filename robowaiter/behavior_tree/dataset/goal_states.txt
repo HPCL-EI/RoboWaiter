@@ -747,7 +747,7 @@
 {At(Robot,Table1)}
 {At(Robot,Table2)}
 {At(Robot,Table3)}
-At(Robot, Table1)
+{At(Robot, Table3)}
 {On(Softdrink,Bar)}
 {On(Softdrink,WaterTable)}
 {On(Softdrink,CoffeeTable)}
@@ -1476,28 +1476,28 @@ At(Robot, Table1)
 {On(Nothing,Table1)}
 {On(Nothing,Table2)}
 {On(Nothing,Table3)}
-On(Nothing, WaterTable)
-On(MilkDrink, CoffeeTable)
-On(Softdrink, Bar2)
-On(Softdrink, WaterTable)
-On(MilkDrink, CoffeeTable)
-On(Yogurt, Table2)
-On(BottledDrink, Table1)
-On(Softdrink, Table1)
-On(MilkDrink, WaterTable)
-On(Softdrink, WaterTable)
-On(VacuumCup, Table1)
-On(Yogurt, Table1)
-On(ADMilk, Table3)
-On(BottledDrink, Table2)
-On(Softdrink, Bar2)
-On(Nothing, Bar)
-On(ADMilk, Bar2)
-On(ADMilk, Table3)
-On(BottledDrink, Bar)
-On(Yogurt, Bar)
-On(VacuumCup, Table3)
-On(MilkDrink, Bar2)
+{On(VacuumCup, Table2)}
+{On(VacuumCup, WaterTable)}
+{On(BottledDrink, Table2)}
+{On(MilkDrink, Table2)}
+{On(ADMilk, CoffeeTable)}
+{On(Softdrink, Table2)}
+{On(Nothing, WaterTable)}
+{On(Milk, Bar)}
+{On(Milk, WaterTable)}
+{On(Nothing, Bar2)}
+{On(BottledDrink, CoffeeTable)}
+{On(Nothing, Table3)}
+{On(Softdrink, Table2)}
+{On(Nothing, WaterTable)}
+{On(BottledDrink, WaterTable)}
+{On(Milk, Table3)}
+{On(Milk, CoffeeTable)}
+{On(Nothing, Table1)}
+{On(MilkDrink, Bar2)}
+{On(ADMilk, Table3)}
+{On(BottledDrink, Table1)}
+{On(Yogurt, WaterTable)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2744,10 +2744,10 @@ On(MilkDrink, Bar2)
 {Holding(Milk)}
 {Holding(VacuumCup)}
 {Holding(Nothing)}
-Holding(Nothing)
-Holding(Nothing)
-Holding(MilkDrink)
-Holding(VacuumCup)
+{Holding(Softdrink)}
+{Holding(Milk)}
+{Holding(BottledDrink)}
+{Holding(Nothing)}
 {On(Coffee,Bar)}
 {On(Coffee,WaterTable)}
 {On(Coffee,CoffeeTable)}
@@ -3483,21 +3483,21 @@ Holding(VacuumCup)
 {On(Dessert,Table1)}
 {On(Dessert,Table2)}
 {On(Dessert,Table3)}
-On(Dessert, Bar2)
-On(Dessert, Bar2)
-On(Water, Bar)
-On(Water, Table1)
-On(Water, Bar2)
-On(Coffee, Bar)
-On(Water, Bar)
-On(Coffee, Bar2)
-On(Dessert, Table3)
-On(Coffee, WaterTable)
-On(Dessert, WaterTable)
-On(Water, Table3)
-On(Coffee, Table2)
-On(Water, Table3)
-On(Dessert, Table2)
+{On(Coffee, CoffeeTable)}
+{On(Water, WaterTable)}
+{On(Water, CoffeeTable)}
+{On(Dessert, WaterTable)}
+{On(Water, Table1)}
+{On(Coffee, WaterTable)}
+{On(Water, CoffeeTable)}
+{On(Dessert, Table1)}
+{On(Coffee, Bar)}
+{On(Coffee, Table3)}
+{On(Coffee, Bar2)}
+{On(Coffee, Table2)}
+{On(Water, Bar2)}
+{On(Dessert, Bar)}
+{On(Coffee, WaterTable)}
 {At(Robot,Bar),On(Softdrink,Bar)}
 {At(Robot,Bar),On(Softdrink,WaterTable)}
 {At(Robot,Bar),On(Softdrink,CoffeeTable)}

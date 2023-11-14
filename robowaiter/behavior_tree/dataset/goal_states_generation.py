@@ -202,14 +202,14 @@ def enumerate_goal_states(total: int):
     with open(os.path.join('./goal_states.txt'), 'w+') as file:
         for i in res:
             if 'Is' in i and 'ACTemperature' in i:
-                i = re.sub('0', 'Up', i)
-                i = re.sub('1', 'Down', i)
+                i = re.sub(',0', ',Up', i)
+                i = re.sub(',1', ',Down', i)
             elif 'Is' in i and ('AC' in i or 'HallLight' in i or 'TubeLight' in i or 'Curtain' in i):
-                i = re.sub('0', 'Off', i)
-                i = re.sub('1', 'On', i)
+                i = re.sub(',0', ',Off', i)
+                i = re.sub(',1', ',On', i)
             elif 'Is' in i and ('Chairs' in i or 'Floor' in i or 'Table' in i):
-                i = re.sub('0', 'Dirty', i)
-                i = re.sub('1', 'Clean', i)
+                i = re.sub(',0', ',Dirty', i)
+                i = re.sub(',1', ',Clean', i)
 
             file.write(i + '\n')
 

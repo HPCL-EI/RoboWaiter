@@ -747,7 +747,7 @@
 {At(Robot,Table1)}
 {At(Robot,Table2)}
 {At(Robot,Table3)}
-{At(Robot, CoffeeTable)}
+{At(Robot, Table3)}
 {On(Softdrink,Bar)}
 {On(Softdrink,WaterTable)}
 {On(Softdrink,CoffeeTable)}
@@ -1483,21 +1483,21 @@
 {On(VacuumCup,Table1)}
 {On(VacuumCup,Table2)}
 {On(VacuumCup,Table3)}
-{On(VacuumCup, Bar)}
-{On(Softdrink, Table3)}
 {On(MilkDrink, Bar2)}
-{On(Softdrink, CoffeeTable)}
-{On(BottledDrink, WaterTable)}
-{On(BottledDrink, Table3)}
+{On(BottledDrink, Bar2)}
+{On(VacuumCup, CoffeeTable)}
+{On(BottledDrink, Bar)}
+{On(VacuumCup, Bar2)}
+{On(BottledDrink, Table2)}
 {On(Yogurt, Table1)}
-{On(Softdrink, WaterTable)}
-{On(Softdrink, CoffeeTable)}
-{On(ADMilk, Bar2)}
-{On(Softdrink, CoffeeTable)}
-{On(Milk, WaterTable)}
-{On(Milk, Table3)}
-{On(Milk, WaterTable)}
-{On(Softdrink, Bar)}
+{On(Yogurt, CoffeeTable)}
+{On(BottledDrink, CoffeeTable)}
+{On(BottledDrink, Bar2)}
+{On(Milk, Bar2)}
+{On(ADMilk, Bar)}
+{On(Milk, Table2)}
+{On(Yogurt, Bar2)}
+{On(ADMilk, WaterTable)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2234,20 +2234,20 @@
 {Is(Floor,Clean)}
 {Is(Table,Dirty)}
 {Is(Table,Clean)}
-{Is(Chairs, Clean)}
-{Is(AC, On)}
-{Is(Floor, Clean)}
-{Is(Chairs, Clean)}
-{Is(Curtain, On)}
-{Is(TubeLight, On)}
-{Is(HallLight, Off)}
-{Is(Table, Clean)}
-{Is(Curtain, On)}
-{Is(AC, Off)}
-{Is(Table, Clean)}
-{Is(HallLight, On)}
-{Is(Curtain, Off)}
-{Is(Chairs, Clean)}
+{Is(AC, 1)}
+{Is(HallLight, 0)}
+{Is(HallLight, 0)}
+{Is(AC, 0)}
+{Is(Chairs, 1)}
+{Is(Table, 1)}
+{Is(HallLight, 1)}
+{Is(AC, 1)}
+{Is(Floor, 1)}
+{Is(HallLight, 1)}
+{Is(Chairs, 0)}
+{Is(Table, 0)}
+{Is(TubeLight, 1)}
+{Is(HallLight, 1)}
 {Holding(Softdrink)}
 {Holding(BottledDrink)}
 {Holding(Yogurt)}
@@ -2744,10 +2744,10 @@
 {Holding(Milk)}
 {Holding(VacuumCup)}
 {Holding(Nothing)}
-{Holding(ADMilk)}
-{Holding(VacuumCup)}
-{Holding(Milk)}
-{Holding(Milk)}
+{Holding(BottledDrink)}
+{Holding(Yogurt)}
+{Holding(BottledDrink)}
+{Holding(Softdrink)}
 {On(Coffee,Bar)}
 {On(Coffee,WaterTable)}
 {On(Coffee,CoffeeTable)}
@@ -3483,21 +3483,21 @@
 {On(Dessert,Table1)}
 {On(Dessert,Table2)}
 {On(Dessert,Table3)}
-{On(Water, Table3)}
+{On(Coffee, Bar)}
 {On(Coffee, Bar)}
 {On(Coffee, Bar2)}
-{On(Water, Table1)}
-{On(Coffee, Bar)}
-{On(Water, Bar)}
-{On(Water, WaterTable)}
-{On(Dessert, CoffeeTable)}
-{On(Water, Table1)}
-{On(Dessert, WaterTable)}
-{On(Coffee, WaterTable)}
-{On(Coffee, Table3)}
 {On(Coffee, Table1)}
+{On(Water, Bar)}
+{On(Coffee, Table1)}
+{On(Coffee, Table1)}
+{On(Water, Bar)}
+{On(Dessert, Table2)}
 {On(Water, WaterTable)}
-{On(Water, CoffeeTable)}
+{On(Dessert, WaterTable)}
+{On(Water, Bar)}
+{On(Dessert, Table2)}
+{On(Coffee, Table1)}
+{On(Coffee, Table1)}
 {At(Robot,Bar),On(Softdrink,Bar)}
 {At(Robot,Bar),On(Softdrink,WaterTable)}
 {At(Robot,Bar),On(Softdrink,CoffeeTable)}
@@ -4062,22 +4062,22 @@
 {At(Robot,Bar2),Is(Floor,Clean)}
 {At(Robot,Bar2),Is(Table,Dirty)}
 {At(Robot,Bar2),Is(Table,Clean)}
-{At(Robot,TableOn),Is(AC,Off)}
-{At(Robot,TableOn),Is(AC,On)}
-{At(Robot,TableDown),Is(ACTemperature,Up)}
-{At(Robot,TableDown),Is(ACTemperature,Down)}
-{At(Robot,TableOn),Is(HallLight,Off)}
-{At(Robot,TableOn),Is(HallLight,On)}
-{At(Robot,TableOn),Is(TubeLight,Off)}
-{At(Robot,TableOn),Is(TubeLight,On)}
-{At(Robot,TableOn),Is(Curtain,Off)}
-{At(Robot,TableOn),Is(Curtain,On)}
-{At(Robot,TableClean),Is(Chairs,Dirty)}
-{At(Robot,TableClean),Is(Chairs,Clean)}
-{At(Robot,TableClean),Is(Floor,Dirty)}
-{At(Robot,TableClean),Is(Floor,Clean)}
-{At(Robot,TableClean),Is(Table,Dirty)}
-{At(Robot,TableClean),Is(Table,Clean)}
+{At(Robot,Table1),Is(AC,Off)}
+{At(Robot,Table1),Is(AC,On)}
+{At(Robot,Table1),Is(ACTemperature,Up)}
+{At(Robot,Table1),Is(ACTemperature,Down)}
+{At(Robot,Table1),Is(HallLight,Off)}
+{At(Robot,Table1),Is(HallLight,On)}
+{At(Robot,Table1),Is(TubeLight,Off)}
+{At(Robot,Table1),Is(TubeLight,On)}
+{At(Robot,Table1),Is(Curtain,Off)}
+{At(Robot,Table1),Is(Curtain,On)}
+{At(Robot,Table1),Is(Chairs,Dirty)}
+{At(Robot,Table1),Is(Chairs,Clean)}
+{At(Robot,Table1),Is(Floor,Dirty)}
+{At(Robot,Table1),Is(Floor,Clean)}
+{At(Robot,Table1),Is(Table,Dirty)}
+{At(Robot,Table1),Is(Table,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4174,22 +4174,22 @@
 {At(Robot,Bar2),Is(Floor,Clean)}
 {At(Robot,Bar2),Is(Table,Dirty)}
 {At(Robot,Bar2),Is(Table,Clean)}
-{At(Robot,TableOn),Is(AC,Off)}
-{At(Robot,TableOn),Is(AC,On)}
-{At(Robot,TableDown),Is(ACTemperature,Up)}
-{At(Robot,TableDown),Is(ACTemperature,Down)}
-{At(Robot,TableOn),Is(HallLight,Off)}
-{At(Robot,TableOn),Is(HallLight,On)}
-{At(Robot,TableOn),Is(TubeLight,Off)}
-{At(Robot,TableOn),Is(TubeLight,On)}
-{At(Robot,TableOn),Is(Curtain,Off)}
-{At(Robot,TableOn),Is(Curtain,On)}
-{At(Robot,TableClean),Is(Chairs,Dirty)}
-{At(Robot,TableClean),Is(Chairs,Clean)}
-{At(Robot,TableClean),Is(Floor,Dirty)}
-{At(Robot,TableClean),Is(Floor,Clean)}
-{At(Robot,TableClean),Is(Table,Dirty)}
-{At(Robot,TableClean),Is(Table,Clean)}
+{At(Robot,Table1),Is(AC,Off)}
+{At(Robot,Table1),Is(AC,On)}
+{At(Robot,Table1),Is(ACTemperature,Up)}
+{At(Robot,Table1),Is(ACTemperature,Down)}
+{At(Robot,Table1),Is(HallLight,Off)}
+{At(Robot,Table1),Is(HallLight,On)}
+{At(Robot,Table1),Is(TubeLight,Off)}
+{At(Robot,Table1),Is(TubeLight,On)}
+{At(Robot,Table1),Is(Curtain,Off)}
+{At(Robot,Table1),Is(Curtain,On)}
+{At(Robot,Table1),Is(Chairs,Dirty)}
+{At(Robot,Table1),Is(Chairs,Clean)}
+{At(Robot,Table1),Is(Floor,Dirty)}
+{At(Robot,Table1),Is(Floor,Clean)}
+{At(Robot,Table1),Is(Table,Dirty)}
+{At(Robot,Table1),Is(Table,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4286,22 +4286,22 @@
 {At(Robot,Bar2),Is(Floor,Clean)}
 {At(Robot,Bar2),Is(Table,Dirty)}
 {At(Robot,Bar2),Is(Table,Clean)}
-{At(Robot,TableOn),Is(AC,Off)}
-{At(Robot,TableOn),Is(AC,On)}
-{At(Robot,TableDown),Is(ACTemperature,Up)}
-{At(Robot,TableDown),Is(ACTemperature,Down)}
-{At(Robot,TableOn),Is(HallLight,Off)}
-{At(Robot,TableOn),Is(HallLight,On)}
-{At(Robot,TableOn),Is(TubeLight,Off)}
-{At(Robot,TableOn),Is(TubeLight,On)}
-{At(Robot,TableOn),Is(Curtain,Off)}
-{At(Robot,TableOn),Is(Curtain,On)}
-{At(Robot,TableClean),Is(Chairs,Dirty)}
-{At(Robot,TableClean),Is(Chairs,Clean)}
-{At(Robot,TableClean),Is(Floor,Dirty)}
-{At(Robot,TableClean),Is(Floor,Clean)}
-{At(Robot,TableClean),Is(Table,Dirty)}
-{At(Robot,TableClean),Is(Table,Clean)}
+{At(Robot,Table1),Is(AC,Off)}
+{At(Robot,Table1),Is(AC,On)}
+{At(Robot,Table1),Is(ACTemperature,Up)}
+{At(Robot,Table1),Is(ACTemperature,Down)}
+{At(Robot,Table1),Is(HallLight,Off)}
+{At(Robot,Table1),Is(HallLight,On)}
+{At(Robot,Table1),Is(TubeLight,Off)}
+{At(Robot,Table1),Is(TubeLight,On)}
+{At(Robot,Table1),Is(Curtain,Off)}
+{At(Robot,Table1),Is(Curtain,On)}
+{At(Robot,Table1),Is(Chairs,Dirty)}
+{At(Robot,Table1),Is(Chairs,Clean)}
+{At(Robot,Table1),Is(Floor,Dirty)}
+{At(Robot,Table1),Is(Floor,Clean)}
+{At(Robot,Table1),Is(Table,Dirty)}
+{At(Robot,Table1),Is(Table,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4398,22 +4398,22 @@
 {At(Robot,Bar2),Is(Floor,Clean)}
 {At(Robot,Bar2),Is(Table,Dirty)}
 {At(Robot,Bar2),Is(Table,Clean)}
-{At(Robot,TableOn),Is(AC,Off)}
-{At(Robot,TableOn),Is(AC,On)}
-{At(Robot,TableDown),Is(ACTemperature,Up)}
-{At(Robot,TableDown),Is(ACTemperature,Down)}
-{At(Robot,TableOn),Is(HallLight,Off)}
-{At(Robot,TableOn),Is(HallLight,On)}
-{At(Robot,TableOn),Is(TubeLight,Off)}
-{At(Robot,TableOn),Is(TubeLight,On)}
-{At(Robot,TableOn),Is(Curtain,Off)}
-{At(Robot,TableOn),Is(Curtain,On)}
-{At(Robot,TableClean),Is(Chairs,Dirty)}
-{At(Robot,TableClean),Is(Chairs,Clean)}
-{At(Robot,TableClean),Is(Floor,Dirty)}
-{At(Robot,TableClean),Is(Floor,Clean)}
-{At(Robot,TableClean),Is(Table,Dirty)}
-{At(Robot,TableClean),Is(Table,Clean)}
+{At(Robot,Table1),Is(AC,Off)}
+{At(Robot,Table1),Is(AC,On)}
+{At(Robot,Table1),Is(ACTemperature,Up)}
+{At(Robot,Table1),Is(ACTemperature,Down)}
+{At(Robot,Table1),Is(HallLight,Off)}
+{At(Robot,Table1),Is(HallLight,On)}
+{At(Robot,Table1),Is(TubeLight,Off)}
+{At(Robot,Table1),Is(TubeLight,On)}
+{At(Robot,Table1),Is(Curtain,Off)}
+{At(Robot,Table1),Is(Curtain,On)}
+{At(Robot,Table1),Is(Chairs,Dirty)}
+{At(Robot,Table1),Is(Chairs,Clean)}
+{At(Robot,Table1),Is(Floor,Dirty)}
+{At(Robot,Table1),Is(Floor,Clean)}
+{At(Robot,Table1),Is(Table,Dirty)}
+{At(Robot,Table1),Is(Table,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4562,22 +4562,22 @@
 {On(Coffee,Bar2),Is(Floor,Clean)}
 {On(Coffee,Bar2),Is(Table,Dirty)}
 {On(Coffee,Bar2),Is(Table,Clean)}
-{On(Coffee,TableOn),Is(AC,Off)}
-{On(Coffee,TableOn),Is(AC,On)}
-{On(Coffee,TableDown),Is(ACTemperature,Up)}
-{On(Coffee,TableDown),Is(ACTemperature,Down)}
-{On(Coffee,TableOn),Is(HallLight,Off)}
-{On(Coffee,TableOn),Is(HallLight,On)}
-{On(Coffee,TableOn),Is(TubeLight,Off)}
-{On(Coffee,TableOn),Is(TubeLight,On)}
-{On(Coffee,TableOn),Is(Curtain,Off)}
-{On(Coffee,TableOn),Is(Curtain,On)}
-{On(Coffee,TableClean),Is(Chairs,Dirty)}
-{On(Coffee,TableClean),Is(Chairs,Clean)}
-{On(Coffee,TableClean),Is(Floor,Dirty)}
-{On(Coffee,TableClean),Is(Floor,Clean)}
-{On(Coffee,TableClean),Is(Table,Dirty)}
-{On(Coffee,TableClean),Is(Table,Clean)}
+{On(Coffee,Table1),Is(AC,Off)}
+{On(Coffee,Table1),Is(AC,On)}
+{On(Coffee,Table1),Is(ACTemperature,Up)}
+{On(Coffee,Table1),Is(ACTemperature,Down)}
+{On(Coffee,Table1),Is(HallLight,Off)}
+{On(Coffee,Table1),Is(HallLight,On)}
+{On(Coffee,Table1),Is(TubeLight,Off)}
+{On(Coffee,Table1),Is(TubeLight,On)}
+{On(Coffee,Table1),Is(Curtain,Off)}
+{On(Coffee,Table1),Is(Curtain,On)}
+{On(Coffee,Table1),Is(Chairs,Dirty)}
+{On(Coffee,Table1),Is(Chairs,Clean)}
+{On(Coffee,Table1),Is(Floor,Dirty)}
+{On(Coffee,Table1),Is(Floor,Clean)}
+{On(Coffee,Table1),Is(Table,Dirty)}
+{On(Coffee,Table1),Is(Table,Clean)}
 {On(Coffee,Table2),Is(AC,Off)}
 {On(Coffee,Table2),Is(AC,On)}
 {On(Coffee,Table2),Is(ACTemperature,Up)}
@@ -4674,22 +4674,22 @@
 {On(Water,Bar2),Is(Floor,Clean)}
 {On(Water,Bar2),Is(Table,Dirty)}
 {On(Water,Bar2),Is(Table,Clean)}
-{On(Water,TableOn),Is(AC,Off)}
-{On(Water,TableOn),Is(AC,On)}
-{On(Water,TableDown),Is(ACTemperature,Up)}
-{On(Water,TableDown),Is(ACTemperature,Down)}
-{On(Water,TableOn),Is(HallLight,Off)}
-{On(Water,TableOn),Is(HallLight,On)}
-{On(Water,TableOn),Is(TubeLight,Off)}
-{On(Water,TableOn),Is(TubeLight,On)}
-{On(Water,TableOn),Is(Curtain,Off)}
-{On(Water,TableOn),Is(Curtain,On)}
-{On(Water,TableClean),Is(Chairs,Dirty)}
-{On(Water,TableClean),Is(Chairs,Clean)}
-{On(Water,TableClean),Is(Floor,Dirty)}
-{On(Water,TableClean),Is(Floor,Clean)}
-{On(Water,TableClean),Is(Table,Dirty)}
-{On(Water,TableClean),Is(Table,Clean)}
+{On(Water,Table1),Is(AC,Off)}
+{On(Water,Table1),Is(AC,On)}
+{On(Water,Table1),Is(ACTemperature,Up)}
+{On(Water,Table1),Is(ACTemperature,Down)}
+{On(Water,Table1),Is(HallLight,Off)}
+{On(Water,Table1),Is(HallLight,On)}
+{On(Water,Table1),Is(TubeLight,Off)}
+{On(Water,Table1),Is(TubeLight,On)}
+{On(Water,Table1),Is(Curtain,Off)}
+{On(Water,Table1),Is(Curtain,On)}
+{On(Water,Table1),Is(Chairs,Dirty)}
+{On(Water,Table1),Is(Chairs,Clean)}
+{On(Water,Table1),Is(Floor,Dirty)}
+{On(Water,Table1),Is(Floor,Clean)}
+{On(Water,Table1),Is(Table,Dirty)}
+{On(Water,Table1),Is(Table,Clean)}
 {On(Water,Table2),Is(AC,Off)}
 {On(Water,Table2),Is(AC,On)}
 {On(Water,Table2),Is(ACTemperature,Up)}
@@ -4786,22 +4786,22 @@
 {On(Dessert,Bar2),Is(Floor,Clean)}
 {On(Dessert,Bar2),Is(Table,Dirty)}
 {On(Dessert,Bar2),Is(Table,Clean)}
-{On(Dessert,TableOn),Is(AC,Off)}
-{On(Dessert,TableOn),Is(AC,On)}
-{On(Dessert,TableDown),Is(ACTemperature,Up)}
-{On(Dessert,TableDown),Is(ACTemperature,Down)}
-{On(Dessert,TableOn),Is(HallLight,Off)}
-{On(Dessert,TableOn),Is(HallLight,On)}
-{On(Dessert,TableOn),Is(TubeLight,Off)}
-{On(Dessert,TableOn),Is(TubeLight,On)}
-{On(Dessert,TableOn),Is(Curtain,Off)}
-{On(Dessert,TableOn),Is(Curtain,On)}
-{On(Dessert,TableClean),Is(Chairs,Dirty)}
-{On(Dessert,TableClean),Is(Chairs,Clean)}
-{On(Dessert,TableClean),Is(Floor,Dirty)}
-{On(Dessert,TableClean),Is(Floor,Clean)}
-{On(Dessert,TableClean),Is(Table,Dirty)}
-{On(Dessert,TableClean),Is(Table,Clean)}
+{On(Dessert,Table1),Is(AC,Off)}
+{On(Dessert,Table1),Is(AC,On)}
+{On(Dessert,Table1),Is(ACTemperature,Up)}
+{On(Dessert,Table1),Is(ACTemperature,Down)}
+{On(Dessert,Table1),Is(HallLight,Off)}
+{On(Dessert,Table1),Is(HallLight,On)}
+{On(Dessert,Table1),Is(TubeLight,Off)}
+{On(Dessert,Table1),Is(TubeLight,On)}
+{On(Dessert,Table1),Is(Curtain,Off)}
+{On(Dessert,Table1),Is(Curtain,On)}
+{On(Dessert,Table1),Is(Chairs,Dirty)}
+{On(Dessert,Table1),Is(Chairs,Clean)}
+{On(Dessert,Table1),Is(Floor,Dirty)}
+{On(Dessert,Table1),Is(Floor,Clean)}
+{On(Dessert,Table1),Is(Table,Dirty)}
+{On(Dessert,Table1),Is(Table,Clean)}
 {On(Dessert,Table2),Is(AC,Off)}
 {On(Dessert,Table2),Is(AC,On)}
 {On(Dessert,Table2),Is(ACTemperature,Up)}
@@ -4898,22 +4898,22 @@
 {On(Coffee,Bar2),Is(Floor,Clean)}
 {On(Coffee,Bar2),Is(Table,Dirty)}
 {On(Coffee,Bar2),Is(Table,Clean)}
-{On(Coffee,TableOn),Is(AC,Off)}
-{On(Coffee,TableOn),Is(AC,On)}
-{On(Coffee,TableDown),Is(ACTemperature,Up)}
-{On(Coffee,TableDown),Is(ACTemperature,Down)}
-{On(Coffee,TableOn),Is(HallLight,Off)}
-{On(Coffee,TableOn),Is(HallLight,On)}
-{On(Coffee,TableOn),Is(TubeLight,Off)}
-{On(Coffee,TableOn),Is(TubeLight,On)}
-{On(Coffee,TableOn),Is(Curtain,Off)}
-{On(Coffee,TableOn),Is(Curtain,On)}
-{On(Coffee,TableClean),Is(Chairs,Dirty)}
-{On(Coffee,TableClean),Is(Chairs,Clean)}
-{On(Coffee,TableClean),Is(Floor,Dirty)}
-{On(Coffee,TableClean),Is(Floor,Clean)}
-{On(Coffee,TableClean),Is(Table,Dirty)}
-{On(Coffee,TableClean),Is(Table,Clean)}
+{On(Coffee,Table1),Is(AC,Off)}
+{On(Coffee,Table1),Is(AC,On)}
+{On(Coffee,Table1),Is(ACTemperature,Up)}
+{On(Coffee,Table1),Is(ACTemperature,Down)}
+{On(Coffee,Table1),Is(HallLight,Off)}
+{On(Coffee,Table1),Is(HallLight,On)}
+{On(Coffee,Table1),Is(TubeLight,Off)}
+{On(Coffee,Table1),Is(TubeLight,On)}
+{On(Coffee,Table1),Is(Curtain,Off)}
+{On(Coffee,Table1),Is(Curtain,On)}
+{On(Coffee,Table1),Is(Chairs,Dirty)}
+{On(Coffee,Table1),Is(Chairs,Clean)}
+{On(Coffee,Table1),Is(Floor,Dirty)}
+{On(Coffee,Table1),Is(Floor,Clean)}
+{On(Coffee,Table1),Is(Table,Dirty)}
+{On(Coffee,Table1),Is(Table,Clean)}
 {On(Coffee,Table2),Is(AC,Off)}
 {On(Coffee,Table2),Is(AC,On)}
 {On(Coffee,Table2),Is(ACTemperature,Up)}

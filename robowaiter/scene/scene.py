@@ -180,21 +180,13 @@ class Scene:
         )
 
     def walk_to(self, X, Y, Yaw=None, velocity=200, dis_limit=0):
-        if self.use_offset:
-            X, Y = X + loc_offset[0], Y + loc_offset[1]
-
-        if Yaw is None:
-            Yaw = self.status.rotation.Yaw
-
-        v = [X, Y, Yaw - 90, velocity, dis_limit]
-        print(v)
+        walk_v = [X,Y,Yaw,velocity,dis_limit]
         action = GrabSim_pb2.Action(
-            scene=self.sceneID,
-            action=GrabSim_pb2.Action.ActionType.WalkTo,
-            values=v
+            scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
         )
-        scene_info = stub.Do(action)
-        return scene_info
+        scene = stub.Do(action)
+
+        return scene
 
 
     def reachable_check(self, X, Y, Yaw):
@@ -418,13 +410,14 @@ class Scene:
 
     def gen_obj(self,type=5,h=100):
         # 4;冰红(盒) 5;酸奶  7:保温杯 9;冰红(瓶) 13:代语词典  14:cake 61:甜牛奶
-        type= 5  #9
+        # type= 5  #9
         scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
-        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=5),
+        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=type),
                     # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
-                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=9),
+                    # GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=9),
                     ]
+
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 

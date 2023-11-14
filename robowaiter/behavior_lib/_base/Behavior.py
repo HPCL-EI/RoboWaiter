@@ -13,15 +13,17 @@ class Bahavior(ptree.behaviour.Behaviour):
         '''
     scene = None
     print_name_prefix = ""
-    all_place = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3'}
-    all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
-                  'VacuumCup'}
+    # all_place = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3'}
+    # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
+    #               'VacuumCup'}
+    all_place = {'Bar', 'WaterTable', 'CoffeeTable'}
+    all_object = {'Coffee'}
     place_xyz_dic={
         'Bar': (247.0, 520.0, 100.0),
         'Bar2': (240.0, 40.0, 70.0),
         'WaterTable':(-70.0, 500.0, 107),
-        'CoffeeTable':(247.0, 520.0, 100.0), # 位置需要更改！！！
-        'Table1': (247.0, 520.0, 100.0),# 位置需要更改！！！
+        'CoffeeTable':(250.0, 310.0, 100.0),
+        'Table1': (340.0, 900.0, 98.0),
         'Table2': (-55.0, 0.0, 107),
         'Table3':(-55.0, 150.0, 107)
     }

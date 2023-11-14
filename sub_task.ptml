@@ -1,4 +1,26 @@
 selector{
-cond At(Robot,Table2)
-act MoveTo(Table2)
+cond On(Coffee,CoffeeTable)
+sequence{
+cond Holding(Nothing)
+act Make(Coffee)
+}
+sequence{
+cond At(Robot,CoffeeTable)
+ cond Holding(Coffee)
+act PutDown(Coffee,CoffeeTable)
+}
+sequence{
+cond At(Robot,Bar)
+ cond Holding(Coffee)
+act PutDown(Coffee,Bar)
+}
+sequence{
+cond At(Robot,WaterTable)
+ cond Holding(Coffee)
+act PutDown(Coffee,WaterTable)
+}
+sequence{
+cond Holding(Coffee)
+act MoveTo(CoffeeTable)
+}
 }

@@ -417,10 +417,11 @@ class Scene:
         return True
 
     def gen_obj(self,h=100):
-        # 4;冰红(盒) 5;酸奶  7:保温杯 9;冰红(瓶) 13:代语词典
+        # 4;冰红(盒) 5;酸奶  7:保温杯 9;冰红(瓶) 13:代语词典  14:cake 61:甜牛奶
+        type= 9  #9
         scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
-        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z = h, roll=0, pitch=0, yaw=0, type=9)]
+        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z = h, roll=0, pitch=0, yaw=0, type=type)]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 

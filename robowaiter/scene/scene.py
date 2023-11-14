@@ -418,10 +418,12 @@ class Scene:
 
     def gen_obj(self,h=100):
         # 4;冰红(盒) 5;酸奶  7:保温杯 9;冰红(瓶) 13:代语词典  14:cake 61:甜牛奶
-        type= 9  #9
         scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
-        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z = h, roll=0, pitch=0, yaw=0, type=type)]
+        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=9),
+                    # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
+                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=7),
+                    ]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 
@@ -434,11 +436,17 @@ class Scene:
         # Robot
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
         walk_v = [obj_x+50, obj_y] + [180, 180, 0]
+        if obj_y>=820 and obj_y<= 1200 and obj_x>=240 and obj_x<= 500: # 物品位于斜的抹布桌上 ([240,500],[820,1200])
+            walk_v = [obj_x+40, obj_y-35, 130, 180, 0]
+            obj_x += 3
+            obj_y += 2.5
+            # walk_v = [obj_x,obj_y-30,130, 180, 0]
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         time.sleep(1.0)
+
         # Finger
-        self.ik_control_joints(2, obj_x-9, obj_y+0.5, obj_z)   # -10, 0, 0
+        self.ik_control_joints(2, obj_x-9, obj_y, obj_z)   # -10, 0, 0
         time.sleep(3.0)
         # Grasp Obj
         print('------------------grasp_obj----------------------')
@@ -461,9 +469,6 @@ class Scene:
         angle[0] = 15
         angle[19] = -15
         angle[20] = -30
-        for i in range(18,21):
-            print("name:",scene.joints[i].name,"angle:",scene.joints[i].angle)
-        # print("angle:",angle)
         action = GrabSim_pb2.Action(scene=self.sceneID,action=GrabSim_pb2.Action.ActionType.RotateJoints,    # 弯腰
                                     values=angle)
         scene = stub.Do(action)
@@ -471,13 +476,19 @@ class Scene:
 
     def release_obj(self,release_pos):
         print("------------------Move to Realese Position----------------------")
-        walk_v = [release_pos[i] for i in range(2)]
-        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v + [180,180,0])
+        walk_v = [release_pos[i] for i in range(2)] + [180,180,0]
+        if release_pos==[340.0, 900.0, 99.0]:
+            walk_v[2] = 130
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         print("------------------release_obj----------------------")
-        self.ik_control_joints(2, release_pos[0] - 80, release_pos[1], release_pos[2])
-        time.sleep(2.0)
-        self.robo_stoop_parallel()
+        if release_pos==[340.0, 900.0, 99.0]:
+            self.ik_control_joints(2, 300.0, 935, release_pos[2])
+            time.sleep(2.0)
+        else:
+            self.ik_control_joints(2, release_pos[0] - 80, release_pos[1], release_pos[2])
+            time.sleep(2.0)
+            self.robo_stoop_parallel()
 
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Release, values=[1])
         scene = stub.Do(action)
@@ -487,7 +498,7 @@ class Scene:
         return True
 
     # 执行过程：输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
-    def op_task_execute(self,op_type,obj_id=0,yaw=180,release_pos=[240,-140]):
+    def op_task_execute(self,op_type,obj_id=0,release_pos=[240,-140]):
         self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
         if op_type in [13,14,15]:   # 调整空调:13代表按开关,14升温,15降温
             result = self.adjust_kongtiao(op_type)

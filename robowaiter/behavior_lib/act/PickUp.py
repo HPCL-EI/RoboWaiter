@@ -6,18 +6,18 @@ from robowaiter.behavior_lib._base.Behavior import Status
 class PickUp(Act):
     can_be_expanded = True
     num_args = 1
-
+    valid_args = Act.all_object
     def __init__(self, *args):
         super().__init__(*args)
         self.target_obj = self.args[0]
 
 
     @classmethod
-    def get_info(self,arg):
+    def get_info(cls,arg):
         info = {}
         info["pre"] = {f'At(Robot,{arg})','Holding(Nothing)'}
         info["add"] = {f'Holding({arg})'}
-        info["del"] = {f'Holding(Nothing)'}
+        info["del_set"] = {f'Holding(Nothing)'}
         return info
 
 
@@ -30,5 +30,5 @@ class PickUp(Act):
         self.scene.op_task_execute(op_type, obj_id=obj_id)
 
         self.scene.state["condition_set"].union(self.info["add"])
-        self.scene.state["condition_set"] -= self.info["del"]
+        self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

@@ -28,13 +28,13 @@ class Clean(Act):
         info["pre"]= {f'Holding(Nothing)'}
         if arg == "Table1":
             info["add"]= {f'Is(Table1,Clean)'}
-            info["del"] = {f'Is(Table1,Dirty)'}
+            info["del_set"] = {f'Is(Table1,Dirty)'}
         elif arg == "Floor":
             info["add"] = {f'Is(Floor,Clean)'}
-            info["del"] = {f'Is(Floor,Dirty)'}
+            info["del_set"] = {f'Is(Floor,Dirty)'}
         elif arg == "Chairs":
             info["add"] = {f'Is(Chairs,Clean)'}
-            info["del"] = {f'Is(Chairs,Dirty)'}
+            info["del_set"] = {f'Is(Chairs,Dirty)'}
         return info
 
     def _update(self) -> ptree.common.Status:
@@ -43,5 +43,5 @@ class Clean(Act):
         self.scene.op_task_execute(self.op_type)
 
         self.scene.state["condition_set"].union(self.info["add"])
-        self.scene.state["condition_set"] -= self.info["del"]
+        self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

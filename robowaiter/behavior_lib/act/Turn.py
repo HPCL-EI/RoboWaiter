@@ -41,29 +41,33 @@ class Turn(Act):
                 self.op_type = 10
         elif self.target_obj=="Curtain":
             if self.op == 'On':
-                self.op_type = 11
-            elif self.op == 'Off':
                 self.op_type = 12
+            elif self.op == 'Off':
+                self.op_type = 11
 
     @classmethod
     def get_info(cls,*arg):
         info = {}
+        info["pre"] = set()
         if arg[0]=="TubeLight" or arg[0]=="HallLight" or arg[0]=="Curtain" or arg[0]=='AC':
+            if arg[0]!="Curtain":
+                info["pre"] |= {f'Holding(Nothing)'}
             if arg[1]=="On":
-                info["pre"] = {f'Is({arg[0]},Off)'}
+                info["pre"] |= {f'Is({arg[0]},Off)'}
                 info["add"] = {f'Is({arg[0]},On)'}
                 info["del_set"] = {f'Is({arg[0]},Off)'}
             elif arg[1]=="Off":
-                info["pre"] = {f'Is({arg[0]},On)'}
+                info["pre"] |= {f'Is({arg[0]},On)'}
                 info["add"] = {f'Is({arg[0]},Off)'}
                 info["del_set"] = {f'Is({arg[0]},On)'}
         elif arg[0]=='ACTemperature':
+            info["pre"] = {f'Holding(Nothing)'}
             if arg[1]=="Up":
-                info["pre"] = {f'Is({arg[0]},Down)'}
+                info["pre"] |= {f'Is({arg[0]},Down)'}
                 info["add"] = {f'Is({arg[0]},Up)'}
                 info["del_set"] = {f'Is({arg[0]},Down)'}
-            elif arg[1]=="Donw":
-                info["pre"] = {f'Is({arg[0]},Up)'}
+            elif arg[1]=="Down":
+                info["pre"] |= {f'Is({arg[0]},Up)'}
                 info["add"] = {f'Is({arg[0]},Down)'}
                 info["del_set"] = {f'Is({arg[0]},Up)'}
         return info

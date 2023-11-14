@@ -48,7 +48,8 @@ class Robot(object):
             print("\n--------------------")
             print(f"首次运行行为树扩展算法，收集到{len(self.action_list)}个有效动作:")
             for a in self.action_list:
-                print(a.name)
+                if "Turn" in a.name:
+                    print(a.name)
             print("--------------------\n")
 
 
@@ -70,7 +71,11 @@ class Robot(object):
         del_sub_tree.set_scene(self.scene)
         seq.add_child(del_sub_tree)
 
-        self.scene.sub_task_seq.add_child(seq)
+        if self.scene.sub_task_seq:
+            self.scene.sub_task_seq.add_child(seq)
+        else:
+            print('Warning: have none sub task sequence')
+            self.scene.sub_task_seq = seq
         print("当前行为树为：")
         print_tree_from_root(self.bt.root)
 

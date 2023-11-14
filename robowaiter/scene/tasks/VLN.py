@@ -22,7 +22,7 @@ class SceneVLN(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
-            (5, self.create_chat_event("测试VLN：前往桌子")),
+            (5, self.create_chat_event("测试VLN：前往2号桌")),
         ]
 
     def _reset(self):

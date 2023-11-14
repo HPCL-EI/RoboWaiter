@@ -10,7 +10,7 @@ import time
 def print_action_data_table(goal,start,actions):
     data = []
     for a in actions:
-        data.append([a.name ,a.pre ,a.add ,a.del_set ,a.cost])
+        data.append([a.name , a.pre , a.add , a.del_set , a.cost])
     data.append(["Goal" ,goal ," " ,"Start" ,start])
     print(tabulate(data, headers=["Name", "Pre", "Add" ,"Del" ,"Cost"], tablefmt="fancy_grid"))  # grid plain simple github fancy_grid
 

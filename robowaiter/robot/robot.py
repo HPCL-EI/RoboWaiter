@@ -32,7 +32,8 @@ class Robot(object):
 
     def load_BT(self):
         self.bt = load_bt_from_ptml(self.scene, self.ptml_path,self.behavior_lib_path)
-        sub_task_place_holder = find_node_by_name(self.bt.root,"SubTaskPlaceHolder")
+        sub_task_place_holder = find_node_by_name(self.bt.root,"SubTaskPlaceHolder()")
+        print(sub_task_place_holder)
         if sub_task_place_holder:
             sub_task_seq = sub_task_place_holder.parent
             sub_task_seq.children.pop()
@@ -44,12 +45,13 @@ class Robot(object):
 
     def expand_sub_task_tree(self,goal):
         if self.action_list is None:
-            self.action_list = self.collect_action_nodes()
             print("\n--------------------")
-            print(f"首次运行行为树扩展算法，收集到{len(self.action_list)}个有效动作:")
-            for a in self.action_list:
-                if "Turn" in a.name:
-                    print(a.name)
+            print(f"首次运行行为树扩展算法")
+            self.action_list = self.collect_action_nodes()
+            print(f"共收集到{len(self.action_list)}个实例化动作:")
+            # for a in self.action_list:
+            #     if "Turn" in a.name:
+            #         print(a.name)
             print("--------------------\n")
 
 
@@ -85,6 +87,7 @@ class Robot(object):
         behavior_dict = load_behavior_tree_lib()
         for cls in behavior_dict["act"].values():
             if cls.can_be_expanded:
+                print(f"可扩展动作：{cls.__name__}, 存在{len(cls.valid_args)}个有效论域组合")
                 if cls.num_args == 0:
                     action_list.append(Action(name=cls.get_ins_name(),**cls.get_info()))
                 if cls.num_args == 1:
@@ -94,7 +97,7 @@ class Robot(object):
                     for args in cls.valid_args:
                         action_list.append(Action(name=cls.get_ins_name(*args),**cls.get_info(*args)))
 
-        print(action_list)
+        # print(action_list)
         # action_list = [
         #     Action(name='MakeCoffee', pre={'At(Robot,CoffeeMachine)'},
         #            add={'At(Coffee,Bar)'}, del_set=set(), cost=1),

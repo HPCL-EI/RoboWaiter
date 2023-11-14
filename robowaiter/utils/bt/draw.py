@@ -129,7 +129,7 @@ def dot_tree(
     root_name = str(root.id)
     node_root = pydot.Node(
         name=root_name,
-        label=get_node_label(root.name, root),
+        label=get_node_label(root.ins_name, root),
         shape=node_shape,
         style="filled",
         fillcolor=node_colour,
@@ -319,7 +319,7 @@ def render_dot_tree(root: behaviour.Behaviour,
         root, visibility_level, collapse_decorators,
         with_blackboard_variables=with_blackboard_variables,
         with_qualified_names=with_qualified_names)
-    filename_wo_extension_to_convert = root.name if name is None else name
+    filename_wo_extension_to_convert = root.ins_name if name is None else name
     filename_wo_extension = utilities.get_valid_filename(filename_wo_extension_to_convert)
     filenames = {}
     for extension, writer in {"dot": graph.write, "png": graph.write_png, "svg": graph.write_svg}.items():

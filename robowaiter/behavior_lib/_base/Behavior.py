@@ -36,15 +36,10 @@ class Bahavior(ptree.behaviour.Behaviour):
         return ins_name
 
     def __init__(self,*args):
-        self.name = Bahavior.get_ins_name(*args)
-        #get valid args
-        # self.valid_arg_list = []
-        # lines = self.valid_params.strip().splitlines()
-        # for line in lines:
-        #     self.valid_arg_list.append((x.strip for x in line.split(",")))
+        ins_name = self.__class__.get_ins_name(*args)
         self.args = args
 
-        super().__init__(self.name)
+        super().__init__(ins_name)
 
     def _update(self) -> ptree.common.Status:
         print("this is just a _base behavior node.")

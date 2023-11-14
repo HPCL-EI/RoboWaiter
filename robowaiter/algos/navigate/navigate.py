@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 import math
-from dstar_lite import DStarLite, euclidean_distance
+from robowaiter.algos.navigate.dstar_lite import DStarLite, euclidean_distance
 
 
 class Navigator:
@@ -71,6 +71,13 @@ class Navigator:
                 print('plan pos:', next_pos, end=' ')
                 yaw = self.get_yaw(pos, next_pos)
                 self.scene.walk_to(next_pos[0], next_pos[1], yaw, velocity=self.v, dis_limit=10)
+
+
+                ### 获取视觉图像
+                self.scene.get_camera_segment()
+
+
+
                 # pos = (self.scene.status.location.X, self.scene.status.location.Y)
                 # if self.is_reached(pos, next_pos):
                 self.planner.path = self.planner.path[next_step - 1:]  # 去除已走过的路径

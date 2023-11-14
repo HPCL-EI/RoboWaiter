@@ -15,7 +15,7 @@ import numpy as np
 from robowaiter.scene.scene import Scene,init_world  # TODO: 文件名改成Scene.py
 
 from robowaiter.scene.scene import Scene
-
+from robowaiter.utils import get_root_path
 
 class SceneVLN(Scene):
     def __init__(self, robot):
@@ -26,7 +26,8 @@ class SceneVLN(Scene):
         ]
 
     def _reset(self):
-        file_name = './robowaiter/algos/navigate/DstarLite/map_5.pkl'
+        root_path = get_root_path()
+        file_name = os.path.join(root_path,'robowaiter/algos/navigate/map_5.pkl')
         with open(file_name, 'rb') as file:
             map = pickle.load(file)
 

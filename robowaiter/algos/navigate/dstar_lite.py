@@ -307,9 +307,7 @@ class DStarLite:
         s_start = self.real2map(s_start)
         s_goal = self.real2map(s_goal)
         dyna_obs = [self.real2map(obs) for obs in dyna_obs]
-
         self._planning(s_start, s_goal, dyna_obs, debug)
-
         # 地图坐标->实际坐标
         path = [self.map2real(node) for node in self.path]
         return path
@@ -327,7 +325,7 @@ class DStarLite:
         path = []
         cur = self.s_start
         while cur != self.s_goal:
-            succ = self.get_neighbors(cur)
+            succ = [s_ for s_ in self.get_neighbors(cur) if s_ not in path]  # 避免抖动 (不可走重复的点)
             cur = succ[np.argmin([self.c(cur, s_) + self.g[s_] for s_ in succ])]
             path.append(cur)
         # else:

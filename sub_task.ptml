@@ -1,3 +1,4 @@
 selector{
-cond EnvExplored()
+cond At(Robot,Table)
+act MoveTo(Table)
 }

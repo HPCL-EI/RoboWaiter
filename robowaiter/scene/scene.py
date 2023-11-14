@@ -1,6 +1,7 @@
 import time
 import grpc
 import numpy as np
+import matplotlib.pyplot as plt
 
 from robowaiter.proto import GrabSim_pb2
 from robowaiter.proto import GrabSim_pb2_grpc
@@ -24,11 +25,18 @@ def init_world(scene_num=1, mapID=11):
     time.sleep(3)  # wait for the map to load
 
 
-def image_extract(camera_data):
-    image = camera_data.images[0]
-    return np.frombuffer(image.data, dtype=image.dtype).reshape(
-        (image.height, image.width, image.channels)
-    )
+def show_image(camera_data):
+    print('------------------show_image----------------------')
+    #获取第0张照片
+    im = camera_data.images[0]
+    #使用numpy(np) 数值类型矩阵的frombuffer，将im.data以流的形式（向量的形式）读入，在变型reshape成三位矩阵的形式(长度，宽度，深度)即三阶张量
+    d = np.frombuffer(im.data, dtype=im.dtype).reshape((im.height, im.width, im.channels))
+    #matplotlib中的plt方法 对矩阵d 进行图形绘制，如果 深度相机拍摄的带深度的图片（图片名字中有depth信息），则转换成黑白图即灰度图
+    plt.imshow(d, cmap="gray" if "depth" in im.name.lower() else None)
+    #图像展示在屏幕上
+    plt.show()
+
+    return d
 
 
 class Scene:
@@ -299,7 +307,7 @@ class Scene:
             )
         )
         if image_only:
-            return image_extract(camera_data)
+            return show_image(camera_data)
         else:
             return camera_data
 
@@ -310,20 +318,20 @@ class Scene:
             )
         )
         if image_only:
-            return image_extract(camera_data)
+            return show_image(camera_data)
         else:
             return camera_data
 
-    def get_camera_segment(self, image_only=True):
+    def get_camera_segment(self, show=True):
         camera_data = stub.Capture(
             GrabSim_pb2.CameraList(
                 cameras=[GrabSim_pb2.CameraName.Head_Segment], scene=self.sceneID
             )
         )
-        if image_only:
-            return image_extract(camera_data)
-        else:
-            return camera_data
+        if show:
+            show_image(camera_data)
+
+        return camera_data
 
     def chat_bubble(self, message):
         stub.ControlRobot(

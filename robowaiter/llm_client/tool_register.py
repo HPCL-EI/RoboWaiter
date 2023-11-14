@@ -126,25 +126,25 @@ def get_tools() -> dict:
 
 @register_tool
 def create_sub_task(
-        goal: Annotated[str, '用于子任务的目标状态集合', True]
+        goal: Annotated[str, '子任务需要达到的目标条件集合', True]
 ) -> str:
     """
-    当需要完成具身任务（如做咖啡，拿放物体，扫地，前往某位置）时，调用该函数，根据用户的提示进行意图理解，生成子任务的目标状态集合，以一阶逻辑的形式来表示，例如：前往桌子的目标状态为{At(Robot,Table)}，做咖啡的目标状态为{On(Coffee,Bar)}等
+    当需要完成具身任务（如做咖啡，拿放物体，扫地，前往某位置）时，调用该函数，根据用户的提示进行意图理解，生成子任务的目标状态集合 `goal`（以一阶逻辑的形式表示）。
     """
 
     return goal
 
 @register_tool
 def get_object_info(
-        object: Annotated[str, '需要判断所在位置的物体', True]
+        obj: Annotated[str, '需要获取信息的物体名称', True]
 ) -> str:
     """
-    在场景中找到相邻的物体，并说出 `object` 在输出物体的附近
+    获取场景中指定物体 `object` 的信息
     """
     near_object = None
-    if object == "Table":
+    if obj == "Table":
         near_object = "Bar"
-    if object == "洗手间":
+    if obj == "洗手间":
         near_object = "大门"
 
     return near_object

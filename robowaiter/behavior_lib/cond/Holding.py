@@ -1,15 +1,11 @@
 import py_trees as ptree
 from typing import Any
 from robowaiter.behavior_lib._base.Cond import Cond
-import itertools
 
-class At(Cond):
+class Holding(Cond):
     can_be_expanded = True
     num_params = 2
-
-    valid_args = list(itertools.product(('Robot','Customer'), tuple(Cond.all_object | Cond.all_place | {'Customer'})))
-    valid_args.remove(('Customer','Customer'))
-    valid_args = tuple(valid_args)
+    valid_args = [tuple(Cond.all_object|{'Nothing'})]
 
     def __init__(self,*args):
         super().__init__(*args)

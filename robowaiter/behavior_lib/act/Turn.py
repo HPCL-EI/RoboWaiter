@@ -2,12 +2,19 @@ import py_trees as ptree
 from typing import Any
 from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.behavior_lib._base.Behavior import Status
+import itertools
 
-class Clean(Act):
+class Turn(Act):
     can_be_expanded = True
-    num_args = 1
-    valid_args = [('AC','ACTemperature','TubeLight','HallLight','Curtain'),
-            ('Off','On','Up','Down','Clean','Dirty')]
+    num_args = 2
+    valid_args = [('AC','TubeLight','HallLight','Curtain'),
+            ('On','Off')]
+
+    valid_args = list(itertools.product(valid_args[0], valid_args[1]))
+    valid_args.extend([('ACTemperature','Up'),('ACTemperature','Down')])
+    valid_args = tuple(valid_args)
+
+
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -39,19 +46,26 @@ class Clean(Act):
                 self.op_type = 12
 
     @classmethod
-    def get_info(cls,arg):
+    def get_info(cls,*arg):
         info = {}
-        # 明天写
-        # info["pre"]= {f'Holding(Nothing)'}
-        # if arg == "Table1":
-        #     info["add"]= {f'Is(Table1,Clean)'}
-        #     info["del"] = {f'Is(Table1,Dirty)'}
-        # elif arg == "Floor":
-        #     info["add"] = {f'Is(Floor,Clean)'}
-        #     info["del"] = {f'Is(Floor,Dirty)'}
-        # elif arg == "Chairs":
-        #     info["add"] = {f'Is(Chairs,Clean)'}
-        #     info["del"] = {f'Is(Chairs,Dirty)'}
+        if arg[0]=="TubeLight" or arg[0]=="HallLight" or arg[0]=="Curtain" or arg[0]=='AC':
+            if arg[1]=="On":
+                info["pre"] = {f'Is({arg[0]},Off)'}
+                info["add"] = {f'Is({arg[0]},On)'}
+                info["del_set"] = {f'Is({arg[0]},Off)'}
+            elif arg[1]=="Off":
+                info["pre"] = {f'Is({arg[0]},On)'}
+                info["add"] = {f'Is({arg[0]},Off)'}
+                info["del_set"] = {f'Is({arg[0]},On)'}
+        elif arg[0]=='ACTemperature':
+            if arg[1]=="Up":
+                info["pre"] = {f'Is({arg[0]},Down)'}
+                info["add"] = {f'Is({arg[0]},Up)'}
+                info["del_set"] = {f'Is({arg[0]},Down)'}
+            elif arg[1]=="Donw":
+                info["pre"] = {f'Is({arg[0]},Up)'}
+                info["add"] = {f'Is({arg[0]},Down)'}
+                info["del_set"] = {f'Is({arg[0]},Up)'}
         return info
 
     def _update(self) -> ptree.common.Status:
@@ -60,5 +74,5 @@ class Clean(Act):
         self.scene.op_task_execute(self.op_type)
 
         self.scene.state["condition_set"].union(self.info["add"])
-        self.scene.state["condition_set"] -= self.info["del"]
+        self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

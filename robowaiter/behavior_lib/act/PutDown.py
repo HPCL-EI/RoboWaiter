@@ -2,10 +2,13 @@ import py_trees as ptree
 from typing import Any
 from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.behavior_lib._base.Behavior import Status
+import itertools
 
 class PutDown(Act):
     can_be_expanded = True
-    num_args = 1
+    num_args = 2
+
+    valid_args = tuple(itertools.product(Act.all_object, Act.all_place))
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -14,11 +17,11 @@ class PutDown(Act):
 
 
     @classmethod
-    def get_info(self,arg):
+    def get_info(cls,*arg):
         info = {}
         info["pre"] = {f'Holding({arg[0]})',f'At(Robot,{arg[1]})'}
         info["add"] = {f'Holding(Nothing)',f'At({arg[0]},{arg[1]})'}
-        info["del"] = {f'Holding(Nothing)'}
+        info["del_set"] = {f'Holding(Nothing)'}
         return info
 
 
@@ -31,5 +34,5 @@ class PutDown(Act):
         self.scene.op_task_execute(op_type, release_pos=release_pos)
 
         self.scene.state["condition_set"].union(self.info["add"])
-        self.scene.state["condition_set"] -= self.info["del"]
+        self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

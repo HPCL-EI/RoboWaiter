@@ -26,7 +26,7 @@ class Make(Act):
     def get_info(cls,arg):
         info = {}
         info["pre"]= {f'Holding(Nothing)'}
-        info['del'] = set()
+        info['del_set'] = set()
         if arg == "Coffee":
             info["add"]= {f'On(Coffee,CoffeeTable)'}
         elif arg == "Water":
@@ -41,5 +41,5 @@ class Make(Act):
         self.scene.op_task_execute(self.op_type)
 
         self.scene.state["condition_set"].union(self.info["add"])
-        self.scene.state["condition_set"] -= self.info["del"]
+        self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

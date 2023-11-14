@@ -38,6 +38,12 @@ def run_conversation(query: str, stream=False, functions=None, max_retry=5):
     for _ in range(max_retry):
         if response["choices"][0]["message"].get("function_call"):
             function_call = response["choices"][0]["message"]["function_call"]
+            if "sub_task" in function_call["name"]:
+                return {
+                    "Answer": "好的",
+                    "Goal": function_call["arguments"]
+                }
+
             logger.info(f"Function Call Response: {function_call}")
             function_args = json.loads(function_call["arguments"])
             tool_response = dispatch_tool(function_call["name"], function_args)
@@ -53,31 +59,17 @@ def run_conversation(query: str, stream=False, functions=None, max_retry=5):
             )
         else:
             reply = response["choices"][0]["message"]["content"]
+            return {
+                "Answer": reply,
+                "Goal": None
+            }
             logger.info(f"Final Reply: \n{reply}")
             return
 
         response = get_response(**params)
 
 
+
 if __name__ == "__main__":
-
-    # chat_messages = [
-    #     {
-    #         "role": "system",
-    #         "content": "You are ChatGLM3, a large language model trained by Zhipu.AI. Follow the user's instructions carefully. Respond using markdown.",
-    #     },
-    #     {
-    #         "role": "user",
-    #         "content": "你好，给我讲一个故事，大概100字"
-    #     }
-    # ]
-    # create_chat_completion("chatglm3-6b", chat_messages, use_stream=False)
-
-
-    # query = "你是谁"
-    # run_conversation(query, stream=False)
-    #
-    # logger.info("\n=========== next conversation ===========")
-
-    query = "洗手间在哪儿"
-    run_conversation(query, functions=functions, stream=False)
+    query = "给我一杯咖啡"
+    print(run_conversation(query, functions=functions, stream=False))

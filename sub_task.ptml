@@ -1,4 +1,7 @@
 selector{
-cond At(Robot,Table)
-act MoveTo(Table)
+cond Is(AC,On)
+sequence{
+cond Is(AC,Off)
+act Turn(AC,On)
+}
 }

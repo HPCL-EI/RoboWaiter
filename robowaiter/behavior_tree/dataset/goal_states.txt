@@ -747,7 +747,7 @@
 {At(Robot,Table1)}
 {At(Robot,Table2)}
 {At(Robot,Table3)}
-{At(Robot, Table3)}
+{At(Robot, Table1)}
 {On(Softdrink,Bar)}
 {On(Softdrink,WaterTable)}
 {On(Softdrink,CoffeeTable)}
@@ -1483,21 +1483,21 @@
 {On(VacuumCup,Table1)}
 {On(VacuumCup,Table2)}
 {On(VacuumCup,Table3)}
-{On(MilkDrink, Bar2)}
-{On(BottledDrink, Bar2)}
-{On(VacuumCup, CoffeeTable)}
-{On(BottledDrink, Bar)}
+{On(Milk, Table1)}
+{On(ADMilk, CoffeeTable)}
 {On(VacuumCup, Bar2)}
-{On(BottledDrink, Table2)}
-{On(Yogurt, Table1)}
-{On(Yogurt, CoffeeTable)}
-{On(BottledDrink, CoffeeTable)}
-{On(BottledDrink, Bar2)}
+{On(Yogurt, WaterTable)}
+{On(Softdrink, WaterTable)}
+{On(Softdrink, Bar)}
+{On(Softdrink, Table2)}
+{On(Softdrink, Table1)}
+{On(ADMilk, Bar2)}
+{On(Milk, Table1)}
+{On(Milk, Table1)}
 {On(Milk, Bar2)}
-{On(ADMilk, Bar)}
-{On(Milk, Table2)}
-{On(Yogurt, Bar2)}
-{On(ADMilk, WaterTable)}
+{On(VacuumCup, Bar)}
+{On(ADMilk, Table3)}
+{On(VacuumCup, Bar2)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1512,8 +1512,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1528,8 +1528,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1544,8 +1544,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1560,8 +1560,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1576,8 +1576,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1592,8 +1592,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1608,8 +1608,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1624,8 +1624,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1640,8 +1640,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1656,8 +1656,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1672,8 +1672,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1688,8 +1688,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1704,8 +1704,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1720,8 +1720,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1736,8 +1736,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1752,8 +1752,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1768,8 +1768,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1784,8 +1784,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1800,8 +1800,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1816,8 +1816,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1832,8 +1832,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1848,8 +1848,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1864,8 +1864,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1880,8 +1880,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1896,8 +1896,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1912,8 +1912,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1928,8 +1928,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1944,8 +1944,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1960,8 +1960,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1976,8 +1976,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -1992,8 +1992,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2008,8 +2008,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2024,8 +2024,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2040,8 +2040,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2056,8 +2056,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2072,8 +2072,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2088,8 +2088,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2104,8 +2104,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2120,8 +2120,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2136,8 +2136,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2152,8 +2152,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2168,8 +2168,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2184,8 +2184,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2200,8 +2200,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2216,8 +2216,8 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
 {Is(AC,Off)}
 {Is(AC,On)}
 {Is(ACTemperature,Up)}
@@ -2232,22 +2232,22 @@
 {Is(Chairs,Clean)}
 {Is(Floor,Dirty)}
 {Is(Floor,Clean)}
-{Is(Table,Dirty)}
-{Is(Table,Clean)}
-{Is(AC, 1)}
-{Is(HallLight, 0)}
-{Is(HallLight, 0)}
-{Is(AC, 0)}
+{Is(Table1,Dirty)}
+{Is(Table1,Clean)}
+{Is(ACTemperature, 0)}
 {Is(Chairs, 1)}
-{Is(Table, 1)}
-{Is(HallLight, 1)}
-{Is(AC, 1)}
-{Is(Floor, 1)}
+{Is(TubeLight, 0)}
+{Is(HallLight, 0)}
+{Is(Chairs, 0)}
+{Is(Floor, 0)}
+{Is(Floor, 0)}
 {Is(HallLight, 1)}
 {Is(Chairs, 0)}
-{Is(Table, 0)}
 {Is(TubeLight, 1)}
-{Is(HallLight, 1)}
+{Is(TubeLight, 0)}
+{Is(Table1, 0)}
+{Is(AC, 0)}
+{Is(ACTemperature, 1)}
 {Holding(Softdrink)}
 {Holding(BottledDrink)}
 {Holding(Yogurt)}
@@ -2744,10 +2744,10 @@
 {Holding(Milk)}
 {Holding(VacuumCup)}
 {Holding(Nothing)}
-{Holding(BottledDrink)}
-{Holding(Yogurt)}
-{Holding(BottledDrink)}
 {Holding(Softdrink)}
+{Holding(VacuumCup)}
+{Holding(Yogurt)}
+{Holding(VacuumCup)}
 {On(Coffee,Bar)}
 {On(Coffee,WaterTable)}
 {On(Coffee,CoffeeTable)}
@@ -3483,21 +3483,21 @@
 {On(Dessert,Table1)}
 {On(Dessert,Table2)}
 {On(Dessert,Table3)}
-{On(Coffee, Bar)}
-{On(Coffee, Bar)}
+{On(Dessert, Table2)}
+{On(Dessert, Bar2)}
+{On(Water, Table2)}
+{On(Dessert, Table3)}
+{On(Coffee, WaterTable)}
+{On(Coffee, CoffeeTable)}
+{On(Coffee, WaterTable)}
+{On(Dessert, Bar2)}
+{On(Water, CoffeeTable)}
+{On(Water, Bar2)}
+{On(Dessert, Table2)}
 {On(Coffee, Bar2)}
-{On(Coffee, Table1)}
-{On(Water, Bar)}
-{On(Coffee, Table1)}
-{On(Coffee, Table1)}
-{On(Water, Bar)}
-{On(Dessert, Table2)}
-{On(Water, WaterTable)}
-{On(Dessert, WaterTable)}
-{On(Water, Bar)}
-{On(Dessert, Table2)}
-{On(Coffee, Table1)}
-{On(Coffee, Table1)}
+{On(Coffee, Bar)}
+{On(Dessert, Bar)}
+{On(Water, Table2)}
 {At(Robot,Bar),On(Softdrink,Bar)}
 {At(Robot,Bar),On(Softdrink,WaterTable)}
 {At(Robot,Bar),On(Softdrink,CoffeeTable)}
@@ -4012,8 +4012,8 @@
 {At(Robot,Bar),Is(Chairs,Clean)}
 {At(Robot,Bar),Is(Floor,Dirty)}
 {At(Robot,Bar),Is(Floor,Clean)}
-{At(Robot,Bar),Is(Table,Dirty)}
-{At(Robot,Bar),Is(Table,Clean)}
+{At(Robot,Bar),Is(Table1,Dirty)}
+{At(Robot,Bar),Is(Table1,Clean)}
 {At(Robot,WaterTable),Is(AC,Off)}
 {At(Robot,WaterTable),Is(AC,On)}
 {At(Robot,WaterTable),Is(ACTemperature,Up)}
@@ -4028,8 +4028,8 @@
 {At(Robot,WaterTable),Is(Chairs,Clean)}
 {At(Robot,WaterTable),Is(Floor,Dirty)}
 {At(Robot,WaterTable),Is(Floor,Clean)}
-{At(Robot,WaterTable),Is(Table,Dirty)}
-{At(Robot,WaterTable),Is(Table,Clean)}
+{At(Robot,WaterTable),Is(Table1,Dirty)}
+{At(Robot,WaterTable),Is(Table1,Clean)}
 {At(Robot,CoffeeTable),Is(AC,Off)}
 {At(Robot,CoffeeTable),Is(AC,On)}
 {At(Robot,CoffeeTable),Is(ACTemperature,Up)}
@@ -4044,8 +4044,8 @@
 {At(Robot,CoffeeTable),Is(Chairs,Clean)}
 {At(Robot,CoffeeTable),Is(Floor,Dirty)}
 {At(Robot,CoffeeTable),Is(Floor,Clean)}
-{At(Robot,CoffeeTable),Is(Table,Dirty)}
-{At(Robot,CoffeeTable),Is(Table,Clean)}
+{At(Robot,CoffeeTable),Is(Table1,Dirty)}
+{At(Robot,CoffeeTable),Is(Table1,Clean)}
 {At(Robot,Bar2),Is(AC,Off)}
 {At(Robot,Bar2),Is(AC,On)}
 {At(Robot,Bar2),Is(ACTemperature,Up)}
@@ -4060,8 +4060,8 @@
 {At(Robot,Bar2),Is(Chairs,Clean)}
 {At(Robot,Bar2),Is(Floor,Dirty)}
 {At(Robot,Bar2),Is(Floor,Clean)}
-{At(Robot,Bar2),Is(Table,Dirty)}
-{At(Robot,Bar2),Is(Table,Clean)}
+{At(Robot,Bar2),Is(Table1,Dirty)}
+{At(Robot,Bar2),Is(Table1,Clean)}
 {At(Robot,Table1),Is(AC,Off)}
 {At(Robot,Table1),Is(AC,On)}
 {At(Robot,Table1),Is(ACTemperature,Up)}
@@ -4076,8 +4076,8 @@
 {At(Robot,Table1),Is(Chairs,Clean)}
 {At(Robot,Table1),Is(Floor,Dirty)}
 {At(Robot,Table1),Is(Floor,Clean)}
-{At(Robot,Table1),Is(Table,Dirty)}
-{At(Robot,Table1),Is(Table,Clean)}
+{At(Robot,Table1),Is(Table1,Dirty)}
+{At(Robot,Table1),Is(Table1,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4092,8 +4092,8 @@
 {At(Robot,Table2),Is(Chairs,Clean)}
 {At(Robot,Table2),Is(Floor,Dirty)}
 {At(Robot,Table2),Is(Floor,Clean)}
-{At(Robot,Table2),Is(Table,Dirty)}
-{At(Robot,Table2),Is(Table,Clean)}
+{At(Robot,Table2),Is(Table1,Dirty)}
+{At(Robot,Table2),Is(Table1,Clean)}
 {At(Robot,Table3),Is(AC,Off)}
 {At(Robot,Table3),Is(AC,On)}
 {At(Robot,Table3),Is(ACTemperature,Up)}
@@ -4108,8 +4108,8 @@
 {At(Robot,Table3),Is(Chairs,Clean)}
 {At(Robot,Table3),Is(Floor,Dirty)}
 {At(Robot,Table3),Is(Floor,Clean)}
-{At(Robot,Table3),Is(Table,Dirty)}
-{At(Robot,Table3),Is(Table,Clean)}
+{At(Robot,Table3),Is(Table1,Dirty)}
+{At(Robot,Table3),Is(Table1,Clean)}
 {At(Robot,Bar),Is(AC,Off)}
 {At(Robot,Bar),Is(AC,On)}
 {At(Robot,Bar),Is(ACTemperature,Up)}
@@ -4124,8 +4124,8 @@
 {At(Robot,Bar),Is(Chairs,Clean)}
 {At(Robot,Bar),Is(Floor,Dirty)}
 {At(Robot,Bar),Is(Floor,Clean)}
-{At(Robot,Bar),Is(Table,Dirty)}
-{At(Robot,Bar),Is(Table,Clean)}
+{At(Robot,Bar),Is(Table1,Dirty)}
+{At(Robot,Bar),Is(Table1,Clean)}
 {At(Robot,WaterTable),Is(AC,Off)}
 {At(Robot,WaterTable),Is(AC,On)}
 {At(Robot,WaterTable),Is(ACTemperature,Up)}
@@ -4140,8 +4140,8 @@
 {At(Robot,WaterTable),Is(Chairs,Clean)}
 {At(Robot,WaterTable),Is(Floor,Dirty)}
 {At(Robot,WaterTable),Is(Floor,Clean)}
-{At(Robot,WaterTable),Is(Table,Dirty)}
-{At(Robot,WaterTable),Is(Table,Clean)}
+{At(Robot,WaterTable),Is(Table1,Dirty)}
+{At(Robot,WaterTable),Is(Table1,Clean)}
 {At(Robot,CoffeeTable),Is(AC,Off)}
 {At(Robot,CoffeeTable),Is(AC,On)}
 {At(Robot,CoffeeTable),Is(ACTemperature,Up)}
@@ -4156,8 +4156,8 @@
 {At(Robot,CoffeeTable),Is(Chairs,Clean)}
 {At(Robot,CoffeeTable),Is(Floor,Dirty)}
 {At(Robot,CoffeeTable),Is(Floor,Clean)}
-{At(Robot,CoffeeTable),Is(Table,Dirty)}
-{At(Robot,CoffeeTable),Is(Table,Clean)}
+{At(Robot,CoffeeTable),Is(Table1,Dirty)}
+{At(Robot,CoffeeTable),Is(Table1,Clean)}
 {At(Robot,Bar2),Is(AC,Off)}
 {At(Robot,Bar2),Is(AC,On)}
 {At(Robot,Bar2),Is(ACTemperature,Up)}
@@ -4172,8 +4172,8 @@
 {At(Robot,Bar2),Is(Chairs,Clean)}
 {At(Robot,Bar2),Is(Floor,Dirty)}
 {At(Robot,Bar2),Is(Floor,Clean)}
-{At(Robot,Bar2),Is(Table,Dirty)}
-{At(Robot,Bar2),Is(Table,Clean)}
+{At(Robot,Bar2),Is(Table1,Dirty)}
+{At(Robot,Bar2),Is(Table1,Clean)}
 {At(Robot,Table1),Is(AC,Off)}
 {At(Robot,Table1),Is(AC,On)}
 {At(Robot,Table1),Is(ACTemperature,Up)}
@@ -4188,8 +4188,8 @@
 {At(Robot,Table1),Is(Chairs,Clean)}
 {At(Robot,Table1),Is(Floor,Dirty)}
 {At(Robot,Table1),Is(Floor,Clean)}
-{At(Robot,Table1),Is(Table,Dirty)}
-{At(Robot,Table1),Is(Table,Clean)}
+{At(Robot,Table1),Is(Table1,Dirty)}
+{At(Robot,Table1),Is(Table1,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4204,8 +4204,8 @@
 {At(Robot,Table2),Is(Chairs,Clean)}
 {At(Robot,Table2),Is(Floor,Dirty)}
 {At(Robot,Table2),Is(Floor,Clean)}
-{At(Robot,Table2),Is(Table,Dirty)}
-{At(Robot,Table2),Is(Table,Clean)}
+{At(Robot,Table2),Is(Table1,Dirty)}
+{At(Robot,Table2),Is(Table1,Clean)}
 {At(Robot,Table3),Is(AC,Off)}
 {At(Robot,Table3),Is(AC,On)}
 {At(Robot,Table3),Is(ACTemperature,Up)}
@@ -4220,8 +4220,8 @@
 {At(Robot,Table3),Is(Chairs,Clean)}
 {At(Robot,Table3),Is(Floor,Dirty)}
 {At(Robot,Table3),Is(Floor,Clean)}
-{At(Robot,Table3),Is(Table,Dirty)}
-{At(Robot,Table3),Is(Table,Clean)}
+{At(Robot,Table3),Is(Table1,Dirty)}
+{At(Robot,Table3),Is(Table1,Clean)}
 {At(Robot,Bar),Is(AC,Off)}
 {At(Robot,Bar),Is(AC,On)}
 {At(Robot,Bar),Is(ACTemperature,Up)}
@@ -4236,8 +4236,8 @@
 {At(Robot,Bar),Is(Chairs,Clean)}
 {At(Robot,Bar),Is(Floor,Dirty)}
 {At(Robot,Bar),Is(Floor,Clean)}
-{At(Robot,Bar),Is(Table,Dirty)}
-{At(Robot,Bar),Is(Table,Clean)}
+{At(Robot,Bar),Is(Table1,Dirty)}
+{At(Robot,Bar),Is(Table1,Clean)}
 {At(Robot,WaterTable),Is(AC,Off)}
 {At(Robot,WaterTable),Is(AC,On)}
 {At(Robot,WaterTable),Is(ACTemperature,Up)}
@@ -4252,8 +4252,8 @@
 {At(Robot,WaterTable),Is(Chairs,Clean)}
 {At(Robot,WaterTable),Is(Floor,Dirty)}
 {At(Robot,WaterTable),Is(Floor,Clean)}
-{At(Robot,WaterTable),Is(Table,Dirty)}
-{At(Robot,WaterTable),Is(Table,Clean)}
+{At(Robot,WaterTable),Is(Table1,Dirty)}
+{At(Robot,WaterTable),Is(Table1,Clean)}
 {At(Robot,CoffeeTable),Is(AC,Off)}
 {At(Robot,CoffeeTable),Is(AC,On)}
 {At(Robot,CoffeeTable),Is(ACTemperature,Up)}
@@ -4268,8 +4268,8 @@
 {At(Robot,CoffeeTable),Is(Chairs,Clean)}
 {At(Robot,CoffeeTable),Is(Floor,Dirty)}
 {At(Robot,CoffeeTable),Is(Floor,Clean)}
-{At(Robot,CoffeeTable),Is(Table,Dirty)}
-{At(Robot,CoffeeTable),Is(Table,Clean)}
+{At(Robot,CoffeeTable),Is(Table1,Dirty)}
+{At(Robot,CoffeeTable),Is(Table1,Clean)}
 {At(Robot,Bar2),Is(AC,Off)}
 {At(Robot,Bar2),Is(AC,On)}
 {At(Robot,Bar2),Is(ACTemperature,Up)}
@@ -4284,8 +4284,8 @@
 {At(Robot,Bar2),Is(Chairs,Clean)}
 {At(Robot,Bar2),Is(Floor,Dirty)}
 {At(Robot,Bar2),Is(Floor,Clean)}
-{At(Robot,Bar2),Is(Table,Dirty)}
-{At(Robot,Bar2),Is(Table,Clean)}
+{At(Robot,Bar2),Is(Table1,Dirty)}
+{At(Robot,Bar2),Is(Table1,Clean)}
 {At(Robot,Table1),Is(AC,Off)}
 {At(Robot,Table1),Is(AC,On)}
 {At(Robot,Table1),Is(ACTemperature,Up)}
@@ -4300,8 +4300,8 @@
 {At(Robot,Table1),Is(Chairs,Clean)}
 {At(Robot,Table1),Is(Floor,Dirty)}
 {At(Robot,Table1),Is(Floor,Clean)}
-{At(Robot,Table1),Is(Table,Dirty)}
-{At(Robot,Table1),Is(Table,Clean)}
+{At(Robot,Table1),Is(Table1,Dirty)}
+{At(Robot,Table1),Is(Table1,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4316,8 +4316,8 @@
 {At(Robot,Table2),Is(Chairs,Clean)}
 {At(Robot,Table2),Is(Floor,Dirty)}
 {At(Robot,Table2),Is(Floor,Clean)}
-{At(Robot,Table2),Is(Table,Dirty)}
-{At(Robot,Table2),Is(Table,Clean)}
+{At(Robot,Table2),Is(Table1,Dirty)}
+{At(Robot,Table2),Is(Table1,Clean)}
 {At(Robot,Table3),Is(AC,Off)}
 {At(Robot,Table3),Is(AC,On)}
 {At(Robot,Table3),Is(ACTemperature,Up)}
@@ -4332,8 +4332,8 @@
 {At(Robot,Table3),Is(Chairs,Clean)}
 {At(Robot,Table3),Is(Floor,Dirty)}
 {At(Robot,Table3),Is(Floor,Clean)}
-{At(Robot,Table3),Is(Table,Dirty)}
-{At(Robot,Table3),Is(Table,Clean)}
+{At(Robot,Table3),Is(Table1,Dirty)}
+{At(Robot,Table3),Is(Table1,Clean)}
 {At(Robot,Bar),Is(AC,Off)}
 {At(Robot,Bar),Is(AC,On)}
 {At(Robot,Bar),Is(ACTemperature,Up)}
@@ -4348,8 +4348,8 @@
 {At(Robot,Bar),Is(Chairs,Clean)}
 {At(Robot,Bar),Is(Floor,Dirty)}
 {At(Robot,Bar),Is(Floor,Clean)}
-{At(Robot,Bar),Is(Table,Dirty)}
-{At(Robot,Bar),Is(Table,Clean)}
+{At(Robot,Bar),Is(Table1,Dirty)}
+{At(Robot,Bar),Is(Table1,Clean)}
 {At(Robot,WaterTable),Is(AC,Off)}
 {At(Robot,WaterTable),Is(AC,On)}
 {At(Robot,WaterTable),Is(ACTemperature,Up)}
@@ -4364,8 +4364,8 @@
 {At(Robot,WaterTable),Is(Chairs,Clean)}
 {At(Robot,WaterTable),Is(Floor,Dirty)}
 {At(Robot,WaterTable),Is(Floor,Clean)}
-{At(Robot,WaterTable),Is(Table,Dirty)}
-{At(Robot,WaterTable),Is(Table,Clean)}
+{At(Robot,WaterTable),Is(Table1,Dirty)}
+{At(Robot,WaterTable),Is(Table1,Clean)}
 {At(Robot,CoffeeTable),Is(AC,Off)}
 {At(Robot,CoffeeTable),Is(AC,On)}
 {At(Robot,CoffeeTable),Is(ACTemperature,Up)}
@@ -4380,8 +4380,8 @@
 {At(Robot,CoffeeTable),Is(Chairs,Clean)}
 {At(Robot,CoffeeTable),Is(Floor,Dirty)}
 {At(Robot,CoffeeTable),Is(Floor,Clean)}
-{At(Robot,CoffeeTable),Is(Table,Dirty)}
-{At(Robot,CoffeeTable),Is(Table,Clean)}
+{At(Robot,CoffeeTable),Is(Table1,Dirty)}
+{At(Robot,CoffeeTable),Is(Table1,Clean)}
 {At(Robot,Bar2),Is(AC,Off)}
 {At(Robot,Bar2),Is(AC,On)}
 {At(Robot,Bar2),Is(ACTemperature,Up)}
@@ -4396,8 +4396,8 @@
 {At(Robot,Bar2),Is(Chairs,Clean)}
 {At(Robot,Bar2),Is(Floor,Dirty)}
 {At(Robot,Bar2),Is(Floor,Clean)}
-{At(Robot,Bar2),Is(Table,Dirty)}
-{At(Robot,Bar2),Is(Table,Clean)}
+{At(Robot,Bar2),Is(Table1,Dirty)}
+{At(Robot,Bar2),Is(Table1,Clean)}
 {At(Robot,Table1),Is(AC,Off)}
 {At(Robot,Table1),Is(AC,On)}
 {At(Robot,Table1),Is(ACTemperature,Up)}
@@ -4412,8 +4412,8 @@
 {At(Robot,Table1),Is(Chairs,Clean)}
 {At(Robot,Table1),Is(Floor,Dirty)}
 {At(Robot,Table1),Is(Floor,Clean)}
-{At(Robot,Table1),Is(Table,Dirty)}
-{At(Robot,Table1),Is(Table,Clean)}
+{At(Robot,Table1),Is(Table1,Dirty)}
+{At(Robot,Table1),Is(Table1,Clean)}
 {At(Robot,Table2),Is(AC,Off)}
 {At(Robot,Table2),Is(AC,On)}
 {At(Robot,Table2),Is(ACTemperature,Up)}
@@ -4428,8 +4428,8 @@
 {At(Robot,Table2),Is(Chairs,Clean)}
 {At(Robot,Table2),Is(Floor,Dirty)}
 {At(Robot,Table2),Is(Floor,Clean)}
-{At(Robot,Table2),Is(Table,Dirty)}
-{At(Robot,Table2),Is(Table,Clean)}
+{At(Robot,Table2),Is(Table1,Dirty)}
+{At(Robot,Table2),Is(Table1,Clean)}
 {At(Robot,Table3),Is(AC,Off)}
 {At(Robot,Table3),Is(AC,On)}
 {At(Robot,Table3),Is(ACTemperature,Up)}
@@ -4444,8 +4444,8 @@
 {At(Robot,Table3),Is(Chairs,Clean)}
 {At(Robot,Table3),Is(Floor,Dirty)}
 {At(Robot,Table3),Is(Floor,Clean)}
-{At(Robot,Table3),Is(Table,Dirty)}
-{At(Robot,Table3),Is(Table,Clean)}
+{At(Robot,Table3),Is(Table1,Dirty)}
+{At(Robot,Table3),Is(Table1,Clean)}
 {At(Robot,Bar),Is(AC,Off)}
 {At(Robot,Bar),Is(AC,On)}
 {At(Robot,Bar),Is(ACTemperature,Up)}
@@ -4460,8 +4460,8 @@
 {At(Robot,Bar),Is(Chairs,Clean)}
 {At(Robot,Bar),Is(Floor,Dirty)}
 {At(Robot,Bar),Is(Floor,Clean)}
-{At(Robot,Bar),Is(Table,Dirty)}
-{At(Robot,Bar),Is(Table,Clean)}
+{At(Robot,Bar),Is(Table1,Dirty)}
+{At(Robot,Bar),Is(Table1,Clean)}
 {At(Robot,WaterTable),Is(AC,Off)}
 {At(Robot,WaterTable),Is(AC,On)}
 {At(Robot,WaterTable),Is(ACTemperature,Up)}
@@ -4476,8 +4476,8 @@
 {At(Robot,WaterTable),Is(Chairs,Clean)}
 {At(Robot,WaterTable),Is(Floor,Dirty)}
 {At(Robot,WaterTable),Is(Floor,Clean)}
-{At(Robot,WaterTable),Is(Table,Dirty)}
-{At(Robot,WaterTable),Is(Table,Clean)}
+{At(Robot,WaterTable),Is(Table1,Dirty)}
+{At(Robot,WaterTable),Is(Table1,Clean)}
 {At(Robot,CoffeeTable),Is(AC,Off)}
 {At(Robot,CoffeeTable),Is(AC,On)}
 {At(Robot,CoffeeTable),Is(ACTemperature,Up)}
@@ -4492,8 +4492,8 @@
 {At(Robot,CoffeeTable),Is(Chairs,Clean)}
 {At(Robot,CoffeeTable),Is(Floor,Dirty)}
 {At(Robot,CoffeeTable),Is(Floor,Clean)}
-{At(Robot,CoffeeTable),Is(Table,Dirty)}
-{At(Robot,CoffeeTable),Is(Table,Clean)}
+{At(Robot,CoffeeTable),Is(Table1,Dirty)}
+{At(Robot,CoffeeTable),Is(Table1,Clean)}
 {At(Robot,Bar2),Is(AC,Off)}
 {At(Robot,Bar2),Is(AC,On)}
 {At(Robot,Bar2),Is(ACTemperature,Up)}
@@ -4512,8 +4512,8 @@
 {On(Coffee,Bar),Is(Chairs,Clean)}
 {On(Coffee,Bar),Is(Floor,Dirty)}
 {On(Coffee,Bar),Is(Floor,Clean)}
-{On(Coffee,Bar),Is(Table,Dirty)}
-{On(Coffee,Bar),Is(Table,Clean)}
+{On(Coffee,Bar),Is(Table1,Dirty)}
+{On(Coffee,Bar),Is(Table1,Clean)}
 {On(Coffee,WaterTable),Is(AC,Off)}
 {On(Coffee,WaterTable),Is(AC,On)}
 {On(Coffee,WaterTable),Is(ACTemperature,Up)}
@@ -4528,8 +4528,8 @@
 {On(Coffee,WaterTable),Is(Chairs,Clean)}
 {On(Coffee,WaterTable),Is(Floor,Dirty)}
 {On(Coffee,WaterTable),Is(Floor,Clean)}
-{On(Coffee,WaterTable),Is(Table,Dirty)}
-{On(Coffee,WaterTable),Is(Table,Clean)}
+{On(Coffee,WaterTable),Is(Table1,Dirty)}
+{On(Coffee,WaterTable),Is(Table1,Clean)}
 {On(Coffee,CoffeeTable),Is(AC,Off)}
 {On(Coffee,CoffeeTable),Is(AC,On)}
 {On(Coffee,CoffeeTable),Is(ACTemperature,Up)}
@@ -4544,8 +4544,8 @@
 {On(Coffee,CoffeeTable),Is(Chairs,Clean)}
 {On(Coffee,CoffeeTable),Is(Floor,Dirty)}
 {On(Coffee,CoffeeTable),Is(Floor,Clean)}
-{On(Coffee,CoffeeTable),Is(Table,Dirty)}
-{On(Coffee,CoffeeTable),Is(Table,Clean)}
+{On(Coffee,CoffeeTable),Is(Table1,Dirty)}
+{On(Coffee,CoffeeTable),Is(Table1,Clean)}
 {On(Coffee,Bar2),Is(AC,Off)}
 {On(Coffee,Bar2),Is(AC,On)}
 {On(Coffee,Bar2),Is(ACTemperature,Up)}
@@ -4560,8 +4560,8 @@
 {On(Coffee,Bar2),Is(Chairs,Clean)}
 {On(Coffee,Bar2),Is(Floor,Dirty)}
 {On(Coffee,Bar2),Is(Floor,Clean)}
-{On(Coffee,Bar2),Is(Table,Dirty)}
-{On(Coffee,Bar2),Is(Table,Clean)}
+{On(Coffee,Bar2),Is(Table1,Dirty)}
+{On(Coffee,Bar2),Is(Table1,Clean)}
 {On(Coffee,Table1),Is(AC,Off)}
 {On(Coffee,Table1),Is(AC,On)}
 {On(Coffee,Table1),Is(ACTemperature,Up)}
@@ -4576,8 +4576,8 @@
 {On(Coffee,Table1),Is(Chairs,Clean)}
 {On(Coffee,Table1),Is(Floor,Dirty)}
 {On(Coffee,Table1),Is(Floor,Clean)}
-{On(Coffee,Table1),Is(Table,Dirty)}
-{On(Coffee,Table1),Is(Table,Clean)}
+{On(Coffee,Table1),Is(Table1,Dirty)}
+{On(Coffee,Table1),Is(Table1,Clean)}
 {On(Coffee,Table2),Is(AC,Off)}
 {On(Coffee,Table2),Is(AC,On)}
 {On(Coffee,Table2),Is(ACTemperature,Up)}
@@ -4592,8 +4592,8 @@
 {On(Coffee,Table2),Is(Chairs,Clean)}
 {On(Coffee,Table2),Is(Floor,Dirty)}
 {On(Coffee,Table2),Is(Floor,Clean)}
-{On(Coffee,Table2),Is(Table,Dirty)}
-{On(Coffee,Table2),Is(Table,Clean)}
+{On(Coffee,Table2),Is(Table1,Dirty)}
+{On(Coffee,Table2),Is(Table1,Clean)}
 {On(Coffee,Table3),Is(AC,Off)}
 {On(Coffee,Table3),Is(AC,On)}
 {On(Coffee,Table3),Is(ACTemperature,Up)}
@@ -4608,8 +4608,8 @@
 {On(Coffee,Table3),Is(Chairs,Clean)}
 {On(Coffee,Table3),Is(Floor,Dirty)}
 {On(Coffee,Table3),Is(Floor,Clean)}
-{On(Coffee,Table3),Is(Table,Dirty)}
-{On(Coffee,Table3),Is(Table,Clean)}
+{On(Coffee,Table3),Is(Table1,Dirty)}
+{On(Coffee,Table3),Is(Table1,Clean)}
 {On(Water,Bar),Is(AC,Off)}
 {On(Water,Bar),Is(AC,On)}
 {On(Water,Bar),Is(ACTemperature,Up)}
@@ -4624,8 +4624,8 @@
 {On(Water,Bar),Is(Chairs,Clean)}
 {On(Water,Bar),Is(Floor,Dirty)}
 {On(Water,Bar),Is(Floor,Clean)}
-{On(Water,Bar),Is(Table,Dirty)}
-{On(Water,Bar),Is(Table,Clean)}
+{On(Water,Bar),Is(Table1,Dirty)}
+{On(Water,Bar),Is(Table1,Clean)}
 {On(Water,WaterTable),Is(AC,Off)}
 {On(Water,WaterTable),Is(AC,On)}
 {On(Water,WaterTable),Is(ACTemperature,Up)}
@@ -4640,8 +4640,8 @@
 {On(Water,WaterTable),Is(Chairs,Clean)}
 {On(Water,WaterTable),Is(Floor,Dirty)}
 {On(Water,WaterTable),Is(Floor,Clean)}
-{On(Water,WaterTable),Is(Table,Dirty)}
-{On(Water,WaterTable),Is(Table,Clean)}
+{On(Water,WaterTable),Is(Table1,Dirty)}
+{On(Water,WaterTable),Is(Table1,Clean)}
 {On(Water,CoffeeTable),Is(AC,Off)}
 {On(Water,CoffeeTable),Is(AC,On)}
 {On(Water,CoffeeTable),Is(ACTemperature,Up)}
@@ -4656,8 +4656,8 @@
 {On(Water,CoffeeTable),Is(Chairs,Clean)}
 {On(Water,CoffeeTable),Is(Floor,Dirty)}
 {On(Water,CoffeeTable),Is(Floor,Clean)}
-{On(Water,CoffeeTable),Is(Table,Dirty)}
-{On(Water,CoffeeTable),Is(Table,Clean)}
+{On(Water,CoffeeTable),Is(Table1,Dirty)}
+{On(Water,CoffeeTable),Is(Table1,Clean)}
 {On(Water,Bar2),Is(AC,Off)}
 {On(Water,Bar2),Is(AC,On)}
 {On(Water,Bar2),Is(ACTemperature,Up)}
@@ -4672,8 +4672,8 @@
 {On(Water,Bar2),Is(Chairs,Clean)}
 {On(Water,Bar2),Is(Floor,Dirty)}
 {On(Water,Bar2),Is(Floor,Clean)}
-{On(Water,Bar2),Is(Table,Dirty)}
-{On(Water,Bar2),Is(Table,Clean)}
+{On(Water,Bar2),Is(Table1,Dirty)}
+{On(Water,Bar2),Is(Table1,Clean)}
 {On(Water,Table1),Is(AC,Off)}
 {On(Water,Table1),Is(AC,On)}
 {On(Water,Table1),Is(ACTemperature,Up)}
@@ -4688,8 +4688,8 @@
 {On(Water,Table1),Is(Chairs,Clean)}
 {On(Water,Table1),Is(Floor,Dirty)}
 {On(Water,Table1),Is(Floor,Clean)}
-{On(Water,Table1),Is(Table,Dirty)}
-{On(Water,Table1),Is(Table,Clean)}
+{On(Water,Table1),Is(Table1,Dirty)}
+{On(Water,Table1),Is(Table1,Clean)}
 {On(Water,Table2),Is(AC,Off)}
 {On(Water,Table2),Is(AC,On)}
 {On(Water,Table2),Is(ACTemperature,Up)}
@@ -4704,8 +4704,8 @@
 {On(Water,Table2),Is(Chairs,Clean)}
 {On(Water,Table2),Is(Floor,Dirty)}
 {On(Water,Table2),Is(Floor,Clean)}
-{On(Water,Table2),Is(Table,Dirty)}
-{On(Water,Table2),Is(Table,Clean)}
+{On(Water,Table2),Is(Table1,Dirty)}
+{On(Water,Table2),Is(Table1,Clean)}
 {On(Water,Table3),Is(AC,Off)}
 {On(Water,Table3),Is(AC,On)}
 {On(Water,Table3),Is(ACTemperature,Up)}
@@ -4720,8 +4720,8 @@
 {On(Water,Table3),Is(Chairs,Clean)}
 {On(Water,Table3),Is(Floor,Dirty)}
 {On(Water,Table3),Is(Floor,Clean)}
-{On(Water,Table3),Is(Table,Dirty)}
-{On(Water,Table3),Is(Table,Clean)}
+{On(Water,Table3),Is(Table1,Dirty)}
+{On(Water,Table3),Is(Table1,Clean)}
 {On(Dessert,Bar),Is(AC,Off)}
 {On(Dessert,Bar),Is(AC,On)}
 {On(Dessert,Bar),Is(ACTemperature,Up)}
@@ -4736,8 +4736,8 @@
 {On(Dessert,Bar),Is(Chairs,Clean)}
 {On(Dessert,Bar),Is(Floor,Dirty)}
 {On(Dessert,Bar),Is(Floor,Clean)}
-{On(Dessert,Bar),Is(Table,Dirty)}
-{On(Dessert,Bar),Is(Table,Clean)}
+{On(Dessert,Bar),Is(Table1,Dirty)}
+{On(Dessert,Bar),Is(Table1,Clean)}
 {On(Dessert,WaterTable),Is(AC,Off)}
 {On(Dessert,WaterTable),Is(AC,On)}
 {On(Dessert,WaterTable),Is(ACTemperature,Up)}
@@ -4752,8 +4752,8 @@
 {On(Dessert,WaterTable),Is(Chairs,Clean)}
 {On(Dessert,WaterTable),Is(Floor,Dirty)}
 {On(Dessert,WaterTable),Is(Floor,Clean)}
-{On(Dessert,WaterTable),Is(Table,Dirty)}
-{On(Dessert,WaterTable),Is(Table,Clean)}
+{On(Dessert,WaterTable),Is(Table1,Dirty)}
+{On(Dessert,WaterTable),Is(Table1,Clean)}
 {On(Dessert,CoffeeTable),Is(AC,Off)}
 {On(Dessert,CoffeeTable),Is(AC,On)}
 {On(Dessert,CoffeeTable),Is(ACTemperature,Up)}
@@ -4768,8 +4768,8 @@
 {On(Dessert,CoffeeTable),Is(Chairs,Clean)}
 {On(Dessert,CoffeeTable),Is(Floor,Dirty)}
 {On(Dessert,CoffeeTable),Is(Floor,Clean)}
-{On(Dessert,CoffeeTable),Is(Table,Dirty)}
-{On(Dessert,CoffeeTable),Is(Table,Clean)}
+{On(Dessert,CoffeeTable),Is(Table1,Dirty)}
+{On(Dessert,CoffeeTable),Is(Table1,Clean)}
 {On(Dessert,Bar2),Is(AC,Off)}
 {On(Dessert,Bar2),Is(AC,On)}
 {On(Dessert,Bar2),Is(ACTemperature,Up)}
@@ -4784,8 +4784,8 @@
 {On(Dessert,Bar2),Is(Chairs,Clean)}
 {On(Dessert,Bar2),Is(Floor,Dirty)}
 {On(Dessert,Bar2),Is(Floor,Clean)}
-{On(Dessert,Bar2),Is(Table,Dirty)}
-{On(Dessert,Bar2),Is(Table,Clean)}
+{On(Dessert,Bar2),Is(Table1,Dirty)}
+{On(Dessert,Bar2),Is(Table1,Clean)}
 {On(Dessert,Table1),Is(AC,Off)}
 {On(Dessert,Table1),Is(AC,On)}
 {On(Dessert,Table1),Is(ACTemperature,Up)}
@@ -4800,8 +4800,8 @@
 {On(Dessert,Table1),Is(Chairs,Clean)}
 {On(Dessert,Table1),Is(Floor,Dirty)}
 {On(Dessert,Table1),Is(Floor,Clean)}
-{On(Dessert,Table1),Is(Table,Dirty)}
-{On(Dessert,Table1),Is(Table,Clean)}
+{On(Dessert,Table1),Is(Table1,Dirty)}
+{On(Dessert,Table1),Is(Table1,Clean)}
 {On(Dessert,Table2),Is(AC,Off)}
 {On(Dessert,Table2),Is(AC,On)}
 {On(Dessert,Table2),Is(ACTemperature,Up)}
@@ -4816,8 +4816,8 @@
 {On(Dessert,Table2),Is(Chairs,Clean)}
 {On(Dessert,Table2),Is(Floor,Dirty)}
 {On(Dessert,Table2),Is(Floor,Clean)}
-{On(Dessert,Table2),Is(Table,Dirty)}
-{On(Dessert,Table2),Is(Table,Clean)}
+{On(Dessert,Table2),Is(Table1,Dirty)}
+{On(Dessert,Table2),Is(Table1,Clean)}
 {On(Dessert,Table3),Is(AC,Off)}
 {On(Dessert,Table3),Is(AC,On)}
 {On(Dessert,Table3),Is(ACTemperature,Up)}
@@ -4832,8 +4832,8 @@
 {On(Dessert,Table3),Is(Chairs,Clean)}
 {On(Dessert,Table3),Is(Floor,Dirty)}
 {On(Dessert,Table3),Is(Floor,Clean)}
-{On(Dessert,Table3),Is(Table,Dirty)}
-{On(Dessert,Table3),Is(Table,Clean)}
+{On(Dessert,Table3),Is(Table1,Dirty)}
+{On(Dessert,Table3),Is(Table1,Clean)}
 {On(Coffee,Bar),Is(AC,Off)}
 {On(Coffee,Bar),Is(AC,On)}
 {On(Coffee,Bar),Is(ACTemperature,Up)}
@@ -4848,8 +4848,8 @@
 {On(Coffee,Bar),Is(Chairs,Clean)}
 {On(Coffee,Bar),Is(Floor,Dirty)}
 {On(Coffee,Bar),Is(Floor,Clean)}
-{On(Coffee,Bar),Is(Table,Dirty)}
-{On(Coffee,Bar),Is(Table,Clean)}
+{On(Coffee,Bar),Is(Table1,Dirty)}
+{On(Coffee,Bar),Is(Table1,Clean)}
 {On(Coffee,WaterTable),Is(AC,Off)}
 {On(Coffee,WaterTable),Is(AC,On)}
 {On(Coffee,WaterTable),Is(ACTemperature,Up)}
@@ -4864,8 +4864,8 @@
 {On(Coffee,WaterTable),Is(Chairs,Clean)}
 {On(Coffee,WaterTable),Is(Floor,Dirty)}
 {On(Coffee,WaterTable),Is(Floor,Clean)}
-{On(Coffee,WaterTable),Is(Table,Dirty)}
-{On(Coffee,WaterTable),Is(Table,Clean)}
+{On(Coffee,WaterTable),Is(Table1,Dirty)}
+{On(Coffee,WaterTable),Is(Table1,Clean)}
 {On(Coffee,CoffeeTable),Is(AC,Off)}
 {On(Coffee,CoffeeTable),Is(AC,On)}
 {On(Coffee,CoffeeTable),Is(ACTemperature,Up)}
@@ -4880,8 +4880,8 @@
 {On(Coffee,CoffeeTable),Is(Chairs,Clean)}
 {On(Coffee,CoffeeTable),Is(Floor,Dirty)}
 {On(Coffee,CoffeeTable),Is(Floor,Clean)}
-{On(Coffee,CoffeeTable),Is(Table,Dirty)}
-{On(Coffee,CoffeeTable),Is(Table,Clean)}
+{On(Coffee,CoffeeTable),Is(Table1,Dirty)}
+{On(Coffee,CoffeeTable),Is(Table1,Clean)}
 {On(Coffee,Bar2),Is(AC,Off)}
 {On(Coffee,Bar2),Is(AC,On)}
 {On(Coffee,Bar2),Is(ACTemperature,Up)}
@@ -4896,8 +4896,8 @@
 {On(Coffee,Bar2),Is(Chairs,Clean)}
 {On(Coffee,Bar2),Is(Floor,Dirty)}
 {On(Coffee,Bar2),Is(Floor,Clean)}
-{On(Coffee,Bar2),Is(Table,Dirty)}
-{On(Coffee,Bar2),Is(Table,Clean)}
+{On(Coffee,Bar2),Is(Table1,Dirty)}
+{On(Coffee,Bar2),Is(Table1,Clean)}
 {On(Coffee,Table1),Is(AC,Off)}
 {On(Coffee,Table1),Is(AC,On)}
 {On(Coffee,Table1),Is(ACTemperature,Up)}
@@ -4912,8 +4912,8 @@
 {On(Coffee,Table1),Is(Chairs,Clean)}
 {On(Coffee,Table1),Is(Floor,Dirty)}
 {On(Coffee,Table1),Is(Floor,Clean)}
-{On(Coffee,Table1),Is(Table,Dirty)}
-{On(Coffee,Table1),Is(Table,Clean)}
+{On(Coffee,Table1),Is(Table1,Dirty)}
+{On(Coffee,Table1),Is(Table1,Clean)}
 {On(Coffee,Table2),Is(AC,Off)}
 {On(Coffee,Table2),Is(AC,On)}
 {On(Coffee,Table2),Is(ACTemperature,Up)}
@@ -4928,8 +4928,8 @@
 {On(Coffee,Table2),Is(Chairs,Clean)}
 {On(Coffee,Table2),Is(Floor,Dirty)}
 {On(Coffee,Table2),Is(Floor,Clean)}
-{On(Coffee,Table2),Is(Table,Dirty)}
-{On(Coffee,Table2),Is(Table,Clean)}
+{On(Coffee,Table2),Is(Table1,Dirty)}
+{On(Coffee,Table2),Is(Table1,Clean)}
 {On(Coffee,Table3),Is(AC,Off)}
 {On(Coffee,Table3),Is(AC,On)}
 {On(Coffee,Table3),Is(ACTemperature,Up)}
@@ -4944,8 +4944,8 @@
 {On(Coffee,Table3),Is(Chairs,Clean)}
 {On(Coffee,Table3),Is(Floor,Dirty)}
 {On(Coffee,Table3),Is(Floor,Clean)}
-{On(Coffee,Table3),Is(Table,Dirty)}
-{On(Coffee,Table3),Is(Table,Clean)}
+{On(Coffee,Table3),Is(Table1,Dirty)}
+{On(Coffee,Table3),Is(Table1,Clean)}
 {On(Water,Bar),Is(AC,Off)}
 {On(Water,Bar),Is(AC,On)}
 {On(Water,Bar),Is(ACTemperature,Up)}
@@ -4960,8 +4960,8 @@
 {On(Water,Bar),Is(Chairs,Clean)}
 {On(Water,Bar),Is(Floor,Dirty)}
 {On(Water,Bar),Is(Floor,Clean)}
-{On(Water,Bar),Is(Table,Dirty)}
-{On(Water,Bar),Is(Table,Clean)}
+{On(Water,Bar),Is(Table1,Dirty)}
+{On(Water,Bar),Is(Table1,Clean)}
 {On(Water,WaterTable),Is(AC,Off)}
 {On(Water,WaterTable),Is(AC,On)}
 {On(Water,WaterTable),Is(ACTemperature,Up)}
@@ -4976,8 +4976,8 @@
 {On(Water,WaterTable),Is(Chairs,Clean)}
 {On(Water,WaterTable),Is(Floor,Dirty)}
 {On(Water,WaterTable),Is(Floor,Clean)}
-{On(Water,WaterTable),Is(Table,Dirty)}
-{On(Water,WaterTable),Is(Table,Clean)}
+{On(Water,WaterTable),Is(Table1,Dirty)}
+{On(Water,WaterTable),Is(Table1,Clean)}
 {On(Water,CoffeeTable),Is(AC,Off)}
 {On(Water,CoffeeTable),Is(AC,On)}
 {On(Water,CoffeeTable),Is(ACTemperature,Up)}
@@ -4992,8 +4992,8 @@
 {On(Water,CoffeeTable),Is(Chairs,Clean)}
 {On(Water,CoffeeTable),Is(Floor,Dirty)}
 {On(Water,CoffeeTable),Is(Floor,Clean)}
-{On(Water,CoffeeTable),Is(Table,Dirty)}
-{On(Water,CoffeeTable),Is(Table,Clean)}
+{On(Water,CoffeeTable),Is(Table1,Dirty)}
+{On(Water,CoffeeTable),Is(Table1,Clean)}
 {On(Water,Bar2),Is(AC,Off)}
 {On(Water,Bar2),Is(AC,On)}
 {On(Water,Bar2),Is(ACTemperature,Up)}

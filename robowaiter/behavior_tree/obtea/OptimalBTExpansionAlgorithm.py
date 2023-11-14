@@ -187,7 +187,7 @@ class OptBTExpAlgorithm:
                     self.ptml_string += c_set_str
                 elif child.type == 'act':
                     if '(' not in child.content.name:
-                        self.ptml_string += 'act '+child.content.name+"()\n"
+                        self.ptml_string += 'act ' + child.content.name + "()\n"
                     else:
                         self.ptml_string += 'act ' + child.content.name + "\n"
             elif isinstance(child, ControlBT):

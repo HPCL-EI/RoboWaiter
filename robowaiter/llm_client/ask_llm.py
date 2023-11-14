@@ -20,8 +20,10 @@ with open(file_path,'r',encoding="utf-8") as f:
 
 def ask_llm(question):
     if question in test_questions_dict:
-        return test_questions_dict[question]
-    ans = single_round(question)
+        ans = test_questions_dict[question]
+    else:
+        ans = single_round(question)
+    print(f"大模型输出： {ans}")
     return ans
 
 

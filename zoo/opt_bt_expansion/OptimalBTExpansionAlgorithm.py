@@ -183,7 +183,7 @@ class OptBTExpAlgorithm:
                     c_set_str = ', '.join(map(str, child.content)) + "\n"
                     self.ptml_string += c_set_str
                 elif child.type == 'act':
-                    self.ptml_string += 'act '+child.content.name+"\n"
+                    self.ptml_string += 'act ' + child.content.name + "\n"
             elif isinstance(child, ControlBT):
                 if parnode.type == '?':
                     self.ptml_string += "selector{\n"

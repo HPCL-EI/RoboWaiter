@@ -23,7 +23,13 @@ class SceneOT(Scene):
         ]
 
     def _reset(self):
-        self.add_walker(50, 300, 0)
+        scene = self.add_walkers([[50, 300, 0]])
+        # time.sleep(2.0)
+        # print("我有点热，能开个空调吗？")
+        print("scene.walkers:",scene.walkers)
+        cont = scene.walkers[0].name+":我有点热，能开个空调吗？"
+        self.control_robot_action(0,3,cont)
+
         # self.add_walker(1085, 2630, 220)
         # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
 

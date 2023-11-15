@@ -4,18 +4,18 @@
 """
 
 from robowaiter.scene.scene import Scene
-
 class SceneAEM(Scene):
     def __init__(self, robot):
         super().__init__(robot)
-        self.event_list = [
-            (5, self.create_chat_event("测试AEM")),
-        ]
 
     def _reset(self):
         pass
     def _run(self):
-
+        cur_objs = []
+        print('------------ 自主探索 ------------')
+        cur_objs = self.semantic_map.navigation_move(cur_objs, 0, 11)
+        print("物品列表如下：")
+        print(cur_objs)
 
         pass
 

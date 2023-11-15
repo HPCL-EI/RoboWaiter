@@ -16,16 +16,16 @@ class SceneGQA(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
-            (5, self.create_chat_event("洗手间在哪里")),
+            (5, self.create_chat_event("哪里有空桌子")),
             (12, self.create_chat_event("可以带我去吗")),
         ]
 
     def _reset(self):
-        self.clean_walker()
+        # self.clean_walker()
+        self.add_walkers()
 
 
-        self.add_walker(50, 500, 0)
-        self.walker_bubble("洗手间在哪里")
+        # self.walker_bubble("洗手间在哪里")
         # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
 
 

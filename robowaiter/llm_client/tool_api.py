@@ -71,5 +71,5 @@ def run_conversation(query: str, stream=False, functions=None, max_retry=5):
 
 
 if __name__ == "__main__":
-    query = "给我一杯咖啡"
+    query = "关掉空调"
     print(run_conversation(query, functions=functions, stream=False))

@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-import GrabSim_pb2_grpc
-import GrabSim_pb2
+from robowaiter.proto import GrabSim_pb2
+from robowaiter.proto import GrabSim_pb2_grpc
 
 channel = grpc.insecure_channel('localhost:30001', options=[
     ('grpc.max_send_message_length', 1024 * 1024 * 1024),
@@ -141,6 +141,10 @@ if __name__ == '__main__':
 
         print('------------ 自主探索 ------------')
         while True:
+
+            # scene = sim_client.Observe(GrabSim_pb2.SceneID(value=0))
+            # cur_pos =[int(scene.location.X), int(scene.location.Y), int(scene.rotation.Yaw)]
+
             goal = explorer.explore(cur_pos)  # cur_pos 指的是当前机器人的位置，场景中应该也有接口可以获取
             if goal is None:
                 break

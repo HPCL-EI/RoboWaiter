@@ -44,8 +44,14 @@ if __name__ == '__main__':
     scene.control_walker([scene.walker_control_generator(walkerID=1, autowalk=False, speed=50, X=100, Y=150, Yaw=0)])
     scene.control_walker([scene.walker_control_generator(walkerID=2, autowalk=False, speed=50, X=0, Y=0, Yaw=0)])
 
-    goal = (-100, 700)
+    # goal = (-100, 700)
     # goal = (-300)
+    # goal = (340.0, 900.0)
+
+    goal = (240.0, 1000.0)
+
+    # goal = (340.0, 900.0)
+    goal = (240.0, 1160.0)
 
     '''场景4: 行人自由移动 robot到达指定目标'''
     # # TODO: autowalk=True仿真器会闪退 ???

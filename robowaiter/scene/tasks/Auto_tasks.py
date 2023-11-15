@@ -20,7 +20,23 @@ class SceneAT(Scene):
         self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
 
     def _run(self):
+
+        self.move_task_area(7)
+        self.op_task_execute(7)
+        self.move_task_area(6)
+        self.op_task_execute(6)
         pass
 
     def _step(self):
         pass
+
+if __name__ == '__main__':
+    import os
+    from robowaiter.robot.robot import Robot
+
+    robot = Robot()
+
+    # create task
+    task = SceneAT(robot)
+    task.reset()
+    task.run()

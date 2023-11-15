@@ -37,19 +37,44 @@ class MoveTo(Act):
             self.scene.walk_to(goal[0],goal[1])
         else: # 走到物品边上
             obj_id = -1
+            min_dis = float('inf')
             obj_dict = self.scene.status.objects
             if len(obj_dict)!=0:
                 # 获取obj_id
                 for id,obj in enumerate(obj_dict):
                     if obj.name == self.target_place:
                         obj_id = id
+                        # obj_info = obj_dict[id]
+                        # obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
+                        # ginger_x,ginger_y,ginger_z = [int(self.scene.location.X), int(self.scene.location.Y), int(self.scene.rotation.Yaw)]
                         break
+            if self.target_place == "CoffeeCup":
+                obj_id = 273
             if obj_id == -1:
                 return ptree.common.Status.FAILURE
 
-            obj_info = self.scene.objects[obj_id]
-            obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
-            self.scene.walk_to(obj_x,obj_y)
+            self.scene.move_to_obj(obj_id=obj_id)
+
+            # 为了演示，写死咖啡位置
+            # if self.target_place=="Coffee":
+            #     obj_id = 273
+            # obj_id = -1
+            # obj_dict = self.scene.status.objects
+            # if len(obj_dict)!=0:
+            #     # 获取obj_id
+            #     for id,obj in enumerate(obj_dict):
+            #         if obj.name == self.target_place:
+            #             obj_id = id
+            #             break
+            #     # 为了演示，写死咖啡位置
+            #     if self.target_place=="Coffee":
+            #         obj_id = 273
+            # if obj_id == -1:
+            #     return ptree.common.Status.FAILURE
+            # obj_info = obj_dict[obj_id]
+            # obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
+            # self.scene.walk_to(obj_x,obj_y)
+            # print("MoveTo",obj_x, obj_y, obj_z," obj_id:",obj_id," obj_info:",obj_info.name)
 
 
         # goal = self.scene.state['map']['obj_pos'][self.args[0]]

@@ -362,13 +362,18 @@ class Scene:
         temp = stub.GetIKControlInfos(GrabSim_pb2.HandPostureInfos(scene=self.sceneID, handPostureObjects=HandPostureObject))
 
     # 移动到进行操作任务的指定地点
-    def move_task_area(self,op_type,obj_id=0):
+    def move_task_area(self,op_type,obj_id=0, release_pos=[247.0, 520.0, 100.0]):
+        scene = self.status
+        cur_pos = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
+        print("Current Position:", cur_pos, "开始任务:", self.op_dialog[op_type])
+
         if op_type==11 or op_type==12:  # 开关窗帘不需要移动
             return
-        scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
-
-        if op_type == 16:
-            print('------------------moveTo_obj----------------------')
+        print('------------------moveTo_Area----------------------')
+        if op_type < 8: walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]   # 动画控制
+        if op_type>=8 and op_type<=10: walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]   # 控灯
+        if op_type in [13,14,15]: walk_v = [240, -140.0] + [0, 180, 0]  # 空调
+        if op_type==16:    # 抓握物体，移动到物体周围的可达区域
             obj_info = scene.objects[obj_id]
             # Robot
             obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
@@ -377,31 +382,14 @@ class Scene:
                 walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
                 obj_x += 3
                 obj_y += 2.5
-                # walk_v = [obj_x,obj_y-30,130, 180, 0]
-            action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-            scene = stub.Do(action)
-            time.sleep(1.0)
-            return
+        if op_type==17:   # 放置物体，移动到物体周围的可达区域
+            walk_v = release_pos[:-1] + [180, 180, 0]
+            if release_pos == [340.0, 900.0, 99.0]:
+                walk_v[2] = 130
 
-        walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
-
-        if op_type < 8:
-            v_list = self.op_v_list[op_type]
-        if op_type>=8 and op_type<=10:  # 控灯
-            v_list = self.op_v_list[6]
-        if op_type in [13,14,15]:   # 空调
-            v_list = [[240, -140.0]]  # KongTiao [300.5, -140.0]  # 250
-
-        print("------------------move_task_area----------------------")
-        print("Current Position:", walk_value,"开始任务:",self.op_dialog[op_type])
-        for walk_v in v_list:
-            walk_v = walk_v + [scene.rotation.Yaw, 180, 0]
-            walk_v[2] = 0 if (op_type in [13,14,15]) else scene.rotation.Yaw   # 空调操作朝向墙面
-            action = GrabSim_pb2.Action(
-                scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
-            )
-            scene = stub.Do(action)
-        print("After Walk Position:",[scene.location.X, scene.location.Y, scene.rotation.Yaw])
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+        scene = stub.Do(action)
+        print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
 
     # 相应的行动，由主办方封装
     def control_robot_action(self, type=0, action=0, message="你好"):
@@ -418,7 +406,9 @@ class Scene:
             return False
 
     def adjust_kongtiao(self,op_type):
-        obj_loc = self.obj_loc[0][:]
+        print("self.obj_loc:",self.obj_loc)
+        obj_loc = self.obj_loc[:]
+        print("obj_loc:",obj_loc,"self.obj_loc:", self.obj_loc)
         obj_loc[2] -= 5
         print("obj_loc:",obj_loc)
         if op_type == 13: obj_loc[1] -= 2
@@ -429,37 +419,25 @@ class Scene:
         self.robo_recover()
         return True
 
-    def gen_obj(self,type=5,h=100):
+    def gen_obj(self,h=100):
         # 4;冰红(盒) 5;酸奶  7:保温杯 9;冰红(瓶) 13:代语词典  14:cake 61:甜牛奶
-        # type= 5  #9
-        scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+        scene = self.status
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
-        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=type),
+        obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=5),
                     # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
-                    # GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=9),
+                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=9),
                     ]
-
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 
     def grasp_obj(self,obj_id,hand_id=1):
-
-        # Move to Obj
-        # print('------------------moveTo_obj----------------------')
-        scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+        scene = self.status
         obj_info = scene.objects[obj_id]
-        # # Robot
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
-        # walk_v = [obj_x+50, obj_y] + [180, 180, 0]
-        # if obj_y>=820 and obj_y<= 1200 and obj_x>=240 and obj_x<= 500: # 物品位于斜的抹布桌上 ([240,500],[820,1200])
-        #     walk_v = [obj_x+40, obj_y-35, 130, 180, 0]
-        #     obj_x += 3
-        #     obj_y += 2.5
-        #     # walk_v = [obj_x,obj_y-30,130, 180, 0]
-        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        # scene = stub.Do(action)
-        # time.sleep(1.0)
-
+        if obj_info.name=="CoffeeCup":
+            pass
+        if obj_info.name=="Glass":
+            pass
         # Finger
         self.ik_control_joints(2, obj_x-9, obj_y, obj_z)   # -10, 0, 0
         time.sleep(3.0)
@@ -467,7 +445,7 @@ class Scene:
         print('------------------grasp_obj----------------------')
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Grasp, values=[hand_id, obj_id])
         scene = stub.Do(action)
-        time.sleep(4)
+        time.sleep(3.0)
         return True
 
     # robot的肢体恢复原位
@@ -479,7 +457,7 @@ class Scene:
 
     def robo_stoop_parallel(self):
         # 0-3是躯干，4-6是脖子和头，7-13是左胳膊，14-20是右胳膊
-        scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+        scene = self.status
         angle = [scene.joints[i].angle for i in range(21)]
         angle[0] = 15
         angle[19] = -15
@@ -490,12 +468,6 @@ class Scene:
         time.sleep(1.0)
 
     def release_obj(self,release_pos):
-        print("------------------Move to Realese Position----------------------")
-        walk_v = [release_pos[i] for i in range(2)] + [180,180,0]
-        if release_pos==[340.0, 900.0, 99.0]:
-            walk_v[2] = 130
-        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        scene = stub.Do(action)
         print("------------------release_obj----------------------")
         if release_pos==[340.0, 900.0, 99.0]:
             self.ik_control_joints(2, 300.0, 935, release_pos[2])
@@ -515,17 +487,14 @@ class Scene:
     # 执行过程：输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
     def op_task_execute(self,op_type,obj_id=0,release_pos=[240,-140]):
         self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
+        if op_type<8: result = self.control_robot_action(op_type, 1)
+        if op_type>=8 and op_type<=12: result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
         if op_type in [13,14,15]:   # 调整空调:13代表按开关,14升温,15降温
             result = self.adjust_kongtiao(op_type)
-        elif op_type ==16:
+        if op_type ==16:    # 抓握物体
             result = self.grasp_obj(obj_id)
-        elif op_type ==17:
+        if op_type ==17:    # 放置物体
             result = self.release_obj(release_pos)
-        elif op_type>=8:
-            result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
-            print("result:",result)
-        else:
-            result = self.control_robot_action(op_type, 1)    #
         self.control_robot_action(0, 2)
         if result:
             if self.op_act_num[op_type]>0:
@@ -535,6 +504,11 @@ class Scene:
             # self.control_robot_action(0, 1, "成功"+self.op_dialog[op_type])
         # else:
         #     self.control_robot_action(0, 1, self.op_dialog[op_type]+"失败")
+
+    def find_obj(self,name):
+        for id, item in enumerate(self.status.objects):
+            if item.name == name:
+                print("name:",name,"id:",id,"X:",item.location.X,"Y:",item.location.Y,"Z:",item.location.Z,)
 
     def test_move(self):
         v_list = [[0, 880], [250, 1200], [-55, 750], [70, -200]]

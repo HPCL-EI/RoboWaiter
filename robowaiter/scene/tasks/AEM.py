@@ -4,13 +4,10 @@
 """
 
 from robowaiter.scene.scene import Scene
-
+from robowaiter.algos.explore.semantic_map import impo
 class SceneAEM(Scene):
     def __init__(self, robot):
         super().__init__(robot)
-        self.event_list = [
-            (5, self.create_chat_event("测试AEM")),
-        ]
 
     def _reset(self):
         pass

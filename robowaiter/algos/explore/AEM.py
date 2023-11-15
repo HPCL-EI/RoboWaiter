@@ -269,6 +269,7 @@ if __name__ == '__main__':
 
         print('------------ 自主探索 ------------')
         cur_objs = semantic_map.navigation_move(cur_objs,i, map_id)
+
         print("物品列表如下：")
         print(cur_objs)
 

@@ -18,3 +18,4 @@ Question,Answer,Goal
 测试VLM：整理椅子,测试VLM：整理椅子,"{""Is(Chairs,Clean)""}"
 测试VLM：把冰红茶放到Table2,测试VLM：把冰红茶放到Table2,"{""On(BottledDrink,Table2)""}"
 我有点热，能开个空调吗？,当然可以，我现在就开！,"{""Is(AC,On)""}"
+可以带我去吗,当然可以，前往一号桌,"{""At(Robot,Table1)""}"

@@ -4,7 +4,6 @@
 """
 
 from robowaiter.scene.scene import Scene
-from robowaiter.algos.explore.semantic_map import impo
 class SceneAEM(Scene):
     def __init__(self, robot):
         super().__init__(robot)

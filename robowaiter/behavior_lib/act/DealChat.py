@@ -13,13 +13,16 @@ class DealChat(Act):
         chat = self.scene.state['chat_list'].pop()
         self.chat_history += chat + '\n'
 
-        res_dict = ask_llm(self.chat_history)
+        res_dict = ask_llm(chat)
         answer = res_dict["Answer"]
         self.chat_history += answer + '\n'
 
         goal = res_dict["Goal"]
-        if goal and "{" not in goal:
-            goal = {str(goal)}
+        if goal:
+            if "{" not in goal:
+                goal = {str(goal)}
+            else:
+                goal=eval(goal)
 
         if goal is not None:
             print(f'goal：{goal}')

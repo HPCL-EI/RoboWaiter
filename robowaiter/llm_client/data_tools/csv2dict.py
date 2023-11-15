@@ -24,3 +24,4 @@ with open(csv_file_path, mode='r', encoding='gbk') as csv_file, \
     json_str = json.dumps(output_dict, ensure_ascii=False)
     # 将JSON字符串写入JSONL文件，并添加换行符
     jsonl_file.write(json_str + '\n')
+s

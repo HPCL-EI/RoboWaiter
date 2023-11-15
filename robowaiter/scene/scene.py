@@ -221,7 +221,7 @@ class Scene:
         print('------------------add_walkers----------------------')
         walker_list = []
         for i in range(len(walker_loc)):
-            loc = walker_loc[i] + [0, 0, 100]
+            loc = walker_loc[i] + [0,0, 100]
             action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=loc)
             scene = stub.Do(action)
             print(scene.info)

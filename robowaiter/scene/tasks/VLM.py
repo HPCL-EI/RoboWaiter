@@ -21,8 +21,8 @@ class SceneVLM(Scene):
             # (5, self.create_chat_event("测试VLM：整理椅子")),
             # (5, self.create_chat_event("测试VLM：把冰红茶放到Table2")),
             # (5, self.create_chat_event("测试VLM：关大厅灯"))
-
             # (5, self.create_chat_event("测试VLM：做一杯咖啡放到吧台上")),
+            # (5, self.create_chat_event("测试VLM：做一杯咖啡放到水杯桌上并倒水")),
         ]
 
     def _reset(self):
@@ -85,6 +85,7 @@ class SceneVLM(Scene):
         # pos = [-55.0, 0.0, 107]
         # self.move_task_area(17, release_pos=pos)
         # self.op_task_execute(17, release_pos=pos)
+
         pass
     
     def _step(self):

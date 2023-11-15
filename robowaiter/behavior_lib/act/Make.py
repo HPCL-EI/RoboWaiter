@@ -47,7 +47,7 @@ class Make(Act):
         if len(obj_dict) != 0:
             # 获取obj_id
             for id, obj in enumerate(obj_dict):
-                if obj.name == "CoffeeCup":
+                if obj.name == "Coffee":
                     obj_info = obj_dict[id]
                     obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
                     print(id,obj.name,obj_x,obj_y,obj_z)

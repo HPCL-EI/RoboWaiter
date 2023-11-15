@@ -31,9 +31,7 @@ class SceneOT(Scene):
         # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
         pass
 
-
     def _run(self):
-
         pass
 
 

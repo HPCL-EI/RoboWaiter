@@ -1,6 +1,7 @@
 Question,Answer,Goal
 测试VLM：做一杯咖啡,测试VLM：做一杯咖啡,"{""On(Coffee,CoffeeTable)""}"
 测试VLM：做一杯咖啡放到吧台上,测试VLM：做一杯咖啡放到吧台上,"{""On(Coffee,Bar)""}"
+测试VLM：做一杯咖啡放到水杯桌上并倒水,测试VLM：做一杯咖啡放到水杯桌上并倒水,"{""On(Coffee,WaterTable)""}"
 测试VLN：前往2号桌,测试VLN：前往2号桌,"{""At(Robot,Table2)""}"
 测试AEM,测试AEM,"{""EnvExplored()""}"
 测试VLM：倒一杯水,测试VLM：倒一杯水,"{""On(Water,WaterTable)""}"

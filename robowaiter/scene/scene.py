@@ -361,6 +361,20 @@ class Scene:
                             ]
         temp = stub.GetIKControlInfos(GrabSim_pb2.HandPostureInfos(scene=self.sceneID, handPostureObjects=HandPostureObject))
 
+
+    def move_to_obj(self,obj_id):
+        scene = self.status
+        obj_info = scene.objects[obj_id]
+        # Robot
+        obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
+        walk_v = [obj_x + 50, obj_y] + [180, 180, 0]
+        if obj_y >= 820 and obj_y <= 1200 and obj_x >= 240 and obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
+            walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
+            obj_x += 3
+            obj_y += 2.5
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+        scene = stub.Do(action)
+
     # 移动到进行操作任务的指定地点
     def move_task_area(self,op_type,obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         scene = self.status
@@ -370,10 +384,13 @@ class Scene:
         if op_type==11 or op_type==12:  # 开关窗帘不需要移动
             return
         print('------------------moveTo_Area----------------------')
-        if op_type < 8: walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]   # 动画控制
+        if op_type < 8:
+            walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]   # 动画控制
+            print("walk_v:",walk_v)
         if op_type>=8 and op_type<=10: walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]   # 控灯
         if op_type in [13,14,15]: walk_v = [240, -140.0] + [0, 180, 0]  # 空调
         if op_type==16:    # 抓握物体，移动到物体周围的可达区域
+            scene = self.status
             obj_info = scene.objects[obj_id]
             # Robot
             obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z

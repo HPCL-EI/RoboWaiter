@@ -29,8 +29,11 @@ class PickUp(Act):
         obj_id = 0
         # 遍历场景里的所有物品，根据名字匹配位置最近的 obj-id
 
+        if self.args=="Coffee":
+            obj_id = 273
+
         self.scene.op_task_execute(op_type, obj_id=obj_id)
 
-        self.scene.state["condition_set"].union(self.info["add"])
+        self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

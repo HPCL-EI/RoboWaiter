@@ -28,3 +28,15 @@ class SceneGQA(Scene):
 
     def _run(self):
         pass
+
+
+if __name__ == '__main__':
+    import os
+    from robowaiter.robot.robot import Robot
+
+    robot = Robot()
+
+    # create task
+    task = SceneGQA(robot)
+    task.reset()
+    task.run()

@@ -11,7 +11,7 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
-            (5, self.create_chat_event("测试VLM：做一杯咖啡")),
+            # (5, self.create_chat_event("测试VLM：做一杯咖啡")),
             # (5, self.create_chat_event("测试VLM：倒一杯水")),
             # (5, self.create_chat_event("测试VLM：开空调")),
             # (5, self.create_chat_event("测试VLM：关空调")),
@@ -22,13 +22,11 @@ class SceneVLM(Scene):
             # (5, self.create_chat_event("测试VLM：把冰红茶放到Table2")),
             # (5, self.create_chat_event("测试VLM：关大厅灯"))
 
-            # (5, self.create_chat_event("测试VLM：做一杯咖啡放到吧台上")),
+            (5, self.create_chat_event("测试VLM：做一杯咖啡放到吧台上")),
         ]
 
     def _reset(self):
-        self.state["condition_set"] = {'At(Robot,Bar)','Is(AC,Off)', 'Holding(Nothing)',  # 'Holding(Yogurt)', #'Holding(Nothing)',
-                                       'Is(HallLight,Off)','Is(TubeLight,On)','Is(Curtain,On)',
-                                       'Is(Table1,Dirty)','Is(Floor,Dirty)','Is(Chairs,Dirty)'}
+
         # self.gen_obj(type=5)
         # self.gen_obj(type=9)
         # self.op_task_execute(op_type=16, obj_id=0)
@@ -57,3 +55,15 @@ class SceneVLM(Scene):
     
     def _step(self):
         pass
+
+
+if __name__ == '__main__':
+    import os
+    from robowaiter.robot.robot import Robot
+
+    robot = Robot()
+
+    # create task
+    task = SceneVLM(robot)
+    task.reset()
+    task.run()

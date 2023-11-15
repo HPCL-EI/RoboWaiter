@@ -33,6 +33,6 @@ class PutDown(Act):
         # # 桌子2:[-55.0, 0.0, 107],桌子3:[-55.0, 150.0, 107]
         self.scene.op_task_execute(op_type, release_pos=release_pos)
 
-        self.scene.state["condition_set"].union(self.info["add"])
+        self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

@@ -52,7 +52,11 @@ class Scene:
         "chat_list": [],  # 未处理的顾客的对话, (顾客的位置,顾客对话的内容)
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
-        "condition_set": set()
+        "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
+                                    'Holding(Nothing)',
+                                   # 'Holding(Yogurt)'
+                                   'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+                                   'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
     }
     """
     status:
@@ -179,7 +183,7 @@ class Scene:
             pose=GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw),
         )
 
-    def walk_to(self, X, Y, Yaw=None, velocity=200, dis_limit=0):
+    def walk_to(self, X, Y, Yaw=100, velocity=200, dis_limit=0):
         walk_v = [X,Y,Yaw,velocity,dis_limit]
         action = GrabSim_pb2.Action(
             scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
@@ -358,10 +362,27 @@ class Scene:
         temp = stub.GetIKControlInfos(GrabSim_pb2.HandPostureInfos(scene=self.sceneID, handPostureObjects=HandPostureObject))
 
     # 移动到进行操作任务的指定地点
-    def move_task_area(self,op_type):
+    def move_task_area(self,op_type,obj_id=0):
         if op_type==11 or op_type==12:  # 开关窗帘不需要移动
             return
         scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+
+        if op_type == 16:
+            print('------------------moveTo_obj----------------------')
+            obj_info = scene.objects[obj_id]
+            # Robot
+            obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
+            walk_v = [obj_x + 50, obj_y] + [180, 180, 0]
+            if obj_y >= 820 and obj_y <= 1200 and obj_x >= 240 and obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
+                walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
+                obj_x += 3
+                obj_y += 2.5
+                # walk_v = [obj_x,obj_y-30,130, 180, 0]
+            action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+            scene = stub.Do(action)
+            time.sleep(1.0)
+            return
+
         walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
 
         if op_type < 8:
@@ -424,20 +445,20 @@ class Scene:
     def grasp_obj(self,obj_id,hand_id=1):
 
         # Move to Obj
-        print('------------------moveTo_obj----------------------')
+        # print('------------------moveTo_obj----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
         obj_info = scene.objects[obj_id]
-        # Robot
+        # # Robot
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
-        walk_v = [obj_x+50, obj_y] + [180, 180, 0]
-        if obj_y>=820 and obj_y<= 1200 and obj_x>=240 and obj_x<= 500: # 物品位于斜的抹布桌上 ([240,500],[820,1200])
-            walk_v = [obj_x+40, obj_y-35, 130, 180, 0]
-            obj_x += 3
-            obj_y += 2.5
-            # walk_v = [obj_x,obj_y-30,130, 180, 0]
-        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        scene = stub.Do(action)
-        time.sleep(1.0)
+        # walk_v = [obj_x+50, obj_y] + [180, 180, 0]
+        # if obj_y>=820 and obj_y<= 1200 and obj_x>=240 and obj_x<= 500: # 物品位于斜的抹布桌上 ([240,500],[820,1200])
+        #     walk_v = [obj_x+40, obj_y-35, 130, 180, 0]
+        #     obj_x += 3
+        #     obj_y += 2.5
+        #     # walk_v = [obj_x,obj_y-30,130, 180, 0]
+        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+        # scene = stub.Do(action)
+        # time.sleep(1.0)
 
         # Finger
         self.ik_control_joints(2, obj_x-9, obj_y, obj_z)   # -10, 0, 0

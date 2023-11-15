@@ -11,3 +11,20 @@ class SceneAEM(Scene):
         self.event_list = [
             (5, self.create_chat_event("测试AEM")),
         ]
+
+    def _reset(self):
+        pass
+    def _run(self):
+        pass
+
+
+if __name__ == '__main__':
+    import os
+    from robowaiter.robot.robot import Robot
+
+    robot = Robot()
+
+    # create task
+    task = SceneAEM(robot)
+    task.reset()
+    task.run()

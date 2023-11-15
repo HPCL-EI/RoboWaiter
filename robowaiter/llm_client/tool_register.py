@@ -40,7 +40,7 @@ def register_tool(func: callable):
         "params": tool_params
     }
 
-    print("[registered tool] " + pformat(tool_def))
+    # print("[registered tool] " + pformat(tool_def))
     _TOOL_HOOKS[tool_name] = func
     _TOOL_DESCRIPTIONS[tool_name] = tool_def
 
@@ -126,13 +126,14 @@ def get_tools() -> dict:
 
 @register_tool
 def create_sub_task(
-        goal: Annotated[str, '子任务需要达到的目标条件集合', True]
+        goal: Annotated[str, '子任务需要达到的目标条件集合，例如{On(Coffee,Bar)}，{At(Robot,Table1)}，{Is(AC,Off)}', True]
 ) -> str:
     """
     当需要完成具身任务（如做咖啡，拿放物体，扫地，前往某位置）时，调用该函数，根据用户的提示进行意图理解，生成子任务的目标状态集合 `goal`（以一阶逻辑的形式表示），用户意图
-    做一杯咖啡,`goal`={On(Coffee,Bar)},
-    前往一号桌,`goal`={At(Robot,Table1)},
-    打开空调,`goal`={Is(AC,On)},。
+    做一杯咖啡,则该函数的参数为 "On(Coffee,Bar)",
+    前往一号桌,则该函数的参数为 "At(Robot,Table1)",
+    打开空调,则该函数的参数为 "Is(AC,On)",。
+    关空调,则该函数的参数为 "Is(AC,Off)",。
     """
 
     return goal
@@ -142,7 +143,7 @@ def get_object_info(
         obj: Annotated[str, '需要获取信息的物体名称', True]
 ) -> str:
     """
-    获取场景中指定物体 `object` 的信息
+    获取场景中指定物体 `object` 的信息，如果`object` 是一个地点，例如洗手间，地方，则输出。如果`object`是一个咖啡，则输出。
     """
     near_object = None
     if obj == "Table":

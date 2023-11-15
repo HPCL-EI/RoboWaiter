@@ -1,6 +1,6 @@
 import requests
 import urllib3
-
+from robowaiter.llm_client.tool_api import run_conversation
 ########################################
 #   该文件实现了与大模型的简单通信、多轮对话，输入end表示对话结束
 ########################################
@@ -20,8 +20,8 @@ while k!='end':
 	user_dict={"role": "user","content":question_now}
 	data_memory.append(user_dict)
 	#print(data_memory)
-	response = requests.post(url, headers=headers, json={"messages":data_memory, "repetition_penalty": 1.0}, verify=False)
-	answer=response.json()['choices'][n]['message']['content']
+	response = run_conversation(str(data_memory))
+	answer=str(response)
 	print(answer)
 	assistant_dict={"role": "assistant","content":answer}
 	data_memory.append(assistant_dict)

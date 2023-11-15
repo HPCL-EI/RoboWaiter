@@ -335,6 +335,23 @@ class Scene:
             )
         )
 
+    # def walker_bubble(self, message):
+    #     status = self.status
+    #     walker_name = status.walkers[0].name
+    #     talk_content = walker_name + ":" + message
+    #     self.control_robot_action(0, 0, 3, talk_content)
+
+    # def control_robot_action(self, scene_id=0, type=0, action=0, message="你好"):
+    #     print('------------------control_robot_action----------------------')
+    #     scene = stub.ControlRobot(
+    #         GrabSim_pb2.ControlInfo(scene=scene_id, type=type, action=action, content=message))
+    #     if (str(scene.info).find("Action Success") > -1):
+    #         print(scene.info)
+    #         return True
+    #     else:
+    #         print(scene.info)
+    #         return False
+
     def animation_control(self, animation_type):
         # animation_type: 1:make coffee 2: pour water 3: grab food 4: mop floor 5: clean table
         scene = stub.ControlRobot(

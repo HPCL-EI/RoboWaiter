@@ -7,7 +7,6 @@
 具体描述：设计一套点单规则（如菜单包含咖啡、水、点心等），按照规则拟造随机的订单。在收到订单后，通过大模型让机器人输出合理的备餐计划，并尝试在模拟环境中按照这个规划实现任务。
 
 """
-import time
 
 # todo: 接收点单信息，大模型生成任务规划
 
@@ -19,19 +18,15 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.event_list = [
-            # (5,self.create_chat_event("给我一杯咖啡"))  # (事件发生的时间，事件函数)
-            (5, self.create_chat_event("我有点热，能开个空调吗？"))  # (事件发生的时间，事件函数)
+            # (5,self.create_chat_event("做一杯咖啡")),
+            (5,self.create_chat_event("感觉有点冷，可以关一下空调吗")),
         ]
 
     def _reset(self):
-        scene = self.add_walkers([[0, 0], [250, 1200], [-55, 750], [70, -200]])
-        # time.sleep(2.0)
-        # print("我有点热，能开个空调吗？")
-        print("scene.walkers:",scene.walkers)
-        cont = scene.walkers[0].name+":我有点热，能开个空调吗？"
-        self.control_robot_action(0,3,cont)
+        self.add_walker(50, 300, 0)
+        # self.add_walker(1085, 2630, 220)
         # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
-        pass
+
 
     def _run(self):
         pass

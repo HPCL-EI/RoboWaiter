@@ -4,6 +4,8 @@ import requests
 import urllib3
 from robowaiter.utils import get_root_path
 from robowaiter.llm_client.single_round import single_round
+from robowaiter.llm_client.tool_api import run_conversation
+
 ########################################
 #   该文件实现了与大模型的简单通信
 ########################################
@@ -22,7 +24,9 @@ def ask_llm(question):
     if question in test_questions_dict:
         ans = test_questions_dict[question]
     else:
-        ans = single_round(question)
+        ans = run_conversation(question, stream=False)
+
+        # ans = single_round(question)
     print(f"大模型输出： {ans}")
     return ans
 

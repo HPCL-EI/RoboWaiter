@@ -3,8 +3,8 @@ import json
 import openai
 from colorama import init, Fore
 from loguru import logger
-
-from tool_register import get_tools, dispatch_tool
+import json
+from robowaiter.llm_client.tool_register import get_tools, dispatch_tool
 import requests
 import json
 
@@ -29,22 +29,21 @@ def get_response(**kwargs):
 
 functions = get_tools()
 
-def run_conversation(query: str, stream=False, functions=None, max_retry=5):
+def run_conversation(query: str, stream=False,  max_retry=5):
     params = dict(model="chatglm3", messages=[{"role": "user", "content": query}], stream=stream)
-    if functions:
-        params["functions"] = functions
+    params["functions"] = functions
     response = get_response(**params)
 
     for _ in range(max_retry):
         if response["choices"][0]["message"].get("function_call"):
             function_call = response["choices"][0]["message"]["function_call"]
+            logger.info(f"Function Call Response: {function_call}")
             if "sub_task" in function_call["name"]:
                 return {
                     "Answer": "好的",
-                    "Goal": function_call["arguments"]
+                    "Goal": json.loads(function_call["arguments"])["goal"]
                 }
 
-            logger.info(f"Function Call Response: {function_call}")
             function_args = json.loads(function_call["arguments"])
             tool_response = dispatch_tool(function_call["name"], function_args)
             logger.info(f"Tool Call Response: {tool_response}")
@@ -71,5 +70,5 @@ def run_conversation(query: str, stream=False, functions=None, max_retry=5):
 
 
 if __name__ == "__main__":
-    query = "关掉空调"
-    print(run_conversation(query, functions=functions, stream=False))
+    query = "可以带我去吗"
+    print(run_conversation(query, stream=False))

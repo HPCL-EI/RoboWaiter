@@ -18,8 +18,8 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.event_list = [
-            (5,self.create_chat_event("来二号桌")),
-            # (5,self.create_chat_event("感觉有点冷，可以关一下空调吗")),
+            # (5,self.create_chat_event("做一杯咖啡")),
+            (5,self.create_chat_event("感觉有点冷，可以关一下空调吗")),
         ]
 
     def _reset(self):

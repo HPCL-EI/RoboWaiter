@@ -6,14 +6,20 @@ from robowaiter.llm_client.ask_llm import ask_llm
 class DealChat(Act):
     def __init__(self):
         super().__init__()
+        self.chat_history = ""
 
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?
         chat = self.scene.state['chat_list'].pop()
+        self.chat_history += chat + '\n'
 
-        res_dict = ask_llm(chat)
+        res_dict = ask_llm(self.chat_history)
         answer = res_dict["Answer"]
-        goal = eval(res_dict["Goal"])
+        self.chat_history += answer + '\n'
+
+        goal = res_dict["Goal"]
+        if goal and "{" not in goal:
+            goal = {str(goal)}
 
         if goal is not None:
             print(f'goal：{goal}')

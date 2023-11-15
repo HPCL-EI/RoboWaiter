@@ -8,12 +8,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from robowaiter.scene import scene
-from navigate import Navigator
-
+# from navigate import Navigator
+from robowaiter.algos.navigate.navigate import Navigator
 
 
 
 if __name__ == '__main__':
+# def navigate_test(scene):
 
     file_name = 'map_5.pkl'
     if os.path.exists(file_name):
@@ -37,9 +38,10 @@ if __name__ == '__main__':
     '''场景3: 移动行人环境 robot到达指定目标'''
     scene.walk_to(100, 0, -90, dis_limit=10)
     scene.clean_walker()
-    scene.add_walker(50, 300, 0)
-    scene.add_walker(-50, 500, 0)
-    scene.add_walker(0, 700, 0)
+    scene.add_walkers([[50, 300],[-50, 500],[0, 700]])
+    # scene.add_walker(50, 300, 0)
+    # scene.add_walker(-50, 500, 0)
+    # scene.add_walker(0, 700, 0)
     scene.control_walker([scene.walker_control_generator(walkerID=0, autowalk=False, speed=50, X=-50, Y=600, Yaw=0)])
     scene.control_walker([scene.walker_control_generator(walkerID=1, autowalk=False, speed=50, X=100, Y=150, Yaw=0)])
     scene.control_walker([scene.walker_control_generator(walkerID=2, autowalk=False, speed=50, X=0, Y=0, Yaw=0)])
@@ -48,8 +50,7 @@ if __name__ == '__main__':
     # goal = (-300)
     # goal = (340.0, 900.0)
 
-    goal = (240.0, 1000.0)
-
+    # goal = (240.0, 1000.0)
     # goal = (340.0, 900.0)
     goal = (240.0, 1160.0)
 

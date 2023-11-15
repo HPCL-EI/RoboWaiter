@@ -21,6 +21,8 @@ class SceneVLM(Scene):
             # (5, self.create_chat_event("测试VLM：整理椅子")),
             # (5, self.create_chat_event("测试VLM：把冰红茶放到Table2")),
             # (5, self.create_chat_event("测试VLM：关大厅灯"))
+
+            # (5, self.create_chat_event("测试VLM：做一杯咖啡放到吧台上")),
         ]
 
     def _reset(self):
@@ -28,7 +30,7 @@ class SceneVLM(Scene):
                                        'Is(HallLight,Off)','Is(TubeLight,On)','Is(Curtain,On)',
                                        'Is(Table1,Dirty)','Is(Floor,Dirty)','Is(Chairs,Dirty)'}
         # self.gen_obj(type=5)
-        # # self.gen_obj(type=9)
+        # self.gen_obj(type=9)
         # self.op_task_execute(op_type=16, obj_id=0)
         # self.move_task_area(op_type=4)
         pass

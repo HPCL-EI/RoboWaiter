@@ -27,18 +27,21 @@ class Make(Act):
         info = {}
         info["pre"]= {f'Holding(Nothing)'}
         info['del_set'] = set()
+        info['add'] = {f'Exist({arg})'}
         if arg == "Coffee":
-            info["add"]= {f'On(Coffee,CoffeeTable)'}
+            info["add"] |= {f'On(Coffee,CoffeeTable)'}
         elif arg == "Water":
-            info["add"] = {f'On(Water,WaterTable)'}
+            info["add"] |= {f'On(Water,WaterTable)'}
         elif arg == "Dessert":
-            info["add"] = {f'On(Dessert,Bar)'}
+            info["add"] |= {f'On(Dessert,Bar)'}
         return info
 
     def _update(self) -> ptree.common.Status:
 
         self.scene.move_task_area(self.op_type)
         self.scene.op_task_execute(self.op_type)
+
+        # self.scene.gen_obj(type=40)
 
         self.scene.state["condition_set"].union(self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]

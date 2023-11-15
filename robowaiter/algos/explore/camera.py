@@ -238,7 +238,7 @@ def save_obj_info(img_data, objs_name):
 
 def get_semantic_map(camera, cur_objs, objs_name):
     scene = Observe(0)
-    print(scene.objects)
+    # print(scene.objects)
 
     objs = scene.objects
     img_data = get_camera([camera])

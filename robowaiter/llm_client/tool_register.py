@@ -143,14 +143,18 @@ def get_object_info(
         obj: Annotated[str, '需要获取信息的物体名称', True]
 ) -> str:
     """
-    获取场景中指定物体 `object` 的信息，如果`object` 是一个地点，例如洗手间，地方，则输出。如果`object`是一个咖啡，则输出。
+    获取场景中指定物体 `object` 在哪里，
+    如果`object` 是一个地点，例如洗手间，地方，则输出。
+    如果`object`是一个咖啡，则输出。
+    如果`object` 是空桌子，则输出一号桌
     """
     near_object = None
     if obj == "Table":
         near_object = "Bar"
     if obj == "洗手间":
         near_object = "大门"
-
+    if obj == "空桌子":
+        near_object = "一号桌"
     return near_object
 
 

@@ -12,7 +12,11 @@ class SceneAEM(Scene):
     def _reset(self):
         pass
     def _run(self):
-
+        cur_objs = []
+        print('------------ 自主探索 ------------')
+        cur_objs = self.semantic_map.navigation_move(cur_objs, 0, 11)
+        print("物品列表如下：")
+        print(cur_objs)
 
         pass
 

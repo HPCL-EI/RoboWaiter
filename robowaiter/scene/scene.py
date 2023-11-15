@@ -2,9 +2,13 @@ import time
 import grpc
 import numpy as np
 import matplotlib.pyplot as plt
-
+from robowaiter.proto import camera
+from robowaiter.proto import semantic_map
+import math
 from robowaiter.proto import GrabSim_pb2
 from robowaiter.proto import GrabSim_pb2_grpc
+
+
 
 
 channel = grpc.insecure_channel(

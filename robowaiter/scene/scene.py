@@ -208,23 +208,22 @@ class Scene:
         else:
             return True
 
-    def add_walker(self, X, Y, Yaw):
-        if self.use_offset:
-            X, Y = X + loc_offset[0], Y + loc_offset[1]
-        if self.reachable_check(X, Y, Yaw):
-            stub.AddWalker(
-                GrabSim_pb2.WalkerList(
-                    walkers=[
-                        GrabSim_pb2.WalkerList.Walker(
-                            id=0,
-                            pose=GrabSim_pb2.Pose(
-                                X=X, Y=Y, Yaw=Yaw
-                            ),  # Parameter id is useless
-                        )
-                    ],
-                    scene=self.sceneID,
-                )
-            )
+    def add_walkers(self,walker_loc=[[0, 880], [250, 1200], [-55, 750], [70, -200]]):
+        print('------------------add_walkers----------------------')
+        walker_list = []
+        for i in range(len(walker_loc)):
+            loc = walker_loc[i] + [0, 0, 100]
+            action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=loc)
+            scene = stub.Do(action)
+            print(scene.info)
+            if (str(scene.info).find('unreachable') > -1):
+                print('当前位置不可达,无法初始化NPC')
+            else:
+                walker_list.append(
+                    GrabSim_pb2.WalkerList.Walker(id=i + 5, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=90)))
+
+        scene = stub.AddWalker(GrabSim_pb2.WalkerList(walkers=walker_list, scene=self.sceneID))
+        return scene
 
     def remove_walker(self, *args):  # take single walkerID or a list of walkerIDs
         remove_list = []

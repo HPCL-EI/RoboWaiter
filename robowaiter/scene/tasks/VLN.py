@@ -33,3 +33,15 @@ class SceneVLN(Scene):
 
         self.state['map']['2d'] = map
         self.state['map']['obj_pos']['Table'] = np.array((-100, 700))
+
+
+if __name__ == '__main__':
+    import os
+    from robowaiter.robot.robot import Robot
+
+    robot = Robot()
+
+    # create task
+    task = SceneVLN(robot)
+    task.reset()
+    task.run()

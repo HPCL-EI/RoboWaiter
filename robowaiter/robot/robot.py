@@ -13,11 +13,18 @@ from robowaiter.behavior_lib.act.DelSubTree import DelSubTree
 from robowaiter.behavior_lib._base.Sequence import Sequence
 from robowaiter.utils.bt.load import load_behavior_tree_lib
 
+from robowaiter.utils import get_root_path
+root_path = get_root_path()
+ptml_path = os.path.join(root_path, 'robowaiter/robot/Default.ptml')
+behavior_lib_path = os.path.join(root_path, 'robowaiter/behavior_lib')
+
+
+
 class Robot(object):
     scene = None
     response_frequency = 1
 
-    def __init__(self,ptml_path,behavior_lib_path):
+    def __init__(self,ptml_path=ptml_path,behavior_lib_path=behavior_lib_path):
         self.ptml_path = ptml_path
         self.behavior_lib_path = behavior_lib_path
 

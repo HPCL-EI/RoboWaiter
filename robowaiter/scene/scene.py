@@ -100,6 +100,11 @@ class Scene:
         # 空调面板位置
         self.obj_loc = [300.5, -140.0,114]
 
+        # AEM
+        self.visited = set()
+        self.all_frontier_list = set()
+        self.semantic_map = semantic_map
+
 
     def reset(self):
         # 基类reset，默认执行仿真器初始化操作
@@ -552,5 +557,75 @@ class Scene:
             action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
             print(scene.info)
+
+    def navigation_move(self, cur_objs, objs_name_set, v_list, scene_id=0, map_id=11):
+        print('------------------navigation_move----------------------')
+        scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
+        walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
+        print("position:", walk_value)
+
+        # if map_id == 11:  # coffee
+        #     v_list = [[0, 880], [250, 1200], [-55, 750], [70, -200]]
+        # else:
+        #     v_list = [[0.0, 0.0]]
+
+        for walk_v in v_list:
+            walk_v = walk_v + [scene.rotation.Yaw - 90, 250, 60]
+            print("walk_v", walk_v)
+            action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+            scene = stub.Do(action)
+            cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs, objs_name_set)
+            # if scene.info == "Unreachable":
+            print(scene.info)
+        return cur_objs, objs_name_set
+
+    def isOutMap(self, pos, min_x=-350, max_x=600, min_y=-400, max_y=1450):
+        if pos[0] <= min_x or pos[0] >= max_x or pos[1] <= min_y or pos[1] >= max_y:
+            return True
+        return False
+
+    def real2map(self, x, y):
+        '''
+            实际坐标->地图坐标 (向下取整)
+        '''
+        # x = round((x - self.min_x) / self.scale_ratio)
+        # y = round((y - self.min_y) / self.scale_ratio)
+        x = math.floor((x + 350) / 5)
+        y = math.floor((y + 400) / 5)
+        return x, y
+
+    def explore(self, map, cur_pos, explore_range):
+        for i in range(cur_pos[0] - explore_range, cur_pos[0] + explore_range + 1):
+            for j in range(cur_pos[1] - explore_range, cur_pos[1] + explore_range + 1):
+                if self.isOutMap((i, j)):
+                    continue
+                x, y = self.real2map(i, j)
+                if map[x, y] == 0:
+                    self.visited.add((i, j))
+        for i in range(cur_pos[0] - explore_range, cur_pos[0] + explore_range + 1):
+            for j in range(cur_pos[1] - explore_range, cur_pos[1] + explore_range + 1):
+                if self.isOutMap((i, j)):
+                    continue
+                x, y = self.real2map(i, j)
+                if map[x, y] == 0:
+                    if self.isNewFrontier((i, j), map):
+                        self.all_frontier_list.add((i, j))
+        if len(self.all_frontier_list) <= 400:
+            free_list = list(self.visited)
+            free_array = np.array(free_list)
+            print(f"探索完成！以下是场景中可以到达的点：{free_array}；其余点均是障碍物不可达")
+            return None
+        return self.getNearestFrontier(cur_pos, self.all_frontier_list)
+
+    def isNewFrontier(self, pos, map):
+        around_nodes = [(pos[0], pos[1] + 1), (pos[0], pos[1] - 1), (pos[0] - 1, pos[1]), (pos[0] + 1, pos[1])]
+
+        for node in around_nodes:
+            x, y = self.real2map(node[0], node[1])
+            if node not in self.visited and map[x, y] == 0:
+                return True
+        if (pos[0], pos[1]) in self.all_frontier_list:
+            self.all_frontier_list.remove((pos[0], pos[1]))
+        return False
 
 

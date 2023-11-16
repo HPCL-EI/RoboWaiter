@@ -43,12 +43,14 @@ class SceneVLM(Scene):
         # 行人说 有点热
         # 好的，这就去开空调
 
-        scene = self.add_walkers([[0, 0]])
+        scene = self.add_walkers([[47, 920],[70,-200]])
         self.control_walker(
-            [self.walker_control_generator(walkerID=1, autowalk=False, speed=50, X=100, Y=150, Yaw=0)])
+            [self.walker_control_generator(walkerID=0, autowalk=False, speed=200, X=47, Y=520, Yaw=0)])
 
-        cont = scene.walkers[0].name+":我有点热，能开个空调吗？"
+        cont = scene.walkers[0].name+":请问可以带我去空位上嘛？我想晒太阳"
         self.control_robot_action(0,3,cont)
+
+        # self.clean_walker()
 
 
         # 共17个操作

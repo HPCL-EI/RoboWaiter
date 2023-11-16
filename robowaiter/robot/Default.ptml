@@ -1,13 +1,18 @@
 selector
 {
     sequence
-{
+    {
         cond Chatting()
         act DealChat()
 
-}    sequence
-{
+    }
+    sequence
+    {
         cond HasSubTask()
         sequence
-{
-            act SubTaskPlaceHolder()}}}
+        {
+            act SubTaskPlaceHolder()
+        }
+    }
+
+}

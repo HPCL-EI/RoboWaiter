@@ -77,6 +77,7 @@ class Turn(Act):
         self.scene.move_task_area(self.op_type)
         self.scene.op_task_execute(self.op_type)
 
-        self.scene.state["condition_set"].union(self.info["add"])
+        self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
+
         return Status.RUNNING

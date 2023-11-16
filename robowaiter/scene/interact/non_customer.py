@@ -12,30 +12,33 @@
 
 from robowaiter.scene.scene import Scene
 
-class SceneOT(Scene):
+class SubScene(Scene):
 
     def __init__(self, robot):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
-        self.event_list = [
-            (5, self.set_goal("At(Robot,Table2)"))
-        ]
 
     def _reset(self):
         pass
 
 
-    def _run(self):
-        pass
+    def _step(self):
+        if len(self.sub_task_seq.children) == 0:
+            question = input("请输入指令：")
+            if question[-1] == ")":
+                print(f"设置目标:{question}")
+                self.set_goal(question)()
+            else:
+                self.state['chat_list'].append(question)
+
 
 
 if __name__ == '__main__':
-    import os
     from robowaiter.robot.robot import Robot
 
     robot = Robot()
 
     # create task
-    task = SceneOT(robot)
+    task = SubScene(robot)
     task.reset()
     task.run()

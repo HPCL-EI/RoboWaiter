@@ -61,7 +61,10 @@ class Robot(object):
             #         print(a.name)
             print("--------------------\n")
 
-
+        # 如果目标是下班，规划的时候就直接快捷导入？
+        # end_goal = {"Is(Floor,Clean)","Is(Table1,Clean)","Is(Chairs,Clean)","Is(AC,Off)","Is(HallLight,Off)","Is(TubeLight,Off)","Is(Curtain,Off)"}
+        # if goal & end_goal == goal
+        # else:
         algo = BTOptExpInterface(self.action_list,self.scene)
 
         ptml_string = algo.process(goal)

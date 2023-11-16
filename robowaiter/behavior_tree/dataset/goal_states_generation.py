@@ -214,5 +214,93 @@ def enumerate_goal_states(total: int):
             file.write(i + '\n')
 
 
+def translate_zero_one(i: str) -> str:
+    if 'ACTemperature' in i:
+        i = re.sub('0\)', '调高', i)
+        i = re.sub('1\)', '调低', i)
+    elif 'AC' in i or 'HallLight' in i or 'TubeLight' in i or 'Curtain' in i:
+        i = re.sub('0\)', '关闭', i)
+        i = re.sub('1\)', '打开', i)
+    elif 'Chairs' in i or 'Floor' in i or 'Table' in i:
+        i = re.sub('0\)', '脏', i)
+        i = re.sub('1\)', '打扫干净', i)
+
+    return i
+
+
+def enumerate_goal_states_with_describe() -> str:
+    with open(os.path.join('./goal_states_with_description.txt'), 'w', encoding='utf-8') as file:
+        # vln
+        count, res = enumerate_predict(['Robot'], Place, 'at')
+        print(count)
+        for i in range(count):
+            tmp = '#' + res[i].split(',')[-1][:-1]
+            file.write(f'{res[i]}\t机器人请你来一下{tmp}。\n')
+            file.write(f'{res[i]}\t机器人请你去一下{tmp}。\n')
+            file.write(f'{res[i]}\t机器人你能去{tmp}那个位置吗？\n')
+
+        # vlm, on
+        count, res = enumerate_predict(Object, Place, 'on')
+        print(count)
+        for i in range(count):
+            tmp = res[i].split(',')
+            obj = '#' + tmp[0][3:]
+            pla = '#' + tmp[-1][:-1]
+            file.write(f'{res[i]}\t机器人请你把{obj}放到{pla}那个位置。\n')
+            file.write(f'{res[i]}\t机器人请你拿一下{obj}到{pla}位置。\n')
+
+        # vlm, is
+        count, res = enumerate_predict(Operable, ['0', '1'], 'is')
+        print(count)
+        for i in res:
+            tmp = i.split(',')
+            thing, op = '#' + tmp[0][3:], '#' + tmp[-1]
+            file.write('%s\t%s\n' % (i, translate_zero_one(f'机器人，你能把{thing}{op}一下吗？')))
+
+        # vlm, holding
+        count, res = enumerate_predict(Object + ['Nothing'], None, 'hold')
+        print(count)
+        for i in res:
+            tmp = '#' + i.split('(')[-1][:-1]
+            if tmp == 'Nothing':
+                file.write(f'{i}\t机器人你手里是没有东西的吗？\n')
+                continue
+            file.write(f'{i}\t机器人你能把{tmp}抓在手里吗？\n')
+            file.write(f'{i}\t机器人你能一直拿着{tmp}吗？\n')
+
+        count, res = enumerate_predict(Cookable, Place, 'on')
+        print(count)
+        for i in res:
+            tmp = i.split(',')
+            thing, pla = '#' + tmp[0][3:], '#' + tmp[-1][:-1]
+
+            file.write(f'{i}\t你能制作{thing}并把它端到{pla}这里来吗？\n')
+            file.write(f'{i}\t给我来点{thing}，并把它端到{pla}这里来。\n')
+    return './goal_states_with_description.txt'
+
+
+from copy import deepcopy
+def mutex(path: str):
+    with open(os.path.join(path), 'r', encoding='utf-8') as file:
+        lines = "".join(file.readlines())
+        new_line = deepcopy(lines)
+
+    check = ['#Bar2', '#WaterTable', '#CoffeeTable', '#Bar', '#Table1', '#Table2', '#Table3', '#Coffee', '#Water',
+             '#Dessert', '#Softdrink', '#BottledDrink', '#Yogurt', '#ADMilk', '#MilkDrink', '#Milk', '#VacuumCup', '#AC',
+             '#ACTemperature', '#HallLight', '#TubeLight', '#Curtain', '#Chairs', '#Floor', '#Table1']
+    repla = ['#另一个吧台', '#水杯桌', '#咖啡桌', '#吧台', '#第一张桌子', '#第二张桌子', '#第三张桌子', '#咖啡', '#水',
+             '#点心或者甜品', '#软饮料', '#瓶装饮料', '#酸奶', '#AD钙奶', '#牛奶饮料', '#牛奶', '#保温杯', '#空调',
+             '#空调温度', '#大厅灯', '#筒灯', '#窗帘', '#椅子', '#地板', '#第一张桌子']
+
+    for i, j in zip(check, repla):
+        new_line = re.sub(i, j, new_line)
+    new_line = re.sub('#', '', new_line)
+    lines = re.sub('#', '', lines)
+
+    with open(os.path.join(path), 'a', encoding='utf-8') as file:
+        file.write(new_line*13 + lines * 13)
+
+
 # generate_goal_states(30, 6, 6)
-enumerate_goal_states(5000)
+# enumerate_goal_states(5000)
+mutex(enumerate_goal_states_with_describe())

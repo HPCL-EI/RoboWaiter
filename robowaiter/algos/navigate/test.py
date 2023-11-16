@@ -64,7 +64,7 @@ if __name__ == '__main__':
     # time.sleep(5)
     # goal = np.array((-100, 700))
 
-    navigator.navigate(goal, animation=False)
+    navigator.navigate(goal, animation=True)
 
     scene.clean_walker()
     print(scene.status.collision)  # TODO: 不显示碰撞信息 ???

@@ -235,9 +235,9 @@ def enumerate_goal_states_with_describe() -> str:
         print(count)
         for i in range(count):
             tmp = '#' + res[i].split(',')[-1][:-1]
-            file.write(f'{res[i]}\t机器人请你来一下{tmp}。\n')
-            file.write(f'{res[i]}\t机器人请你去一下{tmp}。\n')
-            file.write(f'{res[i]}\t机器人你能去{tmp}那个位置吗？\n')
+            file.write(f'{res[i]}\t请你来一下{tmp}。\n')
+            file.write(f'{res[i]}\t请你去一下{tmp}。\n')
+            file.write(f'{res[i]}\t你能去{tmp}那个位置吗？\n')
 
         # vlm, on
         count, res = enumerate_predict(Object, Place, 'on')
@@ -246,8 +246,8 @@ def enumerate_goal_states_with_describe() -> str:
             tmp = res[i].split(',')
             obj = '#' + tmp[0][3:]
             pla = '#' + tmp[-1][:-1]
-            file.write(f'{res[i]}\t机器人请你把{obj}放到{pla}那个位置。\n')
-            file.write(f'{res[i]}\t机器人请你拿一下{obj}到{pla}位置。\n')
+            file.write(f'{res[i]}\t请你把{obj}放到{pla}那个位置。\n')
+            file.write(f'{res[i]}\t请你拿一下{obj}到{pla}位置。\n')
 
         # vlm, is
         count, res = enumerate_predict(Operable, ['0', '1'], 'is')
@@ -255,7 +255,7 @@ def enumerate_goal_states_with_describe() -> str:
         for i in res:
             tmp = i.split(',')
             thing, op = '#' + tmp[0][3:], '#' + tmp[-1]
-            file.write('%s\t%s\n' % (i, translate_zero_one(f'机器人，你能把{thing}{op}一下吗？')))
+            file.write('%s\t%s\n' % (i, translate_zero_one(f'你能把{thing}{op}一下吗？')))
 
         # vlm, holding
         count, res = enumerate_predict(Object + ['Nothing'], None, 'hold')
@@ -263,10 +263,10 @@ def enumerate_goal_states_with_describe() -> str:
         for i in res:
             tmp = '#' + i.split('(')[-1][:-1]
             if tmp == 'Nothing':
-                file.write(f'{i}\t机器人你手里是没有东西的吗？\n')
+                file.write(f'{i}\t你手里是没有东西的吗？\n')
                 continue
-            file.write(f'{i}\t机器人你能把{tmp}抓在手里吗？\n')
-            file.write(f'{i}\t机器人你能一直拿着{tmp}吗？\n')
+            file.write(f'{i}\t你能把{tmp}抓在手里吗？\n')
+            file.write(f'{i}\t你能一直拿着{tmp}吗？\n')
 
         count, res = enumerate_predict(Cookable, Place, 'on')
         print(count)
@@ -288,7 +288,7 @@ def mutex(path: str):
     check = ['#Bar2', '#WaterTable', '#CoffeeTable', '#Bar', '#Table1', '#Table2', '#Table3', '#Coffee', '#Water',
              '#Dessert', '#Softdrink', '#BottledDrink', '#Yogurt', '#ADMilk', '#MilkDrink', '#Milk', '#VacuumCup', '#AC',
              '#ACTemperature', '#HallLight', '#TubeLight', '#Curtain', '#Chairs', '#Floor', '#Table1']
-    repla = ['#另一个吧台', '#水杯桌', '#咖啡桌', '#吧台', '#第一张桌子', '#第二张桌子', '#第三张桌子', '#咖啡', '#水',
+    repla = ['#另一个吧台', '#茶水桌', '#咖啡桌', '#吧台', '#第一张桌子', '#第二张桌子', '#第三张桌子', '#咖啡', '#水',
              '#点心或者甜品', '#软饮料', '#瓶装饮料', '#酸奶', '#AD钙奶', '#牛奶饮料', '#牛奶', '#保温杯', '#空调',
              '#空调温度', '#大厅灯', '#筒灯', '#窗帘', '#椅子', '#地板', '#第一张桌子']
 

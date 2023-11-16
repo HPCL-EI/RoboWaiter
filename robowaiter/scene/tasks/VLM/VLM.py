@@ -12,8 +12,9 @@ class SceneVLM(Scene):
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
             (5, self.create_chat_event("把酸奶放到1号桌，再做一杯咖啡送到水杯桌上，再倒一杯水。")),
-            (60, self.create_chat_event("开空调")),
-            (100, self.create_chat_event("下班啦！打扫卫生，关灯关空调关窗帘。")),
+            # (10, self.create_chat_event("开空调")),
+
+            # (15, self.create_chat_event("下班啦！打扫卫生，关灯关空调关窗帘。")),
 
 
             # (9, self.create_chat_event("关窗帘")),

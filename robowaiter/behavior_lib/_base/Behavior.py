@@ -16,6 +16,7 @@ class Bahavior(ptree.behaviour.Behaviour):
     all_place = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3'}
     all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
                   'VacuumCup'}
+
     # all_place = {'Bar', 'WaterTable', 'CoffeeTable'}
     # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'Yogurt'}
     # all_object = {'Coffee', 'Water'}

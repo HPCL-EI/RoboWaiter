@@ -121,8 +121,6 @@ class Scene:
 
 
 
-
-
         print("场景初始化完成")
         self._reset()
 

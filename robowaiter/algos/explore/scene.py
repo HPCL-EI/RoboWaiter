@@ -1,4 +1,5 @@
 import time
+import math
 import grpc
 import numpy as np
 
@@ -358,29 +359,29 @@ class Scene:
         temp = stub.GetIKControlInfos(GrabSim_pb2.HandPostureInfos(scene=self.sceneID, handPostureObjects=HandPostureObject))
 
     # 移动到进行操作任务的指定地点
-    def move_task_area(self,op_type):
-        if op_type==11 or op_type==12:  # 开关窗帘不需要移动
-            return
-        scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
-        walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
-
-        if op_type < 8:
-            v_list = self.op_v_list[op_type]
-        if op_type>=8 and op_type<=10:  # 控灯
-            v_list = self.op_v_list[6]
-        if op_type in [13,14,15]:   # 空调
-            v_list = [[240, -140.0]]  # KongTiao [300.5, -140.0]  # 250
-
-        print("------------------move_task_area----------------------")
-        print("Current Position:", walk_value,"开始任务:",self.op_dialog[op_type])
-        for walk_v in v_list:
-            walk_v = walk_v + [scene.rotation.Yaw, 180, 0]
-            walk_v[2] = 0 if (op_type in [13,14,15]) else scene.rotation.Yaw   # 空调操作朝向墙面
-            action = GrabSim_pb2.Action(
-                scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
-            )
-            scene = stub.Do(action)
-        print("After Walk Position:",[scene.location.X, scene.location.Y, scene.rotation.Yaw])
+    # def move_task_area(self,op_type):
+    #     if op_type==11 or op_type==12:  # 开关窗帘不需要移动
+    #         return
+    #     scene = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+    #     walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
+    #
+    #     if op_type < 8:
+    #         v_list = self.op_v_list[op_type]
+    #     if op_type>=8 and op_type<=10:  # 控灯
+    #         v_list = self.op_v_list[6]
+    #     if op_type in [13,14,15]:   # 空调
+    #         v_list = [[240, -140.0]]  # KongTiao [300.5, -140.0]  # 250
+    #     print("------------------error version----------------------")
+    #     print("------------------move_task_area----------------------")
+    #     print("Current Position:", walk_value,"开始任务:",self.op_dialog[op_type])
+    #     for walk_v in v_list:
+    #         walk_v = walk_v + [scene.rotation.Yaw, 180, 0]
+    #         walk_v[2] = 0 if (op_type in [13,14,15]) else scene.rotation.Yaw   # 空调操作朝向墙面
+    #         action = GrabSim_pb2.Action(
+    #             scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
+    #         )
+    #         scene = stub.Do(action)
+    #     print("After Walk Position:",[scene.location.X, scene.location.Y, scene.rotation.Yaw])
 
     # 相应的行动，由主办方封装
     def control_robot_action(self, type=0, action=0, message="你好"):
@@ -510,5 +511,6 @@ class Scene:
             action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
             print(scene.info)
+
 
 

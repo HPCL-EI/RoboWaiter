@@ -1,5 +1,10 @@
 selector{
-cond On(Coffee,CoffeeTable)
+
+sequence{
+    cond On(Coffee,CoffeeTable)
+    cond On(Coffee,CoffeeTable)
+    }
+
 sequence{
 cond Holding(Nothing)
 act Make(Coffee)

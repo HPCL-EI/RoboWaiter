@@ -62,7 +62,7 @@ class Robot(object):
             print("--------------------\n")
 
 
-        algo = BTOptExpInterface(self.action_list)
+        algo = BTOptExpInterface(self.action_list,self.scene)
 
         ptml_string = algo.process(goal)
 

@@ -14,11 +14,11 @@ class Make(Act):
         super().__init__(*args)
         self.target_obj = self.args[0]
         self.op_type = 1
-        if self.target_obj=="Coffee":
+        if self.target_obj==self.valid_args[0]:
             self.op_type = 1
-        elif self.target_obj=="Water":
+        elif self.target_obj==self.valid_args[1]:
             self.op_type = 2
-        elif self.target_obj=="Dessert":
+        elif self.target_obj==self.valid_args[2]:
             self.op_type = 3
 
 
@@ -28,12 +28,12 @@ class Make(Act):
         info["pre"]= {f'Holding(Nothing)'}
         info['del_set'] = set()
         info['add'] = {f'Exist({arg})'}
-        if arg == "Coffee":
-            info["add"] |= {f'On(Coffee,CoffeeTable)'}
-        elif arg == "Water":
-            info["add"] |= {f'On(Water,WaterTable)'}
-        elif arg == "Dessert":
-            info["add"] |= {f'On(Dessert,Bar)'}
+        if arg == cls.valid_args[0]:
+            info["add"] |= {f'On({arg},CoffeeTable)'}
+        elif arg == cls.valid_args[1]:
+            info["add"] |= {f'On({arg},WaterTable)'}
+        elif arg == cls.valid_args[2]:
+            info["add"] |= {f'On({arg},Bar)'}
         return info
 
     def _update(self) -> ptree.common.Status:
@@ -43,16 +43,20 @@ class Make(Act):
 
         # self.scene.gen_obj(type=40)
 
-        obj_dict = self.scene.status.objects
-        if len(obj_dict) != 0:
-            # 获取obj_id
-            for id, obj in enumerate(obj_dict):
-                if obj.name == "Coffee":
-                    obj_info = obj_dict[id]
-                    obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
-                    print(id,obj.name,obj_x,obj_y,obj_z)
+        # obj_dict = self.scene.status.objects
+        # if len(obj_dict) != 0:
+        #     # 获取obj_id
+        #     for id, obj in enumerate(obj_dict):
+        #         print("id:",id,"obj",obj.name)
+
+                # if obj.name == "Coffee":
+                #     obj_info = obj_dict[id]
+                #     obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
+                #     print(id,obj.name,obj_x,obj_y,obj_z)
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
+
+        # print("condition_set:",self.scene.state["condition_set"])
 
         return Status.RUNNING

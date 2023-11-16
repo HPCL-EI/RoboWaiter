@@ -2,6 +2,8 @@ import copy
 import random
 from robowaiter.behavior_tree.obtea.BehaviorTree import Leaf,ControlBT
 
+
+
 class CondActPair:
     def __init__(self, cond_leaf,act_leaf):
         self.cond_leaf = cond_leaf
@@ -54,7 +56,10 @@ class OptBTExpAlgorithm:
         self.conditions_index = []
 
     #运行规划算法，从初始状态、目标状态和可用行动，计算行为树self.bt
-    def run_algorithm(self,goal,actions):
+    def run_algorithm(self,goal,actions,scene):
+
+        self.scene = scene
+
         if self.verbose:
             print("\n算法开始！")
 
@@ -99,8 +104,13 @@ class OptBTExpAlgorithm:
                     sequence_structure.add_child(
                         [copy.deepcopy(pair_node.cond_leaf), copy.deepcopy(pair_node.act_leaf)])
                     subtree.add_child([copy.deepcopy(sequence_structure)])  # subtree 是回不断变化的，它的父亲是self.bt
+                    # 增加实时条件判断，满足条件就不再扩展
+                    # if c <= self.scene.state["condition_set"]:
+                    #     return True
                 else:
                     subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
+
+
                 if self.verbose:
                     print("完成扩展 a_node= %s,对应的新条件 c_attr= %s,mincost=%d" \
                           % (cond_anc_pair.act_leaf.content.name, cond_anc_pair.cond_leaf.content,
@@ -128,14 +138,14 @@ class OptBTExpAlgorithm:
                                 break
 
                         if valid:
-                            # 把符合条件的动作节点都放到列表里
-                            if self.verbose:
-                                print("———— -- %s 符合条件放入列表" % actions[i].name)
                             c_attr_node = Leaf(type='cond', content=c_attr, mincost=current_mincost + actions[i].cost)
                             a_attr_node = Leaf(type='act', content=actions[i], mincost=current_mincost + actions[i].cost)
                             cond_anc_pair = CondActPair(cond_leaf=c_attr_node, act_leaf=a_attr_node)
                             self.nodes.append(copy.deepcopy(cond_anc_pair))  # condition node list
                             self.traversed.append(c_attr) # 重点 the set of expanded conditions
+                            # 把符合条件的动作节点都放到列表里
+                            if self.verbose:
+                                print("———— -- %s 符合条件放入列表,对应的c为 %s" % (actions[i].name,c_attr))
 
         if self.verbose:
             print("算法结束！\n")
@@ -178,13 +188,23 @@ class OptBTExpAlgorithm:
 
 
     # 树的dfs
-    def dfs_ptml(self,parnode):
+    def dfs_ptml(self,parnode,is_root=False):
         for child in parnode.children:
             if isinstance(child, Leaf):
                 if child.type == 'cond':
-                    self.ptml_string += "cond "
-                    c_set_str = '\n cond '.join(map(str, child.content)) + "\n"
-                    self.ptml_string += c_set_str
+
+                    if is_root and len(child.content) > 1:
+                        # 把多个 cond 串起来
+                        self.ptml_string += "sequence{\n"
+                        self.ptml_string += "cond "
+                        c_set_str = '\n cond '.join(map(str, child.content)) + "\n"
+                        self.ptml_string += c_set_str
+                        self.ptml_string += '}\n'
+                    else:
+                        self.ptml_string += "cond "
+                        c_set_str = '\n cond '.join(map(str, child.content)) + "\n"
+                        self.ptml_string += c_set_str
+
                 elif child.type == 'act':
                     if '(' not in child.content.name:
                         self.ptml_string += 'act ' + child.content.name + "()\n"
@@ -202,7 +222,7 @@ class OptBTExpAlgorithm:
 
     def get_ptml(self):
         self.ptml_string = "selector{\n"
-        self.dfs_ptml(self.bt.children[0])
+        self.dfs_ptml(self.bt.children[0],is_root=True)
         self.ptml_string += '}\n'
         return self.ptml_string
 

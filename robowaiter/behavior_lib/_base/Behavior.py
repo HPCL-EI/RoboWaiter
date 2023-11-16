@@ -13,12 +13,12 @@ class Bahavior(ptree.behaviour.Behaviour):
         '''
     scene = None
     print_name_prefix = ""
-    all_place = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3'}
+    # all_place = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3'}
     # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
     #               'VacuumCup'}
-    # all_place = {'Bar', 'WaterTable', 'CoffeeTable'}
+    all_place = {'Bar', 'WaterTable', 'CoffeeTable'}
     # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'Yogurt'}
-    all_object = {'Coffee'}
+    all_object = {'Coffee', 'Water'}
     place_xyz_dic={
         'Bar': (247.0, 520.0, 100.0),
         'Bar2': (240.0, 40.0, 70.0),
@@ -28,6 +28,13 @@ class Bahavior(ptree.behaviour.Behaviour):
         'Table2': (-55.0, 0.0, 107),
         'Table3':(-55.0, 150.0, 107)
     }
+    container_dic={
+        'Coffee':'CoffeeCup',
+        'Water': 'Glass',
+        'Dessert':'Plate'
+    }
+
+
     
     @classmethod
     def get_ins_name(cls,*args):

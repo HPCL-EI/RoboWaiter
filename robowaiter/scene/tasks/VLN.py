@@ -16,8 +16,8 @@ from robowaiter.scene.scene import Scene,init_world  # TODO: 文件名改成Scen
 
 from robowaiter.scene.scene import Scene
 from robowaiter.utils import get_root_path
-from robowaiter.algos.navigate.navigate import Navigator
-from robowaiter.algos.navigate import test
+from robowaiter.algos.navigator.navigate import Navigator
+from robowaiter.algos.navigator import test
 
 class SceneVLN(Scene):
     def __init__(self, robot):
@@ -29,7 +29,7 @@ class SceneVLN(Scene):
 
     def _reset(self):
         root_path = get_root_path()
-        file_name = os.path.join(root_path,'robowaiter/algos/navigate/map_5.pkl')
+        file_name = os.path.join(root_path,'robowaiter/algos/navigator/map_5.pkl')
         with open(file_name, 'rb') as file:
             map = pickle.load(file)
 
@@ -37,7 +37,7 @@ class SceneVLN(Scene):
         self.state['map']['obj_pos']['Table'] = np.array((-100, 700))
 
     def _run(self):
-        file_name = '../../algos/navigate/map_5.pkl'
+        file_name = '../../algos/navigator/map_5.pkl'
         if os.path.exists(file_name):
             with open(file_name, 'rb') as file:
                 map = pickle.load(file)

@@ -397,8 +397,12 @@ class Scene:
             walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
             obj_x += 3
             obj_y += 2.5
+        walk_v[0]+=1
+        print("walk:",walk_v)
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
+        print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
+
 
     # 移动到进行操作任务的指定地点
     def move_task_area(self,op_type,obj_id=0, release_pos=[247.0, 520.0, 100.0]):
@@ -428,7 +432,7 @@ class Scene:
             walk_v = release_pos[:-1] + [180, 180, 0]
             if release_pos == [340.0, 900.0, 99.0]:
                 walk_v[2] = 130
-
+        print("walk_v:",walk_v)
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
@@ -527,7 +531,7 @@ class Scene:
         return True
 
     # 执行过程：输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
-    def op_task_execute(self,op_type,obj_id=0,release_pos=[240,-140]):
+    def op_task_execute(self,op_type,obj_id=0,release_pos=[247.0, 520.0, 100.0]):
         self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
         if op_type<8: result = self.control_robot_action(op_type, 1)
         if op_type>=8 and op_type<=12: result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
@@ -633,3 +637,16 @@ class Scene:
         return False
 
 
+    def cal_distance_to_robot(self,objx,objy,objz):
+        scene = self.status
+        ginger_x, ginger_y, ginger_z = [int(scene.location.X), int(scene.location.Y),100]
+        return math.sqrt((ginger_x - objx) ** 2 + (ginger_y - objy) ** 2 + (ginger_z - objz) ** 2)
+
+    def test(self):
+        walk_v = [247.0, 480.0, 180.0, 180, 0]
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+        scene = stub.Do(action)
+        time.sleep(4)
+        walk_v = [247.0, 500.0, 0.0, 180, 0]
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+        scene = stub.Do(action)

@@ -31,6 +31,7 @@ class PutDown(Act):
         release_pos = list(Act.place_xyz_dic[self.target_place])
         # # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 70.0], 水杯桌:[-70.0, 500.0, 107]
         # # 桌子2:[-55.0, 0.0, 107],桌子3:[-55.0, 150.0, 107]
+        self.scene.move_task_area(op_type, release_pos=release_pos)
         self.scene.op_task_execute(op_type, release_pos=release_pos)
 
         self.scene.state["condition_set"] |= (self.info["add"])

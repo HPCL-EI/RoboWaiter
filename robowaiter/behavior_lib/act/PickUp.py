@@ -25,14 +25,36 @@ class PickUp(Act):
 
     def _update(self) -> ptree.common.Status:
         # self.scene.test_move()
-        op_type=16
-        obj_id = 0
+        # op_type=16
+
         # 遍历场景里的所有物品，根据名字匹配位置最近的 obj-id
+        # 是否用容器装好
+        if self.target_obj in Act.container_dic:
+            target_name = Act.container_dic[self.target_obj]
+        else:
+            target_name = self.target_obj
+        # 根据物体名字找到最近的这类物体对应的位置
+        obj_id = -1
+        min_dis = float('inf')
+        obj_dict = self.scene.status.objects
+        if len(obj_dict) != 0:
+            # 获取obj_id
+            for id, obj in enumerate(obj_dict):
+                if obj.name == target_name:
+                    obj_info = obj_dict[id]
+                    dis = self.scene.cal_distance_to_robot(obj_info.location.X, obj_info.location.Y,
+                                                           obj_info.location.Z)
+                    if dis < min_dis:
+                        min_dis = dis
+                        obj_id = id
+        # if self.target_place == "CoffeeCup":
+        #     # obj_id = 273
+        #     obj_id = 275
+        if obj_id == -1:
+            return ptree.common.Status.FAILURE
 
-        if self.args=="Coffee":
-            obj_id = 273
-
-        self.scene.op_task_execute(op_type, obj_id=obj_id)
+        self.scene.move_task_area(op_type=16, obj_id=obj_id)
+        self.scene.op_task_execute(op_type=16, obj_id=obj_id)
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]

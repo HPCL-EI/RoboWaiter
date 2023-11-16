@@ -5,8 +5,8 @@
 '''
 
 import math
-import queue
-from functools import partial
+import os
+import pickle
 import numpy as np
 import heapq
 
@@ -115,13 +115,12 @@ class PriorityQueue:
 
 class DStarLite:
     def __init__(self,
-                 map: np.array([int, int]),  # [X, Y]
-                 area_range,  # [x_min, x_max, y_min, y_max] 实际坐标范围
-                 scale_ratio=5,  # 地图缩放率
-                 dyna_obs_radius=30,  # dyna_obs实际身位半径
+                 map: np.array([int, int]),
+                 area_range,            # [x_min, x_max, y_min, y_max] 实际坐标范围
+                 scale_ratio=5,         # 地图缩放率
+                 dyna_obs_radius=36,    # dyna_obs实际身位半径
                  ):
 
-        # self.area_bounds = area
         self.map = map
         self.background = map.copy()
         self.X = map.shape[0]
@@ -145,9 +144,13 @@ class DStarLite:
             "obstacle": float('inf'),
             "dynamic obstacle": 100
         }
-        self.cost_map = np.zeros_like(self.map)
+
+        file_name = 'costMap_'+str(self.scale_ratio)+'.pkl'
+        if os.path.exists(file_name):
+            with open(file_name, 'rb') as file:
+                cost_map = pickle.load(file)
+        self.cost_map = cost_map
         self.cost_background = self.cost_map.copy()
-        self.compute_cost_map()
 
         self.s_start = None  # (int,int) 必须是元组(元组可以直接当作矩阵索引)
         self.s_goal = None  # (int,int)
@@ -163,9 +166,11 @@ class DStarLite:
     #         设置map 和 cost_map
     #     '''
     #     self.map = map_
+    #     self.background = map_.copy()
     #     self.X = map_.shape[0]
     #     self.Y = map_.shape[1]
     #     self.compute_cost_map()
+    #     self.cost_background = self.cost_map.copy()
 
     def reset(self):
         '''
@@ -299,11 +304,6 @@ class DStarLite:
                 self.compute_shortest_path()
                 self.path = self.get_path()
             return self.path
-        # TODO: 误差抖动使robot没有到达路径上的点，导致新起点的rhs=∞，可能导致get_path失败 ( 当前版本没有该问题 )
-        # assert (self.rhs[self.s_start] != float('inf')), "There is no known path!"
-        # # debug
-        # if debug:
-        #     pass
 
     def planning(self, s_start, s_goal, dyna_obs, debug=False):
         '''
@@ -311,7 +311,10 @@ class DStarLite:
         '''
         # 实际坐标 -> 地图坐标
         s_start = self.real2map(s_start)
-        s_goal = self.real2map(s_goal)
+        if self.s_goal is None:
+            s_goal = self.real2map(s_goal)
+        else:
+            s_goal = self.s_goal
         dyna_obs = [self.real2map(obs, reachable_assurance=False) for obs in dyna_obs]
 
         self._planning(s_start, s_goal, dyna_obs, debug)
@@ -336,13 +339,6 @@ class DStarLite:
             succ = [s_ for s_ in self.get_neighbors(cur) if s_ not in path]  # 避免抖动 (不可走重复的点)
             cur = succ[np.argmin([self.c(cur, s_) + self.g[s_] for s_ in succ])]
             path.append(cur)
-        # else:
-        #     for i in range(step_num):
-        #         if cur == self.s_goal:
-        #             break
-        #         succ = self.get_neighbors(cur)
-        #         cur = succ[np.argmin([self.c(cur, s_) + self.g[s_] for s_ in succ])]
-        #         path.append(cur)
         return path
 
     def in_bounds_without_obstacle(self, pos):
@@ -357,8 +353,6 @@ class DStarLite:
             获取邻居节点, 地图范围内
         '''
         (x_, y_) = pos
-        # results = [(x_+1,y_), (x_-1,y_), (x_, y_+1), (x_,y_-1)]
-        # if mode == 8:
         neighbors = [(x_ + 1, y_), (x_ - 1, y_), (x_, y_ + 1), (x_, y_ - 1), (x_ + 1, y_ + 1), (x_ - 1, y_ + 1),
                      (x_ + 1, y_ - 1), (x_ - 1, y_ - 1)]
         neighbors = filter(self.in_bounds_without_obstacle, neighbors)  # 确保位置在地图范围内 且 不是静态障碍物
@@ -366,17 +360,26 @@ class DStarLite:
 
     def compute_cost_map(self):
         # 计算当前地图的cost_map
+        self.cost_map = np.zeros_like(self.map)
         for idx, obj in self.idx_to_object.items():
             self.cost_map[self.map == idx] = self.object_to_cost[obj]
 
-        # # TODO
-        # for x in range(self.X):
-        #     for y in range(self.Y):
-        #         if self.cost_map[x, y] > 0:
-        #             neighbors = self.get_neighbors((x, y))
-        #             for (x_, y_) in neighbors:
-        #                 self.cost_map[x_, y_] = max(self.cost_map[x_, y_], self.cost_map[x, y] - 10)
-
+        # 扩张静态障碍物影响范围
+        obs_pos = np.where(self.map == self.object_to_idx['obstacle'])  # 静态障碍物位置列表
+        for (x, y) in zip(obs_pos[0], obs_pos[1]):
+            start_x, end_x = max(x - 1, 0), min(x + 1, self.X - 1)
+            start_y, end_y = max(y - 1, 0), min(y + 1, self.Y - 1)
+            for cost in range(9, 0, -3):
+                for x_ in range(start_x, end_x + 1):
+                    self.cost_map[x_, start_y] = max(self.cost_map[x_, start_y], cost)
+                for y_ in range(start_y + 1, end_y + 1):
+                    self.cost_map[end_x, y_] = max(self.cost_map[end_x, y_], cost)
+                for x_ in range(end_x - 1, start_x - 1, -1):
+                    self.cost_map[x_, end_y] = max(self.cost_map[x_, end_y], cost)
+                for y_ in range(end_y - 1, start_y, -1):
+                    self.cost_map[start_x, y_] = max(self.cost_map[start_x, y_], cost)
+                start_x, end_x = max(start_x - 1, 0), min(end_x + 1, self.X - 1)
+                start_y, end_y = max(start_y - 1, 0), min(end_y + 1, self.Y - 1)
 
         self.cost_background = self.cost_map.copy()
 
@@ -388,8 +391,8 @@ class DStarLite:
             return:
                 update_obj: 改变的位置列表 [(x, y, obj_idx, obj_idx_old), ...]
         '''
-        # dyna_obs没有变化 (集合set可以忽略元素在列表中的位置)
-        if set(dyna_obs) == set(self.dyna_obs_list):
+        # dyna_obs没有变化 (集合set可以忽略元素在列表中的位置) 且 robot未在dyna_obs占用位置中
+        if set(dyna_obs) == set(self.dyna_obs_list) and self.s_start not in self.dyna_obs_occupy:
             return []
 
         # 当前dyna_obs占用位置列表
@@ -397,23 +400,9 @@ class DStarLite:
         for pos in dyna_obs:
             dyna_obs_occupy.extend(self.get_occupy_pos(pos))
         dyna_obs_occupy = [pos for i, pos in enumerate(dyna_obs_occupy) if pos not in dyna_obs_occupy[:i]]  # 去除重复位置
-        # 转变为free 和 转变为obs的位置列表
+        # 转变为free 和 转变为dyna_obs的位置列表
         changed_free = [pos for pos in self.dyna_obs_occupy if pos not in dyna_obs_occupy]
         changed_obs = [pos for pos in dyna_obs_occupy if pos not in self.dyna_obs_occupy]
-
-        # # 新旧dyna_obs占用位置列表
-        # old_obs_occupy = []
-        # new_obs_occupy = []
-        # for pos in self.dyna_obs_list:
-        #     old_obs_occupy.extend(self.get_occupy_pos(pos))
-        # for pos in dyna_obs:
-        #     new_obs_occupy.extend(self.get_occupy_pos(pos))
-        # old_obs_occupy = [pos for i, pos in enumerate(old_obs_occupy) if pos not in old_obs_occupy[:i]]  # 去除重复位置
-        # new_obs_occupy = [pos for i, pos in enumerate(new_obs_occupy) if pos not in new_obs_occupy[:i]]  # 去除重复位置
-        #
-        # # 转变为free 和 转变为obs的位置列表
-        # changed_free = [pos for pos in old_obs_occupy if pos not in new_obs_occupy]
-        # changed_obs = [pos for pos in new_obs_occupy if pos not in old_obs_occupy]
 
         # 更新地图，计算changed_pos
         changed_pos = []
@@ -430,21 +419,15 @@ class DStarLite:
 
         return changed_pos
 
-
-
     def get_occupy_pos(self, obs_pos):
         '''
             根据dyna_obs中心位置，计算其占用的所有网格位置
         '''
         (x, y) = obs_pos
         occupy_radius = min(self.dyna_obs_radius, int(euclidean_distance(obs_pos, self.s_start) - 1))  # 避免robot被dyna_obs的占用区域包裹住
-        # for i in range(x - self.dyna_obs_radius, x + self.dyna_obs_radius + 1):  # 方形区域
-        #     for j in range(y - self.dyna_obs_radius, y + self.dyna_obs_radius + 1):
-        #         occupy_pos.append((i, j))
         occupy_pos = [(i, j) for i in range(x - occupy_radius, x + occupy_radius + 1)  # 圆形区域
                       for j in range(y - occupy_radius, y + occupy_radius + 1)
                       if euclidean_distance((i, j), obs_pos) < occupy_radius]
-
         occupy_pos = filter(self.in_bounds_without_obstacle, occupy_pos)  # 确保位置在地图范围内 且 不是静态障碍物
         return list(occupy_pos)
 
@@ -497,20 +480,39 @@ class DStarLite:
         '''
         x = round((pos[0] - self.x_min) / self.scale_ratio)
         y = round((pos[1] - self.y_min) / self.scale_ratio)
-        # 需要确保点可达
-        if reachable_assurance and self.idx_to_object[self.map[x, y]] != 'free':
-            print('1')
-            x_ = math.floor((pos[0] - self.x_min) / self.scale_ratio)
-            y_ = math.floor((pos[1] - self.y_min) / self.scale_ratio)
-            candidates = [(x_, y_), (x_ + 1, y_), (x_, y_ + 1), (x_ + 1, y_ + 1)]
-            for (x, y) in candidates:
-                print(self.idx_to_object[self.map[x, y]])
-                if self.idx_to_object[self.map[x, y]] == 'free':
-                    print((x,y))
-                    return tuple((x, y))
-            raise Exception('error')
+        # 确保点不在静态障碍物上，否则就不断向外圈扩展直到找到非静态障碍物位置
+        if reachable_assurance:
+            return self.validate_pos((x, y))
         else:
             return tuple((x, y))
+
+    def validate_pos(self, pos):
+        '''
+            对于不合法的pos，找到周围距离最近的合法坐标
+        '''
+        (x, y) = pos
+        x = max(0, min(x, self.X - 1))
+        y = max(0, min(y, self.Y - 1))
+        if self.idx_to_object[self.map[x, y]] == 'obstacle':
+            start_x, end_x = max(x - 1, 0), min(x + 1, self.X - 1)
+            start_y, end_y = max(y - 1, 0), min(y + 1, self.Y - 1)
+            while True:
+                for x_ in range(start_x, end_x + 1):
+                    if self.idx_to_object[self.map[x_, start_y]] != 'obstacle':
+                        return tuple((x_, start_y))
+                for y_ in range(start_y + 1, end_y + 1):
+                    if self.idx_to_object[self.map[end_x, y_]] != 'obstacle':
+                        return tuple((end_x, y_))
+                for x_ in range(end_x - 1, start_x - 1, -1):
+                    if self.idx_to_object[self.map[x_, end_y]] != 'obstacle':
+                        return tuple((x_, end_y))
+                for y_ in range(end_y - 1, start_y, -1):
+                    if self.idx_to_object[self.map[start_x, y_]] != 'obstacle':
+                        return tuple((start_x, y_))
+                start_x, end_x = max(start_x - 1, 0), min(end_x + 1, self.X - 1)
+                start_y, end_y = max(start_y - 1, 0), min(end_y + 1, self.Y - 1)
+            # raise Exception('invalid pos!')
+        return tuple((x, y))
 
     def draw_graph(self, step_num):
         # 清空当前figure内容，保留figure对象

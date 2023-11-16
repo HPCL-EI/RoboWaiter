@@ -35,6 +35,7 @@ class SceneVLM(Scene):
 
     def _run(self, op_type=10):
 
+
         # 共17个操作
         # "制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
         # "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",            # 8-12
@@ -58,33 +59,36 @@ class SceneVLM(Scene):
         # 流程测试
         # 抓握放置:抓吧台前生成的酸奶，放到抹布桌上
         self.gen_obj()
-        self.move_task_area(16, obj_id=0)
-        self.op_task_execute(16, obj_id=0)
-        pos = [340.0, 900.0, 99.0]
-        self.move_task_area(17, release_pos=pos)
-        self.op_task_execute(17, release_pos=pos)
+        # self.move_task_area(16, obj_id=0)
+        # self.op_task_execute(16, obj_id=0)
+        # pos = [340.0, 900.0, 99.0]
+        # self.move_task_area(17, release_pos=pos)
+        # self.op_task_execute(17, release_pos=pos)
+        #
+        # # 做咖啡:做完的咖啡放到水杯桌上
+        # self.move_task_area(1)
+        # self.op_task_execute(1)
+        #
+        # self.find_obj("CoffeeCup")
+        #
+        # self.move_task_area(16, obj_id=275)
+        # self.op_task_execute(16, obj_id=275)
+        # pos = [-70.0, 500.0, 107]
+        # self.move_task_area(17, release_pos=pos)
+        # self.op_task_execute(17, release_pos=pos)
+        #
+        # # 倒水:倒完的水放到旁边桌子上
+        # self.move_task_area(2)
+        # self.op_task_execute(2)
 
-        # 做咖啡:做完的咖啡放到水杯桌上
-        self.move_task_area(1)
-        self.op_task_execute(1)
-
-        self.find_obj("CoffeeCup")
-
-        self.move_task_area(16, obj_id=275)
-        self.op_task_execute(16, obj_id=275)
-        pos = [-70.0, 500.0, 107]
-        self.move_task_area(17, release_pos=pos)
-        self.op_task_execute(17, release_pos=pos)
-
-        # 倒水:倒完的水放到旁边桌子上
-        self.move_task_area(2)
-        self.op_task_execute(2)
         #
         # self.move_task_area(16, obj_id=190)
         # self.op_task_execute(16, obj_id=190)
         # pos = [-55.0, 0.0, 107]
         # self.move_task_area(17, release_pos=pos)
         # self.op_task_execute(17, release_pos=pos)
+
+        # self.test()
 
         pass
     

@@ -2,6 +2,8 @@ import copy
 import random
 from robowaiter.behavior_tree.obtea.BehaviorTree import Leaf,ControlBT
 
+
+
 class CondActPair:
     def __init__(self, cond_leaf,act_leaf):
         self.cond_leaf = cond_leaf
@@ -54,7 +56,10 @@ class OptBTExpAlgorithm:
         self.conditions_index = []
 
     #运行规划算法，从初始状态、目标状态和可用行动，计算行为树self.bt
-    def run_algorithm(self,goal,actions):
+    def run_algorithm(self,goal,actions,scene):
+
+        self.scene = scene
+
         if self.verbose:
             print("\n算法开始！")
 
@@ -99,8 +104,13 @@ class OptBTExpAlgorithm:
                     sequence_structure.add_child(
                         [copy.deepcopy(pair_node.cond_leaf), copy.deepcopy(pair_node.act_leaf)])
                     subtree.add_child([copy.deepcopy(sequence_structure)])  # subtree 是回不断变化的，它的父亲是self.bt
+                    # 增加实时条件判断，满足条件就不再扩展
+                    if c <= self.scene.state["condition_set"]:
+                        return True
                 else:
                     subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
+
+
                 if self.verbose:
                     print("完成扩展 a_node= %s,对应的新条件 c_attr= %s,mincost=%d" \
                           % (cond_anc_pair.act_leaf.content.name, cond_anc_pair.cond_leaf.content,

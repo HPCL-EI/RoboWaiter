@@ -31,7 +31,7 @@ class BTOptExpInterface:
         :return: A PTML string representing the outcome of the behavior tree.
         """
         self.goal = goal
-        self.algo = OptBTExpAlgorithm(verbose=True)
+        self.algo = OptBTExpAlgorithm(verbose=False)
         self.algo.clear()
         self.algo.run_algorithm(self.goal, self.actions,self.scene) # 调用算法得到行为树保存至 algo.bt
         self.ptml_string = self.algo.get_ptml()

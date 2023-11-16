@@ -57,6 +57,6 @@ class Make(Act):
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
 
-        print("condition_set:",self.scene.state["condition_set"])
+        # print("condition_set:",self.scene.state["condition_set"])
 
         return Status.RUNNING

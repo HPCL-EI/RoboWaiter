@@ -22,7 +22,10 @@ class SceneVLM(Scene):
             # (5, self.create_chat_event("测试VLM：把冰红茶放到Table2")),
             # (5, self.create_chat_event("测试VLM：关大厅灯"))
             # (5, self.create_chat_event("测试VLM：做一杯咖啡放到吧台上")),
-            (5, self.create_chat_event("测试VLM：做一杯咖啡放到水杯桌上并倒水")),
+            (5, self.create_chat_event("测试VLM：做一杯咖啡放到水杯桌上，再倒一杯水")),
+            (10, self.create_chat_event("测试VLM：关窗帘")),
+            # (5, self.create_chat_event("测试VLN：前往2号桌")),
+
         ]
 
     def _reset(self):

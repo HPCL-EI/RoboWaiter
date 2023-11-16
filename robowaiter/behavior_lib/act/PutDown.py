@@ -22,6 +22,8 @@ class PutDown(Act):
         info["pre"] = {f'Holding({arg[0]})',f'At(Robot,{arg[1]})'}
         info["add"] = {f'Holding(Nothing)',f'On({arg[0]},{arg[1]})'}
         info["del_set"] = {f'Holding({arg[0]})'}
+
+        info['cost'] = 100
         return info
 
 
@@ -36,4 +38,6 @@ class PutDown(Act):
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
+
+        print("After PutDown condition_set:",self.scene.state["condition_set"])
         return Status.RUNNING

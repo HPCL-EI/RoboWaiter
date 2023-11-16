@@ -1,3 +1,4 @@
+import sys
 import time
 import grpc
 import numpy as np
@@ -108,6 +109,7 @@ class Scene:
         self.visited = set()
         self.all_frontier_list = set()
         self.semantic_map = semantic_map
+        self.auto_map = np.ones((800, 1550))
 
 
     def reset(self):
@@ -574,7 +576,7 @@ class Scene:
         #     v_list = [[0.0, 0.0]]
 
         for walk_v in v_list:
-            walk_v = walk_v + [scene.rotation.Yaw - 90, 250, 60]
+            walk_v = walk_v + [scene.rotation.Yaw - 90, 250, 10]
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
@@ -583,7 +585,7 @@ class Scene:
             print(scene.info)
         return cur_objs, objs_name_set
 
-    def isOutMap(self, pos, min_x=-350, max_x=600, min_y=-400, max_y=1450):
+    def isOutMap(self, pos, min_x=-200, max_x=600, min_y=-250, max_y=1300):
         if pos[0] <= min_x or pos[0] >= max_x or pos[1] <= min_y or pos[1] >= max_y:
             return True
         return False
@@ -594,11 +596,13 @@ class Scene:
         '''
         # x = round((x - self.min_x) / self.scale_ratio)
         # y = round((y - self.min_y) / self.scale_ratio)
-        x = math.floor((x + 350) / 5)
-        y = math.floor((y + 400) / 5)
+        x = math.floor((x + 200))
+        y = math.floor((y + 250))
         return x, y
 
-    def explore(self, map, cur_pos, explore_range):
+    def explore(self, map, explore_range):
+        scene = stub.Observe(GrabSim_pb2.SceneID(value=0))
+        cur_pos = [int(scene.location.X), int(scene.location.Y)]
         for i in range(cur_pos[0] - explore_range, cur_pos[0] + explore_range + 1):
             for j in range(cur_pos[1] - explore_range, cur_pos[1] + explore_range + 1):
                 if self.isOutMap((i, j)):
@@ -606,6 +610,7 @@ class Scene:
                 x, y = self.real2map(i, j)
                 if map[x, y] == 0:
                     self.visited.add((i, j))
+                    self.auto_map[x][y] = 0
         for i in range(cur_pos[0] - explore_range, cur_pos[0] + explore_range + 1):
             for j in range(cur_pos[1] - explore_range, cur_pos[1] + explore_range + 1):
                 if self.isOutMap((i, j)):
@@ -614,11 +619,26 @@ class Scene:
                 if map[x, y] == 0:
                     if self.isNewFrontier((i, j), map):
                         self.all_frontier_list.add((i, j))
-        if len(self.all_frontier_list) <= 400:
+        if len(self.all_frontier_list) == 0:
             free_list = list(self.visited)
             free_array = np.array(free_list)
-            print(f"探索完成！以下是场景中可以到达的点：{free_array}；其余点均是障碍物不可达")
+            print(f"主动探索完成！以下是场景中可以到达的点：{free_array}；其余点均是障碍物不可达")
+
+            # 画地图: X行Y列，第一行在下面
+            plt.clf()
+            plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
+                       extent=(-250, 1300,
+                               -200, 600))
+            plt.show()
+            print("已绘制完成地图！！！")
+
             return None
+        # 画地图: X行Y列，第一行在下面
+        plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
+                   extent=(-250, 1300,
+                           -200, 600))
+        plt.show()
+        print("已绘制部分地图！")
         return self.getNearestFrontier(cur_pos, self.all_frontier_list)
 
     def isNewFrontier(self, pos, map):
@@ -626,10 +646,24 @@ class Scene:
 
         for node in around_nodes:
             x, y = self.real2map(node[0], node[1])
-            if node not in self.visited and map[x, y] == 0:
+            if not self.isOutMap((node[0], node[1])) and node not in self.visited and map[x, y] == 0:
                 return True
         if (pos[0], pos[1]) in self.all_frontier_list:
             self.all_frontier_list.remove((pos[0], pos[1]))
         return False
+
+    def getDistance(self, pos1, pos2):
+        return math.sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2)
+
+    def getNearestFrontier(self, cur_pos, frontiers):
+        dis_min = sys.maxsize
+        frontier_best = None
+        for frontier in frontiers:
+            dis = self.getDistance(frontier, cur_pos)
+            if dis <= dis_min:
+                dis_min = dis
+                frontier_best = frontier
+        return frontier_best
+
 
 

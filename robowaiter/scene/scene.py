@@ -642,11 +642,11 @@ class Scene:
         ginger_x, ginger_y, ginger_z = [int(scene.location.X), int(scene.location.Y),100]
         return math.sqrt((ginger_x - objx) ** 2 + (ginger_y - objy) ** 2 + (ginger_z - objz) ** 2)
 
-    def test(self):
-        walk_v = [247.0, 480.0, 180.0, 180, 0]
-        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        scene = stub.Do(action)
-        time.sleep(4)
-        walk_v = [247.0, 500.0, 0.0, 180, 0]
-        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        scene = stub.Do(action)
+    # def test_yaw(self):
+    #     walk_v = [247.0, 480.0, 180.0, 180, 0]
+    #     action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+    #     scene = stub.Do(action)
+    #     time.sleep(4)
+    #     walk_v = [247.0, 500.0, 0.0, 180, 0]
+    #     action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+    #     scene = stub.Do(action)

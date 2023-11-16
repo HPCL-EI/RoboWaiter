@@ -88,7 +88,7 @@ class SceneVLM(Scene):
         # self.move_task_area(17, release_pos=pos)
         # self.op_task_execute(17, release_pos=pos)
 
-        # self.test()
+        # self.test_yaw()
 
         pass
     

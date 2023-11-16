@@ -22,8 +22,8 @@ class SceneGQA(Scene):
 
     def _reset(self):
         # self.clean_walker()
-        self.add_walkers()
-
+        # self.add_walkers([[50, 500,90]])
+        pass
 
         # self.walker_bubble("洗手间在哪里")
         # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])

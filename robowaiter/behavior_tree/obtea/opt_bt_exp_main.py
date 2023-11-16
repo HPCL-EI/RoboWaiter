@@ -6,7 +6,7 @@ from robowaiter.behavior_tree.obtea.examples import *
 
 # 封装好的主接口
 class BTOptExpInterface:
-    def __init__(self, action_list):
+    def __init__(self, action_list,scene):
         """
         Initialize the BTOptExpansion with a list of actions.
         :param action_list: A list of actions to be used in the behavior tree.
@@ -22,6 +22,8 @@ class BTOptExpInterface:
         self.actions = action_list
         self.has_processed = False
 
+        self.scene = scene
+
     def process(self, goal):
         """
         Process the input sets and return a string result.
@@ -29,9 +31,9 @@ class BTOptExpInterface:
         :return: A PTML string representing the outcome of the behavior tree.
         """
         self.goal = goal
-        self.algo = OptBTExpAlgorithm(verbose=False)
+        self.algo = OptBTExpAlgorithm(verbose=True)
         self.algo.clear()
-        self.algo.run_algorithm(self.goal, self.actions) # 调用算法得到行为树保存至 algo.bt
+        self.algo.run_algorithm(self.goal, self.actions,self.scene) # 调用算法得到行为树保存至 algo.bt
         self.ptml_string = self.algo.get_ptml()
         self.has_processed = True
         # algo.print_solution() # print behavior tree

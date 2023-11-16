@@ -19,8 +19,7 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.event_list = [
-            # (5,self.create_chat_event("给我一杯咖啡"))  # (事件发生的时间，事件函数)
-            (5, self.create_chat_event("我有点热，能开个空调吗？"))  # (事件发生的时间，事件函数)
+            (5, self.create_chat_event("我有点热，能开个空调吗？")),
         ]
 
     def _reset(self):
@@ -30,7 +29,6 @@ class SceneOT(Scene):
         print("scene.walkers:",scene.walkers)
         cont = scene.walkers[0].name+":我有点热，能开个空调吗？"
         self.control_robot_action(0,3,cont)
-        # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
         pass
 
     def _run(self):

@@ -1,6 +1,6 @@
 import py_trees as ptree
 from robowaiter.behavior_lib._base.Act import Act
-from robowaiter.algos.navigate.navigate import Navigator
+from robowaiter.algos.navigator.navigate import Navigator
 
 class MoveTo(Act):
     can_be_expanded = True
@@ -21,6 +21,7 @@ class MoveTo(Act):
             info['pre'] |= {f'Exist({arg})'}
         info["add"] = {f'At(Robot,{arg})'}
         info["del_set"] = {f'At(Robot,{place})' for place in cls.valid_args if place != arg}
+        info['cost']=5
         return info
 
 
@@ -29,30 +30,41 @@ class MoveTo(Act):
 
         # navigator = Navigator(scene=self.scene, area_range=[-350, 600, -400, 1450], map=self.scene.state["map"]["2d"])
         # goal = self.scene.state['map']['obj_pos'][self.args[0]]
-        # navigator.navigate(goal, animation=False)
+        # navigator.navigate_old(goal, animation=False)
 
         # 走到固定的地点
         if self.target_place in Act.place_xyz_dic:
             goal = Act.place_xyz_dic[self.target_place]
-            self.scene.walk_to(goal[0],goal[1])
-        else: # 走到物品边上
+            self.scene.walk_to(goal[0]+1,goal[1])
+        # 走到物品边上
+        else:
+            # 是否用容器装好
+            if self.target_place in Act.container_dic:
+                target_name = Act.container_dic[self.target_place]
+            else:
+                target_name = self.target_place
+            # 根据物体名字找到最近的这类物体对应的位置
             obj_id = -1
             min_dis = float('inf')
             obj_dict = self.scene.status.objects
             if len(obj_dict)!=0:
                 # 获取obj_id
                 for id,obj in enumerate(obj_dict):
-                    if obj.name == self.target_place:
-                        obj_id = id
-                        # obj_info = obj_dict[id]
-                        # obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
-                        # ginger_x,ginger_y,ginger_z = [int(self.scene.location.X), int(self.scene.location.Y), int(self.scene.rotation.Yaw)]
-                        break
-            if self.target_place == "CoffeeCup":
-                obj_id = 273
+                    if obj.name == target_name:
+                        obj_info = obj_dict[id]
+                        dis = self.scene.cal_distance_to_robot(obj_info.location.X, obj_info.location.Y, obj_info.location.Z)
+                        if id==275:
+                            print("275'dis:",dis)
+                        if dis<min_dis:
+                            min_dis = dis
+                            obj_id = id
+            # if self.target_place == "CoffeeCup":
+            #     # obj_id = 273
+            #     obj_id = 275
             if obj_id == -1:
                 return ptree.common.Status.FAILURE
 
+            print("self.target_place:",self.target_place,"id:",obj_id,"dis:",min_dis)
             self.scene.move_to_obj(obj_id=obj_id)
 
             # 为了演示，写死咖啡位置

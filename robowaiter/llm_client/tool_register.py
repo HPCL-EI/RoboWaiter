@@ -132,8 +132,13 @@ def create_sub_task(
     当需要完成具身任务（如做咖啡，拿放物体，扫地，前往某位置）时，调用该函数，根据用户的提示进行意图理解，生成子任务的目标状态集合 `goal`（以一阶逻辑的形式表示），用户意图
     做一杯咖啡,则该函数的参数为 "On(Coffee,Bar)",
     前往一号桌,则该函数的参数为 "At(Robot,Table1)",
-    打开空调,则该函数的参数为 "Is(AC,On)",。
-    关空调,则该函数的参数为 "Is(AC,Off)",。
+    前往二号桌,则该函数的参数为 "At(Robot,Table2)",
+    打开空调,则该函数的参数为 "Is(AC,On)",
+    关空调,则该函数的参数为 "Is(AC,Off)",
+    打开窗帘,则该函数的参数为 "Is(Curtain,On)",
+    关闭窗帘,则该函数的参数为 "Is(Curtain,Off)",
+    拖地,则该函数的参数为 "Is(Floor,Clean)",
+    打开大厅灯,则该函数的参数为 "Is(HallLight,On)",
     """
 
     return goal
@@ -143,9 +148,9 @@ def get_object_info(
         obj: Annotated[str, '需要获取信息的物体名称', True]
 ) -> str:
     """
-    获取场景中指定物体 `object` 在哪里，
-    如果`object` 是一个地点，例如洗手间，地方，则输出。
-    如果`object`是一个咖啡，则输出。
+    获取场景中指定物体 `object` 在哪里，不涉及到具体的执行任务
+    如果`object` 是一个地点，例如洗手间，则输出大门。
+    如果`object`是咖啡，则输出桌子，咖啡在桌子上。
     如果`object` 是空桌子，则输出一号桌
     """
     near_object = None

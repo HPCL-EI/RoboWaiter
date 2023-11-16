@@ -16,8 +16,9 @@ class SceneAT(Scene):
         super().__init__(robot)
 
     def _reset(self):
-        self.add_walker(1085, 2630, 220)
-        self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
+        # self.add_walker(1085, 2630, 220)
+        # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
+        pass
 
     def _run(self):
 

@@ -32,7 +32,6 @@ functions = get_tools()
 def run_conversation(query: str, stream=False,  max_retry=5):
     params = dict(model="chatglm3", messages=[{"role": "user", "content": query}], stream=stream)
     params["functions"] = functions
-    print(params)
     response = get_response(**params)
 
     for _ in range(max_retry):

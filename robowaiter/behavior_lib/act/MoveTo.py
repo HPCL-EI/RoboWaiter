@@ -21,7 +21,7 @@ class MoveTo(Act):
             info['pre'] |= {f'Exist({arg})'}
         info["add"] = {f'At(Robot,{arg})'}
         info["del_set"] = {f'At(Robot,{place})' for place in cls.valid_args if place != arg}
-        info['cost']=5
+        info['cost']=10
         return info
 
 
@@ -53,8 +53,6 @@ class MoveTo(Act):
                     if obj.name == target_name:
                         obj_info = obj_dict[id]
                         dis = self.scene.cal_distance_to_robot(obj_info.location.X, obj_info.location.Y, obj_info.location.Z)
-                        if id==275:
-                            print("275'dis:",dis)
                         if dis<min_dis:
                             min_dis = dis
                             obj_id = id
@@ -64,7 +62,7 @@ class MoveTo(Act):
             if obj_id == -1:
                 return ptree.common.Status.FAILURE
 
-            print("self.target_place:",self.target_place,"id:",obj_id,"dis:",min_dis)
+            # print("self.target_place:",self.target_place,"id:",obj_id,"dis:",min_dis)
             self.scene.move_to_obj(obj_id=obj_id)
 
             # 为了演示，写死咖啡位置

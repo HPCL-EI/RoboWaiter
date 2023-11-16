@@ -1,6 +1,6 @@
 import py_trees as ptree
 from robowaiter.behavior_lib._base.Act import Act
-from robowaiter.algos.navigate_old.navigate import Navigator
+from robowaiter.algos.navigator.navigate import Navigator
 
 class MoveTo(Act):
     can_be_expanded = True

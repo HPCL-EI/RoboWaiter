@@ -11,6 +11,11 @@ class DealChat(Act):
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?
         chat = self.scene.state['chat_list'].pop()
+        if isinstance(chat,set):
+            self.create_sub_task(chat)
+            return ptree.common.Status.RUNNING
+
+
         self.chat_history += chat + '\n'
 
         res_dict = ask_llm(chat)

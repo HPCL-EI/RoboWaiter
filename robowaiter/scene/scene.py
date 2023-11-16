@@ -116,6 +116,11 @@ class Scene:
 
         # reset state
         self.state = self.default_state
+
+
+
+
+
         print("场景初始化完成")
         self._reset()
 
@@ -155,6 +160,14 @@ class Scene:
             self.state['chat_list'].append(f'{sentence}')
 
         return customer_say
+
+    def set_goal(self,goal):
+        g = eval("{'" + goal + "'}")
+        def set_sub_task():
+            self.state['chat_list'].append(g)
+
+        return set_sub_task
+
 
     @property
     def status(self):

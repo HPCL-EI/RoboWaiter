@@ -268,6 +268,19 @@ class Scene:
             GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
         )
 
+    def control_walkers(self,walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True):
+        """pose:表示行人的终止位置姿态"""
+        scene = self.status
+        walker_loc = walker_loc
+        controls = []
+        for i in range(len(scene.walkers)):
+            loc = walker_loc[i]
+            is_autowalk = is_autowalk
+            pose = GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=180)
+            controls.append(GrabSim_pb2.WalkerControls.WControl(id=i, autowalk=is_autowalk, speed=80, pose=pose))
+        scene = stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
+
+
     def control_joints(self, angles):
         stub.Do(
             GrabSim_pb2.Action(

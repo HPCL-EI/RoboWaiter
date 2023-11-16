@@ -39,5 +39,5 @@ class PutDown(Act):
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
 
-        print("After PutDown condition_set:",self.scene.state["condition_set"])
+        # print("After PutDown condition_set:",self.scene.state["condition_set"])
         return Status.RUNNING

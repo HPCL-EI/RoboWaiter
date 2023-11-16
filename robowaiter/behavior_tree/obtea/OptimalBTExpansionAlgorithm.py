@@ -105,8 +105,8 @@ class OptBTExpAlgorithm:
                         [copy.deepcopy(pair_node.cond_leaf), copy.deepcopy(pair_node.act_leaf)])
                     subtree.add_child([copy.deepcopy(sequence_structure)])  # subtree 是回不断变化的，它的父亲是self.bt
                     # 增加实时条件判断，满足条件就不再扩展
-                    # if c <= self.scene.state["condition_set"]:
-                    #     return True
+                    if c <= self.scene.state["condition_set"]:
+                        return True
                 else:
                     subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
 

@@ -25,7 +25,7 @@ class Clean(Act):
     @classmethod
     def get_info(cls,arg):
         info = {}
-        info["pre"]= {f'Holding(Nothing)'}
+        info["pre"]= {f'Holding(Nothing)',f'Is(HallLight,On)'}
         if arg == "Table1":
             info["add"]= {f'Is(Table1,Clean)'}
             info["del_set"] = {f'Is(Table1,Dirty)'}
@@ -44,4 +44,6 @@ class Clean(Act):
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
-        return Status.SUCCESS
+
+        # print("After Clean condition_set:",self.scene.state["condition_set"] )
+        return Status.RUNNING

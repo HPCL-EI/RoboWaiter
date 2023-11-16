@@ -23,7 +23,7 @@ class PutDown(Act):
         info["add"] = {f'Holding(Nothing)',f'On({arg[0]},{arg[1]})'}
         info["del_set"] = {f'Holding({arg[0]})'}
 
-        info['cost'] = 100
+        info['cost'] = 1
         return info
 
 

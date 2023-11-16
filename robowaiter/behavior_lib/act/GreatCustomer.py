@@ -21,5 +21,7 @@ class GreatCustomer(Act):
 
     def _update(self) -> ptree.common.Status:
 
+        goal = Act.place_xyz_dic['Bar']
+        self.scene.walk_to(goal[0]-5,goal[1], 180, 180, 0)
         self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
         return ptree.common.Status.RUNNING

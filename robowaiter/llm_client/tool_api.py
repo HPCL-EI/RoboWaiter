@@ -36,7 +36,6 @@ functions = get_tools()
 def run_conversation(query: str, stream=False, max_retry=5):
     params = dict(model="chatglm3", messages=[{"role": "user", "content": query}], stream=stream)
     params["functions"] = functions
-    # print(params)
     response = get_response(**params)
 
     for _ in range(max_retry):
@@ -61,6 +60,7 @@ def run_conversation(query: str, stream=False, max_retry=5):
                     "content": tool_response,  # 调用函数返回结果
                 }
             )
+            del params["functions"]
         else:
             reply = response["choices"][0]["message"]["content"]
             return {
@@ -111,4 +111,7 @@ def run_conversation_for_test_only(query: str, stream=False, max_retry=5):
 
 if __name__ == "__main__":
     query = "可以带我去吗"
+    print(run_conversation_for_test_only(query, stream=False))
+
+    query = "这里有吗"
     print(run_conversation_for_test_only(query, stream=False))

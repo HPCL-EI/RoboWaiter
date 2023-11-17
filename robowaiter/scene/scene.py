@@ -10,8 +10,9 @@ import math
 from robowaiter.proto import GrabSim_pb2
 from robowaiter.proto import GrabSim_pb2_grpc
 
-
-
+import os
+from robowaiter.utils import get_root_path
+root_path = get_root_path()
 
 channel = grpc.insecure_channel(
     "localhost:30001",
@@ -111,24 +112,24 @@ class Scene:
         self.all_frontier_list = set()
         self.semantic_map = semantic_map
         self.auto_map = np.ones((800, 1550))
-        self.filename = "../proto/map_1.pkl"
+        self.filename = os.path.join(root_path, 'robowaiter/proto/map_1.pkl')
         with open(self.filename, 'rb') as file:
             self.map_file = pickle.load(file)
 
 
     def reset(self):
-            # 基类reset，默认执行仿真器初始化操作
-            self.reset_sim()
+        # 基类reset，默认执行仿真器初始化操作
+        self.reset_sim()
 
-            # reset state
-            self.state = self.default_state
+        # reset state
+        self.state = self.default_state
 
 
 
-            print("场景初始化完成")
-            self._reset()
+        print("场景初始化完成")
+        self._reset()
 
-            self.running = True
+        self.running = True
 
     def run(self):
         # 基类run
@@ -180,8 +181,8 @@ class Scene:
     def reset_sim(self):
         # reset world
         init_world()
-        
         stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
+        stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
 
     def _reset(self):
         # 场景自定义的reset

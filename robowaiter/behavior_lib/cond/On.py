@@ -6,7 +6,7 @@ class On(Cond):
     can_be_expanded = True
     num_params = 2
     valid_params = [tuple(Cond.all_object),
-            tuple(Cond.all_place)]
+            tuple(Cond.tables_for_placement)]
 
 
     def __init__(self,*args):

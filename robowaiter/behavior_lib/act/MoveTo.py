@@ -5,7 +5,7 @@ from robowaiter.algos.navigator.navigate import Navigator
 class MoveTo(Act):
     can_be_expanded = True
     num_args = 1
-    valid_args = Act.all_object | Act.all_place
+    valid_args = Act.all_object | Act.tables_for_placement | Act.tables_for_guiding
     valid_args.add('Customer')
 
     def __init__(self, target_place):
@@ -21,7 +21,7 @@ class MoveTo(Act):
             info['pre'] |= {f'Exist({arg})'}
         info["add"] = {f'At(Robot,{arg})'}
         info["del_set"] = {f'At(Robot,{place})' for place in cls.valid_args if place != arg}
-        info['cost']=10
+        info['cost']=5
         return info
 
 
@@ -35,7 +35,7 @@ class MoveTo(Act):
         # 走到固定的地点
         if self.target_place in Act.place_xyz_dic:
             goal = Act.place_xyz_dic[self.target_place]
-            self.scene.walk_to(goal[0]+1,goal[1])
+            self.scene.walk_to(goal[0]+1,goal[1],goal[2])
         # 走到物品边上
         else:
             # 是否用容器装好

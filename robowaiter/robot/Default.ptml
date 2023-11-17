@@ -14,5 +14,14 @@ selector
             act SubTaskPlaceHolder()
         }
     }
-
+    sequence
+    {
+        cond DetectCustomer()
+        selector
+        {
+            cond At(Robot,Bar)
+            act MoveTo(Bar)
+        }
+        act GreatCustomer()
+    }
 }

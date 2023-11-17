@@ -41,9 +41,11 @@ class SceneVLM(Scene):
          'Holding(Nothing)','Exist(Yogurt)','Exist(Softdrink)','On(Yogurt,Bar)','On(Softdrink,Table1)',
          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
-        self.add_walkers([[0, 880], [250, 1200], [-55, 750], [70, -200]])
-        # self.add_walkers([[-500, 500]])
+        # 随机生成4个自由行走，一个在 BrightTable4,BrightTable5(-20,220)
+        self.add_walkers([[0, 880], [250, 1200], [-55, 750], [70, -200],[-290, 400, 0],[20, -150,180]])
         self.control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
+
+
         # self.control_walkers(walker_loc=[[-55, 750]],is_autowalk = False)
         # 在场景中随机增加一堆行人。
         # walker_loc = [[-55, 750], [70, -200], [250, 1200], [0, 880]]

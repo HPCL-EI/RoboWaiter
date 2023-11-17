@@ -7,7 +7,7 @@ class At(Cond):
     can_be_expanded = True
     num_params = 2
 
-    valid_args = list(itertools.product(('Robot','Customer'), tuple(Cond.all_object | Cond.all_place | {'Customer'})))
+    valid_args = list(itertools.product(('Robot','Customer'), tuple(Cond.all_object | Cond.tables_for_placement | Cond.tables_for_guiding | {'Customer'})))
     valid_args.remove(('Customer','Customer'))
     valid_args = tuple(valid_args)
 

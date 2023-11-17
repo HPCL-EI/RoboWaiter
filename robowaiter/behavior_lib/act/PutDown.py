@@ -8,7 +8,7 @@ class PutDown(Act):
     can_be_expanded = True
     num_args = 2
 
-    valid_args = tuple(itertools.product(Act.all_object, Act.all_place))
+    valid_args = tuple(itertools.product(Act.all_object, Act.tables_for_placement))
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -23,7 +23,7 @@ class PutDown(Act):
         info["add"] = {f'Holding(Nothing)',f'On({arg[0]},{arg[1]})'}
         info["del_set"] = {f'Holding({arg[0]})'}
 
-        info['cost'] = 100
+        info['cost'] = 1
         return info
 
 

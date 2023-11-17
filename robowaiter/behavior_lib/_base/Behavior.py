@@ -13,9 +13,14 @@ class Bahavior(ptree.behaviour.Behaviour):
         '''
     scene = None
     print_name_prefix = ""
-    all_place = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3'}
+    tables_for_placement = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3',"BrightTable6"}
     all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
                   'VacuumCup'}
+
+    # BrightTable5 = Table4
+    tables_for_guiding = {"QuietTable1","QuietTable2",
+                          "BrightTable1","BrightTable2","BrightTable3","BrightTable4","BrightTable5","BrightTable6"
+                          'CoffeeTable','WaterTable','Table1', 'Table2', 'Table3'}
 
     # all_place = {'Bar', 'WaterTable', 'CoffeeTable'}
     # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'Yogurt'}
@@ -29,10 +34,18 @@ class Bahavior(ptree.behaviour.Behaviour):
         'Bar2': (240.0, 40.0, 70.0),
         'WaterTable':(-70.0, 500.0, 107),
         'CoffeeTable':(250.0, 310.0, 100.0),
-        'Table1': (340.0, 900.0, 98.0),
-        # 'Table1': (345.0, 895.0, 98.0),
+        'Table1': (340.0, 900.0, 99.0),
         'Table2': (-55.0, 0.0, 107),
-        'Table3':(-55.0, 150.0, 107)
+        'Table3':(-55.0, 150.0, 107),
+        'BrightTable6': (5, -315, 116.5),
+
+        'QuietTable1':(480,1300,90),
+        'QuietTable2':(250,-240,-65),
+        'BrightTable1':(230,1200,135),
+        'BrightTable2': (65, 1000, 135),
+        'BrightTable3': (-80, 850, 135),
+        'BrightTable4': (-270, 520, 150),
+        'BrightTable5': (-270, 420, -135)
     }
     container_dic={
         'Coffee':'CoffeeCup',

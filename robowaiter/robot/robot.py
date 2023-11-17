@@ -37,6 +37,7 @@ class Robot(object):
     def set_scene(self,scene):
         self.scene = scene
 
+
     def load_BT(self):
         self.bt = load_bt_from_ptml(self.scene, self.ptml_path,self.behavior_lib_path)
         sub_task_place_holder = find_node_by_name(self.bt.root,"SubTaskPlaceHolder()")

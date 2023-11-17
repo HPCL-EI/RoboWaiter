@@ -18,7 +18,7 @@ class PickUp(Act):
         info["pre"] = {f'At(Robot,{arg})','Holding(Nothing)'}
         info["add"] = {f'Holding({arg})'}
         info["del_set"] = {f'Holding(Nothing)'}
-        for place in Act.all_place:
+        for place in cls.valid_args:
             info["del_set"] |= {f'On({arg},{place})'}
         return info
 

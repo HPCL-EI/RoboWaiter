@@ -36,10 +36,9 @@ functions = get_tools()
 def run_conversation(query: str, stream=False, max_retry=5):
     params = dict(model="chatglm3", messages=[{"role": "user", "content": query}], stream=stream)
     params["functions"] = functions
-    # print(params)
     response = get_response(**params)
 
-    for _ in range(max_retry):
+    for retry in range(max_retry):
         if response["choices"][0]["message"].get("function_call"):
             function_call = response["choices"][0]["message"]["function_call"]
             logger.info(f"Function Call Response: {function_call}")
@@ -61,6 +60,7 @@ def run_conversation(query: str, stream=False, max_retry=5):
                     "content": tool_response,  # 调用函数返回结果
                 }
             )
+            # del params["functions"]
         else:
             reply = response["choices"][0]["message"]["content"]
             return {
@@ -110,5 +110,18 @@ def run_conversation_for_test_only(query: str, stream=False, max_retry=5):
 
 
 if __name__ == "__main__":
-    query = "可以带我去吗"
-    print(run_conversation_for_test_only(query, stream=False))
+    # query = "可以带我去吗"
+    # print(run_conversation_for_test_only(query, stream=False))
+
+    query = "卫生间在哪里"   #
+    print(run_conversation(query, stream=False))
+
+    query = "我想看看冰箱,请问哪里可以找到冰箱"
+    print(run_conversation(query, stream=False))
+
+    query = "我想找个充电的地方，你能告诉我在哪儿吗"
+    print(run_conversation(query, stream=False))
+
+    query = "我想找张桌子"   #
+    print(run_conversation(query, stream=False))
+    # for query in

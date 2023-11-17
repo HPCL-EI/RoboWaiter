@@ -507,6 +507,9 @@ class Scene:
         obj_info = scene.objects[obj_id]
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
         if obj_info.name=="CoffeeCup":
+            values = [0,0,0,0,0, -15,0,0,0,0]
+            # values= [-6, 0, 0, 0, 0, -6, 0, 45, 45, 45]
+            stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
             pass
         if obj_info.name=="Glass":
             pass
@@ -525,6 +528,11 @@ class Scene:
         action = GrabSim_pb2.Action(scene=self.sceneID,action=GrabSim_pb2.Action.ActionType.RotateJoints,    # 恢复原位
                                     values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         scene = stub.Do(action)
+
+    def standard_finger(self):
+        values = [0,0,0,0,0, 0,0,0,0,0]
+        stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
+        time.sleep(1.0)
 
 
     def robo_stoop_parallel(self):
@@ -553,6 +561,7 @@ class Scene:
         scene = stub.Do(action)
         time.sleep(2.0)
         self.robo_recover()
+        self.standard_finger()
 
         return True
 
@@ -700,11 +709,4 @@ class Scene:
         ginger_x, ginger_y, ginger_z = [int(scene.location.X), int(scene.location.Y),100]
         return math.sqrt((ginger_x - objx) ** 2 + (ginger_y - objy) ** 2 + (ginger_z - objz) ** 2)
 
-    # def test_yaw(self):
-    #     walk_v = [247.0, 480.0, 180.0, 180, 0]
-    #     action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-    #     scene = stub.Do(action)
-    #     time.sleep(4)
-    #     walk_v = [247.0, 500.0, 0.0, 180, 0]
-    #     action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-    #     scene = stub.Do(action)
+

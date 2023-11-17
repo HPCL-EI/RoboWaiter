@@ -180,9 +180,10 @@ class Scene:
 
     def reset_sim(self):
         # reset world
+        stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
         init_world()
         stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
-        stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
+
 
     def _reset(self):
         # 场景自定义的reset

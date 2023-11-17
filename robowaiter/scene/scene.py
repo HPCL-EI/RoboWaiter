@@ -488,6 +488,7 @@ class Scene:
             print(scene.info)
             return False
 
+    # 调整空调开关、温度
     def adjust_kongtiao(self,op_type):
         obj_loc = self.obj_loc[:]
         obj_loc[2] -= 5
@@ -496,7 +497,7 @@ class Scene:
         if op_type == 15: obj_loc[1] += 2
         self.ik_control_joints(2, obj_loc[0], obj_loc[1], obj_loc[2])
         time.sleep(3.0)
-        self.robo_recover()
+        self.robo_recover()   # 恢复肢体关节
         return True
 
     def gen_obj(self,h=100):
@@ -510,7 +511,9 @@ class Scene:
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 
+    # 实现抓握操作
     def grasp_obj(self,obj_id,hand_id=1):
+        print('------------------adjust_joints----------------------')
         scene = self.status
         obj_info = scene.objects[obj_id]
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
@@ -519,7 +522,7 @@ class Scene:
             # obj_y -= 1
             # values = [0,0,0,0,0, 10,-25,-45,-45,-45]
             # values= [-6, 0, 0, 0, 0, -6, 0, 45, 45, 45]
-            stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
+            # stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
             pass
         if obj_info.name=="Glass":
             pass
@@ -539,12 +542,13 @@ class Scene:
                                     values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         scene = stub.Do(action)
 
+    # 恢复手指关节
     def standard_finger(self):
         values = [0,0,0,0,0, 0,0,0,0,0]
         stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
         time.sleep(1.0)
 
-
+    # 弯腰以及手掌与放置面平齐
     def robo_stoop_parallel(self):
         # 0-3是躯干，4-6是脖子和头，7-13是左胳膊，14-20是右胳膊
         scene = self.status
@@ -557,6 +561,7 @@ class Scene:
         scene = stub.Do(action)
         time.sleep(1.0)
 
+    # 实现放置操作
     def release_obj(self,release_pos):
         print("------------------adjust_joints----------------------")
         if release_pos==[340.0, 900.0, 99.0]:
@@ -727,7 +732,3 @@ class Scene:
             return True
         else:
             return False
-
-
-
-

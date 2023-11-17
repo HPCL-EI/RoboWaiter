@@ -6,12 +6,12 @@ from types import GenericAlias
 from typing import get_origin, Annotated
 import robowaiter.llm_client.find_obj_utils as find_obj_utils
 import random
-import spacy
+# import spacy
 
 _TOOL_HOOKS = {}
 _TOOL_DESCRIPTIONS = {}
-nlp = spacy.load('en_core_web_lg')
-all_object = find_obj_utils.all_loc + find_obj_utils.all_obj
+# nlp = spacy.load('en_core_web_lg')
+
 
 def register_tool(func: callable):
     tool_name = func.__name__
@@ -147,46 +147,56 @@ def create_sub_task(
 
     return goal
 
-@register_tool
-def find_object(
-        object: Annotated[str, '客人咨询的物品', True]
-) -> str:
-    """"
-    用户想找某个物品，获取的object中文
-    在输出中可以找到
-    基于生活经验从输出中选择一个可以与object相关联的来描述物品
-    """
-    near_object = None
+# @register_tool
+# def get_object_info(
+#         obj: Annotated[str, '需要获取信息的物体名称', True]
+# ) -> str:
+#     """
+#     获取场景中指定物体 `object` 在哪里，不涉及到具体的执行任务
+#     如果`object` 是一个地点，例如洗手间，则输出大门。
+#     如果`object`是咖啡，则输出桌子，咖啡在桌子上。
+#     如果`object` 是空桌子，则输出一号桌
+#     """
+#     near_object = None
+#     # if obj == "Table":
+#     #     near_object = "Bar"
+#     # if obj == "洗手间":
+#     #     near_object = "大门"
+#     # if obj == "空桌子":
+#     #     near_object = "一号桌"
+#     if obj in find_obj_utils.all_loc:   # object是一个地点
+#         mp = list(find_obj_utils.loc_map[obj])
+#         # near_object = random.choice(mp)
+#         near_object = mp
+#     if obj in find_obj_utils.all_obj:   # object是一个物品
+#         near_ls = find_obj_utils.all_loc + find_obj_utils.all_obj
+#         near_object = random.choices(near_ls,k=5)
+#     return near_object
 
-    if object in find_obj_utils.all_obj:   # object是一个物品
-        near_object = random.choices(all_object, k=10)
-        # near_object.append(object)
-    return near_object
-
-@register_tool
-def find_location(
-        location: Annotated[str, '客人咨询的地点', True]
-) -> str:
-    """
-    获取的location为英文
-    用户想找某个地点
-    """
-    near_location = None
-    query_token = nlp(location)
-    max_similarity = 0
-    similar_word = None
-    for w in find_obj_utils.all_loc_en:
-        word_token = nlp(w)
-        similarity = query_token.similarity(word_token)
-
-        if similarity > max_similarity:
-            max_similarity = similarity
-            similar_word = w
-    print("similarity:", max_similarity, "similar_word:", similar_word)
-    if similar_word:
-        mp = list(find_obj_utils.loc_map_en[similar_word])
-        near_location = random.choice(mp)
-    return near_location
+# @register_tool
+# def find_location(
+#         location: Annotated[str, '客人咨询的地点', True]
+# ) -> str:
+#     """"
+#     获取的location为英文
+#     用户想找某个地点
+#     """
+#     near_location = None
+#     query_token = nlp(location)
+#     max_similarity = 0
+#     similar_word = None
+#     for w in find_obj_utils.all_loc_en:
+#         word_token = nlp(w)
+#         similarity = query_token.similarity(word_token)
+#
+#         if similarity > max_similarity:
+#             max_similarity = similarity
+#             similar_word = w
+#     print("similarity:", max_similarity, "similar_word:", similar_word)
+#     if similar_word:
+#         mp = list(find_obj_utils.loc_map_en[similar_word])
+#         near_location = random.choice(mp)
+#     return near_location
 
 if __name__ == "__main__":
     print(dispatch_tool("get_weather", {"city_name": "beijing"}))

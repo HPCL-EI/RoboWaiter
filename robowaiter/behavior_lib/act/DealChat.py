@@ -20,6 +20,7 @@ class DealChat(Act):
 
         res_dict = ask_llm(chat)
         answer = res_dict["Answer"]
+        self.scene.chat_bubble(answer) # 机器人输出对话
         self.chat_history += answer + '\n'
 
         goal = res_dict["Goal"]

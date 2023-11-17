@@ -297,7 +297,7 @@ def mutex(path: str):
     new_line = re.sub('#', '', new_line)
     lines = re.sub('#', '', lines)
 
-    with open(os.path.join(path), 'a', encoding='utf-8') as file:
+    with open(os.path.join(path), 'w', encoding='utf-8') as file:
         file.write(new_line*13 + lines * 13)
 
 

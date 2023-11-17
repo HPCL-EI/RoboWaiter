@@ -16,12 +16,12 @@ selector
     }
     sequence
     {
+        cond DetectCustomer()
         selector
         {
             cond At(Robot,Bar)
             act MoveTo(Bar)
         }
-        cond DetectCustomer()
-        act GreatCustomer
+        act GreatCustomer()
     }
 }

@@ -18,10 +18,17 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.event_list = [
-            (5, self.set_goal("At(Robot,Table2)"))
+            # (5, self.set_goal("At(Robot,WaterTable)"))
+            # (5, self.set_goal("On(Yogurt,Table4)"))
+            (5, self.set_goal("At(Robot,BrightTable4)"))
         ]
 
     def _reset(self):
+        self.gen_obj()
+        self.state["condition_set"] = {'At(Robot,Bar)', 'Is(AC,Off)',
+         'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Table1)',
+         'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+         'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
         pass
 
 

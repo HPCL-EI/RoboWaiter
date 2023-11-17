@@ -60,10 +60,9 @@ class Scene:
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-                                    'Holding(Nothing)',
-                                   # 'Holding(Yogurt)'
-                                   'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
-                                   'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
+         'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Table1)',
+         'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+         'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
     }
     """
     status:
@@ -135,7 +134,6 @@ class Scene:
         # 基类run
 
         self._run()
-
         # 运行并由robot打印每步信息
         while True:
             self.step()
@@ -159,9 +157,9 @@ class Scene:
 
     def create_chat_event(self,sentence):
         def customer_say():
-            print(f'顾客说：{sentence}')
+            print(f'{sentence}')
             if self.show_bubble:
-                self.chat_bubble(f'顾客说：{sentence}')
+                self.chat_bubble(f'{sentence}')
             self.state['chat_list'].append(f'{sentence}')
 
         return customer_say
@@ -196,8 +194,6 @@ class Scene:
     def _step(self):
         # 场景自定义的step
         pass
-
-
 
 
 
@@ -236,22 +232,31 @@ class Scene:
         else:
             return True
 
+
+    def add_walker(self,id,x,y,yaw=0,v=0,scope=100):
+        loc = [x,y,yaw,v,scope]
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=loc)
+        scene = stub.Do(action)
+        # print(scene.info)
+        walker_list=[]
+        if (str(scene.info).find('unreachable') > -1):
+            print('当前位置不可达,无法初始化NPC')
+        else:
+            walker_list.append(
+                GrabSim_pb2.WalkerList.Walker(id=id+5, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=loc[2])))
+        stub.AddWalker(GrabSim_pb2.WalkerList(walkers=walker_list, scene=self.sceneID))
+
     def add_walkers(self,walker_loc=[[0, 880], [250, 1200], [-55, 750], [70, -200]]):
         print('------------------add_walkers----------------------')
-        walker_list = []
-        for i in range(len(walker_loc)):
-            loc = walker_loc[i] + [0,0, 100]
-            action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=loc)
-            scene = stub.Do(action)
-            print(scene.info)
-            if (str(scene.info).find('unreachable') > -1):
-                print('当前位置不可达,无法初始化NPC')
-            else:
-                walker_list.append(
-                    GrabSim_pb2.WalkerList.Walker(id=i + 5, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=90)))
-
-        scene = stub.AddWalker(GrabSim_pb2.WalkerList(walkers=walker_list, scene=self.sceneID))
-        return scene
+        for id,walker in enumerate(walker_loc):
+            if len(walker)==2:
+                self.add_walker(id,walker[0],walker[1])
+            elif len(walker)==3:
+                self.add_walker(id, walker[0], walker[1],walker[2])
+            elif len(walker) == 4:
+                self.add_walker(id, walker[0], walker[1], walker[2], walker[3])
+            elif len(walker) == 5:
+                self.add_walker(id, walker[0], walker[1], walker[2], walker[3], walker[4])
 
     def remove_walker(self, *args):  # take single walkerID or a list of walkerIDs
         remove_list = []
@@ -272,12 +277,13 @@ class Scene:
             GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
         )
 
+
     def control_walkers(self,walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True):
         """pose:表示行人的终止位置姿态"""
         scene = self.status
         walker_loc = walker_loc
         controls = []
-        for i in range(len(scene.walkers)):
+        for i in range(len(walker_loc)):
             loc = walker_loc[i]
             is_autowalk = is_autowalk
             pose = GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=180)

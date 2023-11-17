@@ -558,7 +558,7 @@ class Scene:
         time.sleep(1.0)
 
     def release_obj(self,release_pos):
-        print("------------------release_obj----------------------")
+        print("------------------adjust_joints----------------------")
         if release_pos==[340.0, 900.0, 99.0]:
             self.ik_control_joints(2, release_pos[0]-40, release_pos[1]+35, release_pos[2])
             time.sleep(2.0)
@@ -566,25 +566,26 @@ class Scene:
             self.ik_control_joints(2, release_pos[0] - 80, release_pos[1], release_pos[2])
             time.sleep(2.0)
             self.robo_stoop_parallel()
-
+        print("------------------release_obj----------------------")
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Release, values=[1])
         scene = stub.Do(action)
         time.sleep(2.0)
-        self.robo_recover()
-        self.standard_finger()
-
+        self.robo_recover()       # 恢复肢体关节
+        self.standard_finger()    # 恢复手指关节
         return True
 
-    # 执行过程：输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
+    # 执行过程: Robot输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
     def op_task_execute(self,op_type,obj_id=0,release_pos=[247.0, 520.0, 100.0]):
-        self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
-        if op_type<8: result = self.control_robot_action(op_type, 1)
-        if op_type>=8 and op_type<=12: result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
-        if op_type in [13,14,15]:   # 调整空调:13代表按开关,14升温,15降温
+        self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 输出正在执行的任务
+        if op_type < 8:
+            result = self.control_robot_action(op_type, 1)
+        if 8 <= op_type <= 12:
+            result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
+        if op_type in [13, 14, 15]:  # 调整空调:13代表按开关,14升温,15降温
             result = self.adjust_kongtiao(op_type)
-        if op_type ==16:    # 抓握物体
+        if op_type == 16:            # 抓握物体, 需要传入物品id
             result = self.grasp_obj(obj_id)
-        if op_type ==17:    # 放置物体
+        if op_type == 17:            # 放置物体, 放置物品, 需要传入放置地点
             result = self.release_obj(release_pos)
         self.control_robot_action(0, 2)
         if result:

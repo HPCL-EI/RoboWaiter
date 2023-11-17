@@ -30,7 +30,7 @@ class Bahavior(ptree.behaviour.Behaviour):
     # all_place=set()
 
     place_xyz_dic={
-        'Bar': (247.0, 520.0, 100.0),
+        'Bar': (247.0, 520.0, 180.0), #(247.0, 520.0, 100.0)
         'Bar2': (240.0, 40.0, 70.0),
         'WaterTable':(-70.0, 500.0, 107),
         'CoffeeTable':(250.0, 310.0, 100.0),

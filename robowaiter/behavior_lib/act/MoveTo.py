@@ -21,7 +21,7 @@ class MoveTo(Act):
             info['pre'] |= {f'Exist({arg})'}
         info["add"] = {f'At(Robot,{arg})'}
         info["del_set"] = {f'At(Robot,{place})' for place in cls.valid_args if place != arg}
-        info['cost']=10
+        info['cost']=5
         return info
 
 

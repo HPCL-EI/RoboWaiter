@@ -464,7 +464,6 @@ class Scene:
             walk_v = release_pos[:-1] + [180, 180, 0]
             if release_pos == [340.0, 900.0, 99.0]:
                 walk_v[2] = 130
-        print("walk_v:",walk_v)
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
@@ -513,7 +512,9 @@ class Scene:
         obj_info = scene.objects[obj_id]
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
         if obj_info.name=="CoffeeCup":
-            values = [0,0,0,0,0, -15,0,0,0,0]
+            # obj_x += 1
+            # obj_y -= 1
+            # values = [0,0,0,0,0, 10,-25,-45,-45,-45]
             # values= [-6, 0, 0, 0, 0, -6, 0, 45, 45, 45]
             stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
             pass
@@ -545,7 +546,7 @@ class Scene:
         # 0-3是躯干，4-6是脖子和头，7-13是左胳膊，14-20是右胳膊
         scene = self.status
         angle = [scene.joints[i].angle for i in range(21)]
-        angle[0] = 15
+        angle[0] = 15   # 15
         angle[19] = -15
         angle[20] = -30
         action = GrabSim_pb2.Action(scene=self.sceneID,action=GrabSim_pb2.Action.ActionType.RotateJoints,    # 弯腰
@@ -556,7 +557,7 @@ class Scene:
     def release_obj(self,release_pos):
         print("------------------release_obj----------------------")
         if release_pos==[340.0, 900.0, 99.0]:
-            self.ik_control_joints(2, 300.0, 935, release_pos[2])
+            self.ik_control_joints(2, release_pos[0]-40, release_pos[1]+35, release_pos[2])
             time.sleep(2.0)
         else:
             self.ik_control_joints(2, release_pos[0] - 80, release_pos[1], release_pos[2])
@@ -722,6 +723,7 @@ class Scene:
             return True
         else:
             return False
+
 
 
 

@@ -21,3 +21,4 @@ Question,Answer,Goal
 可以带我去吗,当然可以，前往一号桌,"{""At(Robot,Table1)""}"
 把酸奶放到1号桌，再做一杯咖啡送到水杯桌上，再倒一杯水。,明白，我这就去办！,"{""On(Coffee,WaterTable)"",""On(Yogurt,Table1)"",""On(Water,WaterTable)""}"
 下班啦！打扫卫生，关灯关空调关窗帘。,太棒啦，下班啦！我这就去打扫卫生，关灯关空调关窗帘。,"{""Is(Floor,Clean)"",""Is(Table1,Clean)"",""Is(Chairs,Clean)"",""Is(AC,Off)"",""Is(HallLight,Off)"",""Is(TubeLight,Off)"",""Is(Curtain,Off)""}"
+请问可以带我去空位上嘛？我想晒太阳。,没问题！请跟我来。,"{""At(Robot,BrightTable1)""}"

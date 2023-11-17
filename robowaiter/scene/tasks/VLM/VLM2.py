@@ -11,11 +11,10 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
-
+            (5, self.create_chat_event("请问可以带我去空位上嘛？我想晒太阳。")),
         ]
 
     def _reset(self):
-        self.gen_obj()
         pass
 
     def _run(self, op_type=10):
@@ -25,12 +24,33 @@ class SceneVLM(Scene):
         # 带领行人去有太阳的地方
         # 行人说 有点热
         # 好的，这就去开空调
-        scene = self.add_walkers([[47, 920]])
-        self.control_walker(
-            [self.walker_control_generator(walkerID=0, autowalk=False, speed=200, X=60, Y=520, Yaw=0)])
 
-        cont = scene.walkers[0].name+":请问可以带我去空位上嘛？我想晒太阳"
+        self.gen_obj()
+        self.add_walkers([[47, 920]])
+        self.control_walker(
+            [self.walker_control_generator(walkerID=0, autowalk=False, speed=200, X=60, Y=520, Yaw=180)])
+        time.sleep(1)
+        cont = self.status.walkers[0].name+":请问可以带我去空位上嘛？我想晒太阳。"
         self.control_robot_action(0,3,cont)
+
+        # time.sleep(3)
+        # self.event_list.append((5, self.set_goal("At(Robot,BrightTable1)"))) # "请问可以带我去空位上嘛？我想晒太阳"
+        # self.chat_bubble("没问题！请跟我来。")
+
+
+        # 跟随机器人
+        # cont = self.status.walkers[0].name + "好的！"
+        # self.control_robot_action(0, 3, cont)
+        #
+        # start = [self.status.location.X, self.status.location.Y]
+        # time.sleep(0.2)
+        # end = [self.status.location.X, self.status.location.Y]
+        # while abs(start[0]-end[0])>=1 or abs(start[1]-end[1])>=1:
+        #     self.control_walker(
+        #         [self.walker_control_generator(walkerID=0, autowalk=False, speed=100, X=end[0], Y=end[1], Yaw=0)])
+        #
+        # cont = self.status.walkers[0].name+"谢谢！"
+        # self.control_robot_action(0,3,cont)
 
         # 共17个操作
         # "制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
@@ -51,11 +71,21 @@ class SceneVLM(Scene):
         #     pos = [240.0, 40.0, 100.0]
         #     self.move_task_area(op_type, release_pos=pos)
         #     self.op_task_execute(op_type, release_pos=pos)   # [325.0, 860.0, 100]
-
-
         pass
     
     def _step(self):
+
+        # 如果机器人不在 吧台
+        # if "At(Robot,Bar)" not in self.state['condition_set']:
+        end = [self.status.location.X, self.status.location.Y]
+        print("end:",end)
+        if end[1]>=600 or end[1]<=450 or end[0]>=250:
+        # if int(self.status.location.X)!=247 or  int(self.status.location.X)!=520:
+            self.control_walker(
+                    [self.walker_control_generator(walkerID=0, autowalk=False, speed=100, X=end[0], Y=end[1], Yaw=-90)])
+
+            cont = self.status.walkers[0].name+"谢谢！"
+            self.control_robot_action(0,3,cont)
         pass
 
 

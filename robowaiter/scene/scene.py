@@ -483,11 +483,8 @@ class Scene:
             return False
 
     def adjust_kongtiao(self,op_type):
-        print("self.obj_loc:",self.obj_loc)
         obj_loc = self.obj_loc[:]
-        print("obj_loc:",obj_loc,"self.obj_loc:", self.obj_loc)
         obj_loc[2] -= 5
-        print("obj_loc:",obj_loc)
         if op_type == 13: obj_loc[1] -= 2
         if op_type == 14: obj_loc[1] -= 0
         if op_type == 15: obj_loc[1] += 2

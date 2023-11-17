@@ -154,9 +154,9 @@ class Scene:
 
     def create_chat_event(self,sentence):
         def customer_say():
-            print(f'顾客说：{sentence}')
+            print(f'{sentence}')
             if self.show_bubble:
-                self.chat_bubble(f'顾客说：{sentence}')
+                self.chat_bubble(f'{sentence}')
             self.state['chat_list'].append(f'{sentence}')
 
         return customer_say

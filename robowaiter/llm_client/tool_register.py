@@ -6,11 +6,11 @@ from types import GenericAlias
 from typing import get_origin, Annotated
 import robowaiter.llm_client.find_obj_utils as find_obj_utils
 import random
-import spacy
+# import spacy
 
 _TOOL_HOOKS = {}
 _TOOL_DESCRIPTIONS = {}
-nlp = spacy.load('en_core_web_lg')
+# nlp = spacy.load('en_core_web_lg')
 
 
 def register_tool(func: callable):
@@ -173,30 +173,30 @@ def create_sub_task(
 #         near_object = random.choices(near_ls,k=5)
 #     return near_object
 
-@register_tool
-def find_location(
-        location: Annotated[str, '客人咨询的地点', True]
-) -> str:
-    """"
-    获取的location为英文
-    用户想找某个地点
-    """
-    near_location = None
-    query_token = nlp(location)
-    max_similarity = 0
-    similar_word = None
-    for w in find_obj_utils.all_loc_en:
-        word_token = nlp(w)
-        similarity = query_token.similarity(word_token)
-
-        if similarity > max_similarity:
-            max_similarity = similarity
-            similar_word = w
-    print("similarity:", max_similarity, "similar_word:", similar_word)
-    if similar_word:
-        mp = list(find_obj_utils.loc_map_en[similar_word])
-        near_location = random.choice(mp)
-    return near_location
+# @register_tool
+# def find_location(
+#         location: Annotated[str, '客人咨询的地点', True]
+# ) -> str:
+#     """"
+#     获取的location为英文
+#     用户想找某个地点
+#     """
+#     near_location = None
+#     query_token = nlp(location)
+#     max_similarity = 0
+#     similar_word = None
+#     for w in find_obj_utils.all_loc_en:
+#         word_token = nlp(w)
+#         similarity = query_token.similarity(word_token)
+#
+#         if similarity > max_similarity:
+#             max_similarity = similarity
+#             similar_word = w
+#     print("similarity:", max_similarity, "similar_word:", similar_word)
+#     if similar_word:
+#         mp = list(find_obj_utils.loc_map_en[similar_word])
+#         near_location = random.choice(mp)
+#     return near_location
 
 if __name__ == "__main__":
     print(dispatch_tool("get_weather", {"city_name": "beijing"}))

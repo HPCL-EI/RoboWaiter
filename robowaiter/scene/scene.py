@@ -90,21 +90,21 @@ class Scene:
             robot.load_BT()
         self.robot = robot
 
-        # myx op
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
                           "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",              # 8-12
                           "调整空调开关","调高空调温度","调低空调温度",                      # 13-15
                           "抓握物体","放置物体"]                                         # 16-17
+        # 动画控制的执行步骤数
         self.op_act_num = [0,3,4,6,3,2,0,1,
                            0,0,0,0,0,
                            0,0,0,
                            0,0]
+        # 动画控制的执行区域坐标
         self.op_v_list = [[0.0,0.0],[250.0, 310.0],[-70.0, 480.0],[250.0, 630.0],[-70.0, 740.0],[260.0, 1120.0],[300.0, -220.0],
                           [0.0, -70.0]]
-        self.op_typeToAct = {8:[6,2],9:[6,3],10:[6,4],11:[8,1],12:[8,2]}
-        # 空调面板位置
-        self.obj_loc = [300.5, -140.0,114]
+        self.op_typeToAct = {8:[6,2],9:[6,3],10:[6,4],11:[8,1],12:[8,2]}   # 任务类型到行动的映射
+        self.obj_loc = [300.5, -140.0,114]   # 空调面板位置
 
         # AEM
         self.visited = set()
@@ -443,33 +443,33 @@ class Scene:
 
 
     # 移动到进行操作任务的指定地点
-    def move_task_area(self,op_type,obj_id=0, release_pos=[247.0, 520.0, 100.0]):
+    def move_task_area(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         scene = self.status
         cur_pos = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
         print("Current Position:", cur_pos, "开始任务:", self.op_dialog[op_type])
-
-        if op_type==11 or op_type==12:  # 开关窗帘不需要移动
+        if op_type == 11 or op_type == 12:  # 开关窗帘不需要移动
             return
         print('------------------moveTo_Area----------------------')
-        if op_type < 8:
-            walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]   # 动画控制
-            print("walk_v:",walk_v)
-        if op_type>=8 and op_type<=10: walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]   # 控灯
-        if op_type in [13,14,15]: walk_v = [240, -140.0] + [0, 180, 0]  # 空调
-        if op_type==16:    # 抓握物体，移动到物体周围的可达区域
+        if op_type < 8:    # 动画控制相关任务的移动目标
+            walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]
+        if 8 <= op_type <= 10:     # 控灯相关任务的移动目标
+            walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]
+        if op_type in [13,14,15]:          # 空调相关任务的移动目标
+            walk_v = [240, -140.0] + [0, 180, 0]
+        if op_type == 16:    # 抓握物体，移动到物体周围的可达区域
             scene = self.status
             obj_info = scene.objects[obj_id]
-            # Robot
             obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
             walk_v = [obj_x + 50, obj_y] + [180, 180, 0]
-            if obj_y >= 820 and obj_y <= 1200 and obj_x >= 240 and obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
+            if 820 <= obj_y <= 1200 and 240 <= obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
                 walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
                 obj_x += 3
                 obj_y += 2.5
-        if op_type==17:   # 放置物体，移动到物体周围的可达区域
+        if op_type == 17:   # 放置物体，移动到物体周围的可达区域
             walk_v = release_pos[:-1] + [180, 180, 0]
             if release_pos == [340.0, 900.0, 99.0]:
                 walk_v[2] = 130
+        # 移动到目标位置
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])

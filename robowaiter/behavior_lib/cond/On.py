@@ -16,6 +16,9 @@ class On(Cond):
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?
 
+        # print("self.name:",self.name)
+        # print("On: condition_set:",self.scene.state["condition_set"])
+
         if self.name in self.scene.state["condition_set"]:
             return ptree.common.Status.SUCCESS
         else:

@@ -138,14 +138,14 @@ class OptBTExpAlgorithm:
                                 break
 
                         if valid:
-                            # 把符合条件的动作节点都放到列表里
-                            if self.verbose:
-                                print("———— -- %s 符合条件放入列表" % actions[i].name)
                             c_attr_node = Leaf(type='cond', content=c_attr, mincost=current_mincost + actions[i].cost)
                             a_attr_node = Leaf(type='act', content=actions[i], mincost=current_mincost + actions[i].cost)
                             cond_anc_pair = CondActPair(cond_leaf=c_attr_node, act_leaf=a_attr_node)
                             self.nodes.append(copy.deepcopy(cond_anc_pair))  # condition node list
                             self.traversed.append(c_attr) # 重点 the set of expanded conditions
+                            # 把符合条件的动作节点都放到列表里
+                            if self.verbose:
+                                print("———— -- %s 符合条件放入列表,对应的c为 %s" % (actions[i].name,c_attr))
 
         if self.verbose:
             print("算法结束！\n")
@@ -188,13 +188,23 @@ class OptBTExpAlgorithm:
 
 
     # 树的dfs
-    def dfs_ptml(self,parnode):
+    def dfs_ptml(self,parnode,is_root=False):
         for child in parnode.children:
             if isinstance(child, Leaf):
                 if child.type == 'cond':
-                    self.ptml_string += "cond "
-                    c_set_str = '\n cond '.join(map(str, child.content)) + "\n"
-                    self.ptml_string += c_set_str
+
+                    if is_root and len(child.content) > 1:
+                        # 把多个 cond 串起来
+                        self.ptml_string += "sequence{\n"
+                        self.ptml_string += "cond "
+                        c_set_str = '\n cond '.join(map(str, child.content)) + "\n"
+                        self.ptml_string += c_set_str
+                        self.ptml_string += '}\n'
+                    else:
+                        self.ptml_string += "cond "
+                        c_set_str = '\n cond '.join(map(str, child.content)) + "\n"
+                        self.ptml_string += c_set_str
+
                 elif child.type == 'act':
                     if '(' not in child.content.name:
                         self.ptml_string += 'act ' + child.content.name + "()\n"
@@ -212,7 +222,7 @@ class OptBTExpAlgorithm:
 
     def get_ptml(self):
         self.ptml_string = "selector{\n"
-        self.dfs_ptml(self.bt.children[0])
+        self.dfs_ptml(self.bt.children[0],is_root=True)
         self.ptml_string += '}\n'
         return self.ptml_string
 

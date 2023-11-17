@@ -11,21 +11,49 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
+            (5, self.create_chat_event("把酸奶放到1号桌，再做一杯咖啡送到水杯桌上，再倒一杯水。")),
+            # (10, self.create_chat_event("开空调")),
+
+            # (15, self.create_chat_event("下班啦！打扫卫生，关灯关空调关窗帘。")),
+
+
+            # (9, self.create_chat_event("关窗帘")),
+            # (9, self.create_chat_event("开大厅灯")),
             # (5, self.create_chat_event("测试VLM：做一杯咖啡")),
             # (5, self.create_chat_event("测试VLM：倒一杯水")),
-            # (5, self.create_chat_event("测试VLM：开空调")),
             # (5, self.create_chat_event("测试VLM：关空调")),
-            # (5, self.create_chat_event("测试VLM：开大厅灯")),
             # (5, self.create_chat_event("测试VLM：拖地")),
             # (5, self.create_chat_event("测试VLM：擦桌子")),
             # (5, self.create_chat_event("测试VLM：整理椅子")),
             # (5, self.create_chat_event("测试VLM：把冰红茶放到Table2")),
             # (5, self.create_chat_event("测试VLM：关大厅灯"))
             # (5, self.create_chat_event("测试VLM：做一杯咖啡放到吧台上")),
-            (5, self.create_chat_event("测试VLM：做一杯咖啡放到水杯桌上并倒水")),
+            # (5, self.create_chat_event("测试VLM：做一杯咖啡放到水杯桌上，再倒一杯水")),
+            # (10, self.create_chat_event("测试VLM：关窗帘")),
+            # (5, self.create_chat_event("测试VLN：前往2号桌")),
+            # (11, self.create_chat_event("测试VLM：拖地")),
+            # (12, self.create_chat_event("测试VLM：擦桌子")),
         ]
 
     def _reset(self):
+        self.gen_obj()
+        self.state["condition_set"] = {'At(Robot,Bar)', 'Is(AC,Off)',
+         'Holding(Nothing)','Exist(Yogurt)','Exist(Softdrink)','On(Yogurt,Bar)','On(Softdrink,Table1)',
+         'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+         'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
+        self.add_walkers([[0, 880], [250, 1200], [-55, 750], [70, -200]])
+        # self.add_walkers([[-500, 500]])
+        self.control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
+        # self.control_walkers(walker_loc=[[-55, 750]],is_autowalk = False)
+        # 在场景中随机增加一堆行人。
+        # walker_loc = [[-55, 750], [70, -200], [250, 1200], [0, 880]]
+        # controls = []
+        # for i in range(len(s.walkers)):
+        #     loc = walker_loc[i]
+        #     is_autowalk = False
+        #     pose = GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=180)
+        #     controls.append(GrabSim_pb2.WalkerControls.WControl(id=i, autowalk=is_autowalk, speed=200, pose=pose))
+        # scene = sim_client.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=scene_id))
 
         # self.gen_obj(type=5)
         # self.gen_obj(type=9)
@@ -34,8 +62,6 @@ class SceneVLM(Scene):
         pass
 
     def _run(self, op_type=10):
-
-
         # 共17个操作
         # "制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
         # "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",            # 8-12
@@ -58,7 +84,7 @@ class SceneVLM(Scene):
 
         # 流程测试
         # 抓握放置:抓吧台前生成的酸奶，放到抹布桌上
-        self.gen_obj()
+        # self.gen_obj()
         # self.move_task_area(16, obj_id=0)
         # self.op_task_execute(16, obj_id=0)
         # pos = [340.0, 900.0, 99.0]

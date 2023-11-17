@@ -34,6 +34,7 @@ class Make(Act):
             info["add"] |= {f'On({arg},WaterTable)'}
         elif arg == cls.valid_args[2]:
             info["add"] |= {f'On({arg},Bar)'}
+        info['cost'] = 10
         return info
 
     def _update(self) -> ptree.common.Status:
@@ -57,6 +58,6 @@ class Make(Act):
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
 
-        print("condition_set:",self.scene.state["condition_set"])
+        # print("condition_set:",self.scene.state["condition_set"])
 
         return Status.RUNNING

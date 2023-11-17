@@ -1,3 +1,4 @@
+import pickle
 import sys
 import time
 import grpc
@@ -110,21 +111,24 @@ class Scene:
         self.all_frontier_list = set()
         self.semantic_map = semantic_map
         self.auto_map = np.ones((800, 1550))
+        self.filename = "../proto/map_1.pkl"
+        with open(self.filename, 'rb') as file:
+            self.map_file = pickle.load(file)
 
 
     def reset(self):
-        # 基类reset，默认执行仿真器初始化操作
-        self.reset_sim()
+            # 基类reset，默认执行仿真器初始化操作
+            self.reset_sim()
 
-        # reset state
-        self.state = self.default_state
+            # reset state
+            self.state = self.default_state
 
 
 
-        print("场景初始化完成")
-        self._reset()
+            print("场景初始化完成")
+            self._reset()
 
-        self.running = True
+            self.running = True
 
     def run(self):
         # 基类run
@@ -699,4 +703,12 @@ class Scene:
         scene = self.status
         ginger_x, ginger_y, ginger_z = [int(scene.location.X), int(scene.location.Y),100]
         return math.sqrt((ginger_x - objx) ** 2 + (ginger_y - objy) ** 2 + (ginger_z - objz) ** 2)
+
+    # 根据map文件判断是否可达
+    def reachable(self, pos):
+        x, y = self.real2map(pos[0], pos[1])
+        if self.map_file[x, y] == 0:
+            return True
+        else:
+            return False
 

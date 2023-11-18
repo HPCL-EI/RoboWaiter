@@ -49,6 +49,7 @@ def show_image(camera_data):
 class Scene:
     robot = None
     event_list = []
+    new_event_list = []
     show_bubble = False
 
     default_state = {
@@ -62,7 +63,12 @@ class Scene:
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
          'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Table1)',
          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
-         'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
+         'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+        "obj_mem":{},
+        "customer_mem":{},
+        "served_mem":{},
+        "greeted_customers":set(),
+        "attention":{}
     }
     """
     status:
@@ -143,8 +149,19 @@ class Scene:
         self.time = time.time() - self.start_time
 
         self.deal_event()
+        self.deal_new_event()
         self._step()
         self.robot.step()
+
+    def deal_new_event(self):
+        if len(self.new_event_list)>0:
+            next_event = self.new_event_list[0]
+            t,func,args = next_event
+            if self.time >= t:
+                print(f'event: {t}, {func.__name__}')
+                self.new_event_list.pop(0)
+                func(*args)
+
 
     def deal_event(self):
         if len(self.event_list)>0:
@@ -171,6 +188,10 @@ class Scene:
 
         return set_sub_task
 
+    def new_set_goal(self,goal):
+        g = eval("{'" + goal + "'}")
+        self.state['chat_list'].append(g)
+
 
     @property
     def status(self):
@@ -196,7 +217,6 @@ class Scene:
         pass
 
 
-
     def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):
         if self.use_offset:
             X, Y = X + loc_offset[0], Y + loc_offset[1]
@@ -215,6 +235,10 @@ class Scene:
         scene = stub.Do(action)
 
         return scene
+
+    def walker_walk_to(self,walkerID,X,Y,speed=50,Yaw=0):
+        self.control_walker(
+            [self.walker_control_generator(walkerID=walkerID, autowalk=False, speed=speed, X=X, Y=Y, Yaw=Yaw)])
 
 
     def reachable_check(self, X, Y, Yaw):
@@ -243,8 +267,18 @@ class Scene:
             print('当前位置不可达,无法初始化NPC')
         else:
             walker_list.append(
-                GrabSim_pb2.WalkerList.Walker(id=id+5, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=loc[2])))
+                GrabSim_pb2.WalkerList.Walker(id=id, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=loc[2])))
         stub.AddWalker(GrabSim_pb2.WalkerList(walkers=walker_list, scene=self.sceneID))
+
+        w = self.status.walkers
+        num_customer = len(w)
+        self.state["customer_mem"][w[-1].name] = num_customer-1
+
+    def walker_index2mem(self,index):
+        for mem,i in self.state["customer_mem"].items():
+            if index == i:
+                return mem
+
 
     def add_walkers(self,walker_loc=[[0, 880], [250, 1200], [-55, 750], [70, -200]]):
         print('------------------add_walkers----------------------')
@@ -267,7 +301,15 @@ class Scene:
                 # walkerID is the index of the walker in status.walkers.
                 # Since status.walkers is a list, some walkerIDs would change after removing a walker.
                 remove_list.append(walkerID)
+
+        index_shift_list = [ 0 for _ in range(len(self.state["customer_mem"])) ]
+
         stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
+
+        w = self.status.walkers
+        for i in range(len(w)):
+            self.state["customer_mem"][w[i].name] = i
+
 
     def clean_walker(self):
         stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
@@ -382,11 +424,15 @@ class Scene:
             )
         )
 
-    # def walker_bubble(self, message):
-    #     status = self.status
-    #     walker_name = status.walkers[0].name
-    #     talk_content = walker_name + ":" + message
-    #     self.control_robot_action(0, 0, 3, talk_content)
+    def walker_bubble(self, name, message):
+        talk_content = name + ":" + message
+        self.control_robot_action(0, 3, talk_content)
+
+    def customer_say(self,name,sentence,show_bubble=True):
+        print(f'{name} say: {sentence}')
+        if show_bubble:
+            self.walker_bubble(name,sentence)
+        self.state['chat_list'].append((name,sentence))
 
     # def control_robot_action(self, scene_id=0, type=0, action=0, message="你好"):
     #     print('------------------control_robot_action----------------------')
@@ -473,6 +519,8 @@ class Scene:
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
+
+
 
     # 相应的行动，由主办方封装
     def control_robot_action(self, type=0, action=0, message="你好"):

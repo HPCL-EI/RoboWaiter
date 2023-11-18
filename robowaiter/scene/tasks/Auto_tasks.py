@@ -32,7 +32,6 @@ class SceneAT(Scene):
         pass
 
 if __name__ == '__main__':
-    import os
     from robowaiter.robot.robot import Robot
 
     robot = Robot()

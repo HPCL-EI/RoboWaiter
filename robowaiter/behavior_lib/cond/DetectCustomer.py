@@ -18,14 +18,21 @@ class DetectCustomer(Cond):
         # bar (247.0, 520.0, 100.0)
         close_to_bar = False
         scene = self.scene.status
+        queue_list = []
         for walker in scene.walkers:
             x, y, yaw = walker.pose.X, walker.pose.Y, walker.pose.Yaw
             # 到达一定区域就打招呼
             if y >= 450 and y <= 620 and x >= 40 and x <= 100 and yaw>=-10 and yaw <=10:
-                close_to_bar = True
-                break
+                # close_to_bar = True
+                queue_list.append((x,y,walker.name))
 
-        if close_to_bar:
+        if queue_list == []:
+            return ptree.common.Status.FAILURE
+
+        queue_list.sort()
+        x,y,name = queue_list[0]
+        if name not in self.scene.state["greet_set"]:
+            self.scene.state['attention']["customer"] = name
             return ptree.common.Status.SUCCESS
         else:
             return ptree.common.Status.FAILURE

@@ -2,7 +2,7 @@ import py_trees as ptree
 from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.algos.navigator.navigate import Navigator
 
-class GreatCustomer(Act):
+class ServeCustomer(Act):
     can_be_expanded = False
     num_args = 0
     valid_args = ()
@@ -14,7 +14,7 @@ class GreatCustomer(Act):
     def get_info(cls):
         info = {}
         info['pre'] = set()
-        info["add"] = set()
+        info["add"] = {"CustomerServed()"}
         info["del_set"] = set()
         info['cost']=0
         return info

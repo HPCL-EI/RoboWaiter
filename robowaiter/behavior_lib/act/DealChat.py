@@ -10,6 +10,9 @@ class DealChat(Act):
 
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?
+        name,sentence = self.scene.state['chat_list'][0]
+
+
         chat = self.scene.state['chat_list'].pop()
         if isinstance(chat,set):
             self.create_sub_task(chat)

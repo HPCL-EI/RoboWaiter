@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from robowaiter.proto import camera
 from robowaiter.proto import semantic_map
+from robowaiter.algos.navigator.navigate import Navigator
 import math
 from robowaiter.proto import GrabSim_pb2
 from robowaiter.proto import GrabSim_pb2_grpc
@@ -49,6 +50,7 @@ def show_image(camera_data):
 class Scene:
     robot = None
     event_list = []
+    new_event_list = []
     show_bubble = False
 
     default_state = {
@@ -62,7 +64,12 @@ class Scene:
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
          'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Table1)',
          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
-         'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
+         'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+        "obj_mem":{},
+        "customer_mem":{},
+        "served_mem":{},
+        "greeted_customers":set(),
+        "attention":{}
     }
     """
     status:
@@ -90,21 +97,21 @@ class Scene:
             robot.load_BT()
         self.robot = robot
 
-        # myx op
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
                           "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",              # 8-12
                           "调整空调开关","调高空调温度","调低空调温度",                      # 13-15
                           "抓握物体","放置物体"]                                         # 16-17
+        # 动画控制的执行步骤数
         self.op_act_num = [0,3,4,6,3,2,0,1,
                            0,0,0,0,0,
                            0,0,0,
                            0,0]
+        # 动画控制的执行区域坐标
         self.op_v_list = [[0.0,0.0],[250.0, 310.0],[-70.0, 480.0],[250.0, 630.0],[-70.0, 740.0],[260.0, 1120.0],[300.0, -220.0],
                           [0.0, -70.0]]
-        self.op_typeToAct = {8:[6,2],9:[6,3],10:[6,4],11:[8,1],12:[8,2]}
-        # 空调面板位置
-        self.obj_loc = [300.5, -140.0,114]
+        self.op_typeToAct = {8:[6,2],9:[6,3],10:[6,4],11:[8,1],12:[8,2]}   # 任务类型到行动的映射
+        self.obj_loc = [300.5, -140.0,114]   # 空调面板位置
 
         # AEM
         self.visited = set()
@@ -143,8 +150,19 @@ class Scene:
         self.time = time.time() - self.start_time
 
         self.deal_event()
+        self.deal_new_event()
         self._step()
         self.robot.step()
+
+    def deal_new_event(self):
+        if len(self.new_event_list)>0:
+            next_event = self.new_event_list[0]
+            t,func,args = next_event
+            if self.time >= t:
+                print(f'event: {t}, {func.__name__}')
+                self.new_event_list.pop(0)
+                func(*args)
+
 
     def deal_event(self):
         if len(self.event_list)>0:
@@ -157,9 +175,9 @@ class Scene:
 
     def create_chat_event(self,sentence):
         def customer_say():
-            print(f'顾客说：{sentence}')
+            print(f'{sentence}')
             if self.show_bubble:
-                self.chat_bubble(f'顾客说：{sentence}')
+                self.chat_bubble(f'{sentence}')
             self.state['chat_list'].append(f'{sentence}')
 
         return customer_say
@@ -172,6 +190,10 @@ class Scene:
             self.state['chat_list'].append(g)
 
         return set_sub_task
+
+    def new_set_goal(self,goal):
+        g = eval("{'" + goal + "'}")
+        self.state['chat_list'].append(g)
 
 
     @property
@@ -198,7 +220,6 @@ class Scene:
         pass
 
 
-
     def walker_control_generator(self, walkerID, autowalk, speed, X, Y, Yaw):
         if self.use_offset:
             X, Y = X + loc_offset[0], Y + loc_offset[1]
@@ -217,6 +238,10 @@ class Scene:
         scene = stub.Do(action)
 
         return scene
+
+    def walker_walk_to(self,walkerID,X,Y,speed=50,Yaw=0):
+        self.control_walker(
+            [self.walker_control_generator(walkerID=walkerID, autowalk=False, speed=speed, X=X, Y=Y, Yaw=Yaw)])
 
 
     def reachable_check(self, X, Y, Yaw):
@@ -245,8 +270,18 @@ class Scene:
             print('当前位置不可达,无法初始化NPC')
         else:
             walker_list.append(
-                GrabSim_pb2.WalkerList.Walker(id=id+5, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=loc[2])))
+                GrabSim_pb2.WalkerList.Walker(id=id, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=loc[2])))
         stub.AddWalker(GrabSim_pb2.WalkerList(walkers=walker_list, scene=self.sceneID))
+
+        w = self.status.walkers
+        num_customer = len(w)
+        self.state["customer_mem"][w[-1].name] = num_customer-1
+
+    def walker_index2mem(self,index):
+        for mem,i in self.state["customer_mem"].items():
+            if index == i:
+                return mem
+
 
     def add_walkers(self,walker_loc=[[0, 880], [250, 1200], [-55, 750], [70, -200]]):
         print('------------------add_walkers----------------------')
@@ -269,7 +304,15 @@ class Scene:
                 # walkerID is the index of the walker in status.walkers.
                 # Since status.walkers is a list, some walkerIDs would change after removing a walker.
                 remove_list.append(walkerID)
+
+        index_shift_list = [ 0 for _ in range(len(self.state["customer_mem"])) ]
+
         stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
+
+        w = self.status.walkers
+        for i in range(len(w)):
+            self.state["customer_mem"][w[i].name] = i
+
 
     def clean_walker(self):
         stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
@@ -399,11 +442,15 @@ class Scene:
             )
         )
 
-    # def walker_bubble(self, message):
-    #     status = self.status
-    #     walker_name = status.walkers[0].name
-    #     talk_content = walker_name + ":" + message
-    #     self.control_robot_action(0, 0, 3, talk_content)
+    def walker_bubble(self, name, message):
+        talk_content = name + ":" + message
+        self.control_robot_action(0, 3, talk_content)
+
+    def customer_say(self,name,sentence,show_bubble=True):
+        print(f'{name} say: {sentence}')
+        if show_bubble:
+            self.walker_bubble(name,sentence)
+        self.state['chat_list'].append((name,sentence))
 
     # def control_robot_action(self, scene_id=0, type=0, action=0, message="你好"):
     #     print('------------------control_robot_action----------------------')
@@ -460,36 +507,38 @@ class Scene:
 
 
     # 移动到进行操作任务的指定地点
-    def move_task_area(self,op_type,obj_id=0, release_pos=[247.0, 520.0, 100.0]):
+    def move_task_area(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         scene = self.status
         cur_pos = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
         print("Current Position:", cur_pos, "开始任务:", self.op_dialog[op_type])
-
-        if op_type==11 or op_type==12:  # 开关窗帘不需要移动
+        if op_type == 11 or op_type == 12:  # 开关窗帘不需要移动
             return
         print('------------------moveTo_Area----------------------')
-        if op_type < 8:
-            walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]   # 动画控制
-            print("walk_v:",walk_v)
-        if op_type>=8 and op_type<=10: walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]   # 控灯
-        if op_type in [13,14,15]: walk_v = [240, -140.0] + [0, 180, 0]  # 空调
-        if op_type==16:    # 抓握物体，移动到物体周围的可达区域
+        if op_type < 8:    # 动画控制相关任务的移动目标
+            walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]
+        if 8 <= op_type <= 10:     # 控灯相关任务的移动目标
+            walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]
+        if op_type in [13,14,15]:          # 空调相关任务的移动目标
+            walk_v = [240, -140.0] + [0, 180, 0]
+        if op_type == 16:    # 抓握物体，移动到物体周围的可达区域
             scene = self.status
             obj_info = scene.objects[obj_id]
-            # Robot
             obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
             walk_v = [obj_x + 50, obj_y] + [180, 180, 0]
-            if obj_y >= 820 and obj_y <= 1200 and obj_x >= 240 and obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
+            if 820 <= obj_y <= 1200 and 240 <= obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
                 walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
                 obj_x += 3
                 obj_y += 2.5
-        if op_type==17:   # 放置物体，移动到物体周围的可达区域
+        if op_type == 17:   # 放置物体，移动到物体周围的可达区域
             walk_v = release_pos[:-1] + [180, 180, 0]
             if release_pos == [340.0, 900.0, 99.0]:
                 walk_v[2] = 130
+        # 移动到目标位置
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
         scene = stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
+
+
 
     # 相应的行动，由主办方封装
     def control_robot_action(self, type=0, action=0, message="你好"):
@@ -505,18 +554,16 @@ class Scene:
             print(scene.info)
             return False
 
+    # 调整空调开关、温度
     def adjust_kongtiao(self,op_type):
-        print("self.obj_loc:",self.obj_loc)
         obj_loc = self.obj_loc[:]
-        print("obj_loc:",obj_loc,"self.obj_loc:", self.obj_loc)
         obj_loc[2] -= 5
-        print("obj_loc:",obj_loc)
         if op_type == 13: obj_loc[1] -= 2
         if op_type == 14: obj_loc[1] -= 0
         if op_type == 15: obj_loc[1] += 2
         self.ik_control_joints(2, obj_loc[0], obj_loc[1], obj_loc[2])
         time.sleep(3.0)
-        self.robo_recover()
+        self.robo_recover()   # 恢复肢体关节
         return True
 
     def gen_obj(self,h=100):
@@ -530,7 +577,9 @@ class Scene:
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 
+    # 实现抓握操作
     def grasp_obj(self,obj_id,hand_id=1):
+        print('------------------adjust_joints----------------------')
         scene = self.status
         obj_info = scene.objects[obj_id]
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
@@ -539,7 +588,7 @@ class Scene:
             # obj_y -= 1
             # values = [0,0,0,0,0, 10,-25,-45,-45,-45]
             # values= [-6, 0, 0, 0, 0, -6, 0, 45, 45, 45]
-            stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
+            # stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
             pass
         if obj_info.name=="Glass":
             pass
@@ -559,12 +608,13 @@ class Scene:
                                     values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         scene = stub.Do(action)
 
+    # 恢复手指关节
     def standard_finger(self):
         values = [0,0,0,0,0, 0,0,0,0,0]
         stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
         time.sleep(1.0)
 
-
+    # 弯腰以及手掌与放置面平齐
     def robo_stoop_parallel(self):
         # 0-3是躯干，4-6是脖子和头，7-13是左胳膊，14-20是右胳膊
         scene = self.status
@@ -577,8 +627,9 @@ class Scene:
         scene = stub.Do(action)
         time.sleep(1.0)
 
+    # 实现放置操作
     def release_obj(self,release_pos):
-        print("------------------release_obj----------------------")
+        print("------------------adjust_joints----------------------")
         if release_pos==[340.0, 900.0, 99.0]:
             self.ik_control_joints(2, release_pos[0]-40, release_pos[1]+35, release_pos[2])
             time.sleep(2.0)
@@ -586,25 +637,26 @@ class Scene:
             self.ik_control_joints(2, release_pos[0] - 80, release_pos[1], release_pos[2])
             time.sleep(2.0)
             self.robo_stoop_parallel()
-
+        print("------------------release_obj----------------------")
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Release, values=[1])
         scene = stub.Do(action)
         time.sleep(2.0)
-        self.robo_recover()
-        self.standard_finger()
-
+        self.robo_recover()       # 恢复肢体关节
+        self.standard_finger()    # 恢复手指关节
         return True
 
-    # 执行过程：输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
+    # 执行过程: Robot输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
     def op_task_execute(self,op_type,obj_id=0,release_pos=[247.0, 520.0, 100.0]):
-        self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 开始制作咖啡
-        if op_type<8: result = self.control_robot_action(op_type, 1)
-        if op_type>=8 and op_type<=12: result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
-        if op_type in [13,14,15]:   # 调整空调:13代表按开关,14升温,15降温
+        self.control_robot_action(0, 1, "开始"+self.op_dialog[op_type])   # 输出正在执行的任务
+        if op_type < 8:
+            result = self.control_robot_action(op_type, 1)
+        if 8 <= op_type <= 12:
+            result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
+        if op_type in [13, 14, 15]:  # 调整空调:13代表按开关,14升温,15降温
             result = self.adjust_kongtiao(op_type)
-        if op_type ==16:    # 抓握物体
+        if op_type == 16:            # 抓握物体, 需要传入物品id
             result = self.grasp_obj(obj_id)
-        if op_type ==17:    # 放置物体
+        if op_type == 17:            # 放置物体, 放置物品, 需要传入放置地点
             result = self.release_obj(release_pos)
         self.control_robot_action(0, 2)
         if result:
@@ -634,22 +686,37 @@ class Scene:
     def navigation_move(self, cur_objs, objs_name_set, v_list, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
-        walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
+        walk_value = [scene.location.X, scene.location.Y]
         print("position:", walk_value)
+
+        if not cur_objs:
+            walk_v = [scene.location.X, scene.location.Y + 1]
+            yaw = Navigator.get_yaw(walk_value, walk_v)
+            walk_v = walk_value + [yaw, 250, 10]
+            print("walk_v", walk_v)
+            action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+            scene = stub.Do(action)
+            cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
+                                                              objs_name_set)
+            # if scene.info == "Unreachable":
+            print(scene.info)
 
         # if map_id == 11:  # coffee
         #     v_list = [[0, 880], [250, 1200], [-55, 750], [70, -200]]
         # else:
         #     v_list = [[0.0, 0.0]]
 
-        for walk_v in v_list:
-            walk_v = walk_v + [scene.rotation.Yaw - 90, 250, 10]
-            print("walk_v", walk_v)
-            action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-            scene = stub.Do(action)
-            cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs, objs_name_set)
-            # if scene.info == "Unreachable":
-            print(scene.info)
+        else:
+            for walk_v in v_list:
+                yaw = Navigator.get_yaw(walk_value, walk_v)
+                walk_v = walk_v + [yaw, 250, 10]
+                print("walk_v", walk_v)
+                action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+                scene = stub.Do(action)
+                cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
+                                                                  objs_name_set)
+                # if scene.info == "Unreachable":
+                print(scene.info)
         return cur_objs, objs_name_set
 
     def isOutMap(self, pos, min_x=-200, max_x=600, min_y=-250, max_y=1300):
@@ -746,7 +813,3 @@ class Scene:
             return True
         else:
             return False
-
-
-
-

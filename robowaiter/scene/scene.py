@@ -9,7 +9,7 @@ from robowaiter.proto import semantic_map
 import math
 from robowaiter.proto import GrabSim_pb2
 from robowaiter.proto import GrabSim_pb2_grpc
-
+import copy
 import os
 from robowaiter.utils import get_root_path
 root_path = get_root_path()
@@ -127,7 +127,7 @@ class Scene:
         self.reset_sim()
 
         # reset state
-        self.state = self.default_state
+        self.state = copy.deepcopy(self.default_state)
 
 
 
@@ -184,13 +184,13 @@ class Scene:
     def set_goal(self,goal):
         g = eval("{'" + goal + "'}")
         def set_sub_task():
-            self.state['chat_list'].append(g)
+            self.state['chat_list'].append(("Goal",g))
 
         return set_sub_task
 
     def new_set_goal(self,goal):
         g = eval("{'" + goal + "'}")
-        self.state['chat_list'].append(g)
+        self.state['chat_list'].append(("Goal",g))
 
 
     @property
@@ -429,6 +429,8 @@ class Scene:
         self.control_robot_action(0, 3, talk_content)
 
     def customer_say(self,name,sentence,show_bubble=True):
+        if isinstance(name,int):
+            name = self.walker_index2mem(name)
         print(f'{name} say: {sentence}')
         if show_bubble:
             self.walker_bubble(name,sentence)

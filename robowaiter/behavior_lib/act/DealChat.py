@@ -10,18 +10,16 @@ class DealChat(Act):
 
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?
-        name,sentence = self.scene.state['chat_list'][0]
+        name,sentence = self.scene.state['chat_list'].pop(0)
 
-
-        chat = self.scene.state['chat_list'].pop()
-        if isinstance(chat,set):
-            self.create_sub_task(chat)
+        if name == "Goal":
+            self.create_sub_task(sentence)
             return ptree.common.Status.RUNNING
 
 
-        self.chat_history += chat + '\n'
+        self.chat_history += sentence + '\n'
 
-        res_dict = ask_llm(chat)
+        res_dict = ask_llm(sentence)
         answer = res_dict["Answer"]
         self.scene.chat_bubble(answer) # 机器人输出对话
         self.chat_history += answer + '\n'

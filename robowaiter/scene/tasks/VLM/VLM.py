@@ -11,7 +11,7 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.event_list = [
-            (5, self.create_chat_event("把酸奶放到1号桌，再做一杯咖啡送到水杯桌上，再倒一杯水。")),
+            # (5, self.create_chat_event("把酸奶放到1号桌，再做一杯咖啡送到水杯桌上，再倒一杯水。")),
             # (10, self.create_chat_event("开空调")),
 
             # (15, self.create_chat_event("下班啦！打扫卫生，关灯关空调关窗帘。")),
@@ -37,13 +37,25 @@ class SceneVLM(Scene):
 
     def _reset(self):
         self.gen_obj()
+
+
         self.state["condition_set"] = {'At(Robot,Bar)', 'Is(AC,Off)',
          'Holding(Nothing)','Exist(Yogurt)','Exist(Softdrink)','On(Yogurt,Bar)','On(Softdrink,Table1)',
          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
+
+        self.add_walkers([[4,1, 880], [31,250, 1200],[6,-55, 750],[10,70, -200],[27,-290, 400, 180],[26, 60,-320,90]])
+        # [3,1, 880] 1号桌旁边小女孩
+        # [31,250, 1200] 最角落QuietTable1女红色
+        # [6,-55, 750] 1号桌附近小男孩
+        # [10,70, -200]  另一边角落 QuietTable2 男黄色
+        # [27,-290, 400, 180] 中间 BrightTable4 女灰
+        # [26, 60,-320,90] 另一边角落 BrightTable5 红胖男
+        # self.control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
+
         # 随机生成4个自由行走，一个在 BrightTable4,BrightTable5(-20,220)
-        self.add_walkers([[0, 880], [250, 1200], [-55, 750], [70, -200],[-290, 400, 0],[20, -150,180]])
-        self.control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
+        # self.add_walkers([[0, 880], [250, 1200], [-55, 750], [70, -200],[-290, 400, 0],[20, -150,180]])
+        # self.control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
 
 
         # self.control_walkers(walker_loc=[[-55, 750]],is_autowalk = False)

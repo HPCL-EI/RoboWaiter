@@ -9,7 +9,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-def single_round(question):
+def single_round(question,prefix=""):
     url = "https://45.125.46.134:25344/v1/chat/completions"
     headers = {"Content-Type": "application/json"}
     data = {
@@ -21,7 +21,7 @@ def single_round(question):
           },
           {
             "role": "user",
-            "content": question
+            "content": prefix + question
           }
         ]
       }

@@ -147,31 +147,42 @@ def create_sub_task(
 
     return goal
 
-# @register_tool
-# def get_object_info(
-#         obj: Annotated[str, '需要获取信息的物体名称', True]
-# ) -> str:
-#     """
-#     获取场景中指定物体 `object` 在哪里，不涉及到具体的执行任务
-#     如果`object` 是一个地点，例如洗手间，则输出大门。
-#     如果`object`是咖啡，则输出桌子，咖啡在桌子上。
-#     如果`object` 是空桌子，则输出一号桌
-#     """
-#     near_object = None
-#     # if obj == "Table":
-#     #     near_object = "Bar"
-#     # if obj == "洗手间":
-#     #     near_object = "大门"
-#     # if obj == "空桌子":
-#     #     near_object = "一号桌"
-#     if obj in find_obj_utils.all_loc:   # object是一个地点
-#         mp = list(find_obj_utils.loc_map[obj])
-#         # near_object = random.choice(mp)
-#         near_object = mp
-#     if obj in find_obj_utils.all_obj:   # object是一个物品
-#         near_ls = find_obj_utils.all_loc + find_obj_utils.all_obj
-#         near_object = random.choices(near_ls,k=5)
-#     return near_object
+
+@register_tool
+def stop_serve(
+) -> bool:
+    """
+    当顾客通过任何形式表示不再需要服务时，调用该函数
+    """
+    return True
+
+
+
+@register_tool
+def get_object_info(
+        obj: Annotated[str, '需要获取信息的物体名称', True]
+) -> str:
+    """
+    获取场景中指定物体 `object` 在哪里，不涉及到具体的执行任务
+    如果`object` 是一个地点，例如洗手间，则输出大门。
+    如果`object`是咖啡，则输出桌子，咖啡在桌子上。
+    如果`object` 是空桌子，则输出一号桌
+    """
+    near_object = None
+    # if obj == "Table":
+    #     near_object = "Bar"
+    if obj == "洗手间":
+        near_object = "大门"
+    # if obj == "空桌子":
+    #     near_object = "一号桌"
+    if obj in find_obj_utils.all_loc:   # object是一个地点
+        mp = list(find_obj_utils.loc_map[obj])
+        # near_object = random.choice(mp)
+        near_object = mp
+    if obj in find_obj_utils.all_obj:   # object是一个物品
+        near_ls = find_obj_utils.all_loc + find_obj_utils.all_obj
+        near_object = random.choices(near_ls,k=5)
+    return near_object
 
 # @register_tool
 # def find_location(

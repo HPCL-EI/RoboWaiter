@@ -18,14 +18,28 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.new_event_list = [
-            (3, self.customer_say, ("System","来一号桌"))
+            # (9,self.add_walkers,([[0, 880]],)),
+            # (10,self.walker_walk_to,(2,50,500))
+            # (5, self.set_goal("On(Yogurt,Table4)"))
             # (5, self.set_goal("At(Robot,BrightTable4)"))
         ]
 
     def _reset(self):
         # self.add_walkers([[0, 880], [250, 1200]])
-        pass
 
+        # 展示顾客，前8个id是小孩，后面都是大人
+        for i in range(4):
+            self.add_walker(i,50,300 + i * 50)
+        name1 = self.walker_index2mem(1)
+        name2 = self.walker_index2mem(3)
+
+        self.remove_walker(0,2)
+
+        index1 = self.state["customer_mem"][name1]
+        index2 = self.state["customer_mem"][name2]
+
+        self.walker_bubble(name1,f"我是第{index1}个")
+        self.walker_bubble(name2,f"我是第{index2}个")
 
     def _run(self):
         pass

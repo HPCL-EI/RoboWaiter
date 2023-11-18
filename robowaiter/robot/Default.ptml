@@ -2,9 +2,8 @@ selector
 {
     sequence
     {
-        cond Chatting()
+        cond CustomerChatting()
         act DealChat()
-
     }
     sequence
     {
@@ -16,7 +15,12 @@ selector
     }
     sequence
     {
-        cond DetectCustomer()
+        cond FocusingCustomer()
+        act ServeCustomer()
+    }
+    sequence
+    {
+        cond NewCustomerComing()
         selector
         {
             cond At(Robot,Bar)
@@ -24,4 +28,5 @@ selector
         }
         act GreetCustomer()
     }
+
 }

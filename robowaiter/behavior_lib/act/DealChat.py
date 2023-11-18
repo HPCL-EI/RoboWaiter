@@ -9,7 +9,8 @@ class DealChat(Act):
         self.chat_history = ""
         self.function_success = False
         self.func_map = {
-            "create_sub_task": self.create_sub_task
+            "create_sub_task": self.create_sub_task,
+            "get_object_info": self.get_object_info
         }
 
     def _update(self) -> ptree.common.Status:
@@ -53,3 +54,19 @@ class DealChat(Act):
             print("参数解析错误")
 
         self.scene.robot.expand_sub_task_tree(goal_set)
+
+
+    def get_object_info(self,**args):
+        try:
+            obj = args['obj']
+
+            self.function_success = True
+        except:
+            obj = None
+            print("参数解析错误")
+
+        near_object = "None"
+        if obj == "洗手间":
+            near_object = "大门"
+
+        return near_object

@@ -47,3 +47,10 @@ create_sub_task
 抱歉，我这就去开空调和关窗帘。
 create_sub_task
 {"goal":"Is(AC,On),Is(Curtain,Off)"}
+
+
+
+请问洗手间在哪里？
+洗手间在这附近
+get_object_info
+{"obj":"洗手间"}

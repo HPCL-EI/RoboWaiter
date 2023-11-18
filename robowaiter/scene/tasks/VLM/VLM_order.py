@@ -19,15 +19,15 @@ class SceneVLM(Scene):
 
             # 有人提出要开空调和关窗帘
             # bar (60, 520)
-            (28, self.add_walker, (0, 0, 0)),
-            (33, self.control_walker, (7, False, 100, 60, 520, 180)),
-            (35, self.customer_say, (7,"好热呀！太阳也好大！")),
-            (45, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "谢谢，这下凉快了！"]]])),
+            # (28, self.add_walker, (0, 0, 0)),
+            # (33, self.control_walker, (7, False, 100, 60, 520, 180)),
+            # (35, self.customer_say, (7,"好热呀！太阳也好大！")),
+            # (45, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "谢谢，这下凉快了！"]]])),
 
-            # (5, self.add_walker, (0, 0, 0)),
-            # (6, self.control_walker, (7, False, 100, 60, 520, 180)),
-            # (10, self.customer_say, (7, "好热呀！太阳也好大！")),
-            # (12, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "这下舒服了！"]]])),
+            (5, self.add_walker, (0, 0, 0)),
+            (6, self.control_walker, (7, False, 100, 60, 520, 180)),
+            (7, self.customer_say, (7,"好热呀！太阳也好大！")),
+            (8, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "谢谢，这下凉快了！"]]])),
         ]
 
     def _reset(self):

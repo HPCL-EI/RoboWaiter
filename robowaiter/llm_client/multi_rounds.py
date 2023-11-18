@@ -29,16 +29,30 @@ root_path = get_root_path()
 # load test questions
 file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions.txt")
 
+functions = get_tools()
+
 fix_questions_dict = {}
+no_reply_functions = ["create_sub_task"]
+
 with open(file_path,'r',encoding="utf-8") as f:
      #读取所有行
     lines = f.read().strip()
     sections = re.split(r'\n\s*\n', lines)
     for s in sections:
         x = s.split()
-        fix_questions_dict[x[0]] = x[1:]
+        if len(x) == 2:
+            fix_questions_dict[x[0]] = {
+                "answer": x[1],
+                "function": None
+            }
+        else:
+            fix_questions_dict[x[0]] = {
+                "answer": x[1],
+                "function": x[2],
+                "args": x[3]
+            }
 
-functions = get_tools()
+
 role_system = [{
         "role": "system",
         "content": "你是RoboWaiter,一个由HPCL团队开发的机器人服务员，你在咖啡厅工作。接受顾客的指令并调用工具函数来完成各种服务任务。如果顾客问你们这里有什么，或者想要点单，你说我们咖啡厅提供咖啡，水，点心，酸奶等食物。如果顾客不需要你了，你就回到吧台招待。如果顾客叫你去做某事，你回复：好的，我马上去做这件事。",
@@ -55,11 +69,12 @@ def new_response():
 def parse_fix_question(question):
     response = new_response()
     fix_ans = fix_questions_dict[question]
-    if len(fix_ans)<=1: #简单对话
-        message = {'role': 'assistant', 'content': fix_ans[0], 'name': None,
+    if not fix_ans['function']: #简单对话
+        message = {'role': 'assistant', 'content': fix_ans["answer"], 'name': None,
          'function_call': None}
     else:
-        reply, func,args = fix_ans
+        func = fix_ans["function"]
+        args = fix_ans["args"]
         # tool_response = dispatch_tool(function_call["name"], json.loads(args))
         # logger.info(f"Tool Call Response: {tool_response}")
         message = {'role': 'assistant',
@@ -115,7 +130,7 @@ def deal_response(response, history, func_map=None ):
         }
 
         history.append(t)
-        return function_call["name"], return_message
+        return function_call["name"], tool_response
 
     else:
         return_message = response["choices"][0]["message"]
@@ -133,8 +148,14 @@ def ask_llm(question,history, func_map=None, retry=3):
     function_call,result = deal_response(response, history, func_map)
     if function_call:
         if question in fix_questions_dict:
-            reply = fix_questions_dict[question][0]
-            result = single_round(reply,"你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
+            if fix_questions_dict[question]['function'] in  no_reply_functions:
+                reply = fix_questions_dict[question]["answer"]
+                result = single_round(reply,
+                                      "你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
+            else:
+                reply = fix_questions_dict[question]["answer"]
+                result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},请把按照以下句子对顾客说，{reply}, 尽量简短。\n")
+
             message = {'role': 'assistant', 'content': result, 'name': None,
                        'function_call': None}
             history.append(message)

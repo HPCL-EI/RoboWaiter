@@ -15,9 +15,8 @@ class SceneGQA(Scene):
     def __init__(self, robot):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
-        self.event_list = [
-            (5, self.create_chat_event("哪里有空桌子")),
-            (12, self.create_chat_event("可以带我去吗")),
+        self.new_event_list = [
+            (3, self.customer_say, ("System","请问洗手间在哪里？"))
         ]
 
     def _reset(self):

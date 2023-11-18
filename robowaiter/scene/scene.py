@@ -666,7 +666,7 @@ class Scene:
             scene = stub.Do(action)
             print(scene.info)
 
-    def navigation_move(self, cur_objs, objs_name_set, v_list, scene_id=0, map_id=11):
+    def navigation_move(self, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
         walk_value = [scene.location.X, scene.location.Y]
@@ -679,6 +679,8 @@ class Scene:
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
+            cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points,map_ratio)
+
             cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                               objs_name_set)
             # if scene.info == "Unreachable":
@@ -696,11 +698,14 @@ class Scene:
                 print("walk_v", walk_v)
                 action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
                 scene = stub.Do(action)
+
+                cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points, map_ratio)
+
                 cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                                   objs_name_set)
                 # if scene.info == "Unreachable":
                 print(scene.info)
-        return cur_objs, objs_name_set
+        return cur_objs, objs_name_set, cur_obstacle_world_points
 
     def isOutMap(self, pos, min_x=-200, max_x=600, min_y=-250, max_y=1300):
         if pos[0] <= min_x or pos[0] >= max_x or pos[1] <= min_y or pos[1] >= max_y:
@@ -741,21 +746,21 @@ class Scene:
             free_array = np.array(free_list)
             print(f"主动探索完成！以下是场景中可以到达的点：{free_array}；其余点均是障碍物不可达")
 
-            # 画地图: X行Y列，第一行在下面
-            plt.clf()
-            plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
-                       extent=(-250, 1300,
-                               -200, 600))
-            plt.show()
-            print("已绘制完成地图！！！")
+            # # 画地图: X行Y列，第一行在下面
+            # plt.clf()
+            # plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
+            #            extent=(-250, 1300,
+            #                    -200, 600))
+            # plt.show()
+            # print("已绘制完成地图！！！")
 
             return None
-        # 画地图: X行Y列，第一行在下面
-        plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
-                   extent=(-250, 1300,
-                           -200, 600))
-        plt.show()
-        print("已绘制部分地图！")
+        # # 画地图: X行Y列，第一行在下面
+        # plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
+        #            extent=(-250, 1300,
+        #                    -200, 600))
+        # plt.show()
+        # print("已绘制部分地图！")
         return self.getNearestFrontier(cur_pos, self.all_frontier_list)
 
     def isNewFrontier(self, pos, map):

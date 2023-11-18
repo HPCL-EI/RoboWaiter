@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from robowaiter.proto import camera
 from robowaiter.proto import semantic_map
+from robowaiter.algos.navigator.navigate import Navigator
 import math
 from robowaiter.proto import GrabSim_pb2
 from robowaiter.proto import GrabSim_pb2_grpc
@@ -668,22 +669,37 @@ class Scene:
     def navigation_move(self, cur_objs, objs_name_set, v_list, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
-        walk_value = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
+        walk_value = [scene.location.X, scene.location.Y]
         print("position:", walk_value)
+
+        if not cur_objs:
+            walk_v = [scene.location.X, scene.location.Y + 1]
+            yaw = Navigator.get_yaw(walk_value, walk_v)
+            walk_v = walk_value + [yaw, 250, 10]
+            print("walk_v", walk_v)
+            action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+            scene = stub.Do(action)
+            cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
+                                                              objs_name_set)
+            # if scene.info == "Unreachable":
+            print(scene.info)
 
         # if map_id == 11:  # coffee
         #     v_list = [[0, 880], [250, 1200], [-55, 750], [70, -200]]
         # else:
         #     v_list = [[0.0, 0.0]]
 
-        for walk_v in v_list:
-            walk_v = walk_v + [scene.rotation.Yaw - 90, 250, 10]
-            print("walk_v", walk_v)
-            action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-            scene = stub.Do(action)
-            cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs, objs_name_set)
-            # if scene.info == "Unreachable":
-            print(scene.info)
+        else:
+            for walk_v in v_list:
+                yaw = Navigator.get_yaw(walk_value, walk_v)
+                walk_v = walk_v + [yaw, 250, 10]
+                print("walk_v", walk_v)
+                action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+                scene = stub.Do(action)
+                cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
+                                                                  objs_name_set)
+                # if scene.info == "Unreachable":
+                print(scene.info)
         return cur_objs, objs_name_set
 
     def isOutMap(self, pos, min_x=-200, max_x=600, min_y=-250, max_y=1300):

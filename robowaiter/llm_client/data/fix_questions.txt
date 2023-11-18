@@ -15,3 +15,13 @@ stop_serve
 好的，我马上来一号桌
 create_sub_task
 {"goal":"At(Robot,Table1)"}
+
+来杯酸奶吧。
+好的没问题，请稍等！
+create_sub_task
+{"goal":"On(Yogurt,WaterTable)"}
+
+好热呀！太阳也好大！
+抱歉，我这就去开空调和关窗帘。
+create_sub_task
+{"goal":"Is(AC,On),Is(Curtain,Off)"}

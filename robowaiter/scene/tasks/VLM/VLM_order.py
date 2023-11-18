@@ -12,17 +12,17 @@ class SceneVLM(Scene):
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.new_event_list = [
             (3, self.add_walker,  (20,0,700)),
-            (5, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
-            # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
-            (8, self.customer_say, (6, "来杯酸奶吧。")),
-            (7, self.control_walker, (6, False, 100, -250, 480, 0)),  #(-100,600)
+            # (5, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
+            # # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
+            # (8, self.customer_say, (6, "来杯酸奶吧。")),
+            # (7, self.control_walker, (6, False, 100, -250, 480, 0)),  #(-100,600)
 
             # 有人提出要开空调和关窗帘
             # bar (60, 520)
-            (20, self.add_walker, (0, 0, 0)),
-            (25, self.control_walker, (7, False, 100, 60, 520, 180)),
-            (28, self.customer_say, (7,"好热呀！太阳也好大！")),
-            (40, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "这下舒服了！"]]])),
+            (28, self.add_walker, (0, 0, 0)),
+            (33, self.control_walker, (7, False, 100, 60, 520, 180)),
+            (35, self.customer_say, (7,"好热呀！太阳也好大！")),
+            (45, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "谢谢，这下凉快了！"]]])),
 
             # (5, self.add_walker, (0, 0, 0)),
             # (6, self.control_walker, (7, False, 100, 60, 520, 180)),
@@ -37,7 +37,7 @@ class SceneVLM(Scene):
          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
         # 随机生成4个自由行走，一个在 BrightTable4,BrightTable5(-20,220)
-        self.add_walkers([[3,1, 880], [31,250, 1200],[6,-55, 750],[10,70, -200],[27,-290, 400, 180],[26, 60,-320,90]])
+        self.add_walkers([[4,1, 880], [31,250, 1200],[6,-55, 750],[10,70, -200],[27,-290, 400, 180],[26, 60,-320,90]])
         # [3,1, 880] 1号桌旁边小女孩
         # [31,250, 1200] 最角落QuietTable1女红色
         # [6,-55, 750] 1号桌附近小男孩

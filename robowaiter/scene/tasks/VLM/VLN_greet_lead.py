@@ -32,12 +32,6 @@ class SceneVLM(Scene):
     
     def _step(self):
 
-        # self.control_walker(
-        #     [self.walker_control_generator(walkerID=0, autowalk=False, speed=200, X=60, Y=520, Yaw=180)])
-        # time.sleep(3)
-        # cont = self.status.walkers[0].name+":请问可以带我去空位上嘛？我想晒太阳。"
-        # self.control_robot_action(0,3,cont)
-
 
         # 如果机器人不在 吧台
         # if "At(Robot,Bar)" not in self.state['condition_set']:
@@ -50,7 +44,7 @@ class SceneVLM(Scene):
         # if int(self.status.location.X)!=247 or  int(self.status.location.X)!=520:
             self.walker_followed = True
             self.control_walker(
-                    [self.walker_control_generator(walkerID=0, autowalk=False, speed=100, X=end[0], Y=end[1], Yaw=-90)])
+                    [self.walker_control_generator(walkerID=0, autowalk=False, speed=300, X=end[0], Y=end[1], Yaw=-90)])
 
             cont = self.status.walkers[0].name+"谢谢！"
             self.control_robot_action(0,3,cont)

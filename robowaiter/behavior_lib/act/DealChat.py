@@ -16,6 +16,11 @@ class DealChat(Act):
             self.create_sub_task(sentence)
             return ptree.common.Status.RUNNING
 
+        self.scene.state["attention"]["customer"] = name
+        self.scene.state["serve_state"] = {
+            "last_chat_time": self.scene.time,
+        }
+
 
         self.chat_history += sentence + '\n'
 

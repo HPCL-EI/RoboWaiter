@@ -69,7 +69,8 @@ class Scene:
         "customer_mem":{},
         "served_mem":{},
         "greeted_customers":set(),
-        "attention":{}
+        "attention":{},
+        "serve_state":{},
     }
     """
     status:

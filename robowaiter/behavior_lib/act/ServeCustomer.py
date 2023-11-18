@@ -3,9 +3,6 @@ from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.algos.navigator.navigate import Navigator
 
 class ServeCustomer(Act):
-    can_be_expanded = False
-    num_args = 0
-    valid_args = ()
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -20,6 +17,8 @@ class ServeCustomer(Act):
         return info
 
     def _update(self) -> ptree.common.Status:
+        # if self.scene.time - self.scene.state["serve_state"]["last_chat_time"] > 10:
+        #     self.chat_bubble
 
         goal = Act.place_xyz_dic['Bar']
         self.scene.walk_to(goal[0]-5,goal[1], 180, 180, 0)

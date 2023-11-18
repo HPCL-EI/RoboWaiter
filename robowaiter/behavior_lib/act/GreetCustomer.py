@@ -28,4 +28,6 @@ class GreetCustomer(Act):
         customer_name = self.scene.state['attention']['customer']
         self.scene.state['greeted_customers'].add(customer_name)
 
+
+
         return ptree.common.Status.RUNNING

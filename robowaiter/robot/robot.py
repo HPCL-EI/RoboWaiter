@@ -41,7 +41,6 @@ class Robot(object):
     def load_BT(self):
         self.bt = load_bt_from_ptml(self.scene, self.ptml_path,self.behavior_lib_path)
         sub_task_place_holder = find_node_by_name(self.bt.root,"SubTaskPlaceHolder()")
-        print(sub_task_place_holder)
         if sub_task_place_holder:
             sub_task_seq = sub_task_place_holder.parent
             sub_task_seq.children.pop()
@@ -53,7 +52,7 @@ class Robot(object):
 
     def expand_sub_task_tree(self,goal):
         if self.action_list is None:
-            print("\n--------------------")
+            print("\n\n--------------------")
             print(f"首次运行行为树扩展算法")
             self.action_list = self.collect_action_nodes()
             print(f"共收集到{len(self.action_list)}个实例化动作:")

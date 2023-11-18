@@ -60,7 +60,7 @@ def run_conversation(query: str, stream=False, max_retry=5):
                     "content": tool_response,  # 调用函数返回结果
                 }
             )
-            # del params["functions"]
+            del params["functions"]
         else:
             reply = response["choices"][0]["message"]["content"]
             return {
@@ -116,12 +116,24 @@ if __name__ == "__main__":
     query = "卫生间在哪里"   #
     print(run_conversation(query, stream=False))
 
-    query = "我想看看冰箱,请问哪里可以找到冰箱"
-    print(run_conversation(query, stream=False))
-
-    query = "我想找个充电的地方，你能告诉我在哪儿吗"
-    print(run_conversation(query, stream=False))
-
     query = "我想找张桌子"   #
     print(run_conversation(query, stream=False))
-    # for query in
+
+    query = "我想看看休闲区,请问哪里可以找到休闲区"
+    print(run_conversation(query, stream=False))
+    #
+    # query = "我想找个充电的地方，你能告诉我在哪儿吗"
+    # print(run_conversation(query, stream=False))
+
+
+    query = "我想来一个面包"
+    print(run_conversation(query, stream=False))
+
+    query = "哪里有卫生纸"
+    print(run_conversation(query, stream=False))
+
+    query = "插座在哪里你知道吗"
+    print(run_conversation(query, stream=False))
+
+    query = "你们的咖啡厅里有香蕉吗"
+    print(run_conversation(query, stream=False))

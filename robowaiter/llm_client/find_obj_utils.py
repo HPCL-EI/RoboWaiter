@@ -35,7 +35,7 @@ all_loc_en = ['bar', 'Table', 'sofa', 'stove', 'Gate', 'light switch', 'aircondi
               'cake display', 'ChargingStations', 'refrigerator', 'bookshelf']
 
 loc_map_en = {'bar': {'工作台', '服务台', '收银台', '蛋糕柜'},
-           'Table': {'沙发', '大门', '窗户', '休闲区', '墙角', '椅子', '书架'},
+           'Table': {'大门', '休闲区', '墙角'},
            'sofa': {'餐桌', '窗户', '音响', '休闲区', '墙角', '书架'},
            'stove': {'吧台', '橱柜', '工作台', '服务台', '收银台', '蛋糕柜', '冰箱'},
            'Gate': {'吧台', '灯开关', '空调开关', '卫生间', '墙角'},

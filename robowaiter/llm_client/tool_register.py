@@ -147,6 +147,17 @@ def create_sub_task(
 
     return goal
 
+
+@register_tool
+def stop_serve(
+) -> bool:
+    """
+    当顾客通过任何形式表示不再需要服务时，调用该函数
+    """
+    return True
+
+
+
 # @register_tool
 # def get_object_info(
 #         obj: Annotated[str, '需要获取信息的物体名称', True]

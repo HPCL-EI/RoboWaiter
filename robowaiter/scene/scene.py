@@ -71,6 +71,7 @@ class Scene:
         "greeted_customers":set(),
         "attention":{},
         "serve_state":{},
+        "chat_history":{}
     }
     """
     status:
@@ -439,7 +440,7 @@ class Scene:
     def chat_bubble(self, message):
         stub.ControlRobot(
             GrabSim_pb2.ControlInfo(
-                scene=self.sceneID, type=0, action=1, content=message
+                scene=self.sceneID, type=0, action=1, content=message.strip()
             )
         )
 

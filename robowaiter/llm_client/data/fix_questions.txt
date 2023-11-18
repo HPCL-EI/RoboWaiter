@@ -1,0 +1,17 @@
+你好
+您好，我是这家咖啡厅的服务员，请问您要点什么？
+
+做一杯咖啡
+好的，我马上做咖啡
+create_sub_task
+{"goal":"On(Coffee,CoffeeTable)"}
+
+不用了
+好的，您有需要再跟我说
+stop_serve
+{}
+
+来一号桌
+好的，我马上来一号桌
+create_sub_task
+{"goal":"At(Robot,Table1)"}

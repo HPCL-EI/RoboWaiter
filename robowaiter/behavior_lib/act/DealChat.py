@@ -47,7 +47,7 @@ class DealChat(Act):
             if len(w)>1:
                 for x in w[1:]:
                     if x != "":
-                        goal_set.add(x[0] + ")")
+                        goal_set.add(x[1:] + ")")
             self.function_success = True
         except:
             print("参数解析错误")

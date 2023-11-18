@@ -458,6 +458,7 @@ class Scene:
     def customer_say(self,name,sentence,show_bubble=True):
         if isinstance(name,int):
             name = self.walker_index2mem(name)
+
         print(f'{name} say: {sentence}')
         if show_bubble:
             self.walker_bubble(name,sentence)

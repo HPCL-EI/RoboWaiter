@@ -12,7 +12,7 @@ class SceneVLM(Scene):
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.new_event_list = [
             (3, self.add_walker,  (0,60,520)),
-            (5, self.customer_say, (0,"请问可以带我去空位上嘛？我想晒太阳。")),
+            (5, self.customer_say, (0,"可以带我去空位上嘛？我想晒太阳。")),
         ]
 
     def _reset(self):
@@ -43,11 +43,7 @@ class SceneVLM(Scene):
         if end[1]>=600 or end[1]<=450 or end[0]>=250:
         # if int(self.status.location.X)!=247 or  int(self.status.location.X)!=520:
             self.walker_followed = True
-            self.control_walker(
-                    [self.walker_control_generator(walkerID=0, autowalk=False, speed=300, X=end[0], Y=end[1], Yaw=-90)])
-
-            cont = self.status.walkers[0].name+"谢谢！"
-            self.control_robot_action(0,3,cont)
+            self.control_walkers_and_say([[0,False,300,end[0],end[1],90,"谢谢！"]])
 
 
 if __name__ == '__main__':

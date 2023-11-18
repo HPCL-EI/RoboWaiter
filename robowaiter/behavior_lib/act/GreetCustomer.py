@@ -23,7 +23,8 @@ class GreetCustomer(Act):
 
         goal = Act.place_xyz_dic['Bar']
         self.scene.walk_to(goal[0]-5,goal[1], 180, 180, 0)
-        self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
+        # self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
+        self.scene.chat_bubble("欢迎光临！")
 
         customer_name = self.scene.state['attention']['customer']
         self.scene.state['greeted_customers'].add(customer_name)

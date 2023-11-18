@@ -287,15 +287,15 @@ class Scene:
 
     def add_walkers(self,walker_loc=[[0, 880], [250, 1200], [-55, 750], [70, -200]]):
         print('------------------add_walkers----------------------')
-        for id,walker in enumerate(walker_loc):
+        for i,walker in enumerate(walker_loc):
             if len(walker)==2:
-                self.add_walker(id,walker[0],walker[1])
+                self.add_walker(i,walker[0],walker[1])
             elif len(walker)==3:
-                self.add_walker(id, walker[0], walker[1],walker[2])
+                self.add_walker(walker[0], walker[1], walker[2])
             elif len(walker) == 4:
-                self.add_walker(id, walker[0], walker[1], walker[2], walker[3])
+                self.add_walker(walker[0], walker[1], walker[2], walker[3])
             elif len(walker) == 5:
-                self.add_walker(id, walker[0], walker[1], walker[2], walker[3], walker[4])
+                self.add_walker(walker[0], walker[1], walker[2], walker[3], walker[4])
 
     def remove_walker(self, *args):  # take single walkerID or a list of walkerIDs
         remove_list = []
@@ -319,10 +319,15 @@ class Scene:
     def clean_walker(self):
         stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
 
-    def control_walker(self, control_list):
-        stub.ControlWalkers(
-            GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
+    def control_walker(self, walkerID,autowalk,speed,X,Y,Yaw=0):
+        pose = GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw)
+        scene = stub.ControlWalkers(
+            GrabSim_pb2.WalkerControls(controls=[GrabSim_pb2.WalkerControls.WControl(id=walkerID, autowalk=autowalk, speed=speed, pose=pose)], scene=self.sceneID)
         )
+        return scene
+        # stub.ControlWalkers(
+        #     GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
+        # )
 
     def control_walkers_and_say(self, control_list_ls):
         """ 同时处理行人的行走和对话
@@ -332,13 +337,15 @@ class Scene:
         for control in control_list_ls:
             if control[-1]!= None:
                 walkerID = control[0]
-                cont = self.status.walkers[walkerID].name + ":"+control[-1]
-                self.control_robot_action(control[walkerID], 3, cont)
+                # cont = self.status.walkers[walkerID].name + ":"+control[-1]
+                # self.control_robot_action(control[walkerID], 3, cont)
+                self.customer_say(walkerID,control[-1])
             control_list.append(self.walker_control_generator(walkerID=control[0], autowalk=control[1], speed=control[2], X=control[3], Y=control[4], Yaw=control[5]))
         # 收集没有对话的统一控制
-        stub.ControlWalkers(
+        scene = stub.ControlWalkers(
             GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
         )
+        return scene
 
     def control_walkers(self,walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True):
         """pose:表示行人的终止位置姿态"""
@@ -351,7 +358,7 @@ class Scene:
             pose = GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=180)
             controls.append(GrabSim_pb2.WalkerControls.WControl(id=i, autowalk=is_autowalk, speed=80, pose=pose))
         scene = stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
-
+        return scene
 
     def control_joints(self, angles):
         stub.Do(

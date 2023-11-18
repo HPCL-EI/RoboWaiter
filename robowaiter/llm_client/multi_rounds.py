@@ -56,7 +56,7 @@ def parse_fix_question(question):
     response = new_response()
     fix_ans = fix_questions_dict[question]
     if len(fix_ans)<=1: #简单对话
-        message = {'role': 'assistant', 'content': fix_ans, 'name': None,
+        message = {'role': 'assistant', 'content': fix_ans[0], 'name': None,
          'function_call': None}
     else:
         reply, func,args = fix_ans

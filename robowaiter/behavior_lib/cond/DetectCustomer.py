@@ -31,7 +31,7 @@ class DetectCustomer(Cond):
 
         queue_list.sort()
         x,y,name = queue_list[0]
-        if name not in self.scene.state["greet_set"]:
+        if name not in self.scene.state["greeted_customers"]:
             self.scene.state['attention']["customer"] = name
             return ptree.common.Status.SUCCESS
         else:

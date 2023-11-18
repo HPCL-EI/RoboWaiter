@@ -22,6 +22,6 @@ selector
             cond At(Robot,Bar)
             act MoveTo(Bar)
         }
-        act GreatCustomer()
+        act GreetCustomer()
     }
 }

@@ -12,10 +12,10 @@ class SceneVLM(Scene):
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.new_event_list = [
             (3, self.add_walker,  (20,0,700)),
-            # (5, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
-            # # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
-            # (8, self.customer_say, (6, "来杯酸奶吧。")),
-            # (7, self.control_walker, (6, False, 100, -250, 480, 0)),  #(-100,600)
+            (5, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
+            # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
+            (8, self.customer_say, (6, "来杯酸奶吧。")),
+            (7, self.control_walker, (6, False, 100, -250, 480, 0)),  #(-100,600)
 
             # 有人提出要开空调和关窗帘
             # bar (60, 520)

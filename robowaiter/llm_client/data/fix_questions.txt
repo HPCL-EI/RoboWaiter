@@ -26,10 +26,17 @@ create_sub_task
 create_sub_task
 {"goal":"At(Robot,BrightTable1)"}
 
+
+嘿，RoboWaiter，过来一下！
+我在来的路上啦，请稍等噢！
+create_sub_task
+{"goal":"At(Robot,BrightTable6)"}
+
 你们这有什么饮料嘛？
 我们咖啡厅提供各种口味咖啡，水，冰红茶，酸奶等饮品，还提供点心蛋糕等甜品。您想点什么？
 
-来杯卡布奇诺吧，我在靠窗边的高脚桌那。
+
+来杯卡布奇诺吧。
 ok，请稍等！
 create_sub_task
 {"goal":"On(Coffee,BrightTable6)"}
@@ -37,6 +44,17 @@ create_sub_task
 
 麻烦啦！
 没事儿，为您服务是我的荣幸！
+
+大厅的桌子好啊，快带我去呀！
+好的好的，跟我来，我带你去找找。
+create_sub_task
+{"goal":"At(Robot,WaterTable)"}
+
+
+我想来杯水，帮我孩子拿个酸奶吧。
+ok，没问题，请稍等！
+create_sub_task
+{"goal":"On(Water,WaterTable),On(Yogurt,WaterTable)"}
 
 来杯酸奶吧。
 好的没问题，请稍等！

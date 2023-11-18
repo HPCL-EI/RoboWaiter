@@ -183,6 +183,8 @@ class Scene:
 
         return customer_say
 
+
+
     def set_goal(self,goal):
         g = eval("{'" + goal + "'}")
         def set_sub_task():
@@ -321,6 +323,21 @@ class Scene:
             GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
         )
 
+    def control_walkers_and_say(self, control_list_ls):
+        """ 同时处理行人的行走和对话
+        control_list_ls =[walkerID,autowalk,speed,X,Y,Yaw,cont]
+        """
+        control_list= []
+        for control in control_list_ls:
+            if control[-1]!= None:
+                walkerID = control[0]
+                cont = self.status.walkers[walkerID].name + ":"+control[-1]
+                self.control_robot_action(control[walkerID], 3, cont)
+            control_list.append(self.walker_control_generator(walkerID=control[0], autowalk=control[1], speed=control[2], X=control[3], Y=control[4], Yaw=control[5]))
+        # 收集没有对话的统一控制
+        stub.ControlWalkers(
+            GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
+        )
 
     def control_walkers(self,walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True):
         """pose:表示行人的终止位置姿态"""

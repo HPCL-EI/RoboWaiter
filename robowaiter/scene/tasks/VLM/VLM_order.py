@@ -14,7 +14,7 @@ class SceneVLM(Scene):
             (3, self.add_walker,  (20,0,700)),
             (5, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
             # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
-            (6, self.customer_say, (6, "来杯酸奶吧。")),
+            (8, self.customer_say, (6, "来杯酸奶吧。")),
             (7, self.control_walker, (6, False, 100, -250, 480, 0)),  #(-100,600)
 
             # 有人提出要开空调和关窗帘
@@ -75,7 +75,7 @@ class SceneVLM(Scene):
         # "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",            # 8-12
         # "调整空调开关","调高空调温度","调低空调温度",                   # 13-15
         # "抓握物体","放置物体"                                       # 16-17
-
+        #
         # self.gen_obj()
         # if op_type <=15:
         #     self.move_task_area(op_type)
@@ -89,7 +89,7 @@ class SceneVLM(Scene):
         #     pos = [240.0, 40.0, 100.0]
         #     self.move_task_area(op_type, release_pos=pos)
         #     self.op_task_execute(op_type, release_pos=pos)   # [325.0, 860.0, 100]
-
+        #
         # 流程测试
         # 抓握放置:抓吧台前生成的酸奶，放到抹布桌上
         # self.gen_obj()
@@ -114,14 +114,14 @@ class SceneVLM(Scene):
         # # 倒水:倒完的水放到旁边桌子上
         # self.move_task_area(2)
         # self.op_task_execute(2)
-
+        #
         #
         # self.move_task_area(16, obj_id=190)
         # self.op_task_execute(16, obj_id=190)
         # pos = [-55.0, 0.0, 107]
         # self.move_task_area(17, release_pos=pos)
         # self.op_task_execute(17, release_pos=pos)
-
+        #
         # self.test_yaw()
 
         pass

@@ -75,7 +75,8 @@ class Scene:
         "greeted_customers":set(),
         "attention":{},
         "serve_state":{},
-        "chat_history":{}
+        "chat_history":{},
+        "wait_history":set()
     }
     """
     status:
@@ -106,6 +107,7 @@ class Scene:
         self.robot = robot
 
         self.robot_changed = False
+        self.last_event_time = 0
 
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
@@ -200,12 +202,14 @@ class Scene:
             if t < 0: #一直等待机器人行动，直到机器人无行动
                 if self.robot_changed:
                     return
-            if t > 0:
-                time.sleep(t)
+            if (t >= 0) and (self.time - self.last_event_time < t):
+                return
 
             print(f'event: {t}, {func.__name__}')
             self.signal_event_list.pop(0)
+            self.last_event_time = self.time
             func(*args)
+
 
     def deal_event(self):
         if len(self.event_list)>0:

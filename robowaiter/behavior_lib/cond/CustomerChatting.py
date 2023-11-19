@@ -20,6 +20,9 @@ class CustomerChatting(Cond):
             if name == attention_customer:
                 return ptree.common.Status.SUCCESS
             else:
+                # self.scene.chat_bubble("请稍等一下")  # 机器人输出对话
+                # self.scene.wait_history.add(sentence)
+
                 return ptree.common.Status.FAILURE
         else:
             self.scene.state["attention"]["customer"] = name

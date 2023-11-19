@@ -17,8 +17,8 @@ class DealChat(Act):
         self.func_map = {
             "create_sub_task": self.create_sub_task,
             "stop_serve": self.stop_serve,
-            # "get_object_info": self.get_object_info,
-            # "find_location": self.find_location
+            "get_object_info": self.get_object_info,
+            "find_location": self.find_location
         }
 
     def _update(self) -> ptree.common.Status:
@@ -64,17 +64,22 @@ class DealChat(Act):
 
         self.scene.robot.expand_sub_task_tree(goal_set)
 
-    # def get_object_info(self,**args):
-    #     try:
-    #         obj = args['obj']
-    #
-    #         self.function_success = True
-    #     except:
-    #         obj = None
-    #         print("参数解析错误")
-    #
-    #     near_object = "None"
-    #
+    def get_object_info(self,**args):
+        try:
+            obj = args['obj']
+
+            self.function_success = True
+        except:
+            obj = None
+            print("参数解析错误")
+
+        d = {"保温杯": "二号桌子"}
+        if obj in d.keys():
+            result = d[obj]
+        else:
+            result = "None"
+        return result
+
     #     max_similarity = 0.02
     #     similar_word = None
     #
@@ -101,32 +106,37 @@ class DealChat(Act):
     #
     #     return near_object
     #
-    # def find_location(self, **args):
-    #     try:
-    #         location = args['obj']
-    #         self.function_success = True
-    #     except:
-    #         obj = None
-    #         print("参数解析错误")
-    #
-    #     near_location = None
-    #     # 用户咨询的地点
-    #     query_token = nlp(location)
-    #     max_similarity = 0
-    #     similar_word = None
-    #     # 到自己维护的地点列表中找同义词
-    #     for w in self.scene.all_loc_en:
-    #         word_token = nlp(w)
-    #         similarity = query_token.similarity(word_token)
-    #         if similarity > max_similarity:
-    #             max_similarity = similarity
-    #             similar_word = w
-    #     print("similarity:", max_similarity, "similar_word:", similar_word)
-    #     # 存在同义词说明客户咨询的地点有效
-    #     if similar_word:
-    #         mp = list(self.scene.loc_map_en[similar_word])
-    #         near_location = random.choice(mp)
-    #     return near_location
+    def find_location(self, **args):
+        try:
+            location = args['obj']
+            self.function_success = True
+        except:
+            obj = None
+            print("参数解析错误")
+
+        d = {"保温杯": "二号桌子"}
+        if location in d.keys():
+            result = d[obj]
+        else:
+            result = "None"
+        return result
+        # 用户咨询的地点
+        # query_token = nlp(location)
+        # max_similarity = 0
+        # similar_word = None
+        # # 到自己维护的地点列表中找同义词
+        # for w in self.scene.all_loc_en:
+        #     word_token = nlp(w)
+        #     similarity = query_token.similarity(word_token)
+        #     if similarity > max_similarity:
+        #         max_similarity = similarity
+        #         similar_word = w
+        # print("similarity:", max_similarity, "similar_word:", similar_word)
+        # # 存在同义词说明客户咨询的地点有效
+        # if similar_word:
+        #     mp = list(self.scene.loc_map_en[similar_word])
+        #     near_location = random.choice(mp)
+        # return near_location
 
     def stop_serve(self,**args):
         customer = self.scene.state["attention"]["customer"]

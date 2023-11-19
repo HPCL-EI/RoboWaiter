@@ -25,11 +25,11 @@ class SceneVLM(Scene):
         self.signal_event_list = [
 
             # 场景1：带小女孩找阳光下的空位
-            # (3, self.add_walker, (5, 230, 1200)),
-            # (1, self.control_walker, (0, False, 200, 60, 520, 0)),
-            # (9, self.customer_say, (0, "早上好呀，我想找个能晒太阳的地方。")),
-            # (-1, self.customer_say, (0,"可以带我过去嘛？")),
-            # (0, self.control_walker, (0, False, 50, 140, 1200, 180)), # 小女孩站在了 BrightTable1 旁边就餐啦
+            (3, self.add_walker, (5, 230, 1200)),
+            (1, self.control_walker, (0, False, 200, 60, 520, 0)),
+            (9, self.customer_say, (0, "早上好呀，我想找个能晒太阳的地方。")),
+            (-1, self.customer_say, (0,"可以带我过去嘛？")),
+            (0, self.control_walker, (0, False, 50, 140, 1200, 180)), # 小女孩站在了 BrightTable1 旁边就餐啦
 
             # 场景2：有个胖胖男人点单交流并要咖啡，帮他送去角落的桌子
             # (3, self.add_walker, (5, 230, 1200)), # 小女孩

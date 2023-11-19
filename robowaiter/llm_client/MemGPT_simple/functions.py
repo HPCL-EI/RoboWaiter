@@ -1,13 +1,13 @@
 FUNCTIONS = [
     {
         "name": "send_message",
-        "description": "Sends a message to the human user",
+        "description": "给用户发送一条消息",
         "parameters": {
             "type": "object",
             "properties": {
                 "message": {
                     "type": "string",
-                    "description": "Message contents. All unicode (including emojis) are supported.",
+                    "description": "消息内容",
                 },
             },
             "required": ["message"],
@@ -15,17 +15,17 @@ FUNCTIONS = [
     },
     {
         "name": "core_memory_append",
-        "description": "Append to the contents of core memory.",
+        "description": "向你的核心记忆中添加内容",
         "parameters": {
             "type": "object",
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Section of the memory to be edited (persona or human).",
+                    "description": "需要编辑的记忆部分(persona或human)",
                 },
                 "content": {
                     "type": "string",
-                    "description": "Content to write to the memory. All unicode (including emojis) are supported.",
+                    "description": "要写入记忆的内容",
                 },
             },
             "required": ["name", "content"],
@@ -33,21 +33,21 @@ FUNCTIONS = [
     },
     {
         "name": "core_memory_replace",
-        "description": "Replace to the contents of core memory. To delete memories, use an empty string for new_content.",
+        "description": "替换核心记忆中的内容。要删除记忆，请将new_content赋值为空",
         "parameters": {
             "type": "object",
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Section of the memory to be edited (persona or human).",
+                    "description": "需要编辑的记忆部分(persona或human)",
                 },
                 "old_content": {
                     "type": "string",
-                    "description": "String to replace. Must be an exact match.",
+                    "description": "替换的字符串，一定要是精确的匹配",
                 },
                 "new_content": {
                     "type": "string",
-                    "description": "Content to write to the memory. All unicode (including emojis) are supported.",
+                    "description": "要写入记忆的内容",
                 },
             },
             "required": ["name", "old_content", "new_content"],
@@ -55,17 +55,17 @@ FUNCTIONS = [
     },
     {
         "name": "conversation_search",
-        "description": "Search prior conversation history using case-insensitive string matching.",
+        "description": "搜索回忆存储中的内容",
         "parameters": {
             "type": "object",
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "String to search for.",
+                    "description": "需要搜索的字符串",
                 },
                 "page": {
                     "type": "integer",
-                    "description": "Allows you to page through results. Only use on a follow-up query. Defaults to 0 (first page).",
+                    "description": "允许你对结果分页。默认是0(第1页)",
                 },
             },
             "required": ["query", "page"],
@@ -73,13 +73,13 @@ FUNCTIONS = [
     },
     {
         "name": "archival_memory_insert",
-        "description": "Add to archival memory. Make sure to phrase the memory contents such that it can be easily queried later.",
+        "description": "写入存档记忆。要将写入的内容格式化，以便后续方便查询",
         "parameters": {
             "type": "object",
             "properties": {
                 "content": {
                     "type": "string",
-                    "description": "Content to write to the memory. All unicode (including emojis) are supported.",
+                    "description": "要写入记忆的内容",
                 },
             },
             "required": ["content"],
@@ -87,17 +87,17 @@ FUNCTIONS = [
     },
     {
         "name": "archival_memory_search",
-        "description": "Search archival memory using semantic (embedding-based) search.",
+        "description": "搜索存档记忆",
         "parameters": {
             "type": "object",
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "String to search for.",
+                    "description": "要搜索的字符串",
                 },
                 "page": {
                     "type": "integer",
-                    "description": "Allows you to page through results. Only use on a follow-up query. Defaults to 0 (first page).",
+                    "description": "允许你对结果分页。默认是0(第1页)",
                 },
             },
             "required": ["query", "page"],

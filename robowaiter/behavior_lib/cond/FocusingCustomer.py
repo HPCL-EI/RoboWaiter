@@ -13,4 +13,6 @@ class FocusingCustomer(Cond):
         if "customer" in self.scene.state['attention']:
             return ptree.common.Status.SUCCESS
         else:
+            goal = Cond.place_xy_yaw_dic['Bar']
+            self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
             return ptree.common.Status.FAILURE

@@ -33,8 +33,8 @@ class MoveTo(Act):
         # navigator.navigate_old(goal, animation=False)
 
         # 走到固定的地点
-        if self.target_place in Act.place_xyz_dic:
-            goal = Act.place_xyz_dic[self.target_place]
+        if self.target_place in Act.place_xy_yaw_dic:
+            goal = Act.place_xy_yaw_dic[self.target_place]
             self.scene.walk_to(goal[0]+1,goal[1],goal[2])
         # 走到物品边上
         else:

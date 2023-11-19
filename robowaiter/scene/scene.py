@@ -353,10 +353,8 @@ class Scene:
                 # Since status.walkers is a list, some walkerIDs would change after removing a walker.
                 remove_list.append(walkerID)
 
-        index_shift_list = [ 0 for _ in range(len(self.state["customer_mem"])) ]
-
         stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
-
+        self.state["customer_mem"] = {}
         w = self.status.walkers
         for i in range(len(w)):
             self.state["customer_mem"][w[i].name] = i
@@ -365,13 +363,23 @@ class Scene:
         s = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
         scene = stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=IDs, scene=self.sceneID))
         time.sleep(2)
+        self.state["customer_mem"] = {}
+        w = self.status.walkers
+        for i in range(len(w)):
+            self.state["customer_mem"][w[i].name] = i
         return
 
 
-    def clean_walker(self):
-        stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
+    def clean_walkers(self):
+        scene = stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
+        self.state["customer_mem"]={}
+        return scene
 
     def control_walker(self, walkerID,autowalk,speed,X,Y,Yaw=0):
+
+        if not isinstance(walkerID, int):
+            walkerID = self.walker_index2mem(walkerID)
+
         pose = GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw)
         scene = stub.ControlWalkers(
             GrabSim_pb2.WalkerControls(controls=[GrabSim_pb2.WalkerControls.WControl(id=walkerID, autowalk=autowalk, speed=speed, pose=pose)], scene=self.sceneID)
@@ -389,6 +397,10 @@ class Scene:
         for control in control_list_ls:
             if control[-1]!= None:
                 walkerID = control[0]
+
+                if not isinstance(walkerID, int):
+                    walkerID = self.walker_index2mem(walkerID)
+
                 # cont = self.status.walkers[walkerID].name + ":"+control[-1]
                 # self.control_robot_action(control[walkerID], 3, cont)
                 self.customer_say(walkerID,control[-1])
@@ -510,6 +522,9 @@ class Scene:
     def customer_say(self,name,sentence,show_bubble=True):
         if isinstance(name,int):
             name = self.walker_index2mem(name)
+
+        # if not isinstance(walkerID, int):
+        #     name = self.walker_index2mem(walkerID)
 
         print(f'{name} say: {sentence}')
         if self.show_bubble and show_bubble:
@@ -752,7 +767,7 @@ class Scene:
             scene = stub.Do(action)
             print(scene.info)
 
-    def navigation_move(self, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, scene_id=0, map_id=11):
+    def navigation_move(self, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, db, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
         walk_value = [scene.location.X, scene.location.Y]
@@ -765,10 +780,12 @@ class Scene:
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
-            cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points,map_ratio)
-
             cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                               objs_name_set)
+
+            cur_obstacle_world_points = camera.get_obstacle_point(db, scene, cur_obstacle_world_points,map_ratio)
+
+
             # if scene.info == "Unreachable":
             print(scene.info)
 
@@ -785,10 +802,12 @@ class Scene:
                 action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
                 scene = stub.Do(action)
 
-                cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points, map_ratio)
-
                 cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                                   objs_name_set)
+
+                cur_obstacle_world_points = camera.get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio)
+
+
                 # if scene.info == "Unreachable":
                 print(scene.info)
         return cur_objs, objs_name_set, cur_obstacle_world_points
@@ -830,7 +849,7 @@ class Scene:
         if len(self.all_frontier_list) == 0:
             free_list = list(self.visited)
             free_array = np.array(free_list)
-            print(f"主动探索完成！以下是场景中可以到达的点：{free_array}；其余点均是障碍物不可达")
+            print(f"主动探索完成！保存了二维地图与环境中重点物品语义信息！")
 
             # # 画地图: X行Y列，第一行在下面
             # plt.clf()

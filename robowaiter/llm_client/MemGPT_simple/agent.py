@@ -1,7 +1,7 @@
 import math
 import json
-import openai
 import utils
+from loguru import logger
 from memory import CoreMemory, ArchivalMemory, RecallMemory
 
 
@@ -68,10 +68,12 @@ class Agent:
     def edit_memory_append(self, name, content):
         self.core_memory.append(name, content)
         self.rebuild_memory()
+        logger.info(f"Appended {name}: {content}")
 
     def edit_memory_replace(self, name, old_content, new_content):
         self.core_memory.replace(name, old_content, new_content)
         self.rebuild_memory()
+        logger.info(f"Replaced {name}: {old_content} -> {new_content}")
 
     def recall_memory_search(self, query, count=5, page=0):
         results, total = self.recall_memory.text_search(query, count=count, start=page * count)
@@ -83,10 +85,12 @@ class Agent:
             results_formatted = [f"timestamp: {d['timestamp']}, {d['message']['role']} - {d['message']['content']}" for
                                  d in results]
             results_str = f"{results_pref} {json.dumps(results_formatted)}"
+        logger.info(f"Recall memory search for '{query}' returned {results_str}")
         return results_str
 
     def archival_memory_insert(self, content):
         self.archival_memory.insert(content)
+        logger.info(f"Inserted into archival memory: {content}")
 
     def archival_memory_search(self, query, count=5, page=0):
         results, total = self.archival_memory.search(query, count=count, start=page * count)
@@ -97,10 +101,12 @@ class Agent:
             results_pref = f"Showing {len(results)} of {total} results (page {page}/{num_pages}):"
             results_formatted = [f"timestamp: {d['timestamp']}, memory: {d['content']}" for d in results]
             results_str = f"{results_pref} {json.dumps(results_formatted)}"
+        logger.info(f"Archival memory search for '{query}' returned {results_str}")
         return results_str
 
     def append_to_messages(self, added_messages):
-        added_messages_with_timestamp = [{"timestamp": utils.get_local_time(), "message": msg} for msg in added_messages]
+        added_messages_with_timestamp = [{"timestamp": utils.get_local_time(), "message": msg} for msg in
+                                         added_messages]
         self.recall_memory.message_logs.extend(added_messages_with_timestamp)
         for msg in added_messages:
             msg.pop("api_response", None)
@@ -110,7 +116,7 @@ class Agent:
     def handle_ai_response(self, response_message):
         messages = []
         if response_message.get("function_call"):
-            print("### Internal monologue: " + (response_message.content if response_message.content else ""))
+            print("### Internal monologue: " + (response_message['content'] if response_message['content'] else ""))
             messages.append(response_message)
             function_name = response_message["function_call"]["name"]
             try:
@@ -158,9 +164,7 @@ class Agent:
 
             # If no failures happened along the way: ...
             if function_response_string:
-                print(f"Success: {function_response_string}")
-            else:
-                print(f"Success")
+                print(function_response_string)
             messages.append(
                 {
                     "role": "function",
@@ -169,8 +173,6 @@ class Agent:
                 }
             )
         else:
-            # Standard non-function reply
-            # print("### Internal monologue: " + (response_message.content if response_message.content else ""))
             print("### Internal monologue: " + (response_message['content'] if response_message['content'] else ""))
             messages.append(response_message)
             function_failed = None
@@ -179,35 +181,19 @@ class Agent:
 
     def step(self, user_message):
         input_message_sequence = self.messages + [{"role": "user", "content": user_message}]
-
-        # 原来的通信方式
-        # response = openai.ChatCompletion.create(model=self.model, messages=input_message_sequence,
-        #                                         functions=self.functions_description, function_call="auto")
-        #
-        # response_message = response.choices[0].message
-        # response_message_copy = response_message.copy()
-
-        # ===我们的通信方式 "tools": self.functions_description 不起作用===
-        import requests
-        url = "https://45.125.46.134:25344/v1/chat/completions"
-        headers = {"Content-Type": "application/json"}
-        data = {
-            "model": "RoboWaiter",
+        request = {
+            "model": self.model,
             "messages": input_message_sequence,
-            # "functions":self.functions_description,
-            # "function_call":"auto"
-            # "function_call":self.functions_description
-            "tools": self.functions_description
+            "functions": self.functions_description,
+            "stream": False,
         }
-        response = requests.post(url, headers=headers, json=data, verify=False)
+        response = utils.get_llm_response(request)
         if response.status_code == 200:
             result = response.json()
             response_message = result['choices'][0]['message']
         else:
-            response_message = "大模型请求失败:"+ str(response.status_code)
-        response_message_copy = response_message
-        # ===我们的通信方式 "tools": self.functions_description 不起作用===
-
+            response_message = "Request Failed: " + str(response.status_code)
+        response_message_copy = response_message.copy()
 
         all_response_messages, function_failed = self.handle_ai_response(response_message)
         assert "api_response" not in all_response_messages[0], f"api_response already in {all_response_messages[0]}"

@@ -6,12 +6,13 @@ import string
 import sys
 import time
 import grpc
-
+from sklearn.cluster import DBSCAN
 
 sys.path.append('./')
 sys.path.append('../')
 
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import numpy as np
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
@@ -29,6 +30,7 @@ obstacle_objs_id = [114, 115, 122, 96, 102, 83, 121, 105, 108, 89, 100, 90,
                     111, 103, 95, 92, 76, 113, 101, 29, 112, 87, 109, 98,
                     106, 120, 97, 86, 104, 78, 85, 81, 82, 84, 91, 93, 94,
                     99, 107, 116, 117, 118, 119, 255]
+not_key_objs_id = {255,254,253,107,81}
 
 '''
 初始化，卸载已经加载的关卡，清除所有机器人
@@ -74,12 +76,12 @@ def SetWorld(map_id=0, scene_num=1):
 def Observe(scene_id=0):
     print('------------------show_env_info----------------------')
     scene = sim_client.Observe(GrabSim_pb2.SceneID(value=scene_id))
-    # print(
-    #     f"location:{[scene.location]}, rotation:{scene.rotation}\n",
-    #     f"joints number:{len(scene.joints)}, fingers number:{len(scene.fingers)}\n",
-    #     f"objects number: {len(scene.objects)}, walkers number: {len(scene.walkers)}\n"
-    #     f"timestep:{scene.timestep}, timestamp:{scene.timestamp}\n"
-    #     f"collision:{scene.collision}, info:{scene.info}")
+    print(
+        f"location:{[scene.location]}, rotation:{scene.rotation}\n",
+        f"joints number:{len(scene.joints)}, fingers number:{len(scene.fingers)}\n",
+        f"objects number: {len(scene.objects)}, walkers number: {len(scene.walkers)}\n"
+        f"timestep:{scene.timestep}, timestamp:{scene.timestamp}\n"
+        f"collision:{scene.collision}, info:{scene.info}")
     return scene
 
 
@@ -339,17 +341,68 @@ def save_obj_info(img_data, objs_name):
             objs_name.add(dictionary[id])
     return objs_name
 
+def get_id_object_pixels(id, scene):
+    pixels = []
+    world_points = []
+    img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
+    im_segment = img_data_segment.images[0]
 
-def get_obstacle_point(scene, cur_obstacle_world_points, map_ratio):
+    img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
+    im_depth = img_data_depth.images[0]
+
+
+    d_segment = np.frombuffer(im_segment.data, dtype=im_segment.dtype).reshape(
+        (im_segment.height, im_segment.width, im_segment.channels))
+    d_depth = np.frombuffer(im_depth.data, dtype=im_depth.dtype).reshape(
+        (im_depth.height, im_depth.width, im_depth.channels))
+
+    d_segment = np.transpose(d_segment, (1, 0, 2))
+    d_depth = np.transpose(d_depth, (1, 0, 2))
+
+    for i in range(0, d_segment.shape[0],5):
+        for j in range(0, d_segment.shape[1], 5):
+            if d_segment[i][j][0] == id:
+                pixels.append([i, j])
+    for pixel in pixels:
+        world_points.append(transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene))
+    return world_points
+
+
+
+
+def get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio):
     cur_obstacle_pixel_points = []
+    object_pixels = {}
+    colors = [
+        'red',
+        'pink',
+        'purple',
+        'blue',
+        'cyan',
+        'green',
+        'yellow',
+        'orange',
+        'brown',
+        'gold',
+    ]
+
     img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
     img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
+    img_data_color = get_camera([GrabSim_pb2.CameraName.Head_Color])
+
     im_segment = img_data_segment.images[0]
     im_depth = img_data_depth.images[0]
+    im_color = img_data_color.images[0]
+
     d_segment = np.frombuffer(im_segment.data, dtype=im_segment.dtype).reshape((im_segment.height, im_segment.width, im_segment.channels))
     d_depth = np.frombuffer(im_depth.data, dtype=im_depth.dtype).reshape((im_depth.height, im_depth.width, im_depth.channels))
+    d_color = np.frombuffer(im_color.data, dtype=im_color.dtype).reshape((im_color.height, im_color.width, im_color.channels))
 
-
+    items = img_data_segment.info.split(";")
+    objs_id = {}
+    for item in items:
+        key, value = item.split(":")
+        objs_id[int(key)] = value
     # plt.imshow(d_depth, cmap="gray" if "depth" in im_depth.name.lower() else None)
     # plt.show()
     #
@@ -362,6 +415,7 @@ def get_obstacle_point(scene, cur_obstacle_world_points, map_ratio):
         for j in range(0, d_segment.shape[1], map_ratio):
             if d_depth[i][j][0] == 600:
                 continue
+
             # if d_segment[i][j] == 96:
             #     print(f"apple的像素坐标：({i},{j})")
             #     print(f"apple的深度：{d_depth[i][j][0]}")
@@ -372,14 +426,69 @@ def get_obstacle_point(scene, cur_obstacle_world_points, map_ratio):
             #     print(f"kettle的世界坐标: {transform_co(img_data_depth, i, j, d_depth[i][j][0], scene)}")
             if d_segment[i][j][0] in obstacle_objs_id:
                 cur_obstacle_pixel_points.append([i, j])
+            if d_segment[i][j][0] not in not_key_objs_id:
+                # 首先检查键是否存在
+                if d_segment[i][j][0] in object_pixels:
+                    # 如果键存在，那么添加元组(i, j)到对应的值中
+                    object_pixels[d_segment[i][j][0]].append([i, j])
+                else:
+                    # 如果键不存在，那么创建一个新的键值对，其中键是d_segment[i][j][0]，值是一个包含元组(i, j)的列表
+                    object_pixels[d_segment[i][j][0]] = [[i, j]]
     # print(cur_obstacle_pixel_points)
     for pixel in cur_obstacle_pixel_points:
         world_point = transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
         cur_obstacle_world_points.append([world_point[0], world_point[1]])
         # print(f"{pixel}：{[world_point[0], world_point[1]]}")
+
+    plt.imshow(d_color, cmap="gray" if "depth" in im_depth.name.lower() else None)
+
+    for key, value in object_pixels.items():
+        if key == 101 or key == 0:
+            continue
+        if key in [91, 84]:
+            X = np.array(value)
+            db.fit(X)
+            labels = db.labels_
+            # 将数据按照聚类标签分组，并打印每个分组的数据
+            for i in range(max(labels) + 1):  # 从0到最大聚类标签的值
+                group_data = X[labels == i]  # 获取当前标签的数据
+                x_max = max(p[0] for p in group_data)
+                y_max = max(p[1] for p in group_data)
+                x_min = min(p[0] for p in group_data)
+                y_min = min(p[1] for p in group_data)
+                if x_max - x_min < 10 or y_max - y_min < 10:
+                    continue
+                # 在指定的位置绘制方框
+                # 创建矩形框
+                rect = patches.Rectangle((x_min, y_min), (x_max - x_min), (y_max - y_min), linewidth=1, edgecolor=colors[key % 10],
+                                         facecolor='none')
+                plt.text(x_min, y_min, f'{objs_id[key]}', fontdict={'family': 'serif', 'size': 10, 'color': 'green'}, ha='center',
+                         va='center')
+                plt.gca().add_patch(rect)
+        else:
+            x_max = max(p[0] for p in value)
+            y_max = max(p[1] for p in value)
+            x_min = min(p[0] for p in value)
+            y_min = min(p[1] for p in value)
+            # 在指定的位置绘制方框
+            # 创建矩形框
+            rect = patches.Rectangle((x_min, y_min), (x_max - x_min), (y_max - y_min), linewidth=1, edgecolor=colors[key % 10],
+                                     facecolor='none')
+            plt.text(x_min, y_min, f'{objs_id[key]}', fontdict={'family': 'serif', 'size': 10, 'color': 'green'}, ha='center',
+                     va='center')
+            plt.gca().add_patch(rect)
+        # point1 = min(value, key=lambda x: (x[0], x[1]))
+        # point2 = max(value, key=lambda x: (x[0], x[1]))
+        # width = point2[1] - point1[1]
+        # height = point2[0] - point1[0]
+        # rect = patches.Rectangle((0, 255), 15, 30, linewidth=1, edgecolor='g',
+        #                          facecolor='none')
+
+
+        # 将矩形框添加到图像中
+        # plt.gca().add_patch(rect)
+    plt.show()
     return cur_obstacle_world_points
-
-
 
 
 

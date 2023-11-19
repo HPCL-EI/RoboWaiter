@@ -1,11 +1,14 @@
 import os
 import json
 import demjson3 as demjson
+import requests
 from datetime import datetime
 
 HUMAN_DEFAULT = "customer"
 PERSONA_DEFAULT = "robowaiter"
-SYSTEM_DEFAULT = "system_gpt3.5"
+SYSTEM_DEFAULT = "memgpt_chs"
+
+base_url = "https://45.125.46.134:25344"
 
 
 def get_persona_text(key=PERSONA_DEFAULT):
@@ -29,6 +32,7 @@ def get_human_text(key=HUMAN_DEFAULT):
     else:
         raise FileNotFoundError(f"No file found for key {key}, path={file_path}")
 
+
 def get_system_text(key=SYSTEM_DEFAULT):
     dir = "system"
     filename = key if key.endswith(".txt") else f"{key}.txt"
@@ -38,6 +42,7 @@ def get_system_text(key=SYSTEM_DEFAULT):
             return file.read().strip()
     else:
         raise FileNotFoundError(f"No file found for key {key}, path={file_path}")
+
 
 def get_local_time():
     local_time = datetime.now()
@@ -80,3 +85,6 @@ def parse_json(string):
         print(f"Error parsing json with demjson package: {e}")
         raise e
 
+
+def get_llm_response(data):
+    return requests.post(f"{base_url}/v1/chat/completions", json=data, stream=data["stream"], verify=False)

@@ -75,7 +75,7 @@ class SceneVLM(Scene):
         # self.move_task_area(op_type=4)
         pass
 
-    def _run(self, op_type=10):
+    def _run(self, op_type=16):
         # 共17个操作
         # "制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
         # "关筒灯","开大厅灯","关大厅灯","关闭窗帘","打开窗帘",            # 8-12
@@ -83,18 +83,20 @@ class SceneVLM(Scene):
         # "抓握物体","放置物体"                                       # 16-17
 
         # self.gen_obj()
-        # if op_type <=15:
-        #     self.move_task_area(op_type)
-        #     self.op_task_execute(op_type)
-        # if op_type == 16:   # 16: 抓操作需要传入物品id
-        #     self.move_task_area(op_type, obj_id=0)
-        #     self.op_task_execute(op_type, obj_id=0)
-        # # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 100.0], 水杯桌:[-70.0, 500.0, 107]
-        # # 桌子1:[-55.0, 0.0, 107],抹布桌:[340.0, 900.0, 99.0]   # 桌子2:[-55.0, 150.0, 107],
-        # if op_type == 17:   # 17: 放操作需要传入放置位置周围的可达区域
-        #     pos = [240.0, 40.0, 100.0]
-        #     self.move_task_area(op_type, release_pos=pos)
-        #     self.op_task_execute(op_type, release_pos=pos)   # [325.0, 860.0, 100]
+        if op_type <=15:
+            self.move_task_area(op_type)
+            self.op_task_execute(op_type)
+        if op_type == 16:   # 16: 抓操作需要传入物品id
+            self.move_task_area(op_type, obj_id=1)
+            self.op_task_execute(op_type, obj_id=1)
+        # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 100.0], 水杯桌:[-70.0, 500.0, 107]
+        # 桌子1:[-55.0, 0.0, 107],抹布桌:[340.0, 900.0, 99.0]   # 桌子2:[-55.0, 150.0, 107],
+        if op_type == 17:   # 17: 放操作需要传入放置位置周围的可达区域
+            pos = [240.0, 40.0, 100.0]
+            self.move_task_area(op_type, release_pos=pos)
+            self.op_task_execute(op_type, release_pos=pos)   # [325.0, 860.0, 100]
+
+
 
         # 流程测试
         # 抓握放置:抓吧台前生成的酸奶，放到抹布桌上

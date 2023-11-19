@@ -4,6 +4,7 @@ from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.llm_client.multi_rounds import ask_llm, new_history
 import random
 
+
 # import spacy
 # nlp = spacy.load('en_core_web_lg')
 
@@ -15,9 +16,9 @@ class DealChat(Act):
         self.function_success = False
         self.func_map = {
             "create_sub_task": self.create_sub_task,
-            "get_object_info": self.get_object_info,
             "stop_serve": self.stop_serve,
-            "find_location": self.find_location
+            # "get_object_info": self.get_object_info,
+            # "find_location": self.find_location
         }
 
     def _update(self) -> ptree.common.Status:
@@ -73,25 +74,29 @@ class DealChat(Act):
     #
     #     near_object = "None"
     #
+    #     max_similarity = 0.02
+    #     similar_word = None
+    #
     #     # 场景中现有物品
     #     cur_things = set()
-    #     for item in self.status.objects:
+    #     for item in self.scene.status.objects:
     #         cur_things.add(item.name)
     #     # obj与现有物品进行相似度匹配
     #     query_token = nlp(obj)
-    #     for w in self.all_loc_en:
+    #     for w in cur_things:
     #         word_token = nlp(w)
     #         similarity = query_token.similarity(word_token)
     #         if similarity > max_similarity:
     #             max_similarity = similarity
     #             similar_word = w
-    #     print("max_similarity:",max_similarity,"similar_word:",similar_word)
+    #     if similar_word:
+    #         print("max_similarity:",max_similarity,"similar_word:",similar_word)
     #
     #     if similar_word:   # 存在同义词说明场景中存在该物品
     #         near_object = random.choices(list(cur_things), k=5)   # 返回场景中的5个物品
     #
     #     if obj == "洗手间":
-    #         near_object = "大门"
+    #         near_object = "Door"
     #
     #     return near_object
     #
@@ -109,7 +114,7 @@ class DealChat(Act):
     #     max_similarity = 0
     #     similar_word = None
     #     # 到自己维护的地点列表中找同义词
-    #     for w in self.all_loc_en:
+    #     for w in self.scene.all_loc_en:
     #         word_token = nlp(w)
     #         similarity = query_token.similarity(word_token)
     #         if similarity > max_similarity:
@@ -118,7 +123,7 @@ class DealChat(Act):
     #     print("similarity:", max_similarity, "similar_word:", similar_word)
     #     # 存在同义词说明客户咨询的地点有效
     #     if similar_word:
-    #         mp = list(self.loc_map_en[similar_word])
+    #         mp = list(self.scene.loc_map_en[similar_word])
     #         near_location = random.choice(mp)
     #     return near_location
 

@@ -35,7 +35,7 @@ class Robot(object):
         self.action_list = None
 
 
-    def set_scene(self,scene):
+    def set_scene(self,scene=None):
         self.scene = scene
 
 

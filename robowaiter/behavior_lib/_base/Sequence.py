@@ -3,6 +3,7 @@ from typing import Any
 
 class Sequence(ptree.composites.Sequence):
     print_name = "Sequence"
+    ins_name = "Selector"
     type = "Sequence"
 
     def __init__(self,*args,**kwargs):

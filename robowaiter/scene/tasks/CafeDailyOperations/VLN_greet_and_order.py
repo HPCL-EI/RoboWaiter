@@ -100,7 +100,7 @@ class SceneVLM(Scene):
             # (1, self.control_walker, (8, False, 100, 60, 600, -90)), # 大胖男排队往前走一步
             # (2, self.control_walker, (9, False, 100, 60, 680, -90)), # 男灰黑色排队往前走一步
             # (6, self.customer_say, (7,"就是这个杯子！找到啦，好开心！")), # 红女士在Table1前
-            # (5, self.customer_say, (7, "不用了")),  # 红女士在Table1前
+            # (5, self.customer_say, (7, "不用了。")),  # 红女士在Table1前
 
 
 
@@ -141,6 +141,7 @@ class SceneVLM(Scene):
             (3, self.clean_walkers, ()),
             (1, self.add_walker, (17, 60, 1000)),# 增加警察，提醒下班啦
             (3, self.control_walkers_and_say, ([[[0, False, 150, 60, 520, 0, "下班啦！别忘了打扫卫生。"]]])),
+            (3, self.control_walkers_and_say, ([[[0, False, 150, 60, 520, 0, "不用了。"]]])),
 
 
 

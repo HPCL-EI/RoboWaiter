@@ -6,7 +6,7 @@
 create_sub_task
 {"goal":"On(Coffee,CoffeeTable)"}00
 
-不用了
+不用了。
 好的，您有需要再跟我说
 stop_serve
 {}
@@ -90,6 +90,11 @@ create_sub_task
 create_sub_task
 {"goal":"Is(AC,On),Is(Curtain,Off)"}
 
+
+下班啦！别忘了打扫卫生。
+收到！请问您需要来点什么吗？
+create_sub_task
+"{""Is(Floor,Clean)"",""Is(Table1,Clean)"",""Is(Chairs,Clean)"",""Is(AC,Off)"",""Is(HallLight,Off)"",""Is(TubeLight,Off)"",""Is(Curtain,Off)""}"
 
 
 请问洗手间在哪里？

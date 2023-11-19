@@ -370,7 +370,7 @@ def get_id_object_pixels(id, scene):
 
 
 
-def get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio):
+def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
     cur_obstacle_pixel_points = []
     object_pixels = {}
     colors = [
@@ -439,13 +439,16 @@ def get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio):
         world_point = transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
         cur_obstacle_world_points.append([world_point[0], world_point[1]])
         # print(f"{pixel}：{[world_point[0], world_point[1]]}")
-
+    plt.subplot(2, 1, 1)
     plt.imshow(d_color, cmap="gray" if "depth" in im_depth.name.lower() else None)
+    plt.axis('off')
+    plt.title("目标检测")
+    # plt.tight_layout()
 
     for key, value in object_pixels.items():
-        if key == 101 or key == 0:
+        if key == 0:
             continue
-        if key in [91, 84]:
+        if key in [91, 84, 96, 87, 102, 106, 120, 85,113, 101, 83]:
             X = np.array(value)
             db.fit(X)
             labels = db.labels_
@@ -487,7 +490,8 @@ def get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio):
 
         # 将矩形框添加到图像中
         # plt.gca().add_patch(rect)
-    plt.show()
+
+    # plt.show()
     return cur_obstacle_world_points
 
 

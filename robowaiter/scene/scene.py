@@ -51,7 +51,9 @@ class Scene:
     robot = None
     event_list = []
     new_event_list = []
-    show_bubble = False
+    signal_event_list = []
+    # show_bubble = True
+    event_signal = "None"
 
     default_state = {
         "map": {
@@ -62,7 +64,9 @@ class Scene:
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-         'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Table1)',
+         'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Bar)',
+         #'Exist(Softdrink)', 'On(Softdrink,Table1)',
+        'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
         "obj_mem":{},
@@ -71,7 +75,8 @@ class Scene:
         "greeted_customers":set(),
         "attention":{},
         "serve_state":{},
-        "chat_history":{}
+        "chat_history":{},
+        "wait_history":set()
     }
     """
     status:
@@ -93,11 +98,16 @@ class Scene:
         self.time = 0
         self.sub_task_seq = None
 
+        self.show_bubble = True
+
         # init robot
         if robot:
             robot.set_scene(self)
             robot.load_BT()
         self.robot = robot
+
+        self.robot_changed = False
+        self.last_event_time = 0
 
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
@@ -123,6 +133,25 @@ class Scene:
         self.filename = os.path.join(root_path, 'robowaiter/proto/map_1.pkl')
         with open(self.filename, 'rb') as file:
             self.map_file = pickle.load(file)
+
+        # tool register
+        self.all_loc_en = ['bar', 'Table', 'sofa', 'stove', 'Gate', 'light switch', 'airconditioner switch', 'cabinet', 'bathroom', 'window', 'audio',
+                      'lounge area', 'workstation', 'service counter', 'cashier counter', 'corner', 'cake display', 'ChargingStations',
+                      'refrigerator', 'bookshelf']
+
+        self.loc_map_en = {'bar': {'工作台', '服务台', '收银台', '蛋糕柜'}, 'Table': {'大门', '休闲区', '墙角'},
+                      'sofa': {'餐桌', '窗户', '音响', '休闲区', '墙角', '书架'},
+                      'stove': {'吧台', '橱柜', '工作台', '服务台', '收银台', '蛋糕柜', '冰箱'},
+                      'Gate': {'吧台', '灯开关', '空调开关', '卫生间', '墙角'}, 'light switch': {'大门', '空调开关', '卫生间', '墙角'},
+                      'airconditioner switch': {'大门', '灯开关', '卫生间', '墙角'},
+                      'cabinet': {'灶台', '吧台', '工作台', '服务台', '收银台', '蛋糕柜', '充电处', '冰箱'}, 'bathroom': {'大门', '墙角'},
+                      'window': {'餐桌', '沙发', '休闲区'}, 'audio': {'餐桌', '沙发', '休闲区', '墙角', '书架'},
+                      'lounge area': {'沙发', '餐桌', '墙角', '书架', '音响'}, 'workstation': {'吧台', '服务台', '收银台'},
+                      'service counter': {'吧台', '工作台', '收银台'}, 'cashier counter': {'吧台', '工作台', '服务台'},
+                      'corner': {'卫生间', '沙发', '灯开关', '空调开关', '音响', '休闲区', '书架'},
+                      'cake display': {'吧台', '橱柜', '服务台', '收银台', '冰箱'},
+                      'ChargingStations': {'吧台', '餐桌', '沙发', '休闲区', '工作台', '服务台', '收银台', '墙角', '书架'},
+                      'refrigerator': {'吧台', '服务台', '蛋糕柜'}, 'bookshelf': {'餐桌', '沙发', '窗户', '休闲区', '墙角'}}
 
 
     def reset(self):
@@ -153,8 +182,9 @@ class Scene:
 
         self.deal_event()
         self.deal_new_event()
+        self.deal_signal_event()
         self._step()
-        self.robot.step()
+        self.robot_changed = self.robot.step()
 
     def deal_new_event(self):
         if len(self.new_event_list)>0:
@@ -164,6 +194,21 @@ class Scene:
                 print(f'event: {t}, {func.__name__}')
                 self.new_event_list.pop(0)
                 func(*args)
+
+    def deal_signal_event(self):
+        if len(self.signal_event_list)>0:
+            next_event = self.signal_event_list[0]
+            t, func,args = next_event
+            if t < 0: #一直等待机器人行动，直到机器人无行动
+                if self.robot_changed:
+                    return
+            if (t >= 0) and (self.time - self.last_event_time < t):
+                return
+
+            print(f'event: {t}, {func.__name__}')
+            self.signal_event_list.pop(0)
+            self.last_event_time = self.time
+            func(*args)
 
 
     def deal_event(self):
@@ -315,6 +360,12 @@ class Scene:
         for i in range(len(w)):
             self.state["customer_mem"][w[i].name] = i
 
+    def remove_walkers(self,IDs=[0]):
+        s = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+        scene = stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=IDs, scene=self.sceneID))
+        time.sleep(2)
+        return
+
 
     def clean_walker(self):
         stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
@@ -460,7 +511,7 @@ class Scene:
             name = self.walker_index2mem(name)
 
         print(f'{name} say: {sentence}')
-        if show_bubble:
+        if self.show_bubble and show_bubble:
             self.walker_bubble(name,sentence)
         self.state['chat_list'].append((name,sentence))
 
@@ -584,7 +635,12 @@ class Scene:
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
         obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=5),
                     # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
-                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=9),
+                    # GrabSim_pb2.ObjectList.Object(x=340, y=960, z=88, roll=0, pitch=0, yaw=90, type=7),
+                    # GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=90, type=9),
+                    # GrabSim_pb2.ObjectList.Object(x=340, y=952, z=88, roll=0, pitch=0, yaw=90, type=4),
+                    GrabSim_pb2.ObjectList.Object(x=-102, y=10, z=90, roll=0, pitch=0, yaw=90, type=7),
+                    GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 70, z=95, roll=0, pitch=0, yaw=0, type=9),
+
                     ]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)

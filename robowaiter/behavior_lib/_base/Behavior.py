@@ -30,8 +30,8 @@ class Bahavior(ptree.behaviour.Behaviour):
     # all_place=set()
 
     place_xyz_dic={
-        'Bar': (247.0, 520.0, 180.0), #(247.0, 520.0, 100.0)
-        'Bar2': (240.0, 40.0, 70.0),
+        'Bar': (247.0, 520.0, 100.0), #(247.0, 520.0, 100.0)
+        'Bar2': (240.0, 40.0, 100.0),
         'WaterTable':(-70.0, 500.0, 107),
         'CoffeeTable':(250.0, 310.0, 100.0),
         'Table1': (340.0, 900.0, 99.0),
@@ -41,7 +41,7 @@ class Bahavior(ptree.behaviour.Behaviour):
 
         'QuietTable1':(480,1300,90),
         'QuietTable2':(250,-240,-65),
-        'BrightTable1':(230,1200,135),
+        'BrightTable1':(230,1200,-135),
         'BrightTable2': (65, 1000, 135),
         'BrightTable3': (-80, 850, 135),
         'BrightTable4': (-270, 520, 150),
@@ -81,9 +81,10 @@ class Bahavior(ptree.behaviour.Behaviour):
 
 
     # let behavior node interact with the scene
-    def set_scene(self, scene):
-        self.scene = scene
-        self.robot = scene.robot
+    def set_scene(self, scene=None):
+        if scene:
+            self.scene = scene
+            self.robot = scene.robot
 
     def setup(self, **kwargs: Any) -> None:
         return super().setup(**kwargs)

@@ -28,18 +28,21 @@ class SceneOT(Scene):
         # self.add_walkers([[0, 880], [250, 1200]])
 
         # 展示顾客，前8个id是小孩，后面都是大人
-        for i in range(4):
+        for i in range(20):
             self.add_walker(i,50,300 + i * 50)
-        name1 = self.walker_index2mem(1)
-        name2 = self.walker_index2mem(3)
 
-        self.remove_walker(0,2)
-
-        index1 = self.state["customer_mem"][name1]
-        index2 = self.state["customer_mem"][name2]
-
-        self.walker_bubble(name1,f"我是第{index1}个")
-        self.walker_bubble(name2,f"我是第{index2}个")
+        for w in self.status.walkers:
+            print(w.name)
+        # name1 = self.walker_index2mem(1)
+        # name2 = self.walker_index2mem(3)
+        #
+        # self.remove_walker(0,2)
+        #
+        # index1 = self.state["customer_mem"][name1]
+        # index2 = self.state["customer_mem"][name2]
+        #
+        # self.walker_bubble(name1,f"我是第{index1}个")
+        # self.walker_bubble(name2,f"我是第{index2}个")
 
     def _run(self):
         pass

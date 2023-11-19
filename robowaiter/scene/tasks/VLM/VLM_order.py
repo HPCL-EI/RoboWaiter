@@ -10,12 +10,12 @@ class SceneVLM(Scene):
     def __init__(self, robot):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
-        self.new_event_list = [
+        self.signal_event_list = [
             (3, self.add_walker,  (20,0,700)),
-            # (5, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
-            # # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
-            # (8, self.customer_say, (6, "来杯酸奶吧。")),
-            # (7, self.control_walker, (6, False, 100, -250, 480, 0)),  #(-100,600)
+            (1, self.control_walker, (4, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
+            # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
+            (-1, self.customer_say, (4, "来杯酸奶吧。")),
+            (-1, self.control_walker, (4, False, 100, -250, 480, 0)),  #(-100,600)
 
             # 有人提出要开空调和关窗帘
             # bar (60, 520)
@@ -24,10 +24,10 @@ class SceneVLM(Scene):
             # (35, self.customer_say, (7,"好热呀！太阳也好大！")),
             # (45, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "谢谢，这下凉快了！"]]])),
 
-            (5, self.add_walker, (0, 0, 0)),
-            (6, self.control_walker, (7, False, 100, 60, 520, 180)),
-            (7, self.customer_say, (7,"好热呀！太阳也好大！")),
-            (8, self.control_walkers_and_say, ([[[7, False, 100, 270, -240, -65, "谢谢，这下凉快了！"]]])),
+            (3, self.add_walker, (0, 0, 0)),
+            (1, self.control_walker, (5, False, 100, 60, 520, 180)),
+            (1, self.customer_say, (5,"好热呀！太阳也好大！")),
+            (-1, self.control_walkers_and_say, ([[[5, False, 100, 270, -240, -65, "谢谢，这下凉快了！"]]])),
         ]
 
     def _reset(self):

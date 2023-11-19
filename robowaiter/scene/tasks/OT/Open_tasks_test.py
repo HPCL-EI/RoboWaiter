@@ -17,13 +17,18 @@ class SceneOT(Scene):
     def __init__(self, robot):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
-        self.new_event_list = [
-            (3, self.customer_say, ("System","来一号桌"))
+        self.signal_event_list = [
+            # (3, self.customer_say, ("System","来一号桌")),
+            # (-1, self.customer_say, ("System","回去吧")),
             # (5, self.set_goal("At(Robot,BrightTable4)"))
+        ]
+        self.event_list = [
+            (3, self.set_goal("On(VacuumCup,Bar)"))
         ]
 
     def _reset(self):
         # self.add_walkers([[0, 880], [250, 1200]])
+        self.gen_obj()
         pass
 
 

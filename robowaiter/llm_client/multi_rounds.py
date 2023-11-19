@@ -154,7 +154,7 @@ def ask_llm(question,history, func_map=None, retry=3):
                                       "你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
             else:
                 reply = fix_questions_dict[question]["answer"]
-                result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},请把按照以下句子对顾客说，{reply}, 尽量简短。\n")
+                result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},把返回的英文名词翻译成中文,请把按照以下句子对顾客说，{reply}, 尽量简短。\n")
 
             message = {'role': 'assistant', 'content': result, 'name': None,
                        'function_call': None}

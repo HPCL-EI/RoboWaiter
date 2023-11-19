@@ -35,8 +35,11 @@ class SceneGQA(Scene):
 if __name__ == '__main__':
     import os
     from robowaiter.robot.robot import Robot
+    from robowaiter.utils.basic import get_root_path
+    root_path = get_root_path()
+    ptml_path = os.path.join(root_path, 'robowaiter/robot/DefaultNLP.ptml')
 
-    robot = Robot()
+    robot = Robot(ptml_path=ptml_path)
 
     # create task
     task = SceneGQA(robot)

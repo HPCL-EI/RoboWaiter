@@ -111,10 +111,10 @@ def dot_tree(
         if with_qualified_names:
             node_label += f"\n({utilities.get_fully_qualified_name(behaviour)})"
         '''
-        if node_name == "Sequence":
-            node_name = ">"
-        if node_name == "Selector":
-            node_name = "?"
+        # if node_name == "Sequence":
+        #     node_name = ">"
+        # if node_name == "Selector":
+        #     node_name = "?"
         return node_name
 
     fontsize = 20

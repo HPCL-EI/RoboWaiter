@@ -43,6 +43,8 @@ create_sub_task
 {"goal":"On(Coffee,BrightTable6)"}
 
 
+
+
 我昨天保温杯好像落在你们咖啡厅了，你看到了吗？
 是的，我有印象，保温杯在大厅的2号桌子上。
 get_object_info

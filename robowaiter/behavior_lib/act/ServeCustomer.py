@@ -20,6 +20,11 @@ class ServeCustomer(Act):
         # if self.scene.time - self.scene.state["serve_state"]["last_chat_time"] > 10:
         #     self.chat_bubble
 
+        if self.scene.state['attention']['customer'] == {}:
+            goal = Act.place_xy_yaw_dic['Bar']
+            self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
+
+
         customer = self.scene.state["attention"]["customer"]
         if customer not in self.scene.state["serve_state"]:
             self.scene.state["serve_state"][customer] = {
@@ -32,8 +37,8 @@ class ServeCustomer(Act):
         if self.scene.time - serve_state['last_chat_time'] > 3:
             serve_state['served'] = True
             del self.scene.state["attention"]["customer"]
-            goal = Act.place_xyz_dic['Bar']
-            self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
+
+
 
         # goal = Act.place_xyz_dic['Bar']
         # self.scene.walk_to(goal[0]-5,goal[1], 180, 180, 0)

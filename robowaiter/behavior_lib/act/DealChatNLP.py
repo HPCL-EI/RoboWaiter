@@ -5,11 +5,8 @@ from robowaiter.llm_client.multi_rounds import ask_llm, new_history
 import random
 
 
-import spacy
-nlp = spacy.load('en_core_web_lg')
 
-
-class DealChat(Act):
+class DealChatNLP(Act):
     def __init__(self):
         super().__init__()
         self.chat_history = ""
@@ -64,6 +61,10 @@ class DealChat(Act):
         self.scene.robot.expand_sub_task_tree(goal_set)
 
     def get_object_info(self,**args):
+
+        import spacy
+        nlp = spacy.load('en_core_web_lg')
+
         try:
             obj = args['obj']
 
@@ -101,6 +102,10 @@ class DealChat(Act):
         return near_object
 
     def find_location(self, **args):
+
+        import spacy
+        nlp = spacy.load('en_core_web_lg')
+
         try:
             location = args['obj']
             self.function_success = True

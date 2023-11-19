@@ -76,7 +76,8 @@ class Scene:
         "attention":{},
         "serve_state":{},
         "chat_history":{},
-        "wait_history":set()
+        "wait_history":set(),
+        "anomaly": None
     }
     """
     status:
@@ -766,7 +767,7 @@ class Scene:
             scene = stub.Do(action)
             print(scene.info)
 
-    def navigation_move(self, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, db, scene_id=0, map_id=11):
+    def navigation_move(self, plt, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, db, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
         walk_value = [scene.location.X, scene.location.Y]
@@ -782,7 +783,7 @@ class Scene:
             cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                               objs_name_set)
 
-            cur_obstacle_world_points = camera.get_obstacle_point(db, scene, cur_obstacle_world_points,map_ratio)
+            cur_obstacle_world_points = camera.get_obstacle_point(plt, db, scene, cur_obstacle_world_points,map_ratio)
 
 
             # if scene.info == "Unreachable":
@@ -804,7 +805,7 @@ class Scene:
                 cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                                   objs_name_set)
 
-                cur_obstacle_world_points = camera.get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio)
+                cur_obstacle_world_points = camera.get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio)
 
 
                 # if scene.info == "Unreachable":

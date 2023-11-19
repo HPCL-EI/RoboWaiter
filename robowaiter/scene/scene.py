@@ -52,7 +52,7 @@ class Scene:
     event_list = []
     new_event_list = []
     signal_event_list = []
-    show_bubble = False
+    # show_bubble = True
     event_signal = "None"
 
     default_state = {
@@ -64,7 +64,9 @@ class Scene:
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-         'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Table1)',
+         'Holding(Nothing)','Exist(Yogurt)','Exist(BottledDrink)','On(Yogurt,Bar)','On(BottledDrink,Bar)',
+         #'Exist(Softdrink)', 'On(Softdrink,Table1)',
+        'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
         "obj_mem":{},
@@ -94,6 +96,8 @@ class Scene:
         self.start_time = time.time()
         self.time = 0
         self.sub_task_seq = None
+
+        self.show_bubble = True
 
         # init robot
         if robot:
@@ -174,16 +178,15 @@ class Scene:
         if len(self.signal_event_list)>0:
             next_event = self.signal_event_list[0]
             t, func,args = next_event
-            if t < 0 and self.robot_changed: #一直等待机器人行动，直到机器人无行动
-                return
+            if t < 0: #一直等待机器人行动，直到机器人无行动
+                if self.robot_changed:
+                    return
             if t > 0:
                 time.sleep(t)
 
             print(f'event: {t}, {func.__name__}')
             self.signal_event_list.pop(0)
             func(*args)
-
-
 
     def deal_event(self):
         if len(self.event_list)>0:
@@ -334,6 +337,12 @@ class Scene:
         for i in range(len(w)):
             self.state["customer_mem"][w[i].name] = i
 
+    def remove_walkers(self,IDs=[0]):
+        s = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+        scene = stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=IDs, scene=self.sceneID))
+        time.sleep(2)
+        return
+
 
     def clean_walker(self):
         stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
@@ -479,7 +488,7 @@ class Scene:
             name = self.walker_index2mem(name)
 
         print(f'{name} say: {sentence}')
-        if show_bubble:
+        if self.show_bubble and show_bubble:
             self.walker_bubble(name,sentence)
         self.state['chat_list'].append((name,sentence))
 
@@ -603,9 +612,11 @@ class Scene:
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
         obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=5),
                     # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
-                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=9),
-
-                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z=88, roll=0, pitch=0, yaw=0, type=9),
+                    # GrabSim_pb2.ObjectList.Object(x=340, y=960, z=88, roll=0, pitch=0, yaw=90, type=7),
+                    # GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=90, type=9),
+                    # GrabSim_pb2.ObjectList.Object(x=340, y=952, z=88, roll=0, pitch=0, yaw=90, type=4),
+                    GrabSim_pb2.ObjectList.Object(x=-102, y=10, z=90, roll=0, pitch=0, yaw=90, type=7),
+                    GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 70, z=95, roll=0, pitch=0, yaw=0, type=9),
 
                     ]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))

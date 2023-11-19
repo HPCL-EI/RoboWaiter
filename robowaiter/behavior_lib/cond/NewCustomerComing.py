@@ -22,7 +22,7 @@ class NewCustomerComing(Cond):
         for walker in scene.walkers:
             x, y, yaw = walker.pose.X, walker.pose.Y, walker.pose.Yaw
             # 到达一定区域就打招呼
-            if y >= 450 and y <= 620 and x >= 40 and x <= 100 and yaw>=-10 and yaw <=10:
+            if y >= 510 and y <= 530 and x >= 50 and x <= 70 and yaw>=-10 and yaw <=10: #450-620
                 # close_to_bar = True
                 queue_list.append((x,y,walker.name))
 

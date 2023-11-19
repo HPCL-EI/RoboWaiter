@@ -32,6 +32,7 @@ create_sub_task
 create_sub_task
 {"goal":"At(Robot,BrightTable6)"}
 
+
 你们这有什么饮料嘛？
 我们咖啡厅提供各种口味咖啡，水，冰红茶，酸奶等饮品，还提供点心蛋糕等甜品。您想点什么？
 
@@ -41,6 +42,26 @@ ok，请稍等！
 create_sub_task
 {"goal":"On(Coffee,BrightTable6)"}
 
+
+我昨天保温杯好像落在你们咖啡厅了，你看到了吗？
+是的，我有印象，保温杯在大厅的2号桌子上。
+get_object_info
+{"obj":"2号桌子"}
+
+
+给我来份午餐套餐。
+本店的午餐套餐包括咖啡和点心，请问您是打包还是堂食？
+
+打包吧，快点！
+请稍等，马上就好！
+create_sub_task
+{"goal":"On(Dessert,Bar),On(Coffee,Bar)"}
+
+
+你可以帮我拿来吗，我在前门的桌子前等你。
+当然，请稍等！
+create_sub_task
+{"goal":"On(VacuumCup,Table1)"}
 
 麻烦啦！
 没事儿，为您服务是我的荣幸！
@@ -60,6 +81,7 @@ create_sub_task
 好的没问题，请稍等！
 create_sub_task
 {"goal":"On(Yogurt,WaterTable)"}
+
 
 好热呀！太阳也好大！
 抱歉，我这就去开空调和关窗帘。

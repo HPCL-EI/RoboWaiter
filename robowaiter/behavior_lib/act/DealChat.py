@@ -10,7 +10,8 @@ class DealChat(Act):
         self.function_success = False
         self.func_map = {
             "create_sub_task": self.create_sub_task,
-            "get_object_info": self.get_object_info
+            "get_object_info": self.get_object_info,
+            "stop_serve": self.stop_serve
         }
 
     def _update(self) -> ptree.common.Status:
@@ -70,3 +71,10 @@ class DealChat(Act):
             near_object = "大门"
 
         return near_object
+
+
+
+    def stop_serve(self,**args):
+
+
+        return "好的"

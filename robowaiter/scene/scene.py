@@ -51,7 +51,9 @@ class Scene:
     robot = None
     event_list = []
     new_event_list = []
+    signal_event_list = []
     show_bubble = False
+    event_signal = "None"
 
     default_state = {
         "map": {
@@ -98,6 +100,8 @@ class Scene:
             robot.set_scene(self)
             robot.load_BT()
         self.robot = robot
+
+        self.robot_changed = False
 
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
@@ -153,8 +157,9 @@ class Scene:
 
         self.deal_event()
         self.deal_new_event()
+        self.deal_signal_event()
         self._step()
-        self.robot.step()
+        self.robot_changed = self.robot.step()
 
     def deal_new_event(self):
         if len(self.new_event_list)>0:
@@ -164,6 +169,20 @@ class Scene:
                 print(f'event: {t}, {func.__name__}')
                 self.new_event_list.pop(0)
                 func(*args)
+
+    def deal_signal_event(self):
+        if len(self.signal_event_list)>0:
+            next_event = self.signal_event_list[0]
+            t, func,args = next_event
+            if t < 0 and self.robot_changed: #一直等待机器人行动，直到机器人无行动
+                return
+            if t > 0:
+                time.sleep(t)
+
+            print(f'event: {t}, {func.__name__}')
+            self.signal_event_list.pop(0)
+            func(*args)
+
 
 
     def deal_event(self):

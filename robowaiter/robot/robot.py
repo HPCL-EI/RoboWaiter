@@ -137,6 +137,9 @@ class Robot(object):
 
                 print("\n")
                 self.last_tick_output = bt_output
+                return True
+            else:
+                return False
 
 if __name__ == '__main__':
     pass

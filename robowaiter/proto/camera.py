@@ -405,8 +405,10 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
         objs_id[int(key)] = value
     # plt.imshow(d_depth, cmap="gray" if "depth" in im_depth.name.lower() else None)
     # plt.show()
-    #
-    # plt.imshow(d_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
+    plt.subplot(2, 2, 1)
+    plt.imshow(d_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
+    plt.axis("off")
+    plt.title("相机分割")
     # plt.show()
 
     d_depth = np.transpose(d_depth, (1, 0, 2))
@@ -439,7 +441,7 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
         world_point = transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
         cur_obstacle_world_points.append([world_point[0], world_point[1]])
         # print(f"{pixel}：{[world_point[0], world_point[1]]}")
-    plt.subplot(2, 1, 1)
+    plt.subplot(2, 2, 2)
     plt.imshow(d_color, cmap="gray" if "depth" in im_depth.name.lower() else None)
     plt.axis('off')
     plt.title("目标检测")

@@ -7,7 +7,6 @@ import pickle
 
 import matplotlib.pyplot as plt
 import numpy as np
-from robowaiter.scene import scene
 
 from robowaiter.algos.navigator.dstar_lite import DStarLite, euclidean_distance
 
@@ -94,6 +93,7 @@ class Navigator:
 if __name__ == '__main__':
 
     # 根据map计算并保存cost_map
+    from robowaiter.scene import scene
 
     file_name = 'map_4.pkl'
     if os.path.exists(file_name):

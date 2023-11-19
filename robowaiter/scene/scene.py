@@ -132,6 +132,25 @@ class Scene:
         with open(self.filename, 'rb') as file:
             self.map_file = pickle.load(file)
 
+        # tool register
+        self.all_loc_en = ['bar', 'Table', 'sofa', 'stove', 'Gate', 'light switch', 'airconditioner switch', 'cabinet', 'bathroom', 'window', 'audio',
+                      'lounge area', 'workstation', 'service counter', 'cashier counter', 'corner', 'cake display', 'ChargingStations',
+                      'refrigerator', 'bookshelf']
+
+        self.loc_map_en = {'bar': {'工作台', '服务台', '收银台', '蛋糕柜'}, 'Table': {'大门', '休闲区', '墙角'},
+                      'sofa': {'餐桌', '窗户', '音响', '休闲区', '墙角', '书架'},
+                      'stove': {'吧台', '橱柜', '工作台', '服务台', '收银台', '蛋糕柜', '冰箱'},
+                      'Gate': {'吧台', '灯开关', '空调开关', '卫生间', '墙角'}, 'light switch': {'大门', '空调开关', '卫生间', '墙角'},
+                      'airconditioner switch': {'大门', '灯开关', '卫生间', '墙角'},
+                      'cabinet': {'灶台', '吧台', '工作台', '服务台', '收银台', '蛋糕柜', '充电处', '冰箱'}, 'bathroom': {'大门', '墙角'},
+                      'window': {'餐桌', '沙发', '休闲区'}, 'audio': {'餐桌', '沙发', '休闲区', '墙角', '书架'},
+                      'lounge area': {'沙发', '餐桌', '墙角', '书架', '音响'}, 'workstation': {'吧台', '服务台', '收银台'},
+                      'service counter': {'吧台', '工作台', '收银台'}, 'cashier counter': {'吧台', '工作台', '服务台'},
+                      'corner': {'卫生间', '沙发', '灯开关', '空调开关', '音响', '休闲区', '书架'},
+                      'cake display': {'吧台', '橱柜', '服务台', '收银台', '冰箱'},
+                      'ChargingStations': {'吧台', '餐桌', '沙发', '休闲区', '工作台', '服务台', '收银台', '墙角', '书架'},
+                      'refrigerator': {'吧台', '服务台', '蛋糕柜'}, 'bookshelf': {'餐桌', '沙发', '窗户', '休闲区', '墙角'}}
+
 
     def reset(self):
         # 基类reset，默认执行仿真器初始化操作

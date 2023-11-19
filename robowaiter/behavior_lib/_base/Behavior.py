@@ -81,9 +81,10 @@ class Bahavior(ptree.behaviour.Behaviour):
 
 
     # let behavior node interact with the scene
-    def set_scene(self, scene):
-        self.scene = scene
-        self.robot = scene.robot
+    def set_scene(self, scene=None):
+        if scene:
+            self.scene = scene
+            self.robot = scene.robot
 
     def setup(self, **kwargs: Any) -> None:
         return super().setup(**kwargs)

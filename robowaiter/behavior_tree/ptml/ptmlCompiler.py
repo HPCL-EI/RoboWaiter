@@ -107,9 +107,12 @@ def format_trans_to_bracket(file_path: str) -> str:
         for i in range(level):
             ptml_new += '}'
 
-    import re
-    new_path = re.sub('\\\[a-zA-Z0-9_]*\.ptml', '/bracket_ptml.ptml', file_path)
-    with open(new_path, 'w+') as file:
+    file_name = os.path.basename(file_path).split(".")[0]
+    dir_path = os.path.dirname(file_path)
+    # import re
+    # new_path = re.sub('\\\[a-zA-Z0-9_]*\.ptml', '/bracket_ptml.ptml', file_path)
+    new_path = os.path.join(dir_path,file_name+"_bracket.ptml")
+    with open(new_path, 'w') as file:
         file.write(ptml_new)
     return new_path
 

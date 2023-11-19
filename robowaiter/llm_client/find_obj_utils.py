@@ -30,9 +30,8 @@ all_obj = ['马克杯', '香蕉', '牙膏', '面包', '软饮料', '酸奶', 'AD
 all_loc = ['吧台', '餐桌', '沙发', '灶台', '大门', '灯开关', '空调开关', '橱柜', '卫生间', '窗户', '音响', '休闲区', '工作台', '服务台', '收银台', '墙角',
               '蛋糕柜', '充电处', '冰箱', '书架']
 
-all_loc_en = ['bar', 'Table', 'sofa', 'stove', 'Gate', 'light switch', 'airconditioner switch', 'cabinet', 'bathroom', 'window',
-              'audio', 'lounge area', 'workstation', 'service counter', 'cashier counter', 'corner',
-              'cake display', 'ChargingStations', 'refrigerator', 'bookshelf']
+all_loc_en = ['bar', 'Table', 'sofa', 'stove', 'Gate', 'light switch', 'airconditioner switch', 'cabinet', 'bathroom', 'window','audio', 'lounge area',
+              'workstation', 'service counter', 'cashier counter', 'corner','cake display', 'ChargingStations', 'refrigerator', 'bookshelf']
 
 loc_map_en = {'bar': {'工作台', '服务台', '收银台', '蛋糕柜'},
            'Table': {'大门', '休闲区', '墙角'},

@@ -76,7 +76,8 @@ class Scene:
         "attention":{},
         "serve_state":{},
         "chat_history":{},
-        "wait_history":set()
+        "wait_history":set(),
+        "anomaly": None
     }
     """
     status:

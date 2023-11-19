@@ -14,7 +14,12 @@ class DealChat(Act):
         super().__init__()
         self.chat_history = ""
         self.function_success = False
-        self.func_map = {"create_sub_task": self.create_sub_task, "get_object_info": self.get_object_info, "find_location": self.find_location}
+        self.func_map = {
+            "create_sub_task": self.create_sub_task,
+            "get_object_info": self.get_object_info,
+            "stop_serve": self.stop_serve,
+            "find_location": self.find_location
+        }
 
     def _update(self) -> ptree.common.Status:
         # if self.scene.status?
@@ -29,13 +34,17 @@ class DealChat(Act):
 
         history = self.scene.state["chat_history"][name]
         self.scene.state["attention"]["customer"] = name
-        self.scene.state["serve_state"] = {"last_chat_time": self.scene.time, }
+        self.scene.state["serve_state"] = {
+            "last_chat_time": self.scene.time,
+        }
 
-        function_call, response = ask_llm(sentence, history, func_map=self.func_map)
+        function_call, response = ask_llm(sentence,history,func_map=self.func_map)
 
-        self.scene.chat_bubble(response)  # 机器人输出对话
+
+        self.scene.chat_bubble(response) # 机器人输出对话
 
         return ptree.common.Status.RUNNING
+
 
     def create_sub_task(self, **args):
         try:
@@ -54,7 +63,7 @@ class DealChat(Act):
 
         self.scene.robot.expand_sub_task_tree(goal_set)
 
-    def get_object_info(self, **args):
+    def get_object_info(self,**args):
         try:
             obj = args['obj']
 
@@ -113,3 +122,10 @@ class DealChat(Act):
             mp = list(self.loc_map_en[similar_word])
             near_location = random.choice(mp)
         return near_location
+
+    def stop_serve(self,**args):
+
+
+        return "好的"
+
+

@@ -51,7 +51,9 @@ class Scene:
     robot = None
     event_list = []
     new_event_list = []
+    signal_event_list = []
     show_bubble = False
+    event_signal = "None"
 
     default_state = {
         "map": {
@@ -98,6 +100,8 @@ class Scene:
             robot.set_scene(self)
             robot.load_BT()
         self.robot = robot
+
+        self.robot_changed = False
 
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["","制作咖啡","倒水","夹点心","拖地","擦桌子","开筒灯","搬椅子",    # 1-7
@@ -172,8 +176,9 @@ class Scene:
 
         self.deal_event()
         self.deal_new_event()
+        self.deal_signal_event()
         self._step()
-        self.robot.step()
+        self.robot_changed = self.robot.step()
 
     def deal_new_event(self):
         if len(self.new_event_list)>0:
@@ -183,6 +188,20 @@ class Scene:
                 print(f'event: {t}, {func.__name__}')
                 self.new_event_list.pop(0)
                 func(*args)
+
+    def deal_signal_event(self):
+        if len(self.signal_event_list)>0:
+            next_event = self.signal_event_list[0]
+            t, func,args = next_event
+            if t < 0 and self.robot_changed: #一直等待机器人行动，直到机器人无行动
+                return
+            if t > 0:
+                time.sleep(t)
+
+            print(f'event: {t}, {func.__name__}')
+            self.signal_event_list.pop(0)
+            func(*args)
+
 
 
     def deal_event(self):
@@ -604,6 +623,9 @@ class Scene:
         obj_list = [GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z = 95, roll=0, pitch=0, yaw=0, type=5),
                     # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
                     GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=0, type=9),
+
+                    GrabSim_pb2.ObjectList.Object(x=340, y=960, z=88, roll=0, pitch=0, yaw=0, type=9),
+
                     ]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
@@ -714,7 +736,7 @@ class Scene:
             scene = stub.Do(action)
             print(scene.info)
 
-    def navigation_move(self, cur_objs, objs_name_set, v_list, scene_id=0, map_id=11):
+    def navigation_move(self, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
         walk_value = [scene.location.X, scene.location.Y]
@@ -727,6 +749,8 @@ class Scene:
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
+            cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points,map_ratio)
+
             cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                               objs_name_set)
             # if scene.info == "Unreachable":
@@ -744,11 +768,14 @@ class Scene:
                 print("walk_v", walk_v)
                 action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
                 scene = stub.Do(action)
+
+                cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points, map_ratio)
+
                 cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                                   objs_name_set)
                 # if scene.info == "Unreachable":
                 print(scene.info)
-        return cur_objs, objs_name_set
+        return cur_objs, objs_name_set, cur_obstacle_world_points
 
     def isOutMap(self, pos, min_x=-200, max_x=600, min_y=-250, max_y=1300):
         if pos[0] <= min_x or pos[0] >= max_x or pos[1] <= min_y or pos[1] >= max_y:
@@ -789,21 +816,21 @@ class Scene:
             free_array = np.array(free_list)
             print(f"主动探索完成！以下是场景中可以到达的点：{free_array}；其余点均是障碍物不可达")
 
-            # 画地图: X行Y列，第一行在下面
-            plt.clf()
-            plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
-                       extent=(-250, 1300,
-                               -200, 600))
-            plt.show()
-            print("已绘制完成地图！！！")
+            # # 画地图: X行Y列，第一行在下面
+            # plt.clf()
+            # plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
+            #            extent=(-250, 1300,
+            #                    -200, 600))
+            # plt.show()
+            # print("已绘制完成地图！！！")
 
             return None
-        # 画地图: X行Y列，第一行在下面
-        plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
-                   extent=(-250, 1300,
-                           -200, 600))
-        plt.show()
-        print("已绘制部分地图！")
+        # # 画地图: X行Y列，第一行在下面
+        # plt.imshow(self.auto_map, cmap='binary', alpha=0.5, origin='lower',
+        #            extent=(-250, 1300,
+        #                    -200, 600))
+        # plt.show()
+        # print("已绘制部分地图！")
         return self.getNearestFrontier(cur_pos, self.all_frontier_list)
 
     def isNewFrontier(self, pos, map):

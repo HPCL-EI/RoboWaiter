@@ -41,7 +41,7 @@ class Bahavior(ptree.behaviour.Behaviour):
 
         'QuietTable1':(480,1300,90),
         'QuietTable2':(250,-240,-65),
-        'BrightTable1':(230,1200,135),
+        'BrightTable1':(230,1200,-135),
         'BrightTable2': (65, 1000, 135),
         'BrightTable3': (-80, 850, 135),
         'BrightTable4': (-270, 520, 150),

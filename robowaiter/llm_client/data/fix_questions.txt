@@ -101,3 +101,16 @@ create_sub_task
 洗手间在这附近
 get_object_info
 {"obj":"洗手间"}
+
+
+
+给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。
+好的，请稍等。
+create_sub_task
+{"goal":"On(BottledDrink,WaterTable),On(Yogurt,WaterTable)"}
+
+
+好热呀，想开空调，想要温度调低点！
+抱歉，我马上去开空调并调低空调温度。
+create_sub_task
+{"goal":"Is(ACTemperature,Down)"}

@@ -11,12 +11,11 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.signal_event_list = [
-            (3, self.add_walker,  (20,0,700)),
+            (3, self.add_walker,  (0,0,700)),
             (1, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
-            # (10, self.customer_say, (6,"给我来杯酸奶和咖啡，哦对，再倒一杯水。")),
-            # (-1, self.customer_say, (6, "来杯酸奶吧。")),
-            (3, self.customer_say, (6, "给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。")),
-            (5, self.control_walker, (6, False, 100, -250, 480, 0)),  #(-100,600)
+            (3, self.customer_say, (6, "好热呀，想开空调，想要温度调低点！")),
+            (5, self.control_walker, (6, False, 200, 60, 80, 0)),
+            (-1, self.customer_say, (6, "谢谢！这下凉快了！")),  #(-100,600)
 
             # 有人提出要开空调和关窗帘
             # bar (60, 520)

@@ -41,10 +41,9 @@ class SceneVLM(Scene):
             (8, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "你们这有什么饮料嘛？"]]])), # 20 胖胖男到了 BrightTable6
             (2, self.customer_say, (1, "咖啡有哪些呢？")),# 10
             (2, self.customer_say, (1,"来杯卡布奇诺吧。")), # 15
-            (2, self.customer_say, (1, "来杯卡布奇诺吧。")),
 
             # # 场景3：有位女士要杯水和冰红茶
-            (0,self.add_walkers,([[[21, 65, 1000, -90],[32, -80, 850, 135],[1, 60, 420, 135]]])),
+            (30 ,self.add_walkers,([[[21, 65, 1000, -90],[32, -80, 850, 135],[1, 60, 420, 135]]])),
             (0, self.control_walker, (5, True, 50, 250, 1200, 180)), #设置id=4 的2小男孩随机游走红随机游走
             (0, self.add_walkers, ([[[48, 60, 520,0], [31, 60, 600, -90], [20, 60, 680, -90],[9, 60, 760, -90],[29, -290, 400, 180]]])),
 
@@ -60,7 +59,7 @@ class SceneVLM(Scene):
             (0, self.control_walker, (9, False, 100, 100, 760, 180)),
             (0, self.control_walker, (9, True, 100, 0, 0, 180)),
             # # ### 增加场景，孩子说热要开空调 或者9号随机游走和说
-            (90, self.customer_say, (6, "谢谢！")), #倒水+取放酸奶 90s
+            (90, self.customer_say, (6, "谢谢！不用了。")), #倒水+取放酸奶 90s
 
 
 

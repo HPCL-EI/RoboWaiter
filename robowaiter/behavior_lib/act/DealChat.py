@@ -34,8 +34,9 @@ class DealChat(Act):
 
         history = self.scene.state["chat_history"][name]
         self.scene.state["attention"]["customer"] = name
-        self.scene.state["serve_state"] = {
+        self.scene.state["serve_state"][name] = {
             "last_chat_time": self.scene.time,
+            "served": False
         }
 
         function_call, response = ask_llm(sentence,history,func_map=self.func_map)
@@ -128,7 +129,10 @@ class DealChat(Act):
     #     return near_location
 
     def stop_serve(self,**args):
+        customer = self.scene.state["attention"]["customer"]
+        serve_state = self.scene.state["serve_state"][customer]
 
+        serve_state['served'] = True
 
         return "好的"
 

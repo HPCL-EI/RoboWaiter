@@ -1,14 +1,11 @@
-from dotenv import load_dotenv
-
-load_dotenv()
 import utils
-# from functions import FUNCTIONS
-from functions_zh import FUNCTIONS
+from functions import FUNCTIONS
 from agent import Agent
 
-
 import urllib3
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 def run_agent_loop(agent):
     while True:
@@ -25,10 +22,15 @@ if __name__ == "__main__":
     human = utils.get_human_text()
     system = utils.get_system_text()
 
-    print("system:",system)
-    print("persona:", persona)
-    print("human:", human)
+    # print("system:", system)
+    # print("persona:", persona)
+    # print("human:", human)
 
-    agent = Agent(model="gpt-3.5-turbo-16k-0613", system=system, functions_description=FUNCTIONS, persona_notes=persona,
-                  human_notes=human)
+    agent = Agent(
+        model="RoboWaiter",
+        system=system,
+        functions_description=FUNCTIONS,
+        persona_notes=persona,
+        human_notes=human,
+    )
     run_agent_loop(agent)

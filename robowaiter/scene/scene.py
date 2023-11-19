@@ -766,7 +766,7 @@ class Scene:
             scene = stub.Do(action)
             print(scene.info)
 
-    def navigation_move(self, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, scene_id=0, map_id=11):
+    def navigation_move(self, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, db, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
         walk_value = [scene.location.X, scene.location.Y]
@@ -779,10 +779,12 @@ class Scene:
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
-            cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points,map_ratio)
-
             cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                               objs_name_set)
+
+            cur_obstacle_world_points = camera.get_obstacle_point(db, scene, cur_obstacle_world_points,map_ratio)
+
+
             # if scene.info == "Unreachable":
             print(scene.info)
 
@@ -799,10 +801,12 @@ class Scene:
                 action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
                 scene = stub.Do(action)
 
-                cur_obstacle_world_points = camera.get_obstacle_point(scene, cur_obstacle_world_points, map_ratio)
-
                 cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                                                                   objs_name_set)
+
+                cur_obstacle_world_points = camera.get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio)
+
+
                 # if scene.info == "Unreachable":
                 print(scene.info)
         return cur_objs, objs_name_set, cur_obstacle_world_points
@@ -844,7 +848,7 @@ class Scene:
         if len(self.all_frontier_list) == 0:
             free_list = list(self.visited)
             free_array = np.array(free_list)
-            print(f"主动探索完成！以下是场景中可以到达的点：{free_array}；其余点均是障碍物不可达")
+            print(f"主动探索完成！保存了二维地图与环境中重点物品语义信息！")
 
             # # 画地图: X行Y列，第一行在下面
             # plt.clf()

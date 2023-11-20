@@ -116,7 +116,7 @@ class Scene:
 
         self.show_bubble = True
         # 图像分割
-        self.take_picture = True
+        self.take_picture = False
         self.map_ratio = 5
         self.map_map = np.zeros((math.ceil(950 / self.map_ratio), math.ceil(1850 / self.map_ratio)))
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))

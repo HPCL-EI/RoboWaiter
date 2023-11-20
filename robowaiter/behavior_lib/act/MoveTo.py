@@ -40,8 +40,10 @@ class MoveTo(Act):
         # 走到固定的地点
         if self.target_place in Act.place_xy_yaw_dic:
             goal = Act.place_xy_yaw_dic[self.target_place]
-            # self.scene.walk_to(goal[0]+1,goal[1],goal[2])
-            self.scene.navigator.navigate(goal=(goal[0] + 1, goal[1]), animation=False)
+            if self.scene.is_nav_walk:
+                self.scene.navigator.navigate(goal=(goal[0] + 1, goal[1]), animation=False)
+            else:
+                self.scene.walk_to(goal[0]+1,goal[1],goal[2])
         # 走到物品边上
         else:
             # 是否用容器装好
@@ -66,9 +68,6 @@ class MoveTo(Act):
                 return ptree.common.Status.FAILURE
             self.scene.move_to_obj(obj_id=obj_id)
             # #####################################
-
-
-
 
         if self.scene.take_picture:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)

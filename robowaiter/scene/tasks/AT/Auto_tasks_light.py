@@ -16,13 +16,13 @@ class SceneAT(Scene):
         super().__init__(robot)
         self.signal_event_list = [
             # (3, self.customer_say, ("System","来一号桌")),
-            # (-1, self.customer_say, ("System","回去吧")),
-            (5, self.new_set_goal, ("Is(TubeLight,Off),Is(Curtain,Off)",))
+            (2, self.customer_say, (0,"可以关筒灯和关窗帘吗？")),
+            # (5, self.new_set_goal, ("Is(TubeLight,Off),Is(Curtain,Off)",))
         ]
 
 
     def _reset(self):
-        # self.add_walker(1085, 2630, 220)
+        self.add_walker(23, 60, 520,0)
         # self.control_walker([self.walker_control_generator(0, False, 100, 755, 1900, 180)])
         pass
 

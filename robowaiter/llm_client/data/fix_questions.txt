@@ -125,3 +125,9 @@ create_sub_task
 OK，请跟我来！
 create_sub_task
 {"goal":"At(Robot,BrightTable5)"}
+
+
+可以关筒灯和关窗帘吗？
+好的，请稍等。
+create_sub_task
+{"goal":"Is(TubeLight,Off),Is(Curtain,Off)"}

@@ -122,6 +122,8 @@ class Scene:
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
         self.infoCount = 0
 
+        self.is_nav_walk = False
+
         file_name = os.path.join(root_path,'robowaiter/algos/navigator/map_5.pkl')
         if os.path.exists(file_name):
             with open(file_name, 'rb') as file:
@@ -656,9 +658,11 @@ class Scene:
             obj_y += 2.5
         walk_v[0] += 1
         print("walk:", walk_v)
-        self.navigator.navigate(goal=(walk_v[0], walk_v[1]), animation=False)
-        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        # scene = stub.Do(action)
+        if self.is_nav_walk:
+            self.navigator.navigate(goal=(walk_v[0], walk_v[1]), animation=False)
+        else:
+            action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+            scene = stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
 
     # 移动到进行操作任务的指定地点
@@ -727,6 +731,10 @@ class Scene:
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
         scene = stub.Do(action)
         time.sleep(1.0)
+
+        if self.take_picture:
+            self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio,update_info_count=1)
+
 
         obj_loc = self.obj_loc[:]
         obj_loc[2] -= 5
@@ -1119,6 +1127,9 @@ class Scene:
         return world_coordinates
 
     def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0):
+
+        # if abs(self.last_take_pic_tim - self.time)<
+
         # db = DBSCAN(eps=4, min_samples=2)
         cur_obstacle_pixel_points = []
         cur_obstacle_world_points = []

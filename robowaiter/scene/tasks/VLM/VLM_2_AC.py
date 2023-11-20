@@ -13,8 +13,8 @@ class SceneVLM(Scene):
         self.signal_event_list = [
             (3, self.add_walker,  (0,0,700)),
             (1, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
-            (3, self.customer_say, (6, "好热呀，想开空调，想要温度调低点！")),
-            (5, self.control_walker, (6, False, 200, 60, 80, 0)),
+            (2, self.customer_say, (6, "好热呀，想开空调，想要温度调低点！")),
+            (6, self.control_walker, (6, False, 200, 60, 80, 0)),
             (-1, self.customer_say, (6, "谢谢！这下凉快了！")),  #(-100,600)
 
             # 有人提出要开空调和关窗帘

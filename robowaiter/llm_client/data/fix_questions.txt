@@ -134,6 +134,17 @@ create_sub_task
 
 
 给我来杯咖啡，哦对，再倒一杯水。
-好的，请稍等。
+速速就好，请稍等！
 create_sub_task
 {"goal":"On(Water,WaterTable),On(Coffee,WaterTable)"}
+
+
+我想来份点心和酸奶。
+稍等片刻噢~
+create_sub_task
+{"goal":"On(Yogurt,Bar),On(Dessert,Bar)"}
+
+酸奶。
+稍等片刻噢~
+create_sub_task
+{"goal":"On(Yogurt,Bar)"}

@@ -11,10 +11,10 @@ class SceneVLN(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.new_event_list = [
-            # (2, self.customer_say, (0, "请问哪里有空位啊？")),
-            # (6, self.customer_say, (0, "我想坐高凳子。")),
+            (5, self.customer_say, (0, "请问哪里有空位啊？")),
+            (13, self.customer_say, (0, "我想坐高凳子。")),
             (3, self.customer_say, (0, "你带我去吧。")),
-            (15, self.control_walker, (0, False,100, -250, 480,-90)),
+            (45, self.control_walker, (0, False,100, -250, 480,-90)),
             (-1, self.customer_say, (0, "谢谢你！这儿还不错！")),
         ]
 

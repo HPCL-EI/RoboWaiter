@@ -131,3 +131,9 @@ create_sub_task
 好的，请稍等。
 create_sub_task
 {"goal":"Is(TubeLight,Off),Is(Curtain,Off)"}
+
+
+给我来杯咖啡，哦对，再倒一杯水。
+好的，请稍等。
+create_sub_task
+{"goal":"On(Water,WaterTable),On(Coffee,WaterTable)"}

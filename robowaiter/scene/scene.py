@@ -781,6 +781,9 @@ class Scene:
             GrabSim_pb2.ObjectList.Object(x=-102, y=10, z=90, roll=0, pitch=0, yaw=90, type=7),
             GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 70, z=95, roll=0, pitch=0, yaw=0,
                                           type=9),
+            GrabSim_pb2.ObjectList.Object(x=-115, y=200, z=85, roll=0, pitch=0, yaw=90, type=26), # Chess
+            GrabSim_pb2.ObjectList.Object(x=-115, y=250, z=85, roll=0, pitch=0, yaw=90, type=26),  # Chess
+            GrabSim_pb2.ObjectList.Object(x=-115, y=280, z=85, roll=0, pitch=0, yaw=90, type=35),  # Chess
 
         ]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))

@@ -11,14 +11,27 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.new_event_list = [
-            (3, self.add_walker,  (29,60,520)),
-            (5, self.customer_say, (6,"请问哪里有空位啊？")),
+            # (5, self.customer_say, (0, "请问哪里有空位啊？")),
+            # (5, self.customer_say, (0, "我想坐高脚凳子。")),
+            (3, self.customer_say, (0, "你带我去吧。")),
         ]
 
     def _reset(self):
         self.gen_obj()
-        self.add_walkers([[4,1, 880], [31,250, 1200],[6,-55, 750],[10,70, -200],[27,-290, 400, 180],[26, 60,-320,90]])
-        self.control_walkers(walker_loc=[[-55, 750], [70, -200]],is_autowalk = True)
+        self.add_walkers([
+                [29, 60, 520], #顾客 0
+                [23, 20, 320], #秃头老头子  1
+                [0, -55, 150], #小男孩走来走去 2
+                [10, -55, 750], # 3
+                [19, 70, -200],  #后门站着不动的 4
+                [21, 65, 1000, -90], #大胖男占了一号桌 5
+                [5, 230, 1200], #小女孩 6
+                [26, -28, -150, 90] , #在设置一个在后门随机游走的 7
+                [31, 280, 1200, -45] # 8
+             ])
+        self.control_walker(2, True, 200, -55, 155, 90) #飞速奔跑的小男孩
+        self.control_walker(7, True, 80, -25, -150, 90)
+        self.control_walker(5, True, 65, 995, 520, 90)
         pass
 
     def _run(self):

@@ -116,7 +116,7 @@ class Scene:
 
         self.show_bubble = True
         # 图像分割
-        self.take_picture = False
+        self.take_picture = True
         self.map_ratio = 5
         self.map_map = np.zeros((math.ceil(950 / self.map_ratio), math.ceil(1850 / self.map_ratio)))
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
@@ -196,6 +196,12 @@ class Scene:
                                                 '书架'},
                            'refrigerator': {'吧台', '服务台', '蛋糕柜'},
                            'bookshelf': {'餐桌', '沙发', '窗户', '休闲区', '墙角'}}
+
+        self.obstacle_objs_id = [114, 115, 122, 96, 102, 83, 121, 105, 108, 89, 100, 90,
+                            111, 103, 95, 92, 76, 113, 101, 29, 112, 87, 109, 98,
+                            106, 120, 97, 86, 104, 78, 85, 81, 82, 84, 91, 93, 94,
+                            99, 107, 116, 117, 118, 119, 255, 251]
+        self.not_key_objs_id = {255, 254, 253, 107, 81}
 
     def reset(self):
         # 基类reset，默认执行仿真器初始化操作
@@ -999,8 +1005,8 @@ class Scene:
         else:
             return False
 
-    @staticmethod
-    def transform_co(img_data, pixel_x_, pixel_y_, depth_, scene, id=0, label=0):
+
+    def transform_co(self,img_data, pixel_x_, pixel_y_, depth_, scene, id=0, label=0):
         im = img_data.images[0]
 
         # 相机外参矩阵
@@ -1031,14 +1037,14 @@ class Scene:
         # print("物体的相对底盘的齐次坐标为:", robot_homogeneous_coordinates)
 
         # 机器人坐标
-        X = scene.location.X
-        Y = scene.location.Y
+        X = self.status.location.X
+        Y = self.status.location.Y
         Z = 0.0
 
         # 机器人旋转信息
         Roll = 0.0
         Pitch = 0.0
-        Yaw = scene.rotation.Yaw
+        Yaw = self.status.rotation.Yaw
 
         # 构建平移矩阵
         T = np.array([[1, 0, 0, X],
@@ -1090,9 +1096,10 @@ class Scene:
         # print("物体世界偏移的坐标: ", world_offest_coordinates)
         return world_coordinates
 
-    def get_obstacle_point(self, db, scene, map_ratio, update_info_count):
+    def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0):
         # db = DBSCAN(eps=4, min_samples=2)
         cur_obstacle_pixel_points = []
+        cur_obstacle_world_points = []
         obj_detect_count = 0
         walker_detect_count = 0
         fig = plt.figure()
@@ -1127,7 +1134,7 @@ class Scene:
         plt.imshow(d_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
         plt.axis("off")
         plt.title("相机分割")
-        plt.show()
+
 
         d_depth = np.transpose(d_depth, (1, 0, 2))
         d_segment = np.transpose(d_segment, (1, 0, 2))
@@ -1144,8 +1151,8 @@ class Scene:
                 #     print(f"kettle的像素坐标：({i},{j})")
                 #     print(f"kettle的深度：{d_depth[i][j][0]}")
                 #     print(f"kettle的世界坐标: {transform_co(img_data_depth, i, j, d_depth[i][j][0], scene)}")
-                # if d_segment[i][j][0] in obstacle_objs_id:
-                #     cur_obstacle_pixel_points.append([i, j])
+                if d_segment[i][j][0] in self.obstacle_objs_id:
+                    cur_obstacle_pixel_points.append([i, j])
                 if d_segment[i][j][0] not in not_key_objs_id:
                     # 首先检查键是否存在
                     if d_segment[i][j][0] in object_pixels:
@@ -1155,13 +1162,13 @@ class Scene:
                         # 如果键不存在，那么创建一个新的键值对，其中键是d_segment[i][j][0]，值是一个包含元组(i, j)的列表
                         object_pixels[d_segment[i][j][0]] = [[i, j]]
         # print(cur_obstacle_pixel_points)
-        # for pixel in cur_obstacle_pixel_points:
-        #     world_point = transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
-        #     cur_obstacle_world_points.append([world_point[0], world_point[1]])
+        for pixel in cur_obstacle_pixel_points:
+            world_point = self.transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
+            cur_obstacle_world_points.append([world_point[0], world_point[1]])
         # print(f"{pixel}：{[world_point[0], world_point[1]]}")
         plt.subplot(2, 2, 2)
         plt.imshow(d_color, cmap="gray" if "depth" in im_depth.name.lower() else None)
-        # plt.axis('off')
+        plt.axis('off')
         plt.title("目标检测")
 
         for key, value in object_pixels.items():
@@ -1215,10 +1222,11 @@ class Scene:
                          ha='center',
                          va='center')
                 plt.gca().add_patch(rect)
-        new_map = self.updateMap(cur_obstacle_pixel_points)
-        self.draw_map(new_map)
+        new_map = self.updateMap(cur_obstacle_world_points)
+        self.draw_map(plt,new_map)
 
         plt.subplot(2, 7, 14)
+        plt.axis("off")
         plt.text(0, 0.9, f'检测行人数量：{walker_detect_count}', fontsize=10)
         plt.text(0, 0.7, f'检测物体数量：{obj_detect_count}', fontsize=10)
         plt.text(0, 0.5, f'新增语义信息：{walker_detect_count}', fontsize=10)
@@ -1233,11 +1241,10 @@ class Scene:
         for point in points:
             if point[0] < -350 or point[0] > 600 or point[1] < -400 or point[1] > 1450:
                 continue
-            map[
-                math.floor((point[0] + 350) / self.map_ratio), math.floor((point[1] + 400) / self.map_ratio)] = 1
+            map[math.floor((point[0] + 350) / self.map_ratio), math.floor((point[1] + 400) / self.map_ratio)] = 1
         return map
 
-    def draw_map(self, map):
+    def draw_map(self,plt, map):
         plt.subplot(2, 1, 2)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
         plt.imshow(map, cmap='binary', alpha=0.5, origin='lower',
                    extent=(-400 / self.map_ratio, 1450 / self.map_ratio,

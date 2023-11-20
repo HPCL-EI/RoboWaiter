@@ -55,7 +55,7 @@ class Make(Act):
                 #     obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
                 #     print(id,obj.name,obj_x,obj_y,obj_z)
         if self.scene.take_picture:
-            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio,update_info_count=1)
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]

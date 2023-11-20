@@ -29,9 +29,10 @@ class SceneAEM(Scene):
         objs_name_set = set()
         visited_obstacle = set()
         obj_json_data = []
-        db = DBSCAN(eps=4, min_samples=2)
+
 
         map_ratio = 3
+        db = DBSCAN(eps=map_ratio, min_samples=int(map_ratio / 2))
         # # 创建一个颜色映射，其中0表示黑色，1表示白色
         # cmap = plt.cm.get_cmap('gray')
         # cmap.set_under('black')
@@ -111,6 +112,9 @@ class SceneAEM(Scene):
         print("已绘制完成地图！！！")
         print("------------检测到的所有物品信息--------------")
         print(obj_json_data)
+        # self.add_walker(0, 30, 520, )
+        # self.add_walker(10, 30, 420)
+        # Scene.get_obstacle_point(db, Scene.status, map_ratio)
 
 
 if __name__ == '__main__':

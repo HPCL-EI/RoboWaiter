@@ -73,7 +73,7 @@ class SceneVLM(Scene):
             (0, self.control_walker, (10, False, 100, 100, 760, 180)),
             (0, self.control_walker, (10, True, 100, 0, 0, 180)),
             # # # ### 增加场景，孩子说热要开空调 或者9号随机游走和说
-            # # (90, self.customer_say, (7, "谢谢！")), #倒水+取放酸奶 90s
+            (90, self.customer_say, (7, "谢谢！")), #倒水+取放酸奶 90s
             # (3, self.customer_say, (7, "谢谢！")),
 
 

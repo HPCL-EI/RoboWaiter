@@ -122,7 +122,7 @@ class Scene:
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
         self.infoCount = 0
 
-        self.is_nav_walk = True
+        self.is_nav_walk = False
 
         file_name = os.path.join(root_path,'robowaiter/algos/navigator/map_5.pkl')
         if os.path.exists(file_name):

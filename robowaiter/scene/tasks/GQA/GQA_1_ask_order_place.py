@@ -17,7 +17,7 @@ class SceneGQA(Scene):
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.signal_event_list = [
             (5, self.customer_say, (6, "你好呀，你们这有啥好吃的？")), # 男
-            (15, self.customer_say, (6, "听起来都好甜呀，我女朋友爱吃水果。")),
+            (8, self.customer_say, (6, "听起来都好甜呀，我女朋友爱吃水果。")),
             (15, self.customer_say, (6, "你们这人可真多。")),
             (15, self.customer_say, (6, "我女朋友怕晒，有空余的阴凉位置嘛？")),
             (15, self.customer_say, (6, "那还不错。")),

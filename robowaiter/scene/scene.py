@@ -774,7 +774,7 @@ class Scene:
             scene = stub.Do(action)
             print(scene.info)
 
-    def navigation_move(self, plt, cur_objs, objs_name_set, cur_obstacle_world_points, v_list, map_ratio, db, scene_id=0, map_id=11):
+    def navigation_move(self, plt, cur_objs, cur_obstacle_world_points, v_list, map_ratio, db, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
         scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
         walk_value = [scene.location.X, scene.location.Y]
@@ -787,10 +787,10 @@ class Scene:
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
             scene = stub.Do(action)
-            cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
-                                                              objs_name_set)
+            # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
+            #                                                   objs_name_set)
 
-            cur_obstacle_world_points = camera.get_obstacle_point(plt, db, scene, cur_obstacle_world_points,map_ratio)
+            cur_obstacle_world_points, cur_objs_id= camera.get_obstacle_point(plt, db, scene, cur_obstacle_world_points,map_ratio)
 
 
             # if scene.info == "Unreachable":
@@ -809,15 +809,15 @@ class Scene:
                 action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
                 scene = stub.Do(action)
 
-                cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
-                                                                  objs_name_set)
+                # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
+                #                                                   objs_name_set)
 
-                cur_obstacle_world_points = camera.get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio)
+                cur_obstacle_world_points, cur_objs_id= camera.get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio)
 
 
                 # if scene.info == "Unreachable":
                 print(scene.info)
-        return cur_objs, objs_name_set, cur_obstacle_world_points
+        return cur_obstacle_world_points, cur_objs_id
 
     def isOutMap(self, pos, min_x=-200, max_x=600, min_y=-250, max_y=1300):
         if pos[0] <= min_x or pos[0] >= max_x or pos[1] <= min_y or pos[1] >= max_y:

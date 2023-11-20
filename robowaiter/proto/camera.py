@@ -29,7 +29,7 @@ objects_dic = {}
 obstacle_objs_id = [114, 115, 122, 96, 102, 83, 121, 105, 108, 89, 100, 90,
                     111, 103, 95, 92, 76, 113, 101, 29, 112, 87, 109, 98,
                     106, 120, 97, 86, 104, 78, 85, 81, 82, 84, 91, 93, 94,
-                    99, 107, 116, 117, 118, 119, 255]
+                    99, 107, 116, 117, 118, 119, 255, 251]
 not_key_objs_id = {255,254,253,107,81}
 
 '''
@@ -367,12 +367,11 @@ def get_id_object_pixels(id, scene):
         world_points.append(transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene))
     return world_points
 
-
-
-
 def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
     cur_obstacle_pixel_points = []
     object_pixels = {}
+    obj_detect_count = 0
+    cur_objs_id = []
     colors = [
         'red',
         'pink',
@@ -403,6 +402,7 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
     for item in items:
         key, value = item.split(":")
         objs_id[int(key)] = value
+    objs_id[251] = "walker"
     # plt.imshow(d_depth, cmap="gray" if "depth" in im_depth.name.lower() else None)
     # plt.show()
     plt.subplot(2, 2, 1)
@@ -448,12 +448,14 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
     # plt.tight_layout()
 
     for key, value in object_pixels.items():
-        if key == 0:
+        if key == 0 or key not in objs_id.keys():
             continue
-        if key in [91, 84, 96, 87, 102, 106, 120, 85,113, 101, 83]:
+
+        if key in [91, 84, 96, 87, 102, 106, 120, 85,113, 101, 83, 251]:
             X = np.array(value)
             db.fit(X)
             labels = db.labels_
+
             # 将数据按照聚类标签分组，并打印每个分组的数据
             for i in range(max(labels) + 1):  # 从0到最大聚类标签的值
                 group_data = X[labels == i]  # 获取当前标签的数据
@@ -463,6 +465,9 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
                 y_min = min(p[1] for p in group_data)
                 if x_max - x_min < 10 or y_max - y_min < 10:
                     continue
+                if key != 251:
+                    obj_detect_count += 1
+                cur_objs_id.append(objs_id[key])
                 # 在指定的位置绘制方框
                 # 创建矩形框
                 rect = patches.Rectangle((x_min, y_min), (x_max - x_min), (y_max - y_min), linewidth=1, edgecolor=colors[key % 10],
@@ -470,7 +475,11 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
                 plt.text(x_min, y_min, f'{objs_id[key]}', fontdict={'family': 'serif', 'size': 10, 'color': 'green'}, ha='center',
                          va='center')
                 plt.gca().add_patch(rect)
+
         else:
+            if key != 251:
+                obj_detect_count += 1
+            cur_objs_id.append(objs_id[key])
             x_max = max(p[0] for p in value)
             y_max = max(p[1] for p in value)
             x_min = min(p[0] for p in value)
@@ -489,12 +498,12 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
         # rect = patches.Rectangle((0, 255), 15, 30, linewidth=1, edgecolor='g',
         #                          facecolor='none')
 
+    plt.subplot(2, 7, 14)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
 
-        # 将矩形框添加到图像中
-        # plt.gca().add_patch(rect)
+    plt.text(0, 0.7, f'检测物体数量：{obj_detect_count}', fontsize=10)
 
     # plt.show()
-    return cur_obstacle_world_points
+    return cur_obstacle_world_points, cur_objs_id
 
 
 

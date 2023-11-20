@@ -40,7 +40,8 @@ class MoveTo(Act):
         # 走到固定的地点
         if self.target_place in Act.place_xy_yaw_dic:
             goal = Act.place_xy_yaw_dic[self.target_place]
-            self.scene.walk_to(goal[0]+1,goal[1],goal[2])
+            # self.scene.walk_to(goal[0]+1,goal[1],goal[2])
+            self.scene.navigator.navigate(goal=(goal[0] + 1, goal[1]), animation=False)
         # 走到物品边上
         else:
             # 是否用容器装好

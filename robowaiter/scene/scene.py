@@ -208,6 +208,22 @@ class Scene:
                             99, 107, 116, 117, 118, 119, 255, 251]
         self.not_key_objs_id = {255, 254, 253, 107, 81}
 
+        self.init_algos()  # 初始化各种算法类
+
+    def init_algos(self):
+        '''
+            初始化各种各种算法
+        '''
+        map_file = os.path.join(root_path, 'robowaiter/algos/navigator/map_5.pkl')
+        with open(map_file, 'rb') as file:
+            map = pickle.load(file)
+
+        # 初始化探索、导航、操作
+        self.navigator = Navigator(scene=self, area_range=[-350, 600, -400, 1450], map=map, scale_ratio=5)
+        # self.explorer
+        # self.manipulator
+
+
     def reset(self):
         # 基类reset，默认执行仿真器初始化操作
         self.reset_sim()
@@ -640,8 +656,9 @@ class Scene:
             obj_y += 2.5
         walk_v[0] += 1
         print("walk:", walk_v)
-        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        scene = stub.Do(action)
+        self.navigator.navigate(goal=(walk_v[0], walk_v[1]), animation=False)
+        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
+        # scene = stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
 
     # 移动到进行操作任务的指定地点

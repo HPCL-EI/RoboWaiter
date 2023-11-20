@@ -11,6 +11,10 @@ import numpy as np
 import heapq
 
 from matplotlib import pyplot as plt
+from matplotlib.patches import Polygon
+import matplotlib.colors as mcolors
+
+from robowaiter.robot.robot import root_path  # 项目根目录路径
 
 
 def diagonal_distance(start, end):  #
@@ -116,9 +120,12 @@ class PriorityQueue:
 class DStarLite:
     def __init__(self,
                  map: np.array([int, int]),
-                 area_range,            # [x_min, x_max, y_min, y_max] 实际坐标范围
-                 scale_ratio=5,         # 地图缩放率
-                 dyna_obs_radius=36,    # dyna_obs实际身位半径
+                 area_range,  # [x_min, x_max, y_min, y_max] 实际坐标范围
+                 scale_ratio=5,  # 地图缩放率
+                 react_radius=200,  # 反应半径
+                 vision_radius=math.pi/3,  # 视角半径
+                 dyna_obs_radius=36,  # dyna_obs实际身位半径
+                 max_path_length=2000  # 最大路径步数
                  ):
 
         self.map = map
@@ -127,9 +134,12 @@ class DStarLite:
         self.Y = map.shape[1]
         (self.x_min, self.x_max, self.y_min, self.y_max) = area_range
         self.scale_ratio = scale_ratio
+        self.react_radius = math.floor(react_radius / scale_ratio)
+        self.vision_radius = vision_radius
+        self.dyna_obs_radius = math.floor(dyna_obs_radius / scale_ratio)  # dyna_obs缩放后身位半径
+        self.max_path_length = max_path_length
 
         self.dyna_obs_list = []  # dyna_obs位置列表 [(x, y)]
-        self.dyna_obs_radius = math.floor(dyna_obs_radius / scale_ratio)  # dyna_obs缩放后身位半径
         self.dyna_obs_occupy = []  # dyna_obs占用位置列表
 
         # free:0, obs:1, dyna_obs:2
@@ -142,12 +152,13 @@ class DStarLite:
         self.object_to_cost = {
             "free": 0,
             "obstacle": float('inf'),
-            "dynamic obstacle": 100
+            "dynamic obstacle": float('inf')
         }
 
-        file_name = 'costMap_'+str(self.scale_ratio)+'.pkl'
-        if os.path.exists(file_name):
-            with open(file_name, 'rb') as file:
+        # 读取 cost_map 文件
+        file_cost_map = os.path.join(root_path, 'robowaiter/algos/navigator/costMap_' + str(self.scale_ratio) + '.pkl')
+        if os.path.exists(file_cost_map):
+            with open(file_cost_map, 'rb') as file:
                 cost_map = pickle.load(file)
         self.cost_map = cost_map
         self.cost_background = self.cost_map.copy()
@@ -158,6 +169,8 @@ class DStarLite:
         self.U = PriorityQueue()
         self.k_m = 0
         self.rhs = np.ones((self.X, self.Y)) * np.inf
+        # self.rhs = np.ones_like(self.map) * 1000
+        # self.rhs[self.map==self.object_to_idx['obstacle']] = np.inf
         self.g = self.rhs.copy()
         self.path = []
 
@@ -203,17 +216,19 @@ class DStarLite:
         k2 = min(self.g[s], self.rhs[s])
         return Priority(k1, k2)
 
-    def c(self, u: (int, int), v: (int, int), v_old=None) -> float:
+    def c(self, u: (int, int), v: (int, int), c_old=None) -> float:
         '''
         计算节点间的 路径代价 和 目标位置代价 (目标位置代价为0时采用路径代价)
         (因为是终点->起点的扩展方向，因此v是node，u是v扩展的neighbor)
         Args:
             u:     from pos
             v:     to pos
-            v_old: 指定的v的类型
+            c_old: 节点v的旧cost
         '''
-        if v_old:
-            obj_cost = self.object_to_cost[v_old]
+        if u == v:
+            return 0.0
+        if c_old is not None:
+            obj_cost = c_old
         else:
             obj_cost = self.cost_map[v]
         if obj_cost > 0:
@@ -244,8 +259,12 @@ class DStarLite:
         '''
             计算最短路径
         '''
+
+        c_map = self.map.copy()
+
         while self.U.top_key() < self.calculate_key(self.s_start) or self.rhs[self.s_start] > self.g[self.s_start]:
             u = self.U.top()
+            c_map[u] = 10
             k_old = self.U.top_key()
             k_new = self.calculate_key(u)
             if k_old < k_new:
@@ -268,6 +287,10 @@ class DStarLite:
                             succ = self.get_neighbors(s)
                             self.rhs[s] = min([self.c(s, s_) + self.g[s_] for s_ in succ])
                     self.update_vertex(s)
+        # self.draw_rhs(self.rhs)
+
+
+
 
     def _planning(self, s_start, s_goal, dyna_obs, debug=False):
         '''
@@ -335,10 +358,15 @@ class DStarLite:
             return []
         path = []
         cur = self.s_start
-        while cur != self.s_goal:
-            succ = [s_ for s_ in self.get_neighbors(cur) if s_ not in path]  # 避免抖动 (不可走重复的点)
-            cur = succ[np.argmin([self.c(cur, s_) + self.g[s_] for s_ in succ])]
+        for i in range(self.max_path_length):
+            succ = [s_ for s_ in self.get_neighbors(cur)]
+            cur = succ[np.argmin([self.c(cur, s_) + self.g[s_] + 20*(s_ in path) for s_ in succ])]  # 避免抖动 (走重复的点会有惩罚)
+            # print(cur)
             path.append(cur)
+            if cur == self.s_goal:
+                while cur in self.dyna_obs_occupy:  # 确保目标未在dyna_obs范围中
+                    cur = path.pop()
+                break
         return path
 
     def in_bounds_without_obstacle(self, pos):
@@ -389,7 +417,7 @@ class DStarLite:
             Args:
                 dyna_obs: 当前动态障碍物位置列表 [(x,y), ...]
             return:
-                update_obj: 改变的位置列表 [(x, y, obj_idx, obj_idx_old), ...]
+                update_obj: 改变的位置列表 [(x, y, obj_idx, cost_old), ...]
         '''
         # dyna_obs没有变化 (集合set可以忽略元素在列表中的位置) 且 robot未在dyna_obs占用位置中
         if set(dyna_obs) == set(self.dyna_obs_list) and self.s_start not in self.dyna_obs_occupy:
@@ -408,10 +436,12 @@ class DStarLite:
         changed_pos = []
         for (x, y) in changed_free:
             self.map[x, y] = self.object_to_idx['free']
-            changed_pos.append((x, y, self.object_to_idx["free"], self.object_to_idx["dynamic obstacle"]))
+            changed_pos.append((x, y, self.object_to_idx["free"], self.cost_map[x, y]))
+            # changed_pos.append((x, y, self.object_to_idx["free"], self.object_to_idx["dynamic obstacle"]))
         for (x, y) in changed_obs:
             self.map[x, y] = self.object_to_idx['dynamic obstacle']
-            changed_pos.append((x, y, self.object_to_idx["dynamic obstacle"], self.object_to_idx["free"]))
+            changed_pos.append((x, y, self.object_to_idx["dynamic obstacle"], self.cost_map[x, y]))
+            # changed_pos.append((x, y, self.object_to_idx["dynamic obstacle"], self.object_to_idx["free"]))
 
         # 更新dyna_obs 位置列表 和 占用位置列表
         self.dyna_obs_list = dyna_obs
@@ -424,10 +454,17 @@ class DStarLite:
             根据dyna_obs中心位置，计算其占用的所有网格位置
         '''
         (x, y) = obs_pos
-        occupy_radius = min(self.dyna_obs_radius, int(euclidean_distance(obs_pos, self.s_start) - 1))  # 避免robot被dyna_obs的占用区域包裹住
-        occupy_pos = [(i, j) for i in range(x - occupy_radius, x + occupy_radius + 1)  # 圆形区域
+        occupy_radius = min(self.dyna_obs_radius,
+                            int(euclidean_distance(obs_pos, self.s_start) - 1))  # 避免robot被dyna_obs的占用区域包裹住
+        # 圆形区域
+        occupy_pos = [(i, j) for i in range(x - occupy_radius, x + occupy_radius + 1)
                       for j in range(y - occupy_radius, y + occupy_radius + 1)
                       if euclidean_distance((i, j), obs_pos) < occupy_radius]
+        # # 等边三角形区域 TODO: 效果不及预期(三角形棱角容易导致robot卡住)
+        # triangle_occupy = self.triangle_occupy(obs=obs_pos, occupy_radius=occupy_radius)
+        # occupy_pos = [(i, j) for i in range(x - occupy_radius, x + occupy_radius + 1)
+        #               for j in range(y - occupy_radius, y + occupy_radius + 1)
+        #               if triangle_occupy.contains_point((i, j))]
         occupy_pos = filter(self.in_bounds_without_obstacle, occupy_pos)  # 确保位置在地图范围内 且 不是静态障碍物
         return list(occupy_pos)
 
@@ -454,13 +491,13 @@ class DStarLite:
         self.s_last = self.s_start
         for pos in changed_pos:
             v = (pos[0], pos[1])  # to pos
-            v_old = self.idx_to_object[pos[3]]  # 位置v的旧类型
+            c_old = pos[3]  # 位置v的旧cost
             pred_v = self.get_neighbors(v)
             for u in pred_v:
-                c_old = self.c(u, v, v_old=v_old)
+                c_old = self.c(u, v, c_old=c_old)
                 c_new = self.c(u, v)
                 if c_old > c_new and u != self.s_goal:
-                    self.rhs[u] = min(self.rhs[u], self.c(u, v) + self.g[v])
+                    self.rhs[u] = min(self.rhs[u], c_new + self.g[v])
                 elif self.rhs[u] == c_old + self.g[v] and u != self.s_goal:
                     succ_u = self.get_neighbors(u)
                     self.rhs[u] = min([self.c(u, s_) + self.g[s_] for s_ in succ_u])
@@ -514,7 +551,12 @@ class DStarLite:
             # raise Exception('invalid pos!')
         return tuple((x, y))
 
-    def draw_graph(self, step_num):
+    def draw_graph(self, step_num, yaw):
+        '''
+        Args:
+            step_num: 移动步数
+            yaw:      robot朝向 (弧度)
+        '''
         # 清空当前figure内容，保留figure对象
         plt.clf()
         # for stopping simulation with the esc key. 按esc结束
@@ -524,7 +566,9 @@ class DStarLite:
 
         # 缩放坐标偏移量
         offset = (self.x_min / self.scale_ratio, self.x_max / self.scale_ratio,
-                  self.y_min / self.scale_ratio, self.y_max / self.scale_ratio,)
+                  self.y_min / self.scale_ratio, self.y_max / self.scale_ratio)
+        start = (self.s_start[0] + offset[0], self.s_start[1] + offset[2])
+        goal = (self.s_goal[0] + offset[0], self.s_goal[1] + offset[2])
 
         # 画地图: X行Y列，第一行在下面
         # 范围: 横向Y[-80,290] 纵向X[-70,120]
@@ -532,8 +576,8 @@ class DStarLite:
                    extent=(offset[2], offset[3],
                            offset[0], offset[1]))
         # 画起点和目标
-        plt.plot(self.s_start[1] + offset[2], self.s_start[0] + offset[0], "xr")
-        plt.plot(self.s_goal[1] + offset[2], self.s_goal[0] + offset[0], "xr")
+        plt.plot(start[1], start[0], 'x', color='r')
+        plt.plot(goal[1], goal[0], 'x', color='darkorange')
 
         # 画搜索路径
         plt.plot([y + offset[2] for (x, y) in self.path],
@@ -541,12 +585,118 @@ class DStarLite:
 
         # 画移动路径
         next_step = min(step_num, len(self.path))
-        # plt.plot([self.s_start[1] + offset[2], self.path[next_step-1][1] + offset[2]],
-        #          [self.s_start[0] + offset[0], self.path[next_step-1][0] + offset[0]], "-r")
-        plt.plot([y + offset[2] for (x, y) in self.path[:next_step]],
-                 [x + offset[0] for (x, y) in self.path[:next_step]], "-r")
+        plt.plot([start[1], self.path[next_step - 1][1] + offset[2]],
+                 [start[0], self.path[next_step - 1][0] + offset[0]], "-r")
+        # plt.plot([y + offset[2] for (x, y) in self.path[:next_step]],
+        #          [x + offset[0] for (x, y) in self.path[:next_step]], "-r")
+
+        # 画感应半径和观测范围
+        self.plot_circle(start[1], start[0], self.react_radius, 'lightgrey')
+        if yaw is not None:
+            plt.plot([start[1], start[1] + self.react_radius * (math.sin(yaw + self.vision_radius))],
+                     [start[0], start[0] + self.react_radius * (math.cos(yaw + self.vision_radius))], "aqua", linewidth=1)
+            plt.plot([start[1], start[1] + self.react_radius * (math.sin(yaw - self.vision_radius))],
+                     [start[0], start[0] + self.react_radius * (math.cos(yaw - self.vision_radius))], "aqua", linewidth=1)
 
         plt.xlabel('y', loc='right')
         plt.ylabel('x', loc='top')
         plt.grid(color='black', linestyle='-', linewidth=0.5)
-        plt.pause(0.2)
+        plt.show()
+
+    def draw_rhs(self, rhs):
+        # 画地图: X行Y列，第一行在下面
+
+        # 缩放坐标偏移量
+        offset = (self.x_min / self.scale_ratio, self.x_max / self.scale_ratio,
+                  self.y_min / self.scale_ratio, self.y_max / self.scale_ratio)
+
+        # 将无穷大位置的值替换为指定的颜色
+        # rhs[np.isinf(rhs)] = np.nan
+
+        # 将无穷大位置的值替换为 np.nan
+        rhs = np.ma.masked_invalid(rhs)
+
+        # 设置颜色映射范围
+        vmin = np.nanmin(rhs)
+        vmax = np.nanmax(rhs)
+
+
+        # 创建一个图形对象
+        fig, ax = plt.subplots()
+
+        # cmap = mcolors.LinearSegmentedColormap.from_list('custom_cmap', ['#0000FF', '#FFFFFF'])
+
+        # 绘制热力图
+        heatmap = ax.imshow(rhs, cmap='jet',  vmin=vmin, vmax=vmax, origin='lower',
+                            extent=(offset[2], offset[3],
+                                    offset[0], offset[1]))
+        # 添加颜色条
+        plt.colorbar(heatmap)
+
+        start = (self.s_start[0] + offset[0], self.s_start[1] + offset[2])
+        goal = (self.s_goal[0] + offset[0], self.s_goal[1] + offset[2])
+
+        # 画起点和目标
+        plt.plot(start[1], start[0], 'x', color='black')
+        plt.plot(goal[1], goal[0], 'x', color='darkorange')
+
+
+        # 设置图形标题和轴标签
+        ax.set_title('Heatmap(G)')
+        ax.set_xlabel('y', loc='right')
+        ax.set_ylabel('x', loc='top')
+        ax.grid(color='black', linestyle='-', linewidth=0.5)
+        # 显示图形
+        plt.show()
+
+
+
+
+    @staticmethod
+    def plot_circle(y, x, size, color="lightgrey"):  # pragma: no cover
+        '''
+            以(x,y)为圆心，size为半径 画圆
+        '''
+        deg = list(range(0, 360, 5))
+        deg.append(0)
+        yl = [y + size * math.cos(np.deg2rad(d)) for d in deg]
+        xl = [x + size * math.sin(np.deg2rad(d)) for d in deg]
+        plt.plot(yl, xl, color)
+
+    def triangle_occupy(self, obs, occupy_radius):
+        '''
+            计算等边三角形的三个顶点并返回三角形对象
+            TODO: 效果不及预期
+        Args:
+            obs:           三角形底边中点
+            occupy_radius: 三角形的高
+        '''
+        dist = euclidean_distance(self.s_start, obs)
+        # obs(底边中点)的坐标
+        x1, y1 = obs
+        # 顶点A的坐标
+        x2 = x1 + occupy_radius * ((self.s_start[0] - x1) / dist)
+        y2 = y1 + occupy_radius * ((self.s_start[1] - y1) / dist)
+
+        # 计算向量AP的坐标
+        AP_x = x1 - x2
+        AP_y = y1 - y2
+        # 计算向量AB的坐标
+        AB_x = AP_x * math.cos(math.pi / 6) - AP_y * math.sin(math.pi / 6)
+        AB_y = AP_x * math.sin(math.pi / 6) + AP_y * math.cos(math.pi / 6)
+        # 计算向量AC的坐标
+        AC_x = AP_x * math.cos(math.pi / 6) + AP_y * math.sin(math.pi / 6)
+        AC_y = -AP_x * math.sin(math.pi / 6) + AP_y * math.cos(math.pi / 6)
+
+        # 计算顶点B的坐标
+        x3 = x2 + AB_x
+        y3 = y2 + AB_y
+        # 计算顶点C的坐标
+        x4 = x2 + AC_x
+        y4 = y2 + AC_y
+
+        ver1 = (x2, y2)
+        ver2 = (x3, y3)
+        ver3 = (x4, y4)
+
+        return Polygon([ver1, ver2, ver3], closed=True, fill=True)

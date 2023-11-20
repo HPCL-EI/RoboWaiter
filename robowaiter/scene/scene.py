@@ -927,6 +927,7 @@ class Scene:
         if not cur_objs:
             walk_v = [scene.location.X, scene.location.Y + 1]
             yaw = Navigator.get_yaw(walk_value, walk_v)
+            yaw =  math.degrees(yaw)
             walk_v = walk_value + [yaw, 250, 10]
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
@@ -948,6 +949,7 @@ class Scene:
         else:
             for walk_v in v_list:
                 yaw = Navigator.get_yaw(walk_value, walk_v)
+                yaw =  math.degrees(yaw)
                 walk_v = walk_v + [yaw, 250, 10]
                 print("walk_v", walk_v)
                 action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)

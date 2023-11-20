@@ -36,11 +36,11 @@ class SceneVLM(Scene):
             # # 场景2：有个胖胖男人点单交流并要咖啡，帮他送去角落的桌子
             (3, self.add_walker, (5, 230, 1200)), # 小女孩
             # # # 上述准备
-            (10, self.add_walker, (26, -28, -150, 90)),
+            (3, self.add_walker, (26, -28, -150, 90)),
             (0, self.add_walker, (10, -70, -200, -45)),
-            (6, self.customer_say, (1, "嘿，RoboWaiter，过来一下！")),
-            (8, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "你们这有什么饮料嘛？"]]])), # 20 胖胖男到了 BrightTable6
-            (2, self.customer_say, (1, "咖啡有哪些呢？")),# 10
+            # (6, self.customer_say, (1, "嘿，RoboWaiter，过来一下！")),
+            # (8, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "你们这有什么饮料嘛？"]]])), # 20 胖胖男到了 BrightTable6
+            # (2, self.customer_say, (1, "咖啡有哪些呢？")),# 10
             (2, self.customer_say, (1,"来杯卡布奇诺吧。")), # 15
 
 
@@ -52,29 +52,29 @@ class SceneVLM(Scene):
             # (0, self.add_walker, (21, 65, 1000, -90)),  # 男 'BrightTable2': (65, 1000, 135),
             # (0, self.add_walker, (32, -80, 850, 135)),  # 女 'BrightTable3': (-80, 850, 135),
             # (0, self.add_walker, (1, 60, 420, 135)), # 生成小男孩随机游走
-            (0,self.add_walkers,([[[21, 65, 1000, -90],[32, -80, 850, 135],[1, 60, 420, 135]]])),
+            (3, self.add_walkers,([[[21, 65, 1000, -90],[32, -80, 850, 135],[1, 60, 420, 135],[29, -290, 400, 180]]])),
             (0, self.control_walker, (5, True, 50, 250, 1200, 180)), #设置id=4 的2小男孩随机游走红随机游走
             (0, self.add_walker, (48, 60, 520,0)),# 生成他妈妈
             # (0, self.add_walker, (31, 60, 600, -90)),  # 女红色排队 7号
             # (0, self.add_walker, (20, 60, 680, -90)),  # 大胖男色排队 8号
             # (0, self.add_walker, (9, 60, 760, -90)),  # 男灰黑排队 9号
             # (0, self.add_walker, (29, -290, 400, 180)),  # 青色女人占了位置 BrightTable5
-            (0, self.add_walkers, ([[[48, 60, 520,0], [31, 60, 600, -90], [20, 60, 680, -90],[9, 60, 760, -90],[29, -290, 400, 180]]])),
-            #
-            # # (5, self.customer_say, (6, "哎呦，今天这么多人，还有空位吗？")),# 女士问
-            # # (15, self.customer_say, (6, "我带着孩子呢，想要宽敞亮堂的地方。")),  # 女士问
+            (0, self.add_walkers, ([[[48, 60, 520,0], [31, 60, 600, -90], [20, 60, 680, -90],[9, 60, 760, -90]]])),
+
+            (29, self.customer_say, (7, "哎呦，今天这么多人，还有空位吗？")),# 女士问
+            (10, self.customer_say, (7, "我带着孩子呢，想要宽敞亮堂的地方。")),  # 女士问
             # # 好的，我明白了，那么您可以选择我们的家庭亲子座，这样可以容纳您的孩子，并且更加宽敞舒适。
             # # 这里可以加一下自主导航和探索，找到一个位置
             # # 好的，我明白了，那么我们推荐您到大厅的桌子，那里的空间比较宽敞，环境也比较明亮，适合带着孩子一起用餐。
-            # (8, self.customer_say, (6, "大厅的桌子好啊，快带我去呀！")),
-            # (15, self.control_walker, (6, False, 50,-250, 480, 0)), #  #290, 400
-            # # (3, self.customer_say, (6, "我想来杯水，帮我孩子拿个酸奶吧。")),
+            (8, self.customer_say, (7, "大厅的桌子好啊，快带我去呀！")),
+            (15, self.control_walker, (7, False, 50,-250, 480, 0)), #  #290, 400
+            # (3, self.customer_say, (7, "我想来杯水，帮我孩子拿个酸奶吧。")),
             # # ### 9号灰色男 排队排着排着，不排了
-            # (0, self.control_walker, (9, False, 100, 100, 760, 180)),
-            # (0, self.control_walker, (9, True, 100, 0, 0, 180)),
+            (0, self.control_walker, (10, False, 100, 100, 760, 180)),
+            (0, self.control_walker, (10, True, 100, 0, 0, 180)),
             # # # ### 增加场景，孩子说热要开空调 或者9号随机游走和说
-            # # (90, self.customer_say, (6, "谢谢！")), #倒水+取放酸奶 90s
-            # (3, self.customer_say, (6, "谢谢！")),
+            # # (90, self.customer_say, (7, "谢谢！")), #倒水+取放酸奶 90s
+            # (3, self.customer_say, (7, "谢谢！")),
 
 
 

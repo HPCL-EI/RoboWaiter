@@ -341,31 +341,6 @@ def save_obj_info(img_data, objs_name):
             objs_name.add(dictionary[id])
     return objs_name
 
-def get_id_object_pixels(id, scene):
-    pixels = []
-    world_points = []
-    img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
-    im_segment = img_data_segment.images[0]
-
-    img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
-    im_depth = img_data_depth.images[0]
-
-
-    d_segment = np.frombuffer(im_segment.data, dtype=im_segment.dtype).reshape(
-        (im_segment.height, im_segment.width, im_segment.channels))
-    d_depth = np.frombuffer(im_depth.data, dtype=im_depth.dtype).reshape(
-        (im_depth.height, im_depth.width, im_depth.channels))
-
-    d_segment = np.transpose(d_segment, (1, 0, 2))
-    d_depth = np.transpose(d_depth, (1, 0, 2))
-
-    for i in range(0, d_segment.shape[0],5):
-        for j in range(0, d_segment.shape[1], 5):
-            if d_segment[i][j][0] == id:
-                pixels.append([i, j])
-    for pixel in pixels:
-        world_points.append(transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene))
-    return world_points
 
 def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
     cur_obstacle_pixel_points = []

@@ -1006,7 +1006,7 @@ class Scene:
             return False
 
 
-    def transform_co(self,img_data, pixel_x_, pixel_y_, depth_, scene, id=0, label=0):
+    def transform_co(self,img_data, pixel_x_, pixel_y_, depth_, id=0, label=0):
         im = img_data.images[0]
 
         # 相机外参矩阵
@@ -1096,7 +1096,7 @@ class Scene:
         # print("物体世界偏移的坐标: ", world_offest_coordinates)
         return world_coordinates
 
-    def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0):
+    def get_walker_point(self, db, scene, map_ratio, update_info_count=0):
         # db = DBSCAN(eps=4, min_samples=2)
         cur_obstacle_pixel_points = []
         cur_obstacle_world_points = []
@@ -1151,7 +1151,7 @@ class Scene:
                 #     print(f"kettle的像素坐标：({i},{j})")
                 #     print(f"kettle的深度：{d_depth[i][j][0]}")
                 #     print(f"kettle的世界坐标: {transform_co(img_data_depth, i, j, d_depth[i][j][0], scene)}")
-                if d_segment[i][j][0] in self.obstacle_objs_id:
+                if d_segment[i][j][0] in [251]:
                     cur_obstacle_pixel_points.append([i, j])
                 if d_segment[i][j][0] not in not_key_objs_id:
                     # 首先检查键是否存在
@@ -1249,3 +1249,28 @@ class Scene:
         plt.imshow(map, cmap='binary', alpha=0.5, origin='lower',
                    extent=(-400 / self.map_ratio, 1450 / self.map_ratio,
                            -350 / self.map_ratio, 600 / self.map_ratio))
+
+    def get_id_object_world(self, id, scene):
+        pixels = []
+        world_points = []
+        img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
+        im_segment = img_data_segment.images[0]
+
+        img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
+        im_depth = img_data_depth.images[0]
+
+        d_segment = np.frombuffer(im_segment.data, dtype=im_segment.dtype).reshape(
+            (im_segment.height, im_segment.width, im_segment.channels))
+        d_depth = np.frombuffer(im_depth.data, dtype=im_depth.dtype).reshape(
+            (im_depth.height, im_depth.width, im_depth.channels))
+
+        d_segment = np.transpose(d_segment, (1, 0, 2))
+        d_depth = np.transpose(d_depth, (1, 0, 2))
+
+        for i in range(0, d_segment.shape[0], 5):
+            for j in range(0, d_segment.shape[1], 5):
+                if d_segment[i][j][0] == id:
+                    pixels.append([i, j])
+        for pixel in pixels:
+            world_points.append(self.transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0]))
+        return world_points

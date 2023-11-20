@@ -44,6 +44,7 @@ class Clean(Act):
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
+        self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
 
         # print("After Clean condition_set:",self.scene.state["condition_set"] )
         return Status.RUNNING

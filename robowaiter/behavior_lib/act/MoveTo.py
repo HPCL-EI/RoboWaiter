@@ -32,9 +32,11 @@ class MoveTo(Act):
         # goal = self.scene.state['map']['obj_pos'][self.args[0]]
         # navigator.navigate_old(goal, animation=False)
 
+        # 拍照片
         if self.scene.take_picture:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
 
+        # #####################################
         # 走到固定的地点
         if self.target_place in Act.place_xy_yaw_dic:
             goal = Act.place_xy_yaw_dic[self.target_place]
@@ -59,42 +61,17 @@ class MoveTo(Act):
                         if dis<min_dis:
                             min_dis = dis
                             obj_id = id
-            # if self.target_place == "CoffeeCup":
-            #     # obj_id = 273
-            #     obj_id = 275
             if obj_id == -1:
                 return ptree.common.Status.FAILURE
-
-            # print("self.target_place:",self.target_place,"id:",obj_id,"dis:",min_dis)
             self.scene.move_to_obj(obj_id=obj_id)
+            # #####################################
 
-            # 为了演示，写死咖啡位置
-            # if self.target_place=="Coffee":
-            #     obj_id = 273
-            # obj_id = -1
-            # obj_dict = self.scene.status.objects
-            # if len(obj_dict)!=0:
-            #     # 获取obj_id
-            #     for id,obj in enumerate(obj_dict):
-            #         if obj.name == self.target_place:
-            #             obj_id = id
-            #             break
-            #     # 为了演示，写死咖啡位置
-            #     if self.target_place=="Coffee":
-            #         obj_id = 273
-            # if obj_id == -1:
-            #     return ptree.common.Status.FAILURE
-            # obj_info = obj_dict[obj_id]
-            # obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
-            # self.scene.walk_to(obj_x,obj_y)
-            # print("MoveTo",obj_x, obj_y, obj_z," obj_id:",obj_id," obj_info:",obj_info.name)
+
 
 
         if self.scene.take_picture:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
 
-        # goal = self.scene.state['map']['obj_pos'][self.args[0]]
-        # self.scene.walk_to(goal[0],goal[1]) # X, Y, Yaw=None, velocity=200, dis_limit=0
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]

@@ -1,20 +1,29 @@
 selector
+{
     sequence
+{
         cond Chatting()
         act DealChat()
-    sequence
+    }    sequence
+{
         cond HasSubTask()
         sequence
+{
             act SubTaskPlaceHolder()
-    sequence
+        }    }    sequence
+{
         cond FocusingCustomer()
         act ServeCustomer()
-    sequence
+    }    sequence
+{
         cond NewCustomer()
         selector
+{
             cond At(Robot,Bar)
             act MoveTo(Bar)
-        act GreetCustomer()
-    sequence
+        }        act GreetCustomer()
+    }    sequence
+{
         cond AnomalyDetected()
         act ResolveAnomaly()
+    }}

@@ -2,7 +2,7 @@ import py_trees as ptree
 from typing import Any
 from robowaiter.behavior_lib._base.Cond import Cond
 
-class CustomerChatting(Cond):
+class Chatting(Cond):
 
 
     def __init__(self):
@@ -15,6 +15,10 @@ class CustomerChatting(Cond):
             return ptree.common.Status.FAILURE
 
         name,sentence = self.scene.state['chat_list'][0]
+        if name == "Goal":
+            return ptree.common.Status.SUCCESS
+
+
         if "customer" in self.scene.state["attention"]:
             attention_customer = self.scene.state["attention"]["customer"]
             if name == attention_customer:

@@ -3,7 +3,7 @@ from typing import Any
 from robowaiter.behavior_lib._base.Cond import Cond
 import itertools
 
-class NewCustomerComing(Cond):
+class NewCustomer(Cond):
     can_be_expanded = False
     num_params = 0
     valid_args = ()

@@ -24,7 +24,7 @@ class Navigator:
                  map,
                  scale_ratio=5,
                  step_length=120,
-                 velocity=150,
+                 velocity=250,
                  react_radius=300,
                  dyna_obs_radius=40,
                  vision_radius=math.pi*3/7,

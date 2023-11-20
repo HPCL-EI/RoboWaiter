@@ -491,6 +491,27 @@ class Scene:
         scene = stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
         return scene
 
+    def control_walker_ls(self, walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]]):
+        """pose:表示行人的终止位置姿态"""
+        scene = self.status
+        walker_loc = walker_loc
+        controls = []
+        for walker in walker_loc:
+            if len(walker) == 2:
+                self.control_walker(walker[0], walker[1])
+            elif len(walker) == 3:
+                self.control_walker(walker[0], walker[1], walker[2])
+            elif len(walker) == 4:
+                self.control_walker(walker[0], walker[1], walker[2], walker[3])
+            elif len(walker) == 5:
+                self.control_walker(walker[0], walker[1], walker[2], walker[3], walker[4])
+            elif len(walker) == 6:
+                self.control_walker(walker[0], walker[1], walker[2], walker[3], walker[4], walker[5])
+        #     self.control_walker()
+        # scene = stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
+        # return scene
+        return
+
     def control_joints(self, angles):
         stub.Do(
             GrabSim_pb2.Action(

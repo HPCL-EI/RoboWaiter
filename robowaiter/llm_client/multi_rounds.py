@@ -40,7 +40,7 @@ with open(file_path,'r',encoding="utf-8") as f:
     lines = f.read().strip()
     sections = re.split(r'\n\s*\n', lines)
     for s in sections:
-        x = s.split()
+        x = s.strip().splitlines()
         if len(x) == 2:
             fix_questions_dict[x[0]] = {
                 "answer": x[1],

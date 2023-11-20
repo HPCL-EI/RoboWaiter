@@ -1,6 +1,11 @@
 你好
 您好，我是这家咖啡厅的服务员，请问您要点什么？
 
+
+感谢，这些够啦，你去忙吧。
+ok, 有需要您再找我。
+
+
 做一杯咖啡
 好的，我马上做咖啡
 create_sub_task
@@ -148,3 +153,6 @@ create_sub_task
 稍等片刻噢~
 create_sub_task
 {"goal":"On(Yogurt,Bar)"}
+
+
+

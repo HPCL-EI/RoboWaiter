@@ -22,8 +22,8 @@ class ServeCustomer(Act):
 
         if self.scene.state['attention']['customer'] == {}:
             goal = Act.place_xy_yaw_dic['Bar']
-            self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
-
+            # self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
+            self.scene.navigator.navigate(goal=(goal[0] - 5, goal[1]), animation=False)
 
         customer = self.scene.state["attention"]["customer"]
         if customer not in self.scene.state["serve_state"]:

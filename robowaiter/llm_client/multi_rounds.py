@@ -1,4 +1,5 @@
 import json
+import time
 
 import openai
 from colorama import init, Fore
@@ -90,6 +91,7 @@ def get_response(sentence, history, allow_function_call = True):
         history.append({"role": "user", "content": sentence})
 
     if sentence in fix_questions_dict:
+        time.sleep(2)
         return parse_fix_question(sentence)
 
     params = dict(model="RoboWaiter")

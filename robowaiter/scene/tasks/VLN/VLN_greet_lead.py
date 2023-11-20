@@ -6,15 +6,15 @@
 import time
 from robowaiter.scene.scene import Scene
 
-class SceneVLM(Scene):
+class SceneVLN(Scene):
     def __init__(self, robot):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.new_event_list = [
             # (2, self.customer_say, (0, "请问哪里有空位啊？")),
             # (6, self.customer_say, (0, "我想坐高凳子。")),
-            (6, self.customer_say, (0, "你带我去吧。")),
-            (13, self.control_walker, (0, False,100, -250, 480,-90)),
+            (3, self.customer_say, (0, "你带我去吧。")),
+            (15, self.control_walker, (0, False,100, -250, 480,-90)),
             (-1, self.customer_say, (0, "谢谢你！这儿还不错！")),
         ]
 
@@ -28,7 +28,9 @@ class SceneVLM(Scene):
                 [19, 70, -200],  #后门站着不动的 4
                 [21, 65, 1000, -90], #大胖男占了一号桌 5
                 [5, 230, 1200], #小女孩 6
-                [26, -28, 0, 90] , #在设置一个在后门随机游走的 7
+                [26, -28, -10, 90],
+                # [26, 60, 0, 90],
+                # [26, -28, 0, 90] , #在设置一个在后门随机游走的 7
             # 设置为 26, 60, 0, 90]
                 [31, 280, 1200, -45] # 8
              ])
@@ -52,6 +54,6 @@ if __name__ == '__main__':
     robot = Robot()
 
     # create task
-    task = SceneVLM(robot)
+    task = SceneVLN(robot)
     task.reset()
     task.run()

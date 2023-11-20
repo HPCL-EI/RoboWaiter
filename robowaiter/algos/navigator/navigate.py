@@ -112,6 +112,11 @@ class Navigator:
                 print('plan pos:', next_pos, end=' ')
                 yaw = self.get_yaw(pos, next_pos)
                 self.scene.walk_to(next_pos[0], next_pos[1], math.degrees(yaw), velocity=self.v, dis_limit=10)
+
+                # 拍照片
+                if self.scene.take_picture:
+                    self.scene.get_obstacle_point(self.scene.db, self.scene.status, map_ratio=self.scene.map_ratio)
+
                 self.planner.path = self.planner.path[next_step - 1:]  # 去除已走过的路径
             pos = np.array((self.scene.status.location.X, self.scene.status.location.Y))
             print('reach pos:', pos)

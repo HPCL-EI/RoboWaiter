@@ -17,7 +17,7 @@ import os
 from robowaiter.utils import get_root_path
 from sklearn.cluster import DBSCAN
 from matplotlib import pyplot as plt
-
+from robowaiter.algos.navigator.dstar_lite import euclidean_distance
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
@@ -214,12 +214,12 @@ class Scene:
         '''
             初始化各种各种算法
         '''
-        map_file = os.path.join(root_path, 'robowaiter/algos/navigator/map_5.pkl')
-        with open(map_file, 'rb') as file:
-            map = pickle.load(file)
+        # map_file = os.path.join(root_path, 'robowaiter/algos/navigator/map_5.pkl')
+        # with open(map_file, 'rb') as file:
+        #     map = pickle.load(file)
 
         # 初始化探索、导航、操作
-        self.navigator = Navigator(scene=self, area_range=[-350, 600, -400, 1450], map=map, scale_ratio=5)
+        self.navigator = Navigator(scene=self, area_range=[-350, 600, -400, 1450], map=copy.deepcopy(self.map_map_real), scale_ratio=5)
         # self.explorer
         # self.manipulator
 
@@ -1299,6 +1299,17 @@ class Scene:
             if point[0] < -350 or point[0] > 600 or point[1] < -400 or point[1] > 1450:
                 continue
             map[math.floor((point[0] + 350) / self.map_ratio), math.floor((point[1] + 400) / self.map_ratio)] = 1
+        for obs in points:
+            obs = self.navigator.planner.real2map(obs)
+            (x, y) = obs
+            occupy_radius = self.navigator.planner.dyna_obs_radius  # 避免robot被dyna_obs的占用区域包裹住
+            # 圆形区域
+            occupy_pos = [(i, j) for i in range(x - occupy_radius, x + occupy_radius + 1)
+                          for j in range(y - occupy_radius, y + occupy_radius + 1)
+                          if euclidean_distance((i, j), obs) < occupy_radius]
+
+            for pos in occupy_pos:
+                map[pos] = 1
         return map
 
     def draw_map(self,plt, map):
@@ -1306,6 +1317,7 @@ class Scene:
         plt.imshow(map, cmap='binary', alpha=0.5, origin='lower',
                    extent=(-400 / self.map_ratio, 1450 / self.map_ratio,
                            -350 / self.map_ratio, 600 / self.map_ratio))
+        plt.title('可达性地图')
 
     def get_id_object_world(self, id, scene):
         pixels = []

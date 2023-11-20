@@ -18,6 +18,7 @@ class On(Cond):
 
         # print("self.name:",self.name)
         # print("On: condition_set:",self.scene.state["condition_set"])
+        # self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
 
         if self.name in self.scene.state["condition_set"]:
             return ptree.common.Status.SUCCESS

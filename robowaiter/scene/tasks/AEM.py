@@ -11,6 +11,8 @@ import pickle
 
 import numpy as np
 from matplotlib import pyplot as plt
+plt.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中文标签
+plt.rcParams['axes.unicode_minus']=False #用来正常显示负号
 from sklearn.cluster import DBSCAN
 
 from robowaiter.scene.scene import Scene
@@ -21,21 +23,20 @@ class SceneAEM(Scene):
     def _reset(self):
         pass
     def _run(self):
+        print(len(self.status.objects))
         # 创建一个从白色（1）到灰色（0）的 colormap
+        objs = self.status.objects
         cur_objs = []
         cur_obstacle_world_points = []
-        objs_name_set = set()
         visited_obstacle = set()
         obj_json_data = []
-        db = DBSCAN(eps=4, min_samples=2)
+        obj_count = 0
+        added_info = 0
+
+
 
         map_ratio = 3
-        # # 创建一个颜色映射，其中0表示黑色，1表示白色
-        # cmap = plt.cm.get_cmap('gray')
-        # cmap.set_under('black')
-        # cmap.set_over('white')
-
-
+        db = DBSCAN(eps=map_ratio, min_samples=int(map_ratio / 2))
 
         file_name = '../../proto/map_1.pkl'
         if os.path.exists(file_name):
@@ -51,11 +52,15 @@ class SceneAEM(Scene):
         # navigation_test(i,map_id)
         map_map = np.zeros((math.ceil(950 / map_ratio), math.ceil(1850 / map_ratio)))
 
+        # self.add_walker(0, 30, 520, )
+        # self.add_walker(10, 30, 420)
         while True:
-            goal = self.explore(map, 120)  # cur_pos 指的是当前机器人的位置，场景中应该也有接口可以获取
+            walker_count = 0
+            fig = plt.figure()
+            goal = self.explore(map, 120)
             if goal is None:
                 break
-            cur_objs, objs_name_set, cur_obstacle_world_points= self.navigation_move(cur_objs, objs_name_set, cur_obstacle_world_points, [[goal[0], goal[1]]], map_ratio, db,0, 11)
+            cur_obstacle_world_points, cur_objs_id= self.navigation_move(plt, cur_objs, cur_obstacle_world_points, [[goal[0], goal[1]]], map_ratio, db,0, 11)
 
             for point in cur_obstacle_world_points:
                 if point[0] < -350 or point[0] > 600 or point[1] < -400 or point[1] > 1450:
@@ -66,34 +71,66 @@ class SceneAEM(Scene):
             #            extent=(-400 / map_ratio, 1450 / map_ratio,
             #                    -350 / map_ratio, 600 / map_ratio))
 
-            # 使用imshow函数绘制图像，其中cmap参数设置颜色映射
+            for i in range(len(cur_objs_id)):
+                if cur_objs_id[i] == "walker":
+                    walker_count += 1
+                for obj in objs:
+                    if obj.name == cur_objs_id[i] and obj not in cur_objs:
+                        cur_objs.append(obj)
+                        break
+
+            plt.subplot(2, 1, 2)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
             plt.imshow(map_map, cmap='binary', alpha=0.5, origin='lower',
                        extent=(-400 / map_ratio, 1450 / map_ratio,
                                -350 / map_ratio, 600 / map_ratio))
             # plt.imshow(map_map, cmap='binary', alpha=0.5, origin='lower')
             # plt.axis('off')
+            plt.title("地图构建过程")
+
+            plt.subplot(2, 7, 14)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
+
+            # plt.text(0, 0.7, f'检测行人数量：{walker_count}', fontsize=10)
+
+            new_add_info = len(cur_objs) - added_info + walker_count
+            plt.text(0, 0.5, f'新增语义信息：{new_add_info}', fontsize=10)  # 在图中添加文字，x和y坐标是在这个图片大小内的相对位置，fontsize是字体大小
+            added_info += new_add_info
+            plt.text(0, 0.3, f'已存语义信息：{added_info}', fontsize=10)  # 在图中添加文字，x和y坐标是在这个图片大小内的相对位置，fontsize是字体大小
+            plt.axis("off")
             plt.show()
+            print("------------当前检测到的物品信息--------------")
+            print(cur_objs)
             time.sleep(1)
-        print("------------物品信息--------------")
-        print(cur_objs)
+
 
         for i in range(len(cur_objs)):
-            obj_json_data.append({"id":f"{i}", "name":f"{cur_objs[i].name}", "location":f"{cur_objs[i].location}", "height":f"{cur_objs[i].location.Z * 2}"})
+            if cur_objs[i].name == "Desk" or cur_objs[i].name == "Chair":
+                obj_json_data.append({"id":f"{i}", "name":f"{cur_objs[i].name}", "location":f"{cur_objs[i].location}", "height":f"{cur_objs[i].location.Z * 2}"})
+
+            else:
+                obj_json_data.append(
+                    {"id": f"{i}", "name": f"{cur_objs[i].name}", "location": f"{cur_objs[i].location}",
+                     "height": f"{cur_objs[i].location.Z}"})
 
         with open('../../proto/objs.json', 'w') as file:
             json.dump(obj_json_data, file)
+
         # for i in range(-350, 600):
         #     for j in range(-400, 1450):
         #         i = (math.floor((i + 350) / map_ratio))
         #         j = (math.floor((j + 400) / map_ratio))
         #         if (i, j) not in visited_obstacle:
         #             map_map[i][j] = 1
-        plt.imshow(map_map, cmap='binary', alpha=0.5, origin='lower',
-                   extent=(-400 / map_ratio, 1450 / map_ratio,
-                           -350 / map_ratio, 600 / map_ratio))
+        # plt.imshow(map_map, cmap='binary', alpha=0.5, origin='lower',
+        #            extent=(-400 / map_ratio, 1450 / map_ratio,
+        #                    -350 / map_ratio, 600 / map_ratio))
         # plt.axis('off')
-        plt.show()
+        # plt.show()
         print("已绘制完成地图！！！")
+        print("------------检测到的所有物品信息--------------")
+        print(obj_json_data)
+        # self.add_walker(0, 30, 520, )
+        # self.add_walker(10, 30, 420)
+        # Scene.get_obstacle_point(db, Scene.status, map_ratio)
 
 
 if __name__ == '__main__':

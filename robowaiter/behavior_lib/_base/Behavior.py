@@ -30,6 +30,17 @@ class Bahavior(ptree.behaviour.Behaviour):
     # all_object = set()
     # all_place=set()
 
+    num_of_obj_on_place={
+        'Bar': 0,  # (247.0, 520.0, 100.0)
+        'Bar2': 0,
+        'WaterTable': 0,
+        'CoffeeTable': 0,
+        'Table1': 0,
+        'Table2': 0,
+        'Table3': 0,
+        'BrightTable6': 0,
+    }
+
     place_xyz_dic={
         'Bar': (247.0, 520.0, 100.0), #(247.0, 520.0, 100.0)
         'Bar2': (240.0, 40.0, 100.0),

@@ -61,13 +61,13 @@ class Turn(Act):
                 info["add"] = {f'Is({arg[0]},Off)'}
                 info["del_set"] = {f'Is({arg[0]},On)'}
         elif arg[0]=='ACTemperature':
-            info["pre"] = {f'Holding(Nothing)'}
+            info["pre"] = {f'Holding(Nothing)',f'Is(AC,On)'}
             if arg[1]=="Up":
-                info["pre"] |= {f'Is({arg[0]},Down)'}
+                # info["pre"] |= {f'Is({arg[0]},Down)'}
                 info["add"] = {f'Is({arg[0]},Up)'}
                 info["del_set"] = {f'Is({arg[0]},Down)'}
             elif arg[1]=="Down":
-                info["pre"] |= {f'Is({arg[0]},Up)'}
+                # info["pre"] |= {f'Is({arg[0]},Up)'}
                 info["add"] = {f'Is({arg[0]},Down)'}
                 info["del_set"] = {f'Is({arg[0]},Up)'}
         return info
@@ -76,7 +76,8 @@ class Turn(Act):
 
         self.scene.move_task_area(self.op_type)
         self.scene.op_task_execute(self.op_type)
-
+        if self.scene.take_picture:
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
 

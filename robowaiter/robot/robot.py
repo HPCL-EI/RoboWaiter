@@ -92,8 +92,9 @@ class Robot(object):
         else:
             print('Warning: have none sub task sequence')
             self.scene.sub_task_seq = seq
-        print("当前行为树为：")
-        print_tree_from_root(self.bt.root)
+        # print("当前行为树为：")
+        # print_tree_from_root(self.bt.root)
+        print("行为树扩展完成！")
 
     # 获取所有action的pre,add,del列表
     def collect_action_nodes(self):

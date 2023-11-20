@@ -32,6 +32,9 @@ class MoveTo(Act):
         # goal = self.scene.state['map']['obj_pos'][self.args[0]]
         # navigator.navigate_old(goal, animation=False)
 
+        if self.scene.take_picture:
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
+
         # 走到固定的地点
         if self.target_place in Act.place_xy_yaw_dic:
             goal = Act.place_xy_yaw_dic[self.target_place]
@@ -87,9 +90,11 @@ class MoveTo(Act):
             # print("MoveTo",obj_x, obj_y, obj_z," obj_id:",obj_id," obj_info:",obj_info.name)
 
 
+        if self.scene.take_picture:
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
+
         # goal = self.scene.state['map']['obj_pos'][self.args[0]]
         # self.scene.walk_to(goal[0],goal[1]) # X, Y, Yaw=None, velocity=200, dis_limit=0
-
 
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]

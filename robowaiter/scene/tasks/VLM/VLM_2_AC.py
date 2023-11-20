@@ -13,7 +13,7 @@ class SceneVLM(Scene):
         self.signal_event_list = [
             (3, self.add_walker,  (0,0,700)),
             (1, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
-            (3, self.customer_say, (6, "好热呀，想开空调，想要温度调低点！")),
+            (1, self.customer_say, (6, "好热呀，想开空调，想要温度调低点！")),
             (5, self.control_walker, (6, False, 200, 60, 80, 0)),
             (-1, self.customer_say, (6, "谢谢！这下凉快了！")),  #(-100,600)
         ]
@@ -21,7 +21,7 @@ class SceneVLM(Scene):
     def _reset(self):
         self.gen_obj()
         self.add_walkers([[4,1, 880], [31,250, 1200],[6,-55, 750],[10,70, -200],[27,-290, 400, 180],[26, 60,-320,90]])
-        self.control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
+        self.control_walkers(walker_loc=[[-55, 750], [70, -200]],is_autowalk = True)
         pass
 
     def _run(self, op_type=10):

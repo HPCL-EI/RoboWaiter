@@ -13,6 +13,7 @@ def load_bt_from_ptml(scene, ptml_path, behavior_lib_path):
 
     print(f'BT loaded:')
     print_tree_from_root(bt.root)
+    # print("行为树子树加载完毕")
     # print(ptree.display.unicode_tree(root=bt.root, show_status=True))
     return bt
 

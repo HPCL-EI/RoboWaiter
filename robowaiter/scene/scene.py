@@ -15,6 +15,12 @@ from robowaiter.proto import GrabSim_pb2_grpc
 import copy
 import os
 from robowaiter.utils import get_root_path
+from sklearn.cluster import DBSCAN
+from matplotlib import pyplot as plt
+plt.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中文标签
+plt.rcParams['axes.unicode_minus']=False #用来正常显示负号
+
+
 root_path = get_root_path()
 
 channel = grpc.insecure_channel(
@@ -35,7 +41,7 @@ def init_world(scene_num=1, mapID=11):
     time.sleep(3)  # wait for the map to load
 
 def get_camera(part, scene_id=0):
-    print('------------------get_camera----------------------')
+    # print('------------------get_camera----------------------')
     action = GrabSim_pb2.CameraList(cameras=part, scene=scene_id)
     return stub.Capture(action)
 
@@ -107,6 +113,10 @@ class Scene:
         self.sub_task_seq = None
 
         self.show_bubble = True
+        # 图像分割
+        self.take_picture = False
+        self.map_ratio = 5
+        self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
 
         # init robot
         if robot:
@@ -576,7 +586,17 @@ class Scene:
 
 
     def move_to_obj(self,obj_id):
+
         scene = self.status
+        # 抬头
+        # value = [0]*21
+        # for i in range(21):
+        #     value[i] = self.status.joints[i].angle
+        # value[5] = 0
+        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
+        # scene = stub.Do(action)
+        # time.sleep(1.0)
+
         obj_info = scene.objects[obj_id]
         # Robot
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
@@ -595,6 +615,16 @@ class Scene:
     # 移动到进行操作任务的指定地点
     def move_task_area(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         scene = self.status
+
+        # 抬头
+        # value = [0]*21
+        # for i in range(21):
+        #     value[i] = self.status.joints[i].angle
+        # value[5] = 0
+        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
+        # scene = stub.Do(action)
+        # time.sleep(1.0)
+
         cur_pos = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
         print("Current Position:", cur_pos, "开始任务:", self.op_dialog[op_type])
         if op_type == 11 or op_type == 12:  # 开关窗帘不需要移动
@@ -642,6 +672,15 @@ class Scene:
 
     # 调整空调开关、温度
     def adjust_kongtiao(self,op_type):
+        # 低头
+        value = [0]*21
+        for i in range(21):
+            value[i] = self.status.joints[i].angle
+        value[5] = 30
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
+        scene = stub.Do(action)
+        time.sleep(1.0)
+
         obj_loc = self.obj_loc[:]
         obj_loc[2] -= 5
         if op_type == 13: obj_loc[1] -= 2
@@ -672,6 +711,19 @@ class Scene:
     def grasp_obj(self,obj_id,hand_id=1):
         print('------------------adjust_joints----------------------')
         scene = self.status
+
+        # 低头
+        value = [0]*21
+        for i in range(21):
+            value[i] = self.status.joints[i].angle
+        value[5] = 30
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
+        scene = stub.Do(action)
+        time.sleep(1.0)
+
+        if self.take_picture:
+            self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
+
         obj_info = scene.objects[obj_id]
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
         if obj_info.name=="CoffeeCup":
@@ -721,6 +773,19 @@ class Scene:
     # 实现放置操作
     def release_obj(self,release_pos):
         print("------------------adjust_joints----------------------")
+        # 低头
+        value = [0]*21
+        for i in range(21):
+            value[i] = self.status.joints[i].angle
+        value[5] = 30
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
+        scene = stub.Do(action)
+        time.sleep(1.0)
+
+        if self.take_picture:
+            self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
+
+
         if release_pos==[340.0, 900.0, 99.0]:
             self.ik_control_joints(2, release_pos[0]-40, release_pos[1]+35, release_pos[2])
             time.sleep(2.0)
@@ -1092,6 +1157,8 @@ class Scene:
 
         for key, value in object_pixels.items():
             if key == 0:
+                continue
+            if key not in objs_id.keys():
                 continue
             if key in [91, 84, 96, 87, 102, 106, 120, 85, 113, 101, 83, 251]:
                 X = np.array(value)

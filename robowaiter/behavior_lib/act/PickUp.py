@@ -56,6 +56,9 @@ class PickUp(Act):
         self.scene.move_task_area(op_type=16, obj_id=obj_id)
         self.scene.op_task_execute(op_type=16, obj_id=obj_id)
 
+        if self.scene.take_picture:
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
+
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
         return Status.RUNNING

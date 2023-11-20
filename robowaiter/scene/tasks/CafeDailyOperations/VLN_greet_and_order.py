@@ -42,7 +42,6 @@ class SceneVLM(Scene):
             (8, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "你们这有什么饮料嘛？"]]])), # 20 胖胖男到了 BrightTable6
             (2, self.customer_say, (1, "咖啡有哪些呢？")),# 10
             (2, self.customer_say, (1,"来杯卡布奇诺吧。")), # 15
-            (2, self.customer_say, (1, "来杯卡布奇诺吧。")),
 
 
             # # 场景3：有位女士要杯水和冰红茶

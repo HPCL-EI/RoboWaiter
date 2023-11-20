@@ -13,7 +13,7 @@ class SceneVLM(Scene):
         self.signal_event_list = [
             (3, self.add_walker,  (20,0,700)),
             (1, self.control_walker, (6, False,100, 60, 520,0)),
-            (3, self.customer_say, (6, "给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。")),
+            (1, self.customer_say, (6, "给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。")),
             (5, self.control_walker, (6, False, 100, -250, 480, 0)),
         ]
 

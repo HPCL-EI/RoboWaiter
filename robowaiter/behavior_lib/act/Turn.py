@@ -76,7 +76,8 @@ class Turn(Act):
 
         self.scene.move_task_area(self.op_type)
         self.scene.op_task_execute(self.op_type)
-
+        if self.scene.take_picture:
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
         self.scene.state["condition_set"] |= (self.info["add"])
         self.scene.state["condition_set"] -= self.info["del_set"]
 

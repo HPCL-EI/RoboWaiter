@@ -1101,7 +1101,7 @@ class Scene:
         # print("物体世界偏移的坐标: ", world_offest_coordinates)
         return world_coordinates
 
-    def get_walker_point(self, db, scene, map_ratio, update_info_count=0):
+    def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0):
         # db = DBSCAN(eps=4, min_samples=2)
         cur_obstacle_pixel_points = []
         cur_obstacle_world_points = []
@@ -1181,8 +1181,8 @@ class Scene:
                 #     print(f"kettle的像素坐标：({i},{j})")
                 #     print(f"kettle的深度：{d_depth[i][j][0]}")
                 #     print(f"kettle的世界坐标: {transform_co(img_data_depth, i, j, d_depth[i][j][0], scene)}")
-                if d_segment[i][j][0] in [251]:
-                    cur_obstacle_pixel_points.append([i, j])
+                # if d_segment[i][j][0] in [251]:
+                #     cur_obstacle_pixel_points.append([i, j])
                 if d_segment[i][j][0] not in not_key_objs_id:
                     # 首先检查键是否存在
                     if d_segment[i][j][0] in object_pixels:
@@ -1194,9 +1194,9 @@ class Scene:
 
 
         # print(cur_obstacle_pixel_points)
-        for pixel in cur_obstacle_pixel_points:
-            world_point = self.transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
-            cur_obstacle_world_points.append([world_point[0], world_point[1]])
+        # for pixel in cur_obstacle_pixel_points:
+        #     world_point = self.transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
+        #     cur_obstacle_world_points.append([world_point[0], world_point[1]])
         # print(f"{pixel}：{[world_point[0], world_point[1]]}")
         plt.subplot(2, 2, 2)
         plt.imshow(d_color, cmap="gray" if "depth" in im_depth.name.lower() else None)
@@ -1224,6 +1224,9 @@ class Scene:
                     if key != 251:
                         obj_detect_count += 1
                     else:
+                        center_point = [int((x_max - x_min) / 2) + x_min, int((y_max-y_min) / 2) + y_min]
+                        world_point = self.transform_co(img_data_depth, center_point[0],center_point[1] , d_depth[center_point[0]][center_point[1]][0], scene)
+                        cur_obstacle_world_points.append([world_point[0], world_point[1]])
                         walker_detect_count += 1
                     # 在指定的位置绘制方框
                     # 创建矩形框
@@ -1238,6 +1241,10 @@ class Scene:
                 if key != 251:
                     obj_detect_count += 1
                 else:
+                    center_point = [int((x_max - x_min) / 2), int(y_max - y_min) / 2]
+                    cur_obstacle_world_points.append(self.transform_co(img_data_depth, center_point[0], center_point[1],
+                                                                       d_depth[center_point[0]][center_point[1]][0],
+                                                                       scene))
                     walker_detect_count += 1
                 x_max = max(p[0] for p in value)
                 y_max = max(p[1] for p in value)

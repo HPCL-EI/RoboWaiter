@@ -68,7 +68,7 @@ class Bahavior(ptree.behaviour.Behaviour):
         'BrightTable2': (65, 1000, 135),
         'BrightTable3': (-80, 850, 135),
         'BrightTable4': (-270, 520, 150),
-        'BrightTable5': (-270, 420, -135)
+        'BrightTable5': (-270, 420, 90) #(-270, 420, -135)
     }
     container_dic={
         'Coffee':'CoffeeCup',

@@ -122,6 +122,11 @@ class Scene:
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
         self.infoCount = 0
 
+        file_name = os.path.join(root_path,'robowaiter/algos/navigator/map_5.pkl')
+        if os.path.exists(file_name):
+            with open(file_name, 'rb') as file:
+                self.map_map_real = pickle.load(file)
+
         # init robot
         if robot:
             robot.set_scene(self)
@@ -1138,6 +1143,7 @@ class Scene:
 
         d_depth = np.transpose(d_depth, (1, 0, 2))
         d_segment = np.transpose(d_segment, (1, 0, 2))
+
         for i in range(0, d_segment.shape[0], map_ratio):
             for j in range(0, d_segment.shape[1], map_ratio):
                 if d_depth[i][j][0] == 600:
@@ -1151,7 +1157,7 @@ class Scene:
                 #     print(f"kettle的像素坐标：({i},{j})")
                 #     print(f"kettle的深度：{d_depth[i][j][0]}")
                 #     print(f"kettle的世界坐标: {transform_co(img_data_depth, i, j, d_depth[i][j][0], scene)}")
-                if d_segment[i][j][0] in self.obstacle_objs_id:
+                if d_segment[i][j][0] in [251]:
                     cur_obstacle_pixel_points.append([i, j])
                 if d_segment[i][j][0] not in not_key_objs_id:
                     # 首先检查键是否存在
@@ -1161,6 +1167,32 @@ class Scene:
                     else:
                         # 如果键不存在，那么创建一个新的键值对，其中键是d_segment[i][j][0]，值是一个包含元组(i, j)的列表
                         object_pixels[d_segment[i][j][0]] = [[i, j]]
+
+        for i in range(0, d_segment.shape[0], map_ratio):
+            for j in range(0, d_segment.shape[1], map_ratio):
+                if d_depth[i][j][0] == 600:
+                    continue
+
+                # if d_segment[i][j] == 96:
+                #     print(f"apple的像素坐标：({i},{j})")
+                #     print(f"apple的深度：{d_depth[i][j][0]}")
+                #     print(f"apple的世界坐标: {transform_co(img_data_depth, i, j, d_depth[i][j][0], scene)}")
+                # if d_segment[i][j] == 113:
+                #     print(f"kettle的像素坐标：({i},{j})")
+                #     print(f"kettle的深度：{d_depth[i][j][0]}")
+                #     print(f"kettle的世界坐标: {transform_co(img_data_depth, i, j, d_depth[i][j][0], scene)}")
+                if d_segment[i][j][0] in [251]:
+                    cur_obstacle_pixel_points.append([i, j])
+                if d_segment[i][j][0] not in not_key_objs_id:
+                    # 首先检查键是否存在
+                    if d_segment[i][j][0] in object_pixels:
+                        # 如果键存在，那么添加元组(i, j)到对应的值中
+                        object_pixels[d_segment[i][j][0]].append([i, j])
+                    else:
+                        # 如果键不存在，那么创建一个新的键值对，其中键是d_segment[i][j][0]，值是一个包含元组(i, j)的列表
+                        object_pixels[d_segment[i][j][0]] = [[i, j]]
+
+
         # print(cur_obstacle_pixel_points)
         for pixel in cur_obstacle_pixel_points:
             world_point = self.transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
@@ -1237,7 +1269,8 @@ class Scene:
         # return cur_obstacle_world_points
 
     def updateMap(self, points):
-        map = copy.deepcopy(self.map_map)
+        # map = copy.deepcopy(self.map_map)
+        map = copy.deepcopy(self.map_map_real)
         for point in points:
             if point[0] < -350 or point[0] > 600 or point[1] < -400 or point[1] > 1450:
                 continue

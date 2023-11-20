@@ -14,10 +14,14 @@ class AnomalyDetected(Cond):
 
         light_set = {'Is(HallLight,Off)', 'Is(TubeLight,Off)', 'Is(Curtain,Off)'}
         if light_set.issubset(self.scene.state["condition_set"]):
-            self.scene.chat_bubble("太暗了，开灯")
-            self.scene.state["anomaly"] = "TooDark"
+            self.scene.state["anomaly"] = "NoLight"
             return ptree.common.Status.SUCCESS
 
+        # light_set = {'Is(Curtain,On)'}
+        # if light_set.issubset(self.scene.state["condition_set"]):
+        #     self.scene.chat_bubble("太暗了，开灯")
+        #     self.scene.state["anomaly"] = "NoLight"
+        #     return ptree.common.Status.SUCCESS
 
 
         return  ptree.common.Status.FAILURE

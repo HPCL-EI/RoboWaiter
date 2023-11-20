@@ -9,6 +9,10 @@ class ResolveAnomaly(Act):
 
     def _update(self) -> ptree.common.Status:
         # explore algorithm
-        self.scene.state["chat_list"].insert(0,("Goal",'Is(HallLight,On)'))
+
+        if self.scene.state["anomaly"] == "NoLight":
+            self.scene.state["chat_list"].insert(0,("Goal",'Is(HallLight,On)'))
+            self.scene.chat_bubble("太暗了，开灯")
+            self.scene.state["anomaly"] = None
 
         return ptree.common.Status.RUNNING

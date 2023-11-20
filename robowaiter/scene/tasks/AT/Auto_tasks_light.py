@@ -14,6 +14,12 @@ from robowaiter.scene.scene import Scene
 class SceneAT(Scene):
     def __init__(self, robot):
         super().__init__(robot)
+        self.signal_event_list = [
+            # (3, self.customer_say, ("System","来一号桌")),
+            # (-1, self.customer_say, ("System","回去吧")),
+            (5, self.new_set_goal, ("Is(TubeLight,Off),Is(Curtain,Off)",))
+        ]
+
 
     def _reset(self):
         # self.add_walker(1085, 2630, 220)
@@ -22,10 +28,6 @@ class SceneAT(Scene):
 
     def _run(self):
 
-        self.move_task_area(7)
-        self.op_task_execute(7)
-        self.move_task_area(6)
-        self.op_task_execute(6)
         pass
 
     def _step(self):

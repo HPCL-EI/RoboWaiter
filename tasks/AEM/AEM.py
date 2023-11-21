@@ -40,7 +40,7 @@ class SceneAEM(Scene):
         map_ratio = self.map_ratio
         db = DBSCAN(eps=map_ratio, min_samples=int(map_ratio / 2))
 
-        file_name = '../../proto/map_1.pkl'
+        file_name = '../../robowaiter/proto/map_1.pkl'
         if os.path.exists(file_name):
             with open(file_name, 'rb') as file:
                 map = pickle.load(file)
@@ -117,7 +117,7 @@ class SceneAEM(Scene):
                     {"id": f"{i}", "name": f"{cur_objs[i].name}", "location": f"{cur_objs[i].location}",
                      "height": f"{cur_objs[i].location.Z}"})
 
-        with open('../../proto/objs.json', 'w') as file:
+        with open('../../robowaiter/proto/objs.json', 'w') as file:
             json.dump(obj_json_data, file)
 
         # for i in range(-350, 600):

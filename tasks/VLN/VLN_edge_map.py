@@ -3,8 +3,6 @@
 
 测试导航算法的动态避障(Obstacle Detection and Avoidance, ODA)能力
 
-
-
 """
 import os
 import pickle

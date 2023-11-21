@@ -9,7 +9,7 @@ ok, 有需要您再找我。
 做一杯咖啡
 好的，我马上做咖啡
 create_sub_task
-{"goal":"On(Coffee,CoffeeTable)"}00
+{"goal":"On(Coffee,CoffeeTable)"}
 
 不用了。
 好的，您有需要再跟我说

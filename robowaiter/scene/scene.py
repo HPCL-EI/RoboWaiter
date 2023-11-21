@@ -306,9 +306,7 @@ class Scene:
 
         return set_sub_task
 
-    def new_set_goal(self, goal):
-        g = eval("{'" + goal + "'}")
-        self.state['chat_list'].append(("Goal", g))
+
     def new_set_goal(self,goal):
         self.state['chat_list'].append(("Goal",goal))
 

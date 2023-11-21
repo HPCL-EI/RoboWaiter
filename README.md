@@ -14,45 +14,29 @@ pip install -e .
 
 ### 快速入门
 1. 安装UE及Harix插件，打开默认项目并运行
-2. 运行 run_robowaiter.py 文件即可实现机器人控制端与仿真器的交互
+2. 运行 tasks 文件夹下的任意场景即可实现机器人控制端与仿真器的交互
 
 
-# 运行流程介绍
-run_robowaiter.py 入口文件如下：
-```python
-import os
-from robowaiter import Robot, task_map
+# 代码框架介绍
 
-TASK_NAME = 'GQA'
-
-# create robot
-project_path = "./robowaiter"
-ptml_path = os.path.join(project_path, 'robot/Default.ptml')
-behavior_lib_path = os.path.join(project_path, 'behavior_lib')
-
-robot = Robot(ptml_path,behavior_lib_path)
-
-# create task
-task = task_map[TASK_NAME](robot)
-task.reset()
-task.run()
-```
 
 ## Robot 
 Robot是机器人类，包括从ptml加载行为树的方法，以及执行行为树的方法等
 
 
-## task_map
-task_map是任务字典，通过任务缩写来返回相应的场景类。
+## tasks
+tasks文件夹中存放的场景定义及运行代码。
 
-| 缩写 | 任务      |
-|----|---------|
-| AEM  | 主动探索和记忆 |
-| GQA  | 具身多轮对话  |
-| VLN  | 视觉语言导航  |
-| VLM  | 视觉语言操作  |
-| OT  | 复杂开放任务   |
-| AT  | 自主任务    |
+| 缩写                  | 任务          |
+|---------------------|-------------|
+| AEM                 | 主动探索和记忆     |
+| GQA                 | 具身多轮对话      |
+| VLN                 | 视觉语言导航      |
+| VLM                 | 视觉语言操作      |
+| OT                  | 复杂开放任务      |
+| AT                  | 自主任务        |
+| CafeDailyOperations | 整体展示：咖啡厅的一天 |
+| Interact            | 命令行自由交互     |
 
 
 ## Scene

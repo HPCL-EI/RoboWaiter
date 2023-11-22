@@ -85,6 +85,7 @@ class Scene:
         "status": None,  # 仿真器中的观测信息，见下方详细解释
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
                           'Holding(Nothing)', 'Exist(Yogurt)', 'Exist(BottledDrink)',
+                          'Exist(Softdrink)',
                           # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
                           # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
                           'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
@@ -735,10 +736,10 @@ class Scene:
             obj_info = scene.objects[obj_id]
             obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
             walk_v = [obj_x + 50, obj_y] + [180, 180, 0]
+            print("obj_y:",obj_y,"obj_x:",obj_x)
             if 820 <= obj_y <= 1200 and 240 <= obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
                 walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
-                obj_x += 3
-                obj_y += 2.5
+            print("walk_v:",walk_v)
         if op_type == 17:  # 放置物体，移动到物体周围的可达区域
             walk_v = release_pos[:-1] + [180, 180, 0]
             if release_pos == [340.0, 900.0, 99.0]:
@@ -797,10 +798,10 @@ class Scene:
             # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
             # GrabSim_pb2.ObjectList.Object(x=340, y=960, z=88, roll=0, pitch=0, yaw=90, type=7),
             # GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=90, type=9),
-            # GrabSim_pb2.ObjectList.Object(x=340, y=952, z=88, roll=0, pitch=0, yaw=90, type=4),
+            GrabSim_pb2.ObjectList.Object(x=340, y=952, z=88, roll=0, pitch=0, yaw=90, type=4),
             GrabSim_pb2.ObjectList.Object(x=-102, y=10, z=90, roll=0, pitch=0, yaw=90, type=7),
-            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 70, z=95, roll=0, pitch=0, yaw=0,
-                                          type=9),
+            # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 70, z=95, roll=0, pitch=0, yaw=0,
+            #                               type=9),
             GrabSim_pb2.ObjectList.Object(x=-115, y=200, z=85, roll=0, pitch=0, yaw=90, type=26), # Chess
             GrabSim_pb2.ObjectList.Object(x=-115, y=250, z=85, roll=0, pitch=0, yaw=90, type=26),  # Chess
             GrabSim_pb2.ObjectList.Object(x=-115, y=280, z=85, roll=0, pitch=0, yaw=90, type=35),  # Chess
@@ -828,6 +829,9 @@ class Scene:
 
         obj_info = scene.objects[obj_id]
         obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
+        if 820 <= obj_y <= 1200 and 240 <= obj_x <= 500: # 物品位于斜的抹布桌上 ([240,500],[820,1200])
+            obj_x += 3
+            obj_y += 2.5
         if obj_info.name == "CoffeeCup":
             # obj_x += 1
             # obj_y -= 1

@@ -18,7 +18,8 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.signal_event_list = [
-            (3, self.customer_say, ("System", "酸奶。")),
+            (3, self.customer_say, ("System", "冰红茶")),
+            # (3, self.customer_say, ("System", "酸奶。")),
             # (3, self.customer_say, ("System","来一号桌")),
             # (-1, self.customer_say, ("System","回去吧")),
             # (5, self.set_goal("At(Robot,BrightTable4)"))

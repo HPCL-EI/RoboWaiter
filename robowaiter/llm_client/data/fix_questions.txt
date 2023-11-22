@@ -194,3 +194,9 @@ get_object_info
 create_sub_task
 {"goal":"On(Softdrink,Bar)"}
 
+
+水杯
+好的
+create_sub_task
+{"goal":"On(Glass,Bar)"}
+

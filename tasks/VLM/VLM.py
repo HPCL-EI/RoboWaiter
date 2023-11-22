@@ -83,18 +83,19 @@ class SceneVLM(Scene):
         # "抓握物体","放置物体"                                       # 16-17
 
         # self.gen_obj()
-        if op_type <=15:
-            self.move_task_area(op_type)
-            self.op_task_execute(op_type)
-        if op_type == 16:   # 16: 抓操作需要传入物品id
-            self.move_task_area(op_type, obj_id=1)
-            self.op_task_execute(op_type, obj_id=1)
-        # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 100.0], 水杯桌:[-70.0, 500.0, 107]
-        # 桌子1:[-55.0, 0.0, 107],抹布桌:[340.0, 900.0, 99.0]   # 桌子2:[-55.0, 150.0, 107],
-        if op_type == 17:   # 17: 放操作需要传入放置位置周围的可达区域
-            pos = [240.0, 40.0, 100.0]
-            self.move_task_area(op_type, release_pos=pos)
-            self.op_task_execute(op_type, release_pos=pos)   # [325.0, 860.0, 100]
+        # if op_type <=15:
+        #     self.move_task_area(op_type)
+        #     self.op_task_execute(op_type)
+        # if op_type == 16:   # 16: 抓操作需要传入物品id
+        #     self.move_task_area(op_type, obj_id=281)
+        #     self.op_task_execute(op_type, obj_id=281)
+        #     op_type = 17
+        # # 原始吧台处:[247.0, 520.0, 100.0], 空调开关旁吧台:[240.0, 40.0, 100.0], 水杯桌:[-70.0, 500.0, 107]
+        # # 桌子1:[-55.0, 0.0, 107],抹布桌:[340.0, 900.0, 99.0]   # 桌子2:[-55.0, 150.0, 107],
+        # if op_type == 17:   # 17: 放操作需要传入放置位置周围的可达区域
+        #     pos = [240.0, 40.0, 100.0]
+        #     self.move_task_area(op_type, release_pos=pos)
+        #     self.op_task_execute(op_type, release_pos=pos)   # [325.0, 860.0, 100]
 
 
 
@@ -111,11 +112,12 @@ class SceneVLM(Scene):
         # self.move_task_area(1)
         # self.op_task_execute(1)
         #
-        # self.find_obj("CoffeeCup")
+        self.find_obj("Plate")
         #
-        # self.move_task_area(16, obj_id=275)
-        # self.op_task_execute(16, obj_id=275)
-        # pos = [-70.0, 500.0, 107]
+        id = 158
+        self.move_task_area(16, obj_id=id)
+        self.op_task_execute(16, obj_id=id)
+        # pos = [-70.0, 500.0, 107]   # 107  98
         # self.move_task_area(17, release_pos=pos)
         # self.op_task_execute(17, release_pos=pos)
         #

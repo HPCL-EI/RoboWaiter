@@ -736,10 +736,10 @@ class Scene:
             obj_info = scene.objects[obj_id]
             obj_x, obj_y, obj_z = obj_info.location.X, obj_info.location.Y, obj_info.location.Z
             walk_v = [obj_x + 50, obj_y] + [180, 180, 0]
-            print("obj_y:",obj_y,"obj_x:",obj_x)
+            if obj_info.name == 'Plate':
+                walk_v = [obj_x + 51, obj_y] + [180, 180, 0]
             if 820 <= obj_y <= 1200 and 240 <= obj_x <= 500:  # 物品位于斜的抹布桌上 ([240,500],[820,1200])
                 walk_v = [obj_x + 40, obj_y - 35, 130, 180, 0]
-            print("walk_v:",walk_v)
         if op_type == 17:  # 放置物体，移动到物体周围的可达区域
             walk_v = release_pos[:-1] + [180, 180, 0]
             if release_pos == [340.0, 900.0, 99.0]:
@@ -793,12 +793,19 @@ class Scene:
         scene = self.status
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
         obj_list = [
+            # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z=95, roll=0, pitch=0, yaw=0,
+            #                               type=5),  #48是薯片，6是AD钙奶
             GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z=95, roll=0, pitch=0, yaw=0,
-                                          type=5),
+                                          type=57),
             # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
             # GrabSim_pb2.ObjectList.Object(x=340, y=960, z=88, roll=0, pitch=0, yaw=90, type=7),
             # GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=90, type=9),
-            GrabSim_pb2.ObjectList.Object(x=340, y=952, z=88, roll=0, pitch=0, yaw=90, type=4),
+
+            # 斜桌三瓶冰红茶
+            GrabSim_pb2.ObjectList.Object(x=340, y=965, z=88, roll=0, pitch=0, yaw=90, type=4),
+            GrabSim_pb2.ObjectList.Object(x=320, y=940, z=88, roll=0, pitch=0, yaw=90, type=4),
+            GrabSim_pb2.ObjectList.Object(x=300, y=930, z=88, roll=0, pitch=0, yaw=90, type=4),
+
             GrabSim_pb2.ObjectList.Object(x=-102, y=10, z=90, roll=0, pitch=0, yaw=90, type=7),
             # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 70, z=95, roll=0, pitch=0, yaw=0,
             #                               type=9),
@@ -816,13 +823,13 @@ class Scene:
         scene = self.status
 
         # 低头
-        value = [0] * 21
-        for i in range(21):
-            value[i] = self.status.joints[i].angle
-        value[5] = 30
-        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
-        scene = stub.Do(action)
-        time.sleep(1.0)
+        # value = [0] * 21
+        # for i in range(21):
+        #     value[i] = self.status.joints[i].angle
+        # value[5] = 30
+        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
+        # scene = stub.Do(action)
+        # time.sleep(1.0)
 
         if self.take_picture:
             self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
@@ -833,10 +840,10 @@ class Scene:
             obj_x += 3
             obj_y += 2.5
         if obj_info.name == "CoffeeCup":
-            # obj_x += 1
-            # obj_y -= 1
-            # values = [0,0,0,0,0, 10,-25,-45,-45,-45]
-            # values= [-6, 0, 0, 0, 0, -6, 0, 45, 45, 45]
+            # obj_x += 2.5
+            # obj_y -= 0.7  # 1.7
+            # obj_z -= 6
+            # values= [0, 0, 0, 0, 0, 15, -6, -6, -6, -6]  # 后5位右手 [-6,45]
             # stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
             pass
         if obj_info.name == "Glass":

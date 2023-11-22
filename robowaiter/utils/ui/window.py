@@ -15,11 +15,11 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(960, 1080)
-        MainWindow.setAutoFillBackground(True)
+        MainWindow.setAutoFillBackground(False)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.edit_say = QtWidgets.QLineEdit(self.centralwidget)
-        self.edit_say.setGeometry(QtCore.QRect(450, 30, 221, 31))
+        self.edit_say.setGeometry(QtCore.QRect(430, 40, 221, 31))
         self.edit_say.setObjectName("edit_say")
         self.btn_say = QtWidgets.QPushButton(self.centralwidget)
         self.btn_say.setGeometry(QtCore.QRect(680, 40, 75, 23))
@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.edit_say.setText(_translate("MainWindow", "做一杯咖啡"))
+        self.edit_say.setText(_translate("MainWindow", "Is(AC,On)"))
         self.btn_say.setText(_translate("MainWindow", "说话"))
         self.label_5.setText(_translate("MainWindow", "语义地图"))
 

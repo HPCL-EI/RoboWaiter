@@ -4,6 +4,7 @@
 import tkinter as tk
 from robowaiter.utils.ui.pyqt5 import UI
 import os
+from matplotlib import pyplot as plt
 
 # todo: 接收点单信息，大模型生成任务规划
 
@@ -14,13 +15,13 @@ class SceneUI(Scene):
     scene_queue = None
     ui_queue = None
     # camera_interval = 4
-
     def __init__(self, robot,scene_queue,ui_queue):
         self.scene_queue = scene_queue
         self.ui_queue = ui_queue
 
         super().__init__(robot)
         # 在这里加入场景中发生的事件
+        self.take_picture = True
 
         # while True:
         #     if not self.scene_queue.empty():
@@ -43,6 +44,9 @@ class SceneUI(Scene):
         self.ui_queue.put(('draw_from_file',"img_label_bt", f"{self.output_path}/current_bt.png"))
 
     def ui_func(self,args):
+        _,_,output_path = args
+        plt.savefig(output_path)
+
         self.ui_queue.put(args)
 
     def _reset(self):

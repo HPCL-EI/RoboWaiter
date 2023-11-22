@@ -1177,6 +1177,9 @@ class Scene:
         return world_coordinates
 
     def ui_func(self,args):
+        plt.show()
+
+    def draw_current_bt(self):
         pass
 
     def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0):
@@ -1357,7 +1360,6 @@ class Scene:
         # plt.text(0, 0.1, f'已存语义信息：{self.infoCount}', fontsize=10)
 
         output_path = os.path.join(self.output_path,"vision.png")
-        plt.savefig(output_path)
 
         # canvas = FigureCanvas(plt.gcf())
         # fig = plt.gcf()  # 获取当前figure

@@ -14,20 +14,20 @@
    <string>MainWindow</string>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="edit_say">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>30</y>
+      <x>430</x>
+      <y>40</y>
       <width>221</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>做一杯咖啡</string>
+     <string>Is(AC,On)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_say">

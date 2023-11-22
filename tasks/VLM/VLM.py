@@ -112,11 +112,11 @@ class SceneVLM(Scene):
         # self.move_task_area(1)
         # self.op_task_execute(1)
         #
-        self.find_obj("Plate")
-        #
-        id = 158
-        self.move_task_area(16, obj_id=id)
-        self.op_task_execute(16, obj_id=id)
+        # self.find_obj("Plate")
+        # #
+        # id = 158
+        # self.move_task_area(16, obj_id=id)
+        # self.op_task_execute(16, obj_id=id)
         # pos = [-70.0, 500.0, 107]   # 107  98
         # self.move_task_area(17, release_pos=pos)
         # self.op_task_execute(17, release_pos=pos)

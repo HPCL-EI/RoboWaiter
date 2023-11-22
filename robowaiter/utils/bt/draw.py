@@ -279,7 +279,8 @@ def render_dot_tree(root: behaviour.Behaviour,
                     name: str = None,
                     target_directory: str = os.getcwd(),
                     with_blackboard_variables: bool = False,
-                    with_qualified_names: bool = False):
+                    with_qualified_names: bool = False,
+                    png_only = True):
     """
     Render the dot tree to .dot, .svg, .png. files in the current
     working directory. These will be named with the root behaviour name.
@@ -322,10 +323,16 @@ def render_dot_tree(root: behaviour.Behaviour,
     filename_wo_extension_to_convert = root.ins_name if name is None else name
     filename_wo_extension = utilities.get_valid_filename(filename_wo_extension_to_convert)
     filenames = {}
-    for extension, writer in {"dot": graph.write, "png": graph.write_png, "svg": graph.write_svg}.items():
+
+    if png_only:
+        write_dict = {"png": graph.write_png}
+    else:
+        write_dict = {"dot": graph.write, "png": graph.write_png, "svg": graph.write_svg}
+
+    for extension, writer in write_dict.items():
         filename = filename_wo_extension + '.' + extension
         pathname = os.path.join(target_directory, filename)
         print("Writing {}".format(pathname))
         writer(pathname)
         filenames[extension] = pathname
-    return filenames
+    return filenames["png"]

@@ -19,4 +19,5 @@ class DelSubTree(Act):
 
         sub_task_tree = self.parent
         self.scene.sub_task_seq.children.remove(sub_task_tree)
+        self.scene.draw_current_bt()
         return Status.RUNNING

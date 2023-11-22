@@ -96,6 +96,8 @@ class Robot(object):
         # print_tree_from_root(self.bt.root)
         print("行为树扩展完成！")
 
+        self.scene.draw_current_bt()
+
     # 获取所有action的pre,add,del列表
     def collect_action_nodes(self):
         action_list = []

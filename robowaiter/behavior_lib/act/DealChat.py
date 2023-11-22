@@ -64,6 +64,7 @@ class DealChat(Act):
 
         self.scene.robot.expand_sub_task_tree(goal_set)
 
+
     def get_object_info(self,**args):
         try:
             obj = args['obj']

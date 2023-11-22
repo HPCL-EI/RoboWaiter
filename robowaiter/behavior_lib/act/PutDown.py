@@ -24,6 +24,14 @@ class PutDown(Act):
         info["del_set"] = {f'Holding({arg[0]})'}
 
         info['cost'] = 1
+
+        # if arg[0]!='Anything':
+        #     info['cost'] = 1
+        # else:
+        #     info['cost'] = 0
+        #     info["pre"] = {}
+        #     info["add"] = {f'Holding(Nothing)'}
+        #     info["del_set"] = {f'Holding({obj})' for obj in cls.valid_args if obj[0] != arg}
         return info
 
 

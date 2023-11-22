@@ -11,7 +11,7 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
         self.signal_event_list = [
-            (5, self.customer_say, (5, "给我来杯咖啡，哦对，再倒一杯水。")),
+            (8, self.customer_say, (5, "给我来杯咖啡，哦对，再倒一杯水。")),
             (1, self.control_walker_ls,([[[5, False, 100, -250, 480, 0],[6, False, 100, 60, 520, 0]]])),
             (-1, self.customer_say, (5, "感谢，这些够啦，你去忙吧。")),
             (10, self.customer_say, (6, "我想来份点心和酸奶。")),

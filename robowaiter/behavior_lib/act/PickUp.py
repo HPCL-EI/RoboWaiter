@@ -7,6 +7,7 @@ class PickUp(Act):
     can_be_expanded = True
     num_args = 1
     valid_args = Act.all_object
+    # valid_args.add("Anything")
     def __init__(self, *args):
         super().__init__(*args)
         self.target_obj = self.args[0]
@@ -20,6 +21,15 @@ class PickUp(Act):
         info["del_set"] = {f'Holding(Nothing)'}
         for place in cls.valid_args:
             info["del_set"] |= {f'On({arg},{place})'}
+        info['cost'] = 1
+
+        # if arg != 'Anything':
+        #     info['cost'] = 1
+        # else:
+        #     info['cost'] = 0
+        #
+        #     info["pre"] = {}
+
         return info
 
 

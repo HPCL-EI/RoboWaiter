@@ -37,6 +37,17 @@ def state_transition(state,action):
     return new_state
 
 
+def conflict(c):
+    have_at = False
+    for str in c:
+        if 'At' in  str:
+            if not have_at:
+                have_at = True
+            else:
+                return True
+    return False
+
+
 #本文所提出的完备规划算法
 class OptBTExpAlgorithm:
     def __init__(self,verbose=False):
@@ -51,7 +62,8 @@ class OptBTExpAlgorithm:
     def clear(self):
         self.bt = None
         self.nodes = []
-        self.traversed = []
+        self.traversed = [] #存cond
+        self.expanded = [] #存整个
         self.conditions = []
         self.conditions_index = []
 
@@ -77,7 +89,6 @@ class OptBTExpAlgorithm:
         self.nodes.append(copy.deepcopy(cond_anc_pair)) # the set of explored but unexpanded conditions
         self.traversed = [goal] # the set of expanded conditions
 
-
         while len(self.nodes)!=0:
 
             #  Find the condition for the shortest cost path
@@ -85,6 +96,19 @@ class OptBTExpAlgorithm:
             min_cost = float ('inf')
             index= -1
             for i,cond_anc_pair in enumerate(self.nodes):
+
+                ########### 剪枝操作
+                # cond_tmp = cond_anc_pair.cond_leaf.content
+                # valid = True
+                # for pn in self.expanded:  # 剪枝操作
+                #     if isinstance(pn.act_leaf.content,Action):
+                #         if pn.act_leaf.content.name==cond_anc_pair.act_leaf.content.name and cond_tmp <= pn.cond_leaf.content:
+                #             valid = False
+                #             break
+                # if not valid:
+                #     continue
+                ########### 剪枝操作
+
                 if cond_anc_pair.cond_leaf.mincost < min_cost:
                     min_cost = cond_anc_pair.cond_leaf.mincost
                     pair_node = copy.deepcopy(cond_anc_pair)
@@ -100,10 +124,22 @@ class OptBTExpAlgorithm:
             # Mount the action node and extend BT. T = Eapand(T,c,A(c))
             if c!=goal:
                 if c!=set():
+
+                    # 挂在上去的时候判断要不要挂载
+                    ########### 剪枝操作 发现行不通
+                    # valid = True
+                    # for pn in self.expanded:  # 剪枝操作
+                    #     if isinstance(pn.act_leaf.content,Action):
+                    #         if pn.act_leaf.content.name==pair_node.act_leaf.content.name and c <= pn.cond_leaf.content:
+                    #             valid = False
+                    #             break
+                    # if valid:
+                    ########### 剪枝操作
                     sequence_structure = ControlBT(type='>')
                     sequence_structure.add_child(
                         [copy.deepcopy(pair_node.cond_leaf), copy.deepcopy(pair_node.act_leaf)])
                     subtree.add_child([copy.deepcopy(sequence_structure)])  # subtree 是回不断变化的，它的父亲是self.bt
+                    self.expanded.append(copy.deepcopy(pair_node))
                     # 增加实时条件判断，满足条件就不再扩展
                     if c <= self.scene.state["condition_set"]:
                         return True
@@ -127,6 +163,10 @@ class OptBTExpAlgorithm:
                         if self.verbose:
                             print("———— 满足条件可以扩展")
                         c_attr = (actions[i].pre | c) - actions[i].add
+
+                        # 这样剪枝存在错误性
+                        if conflict(c_attr):
+                            continue
 
                         # 剪枝操作,现在的条件是以前扩展过的条件的超集
                         valid = True

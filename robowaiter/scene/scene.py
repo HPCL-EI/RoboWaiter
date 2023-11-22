@@ -78,8 +78,8 @@ class Scene:
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-                          'Holding(Nothing)', 'Exist(Yogurt)', 'Exist(BottledDrink)', 'On(Yogurt,Bar)',
-                          'On(BottledDrink,Bar)',
+                          'Holding(Nothing)', 'Exist(Yogurt)', 'Exist(BottledDrink)',
+                          # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
                           # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
                           'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
                           'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
@@ -116,7 +116,7 @@ class Scene:
 
         self.show_bubble = True
         # 图像分割
-        self.take_picture = True
+        self.take_picture = False
         self.map_ratio = 5
         self.map_map = np.zeros((math.ceil(950 / self.map_ratio), math.ceil(1850 / self.map_ratio)))
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
@@ -705,10 +705,16 @@ class Scene:
             return
         print('------------------moveTo_Area----------------------')
         if op_type < 8:  # 动画控制相关任务的移动目标
+            if self.take_picture:
+                self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]
         if 8 <= op_type <= 10:  # 控灯相关任务的移动目标
+            if self.take_picture:
+                self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]
         if op_type in [13, 14, 15]:  # 空调相关任务的移动目标
+            if self.take_picture:
+                self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             walk_v = [240, -140.0] + [0, 180, 0]
         if op_type == 16:  # 抓握物体，移动到物体周围的可达区域
             scene = self.status
@@ -887,8 +893,12 @@ class Scene:
     def op_task_execute(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         self.control_robot_action(0, 1, "开始" + self.op_dialog[op_type])  # 输出正在执行的任务
         if op_type < 8:
+            if self.take_picture:
+                self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             result = self.control_robot_action(op_type, 1)
         if 8 <= op_type <= 12:
+            if self.take_picture:
+                self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
         if op_type in [13, 14, 15]:  # 调整空调:13代表按开关,14升温,15降温
             result = self.adjust_kongtiao(op_type)

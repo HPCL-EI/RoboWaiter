@@ -88,6 +88,8 @@ class Scene:
                           'Exist(Softdrink)',
                           # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
                           # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
+                          'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)'
+                          
                           'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
                           'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
                           'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
@@ -793,25 +795,68 @@ class Scene:
         scene = self.status
         ginger_loc = [scene.location.X, scene.location.Y, scene.location.Z]
         obj_list = [
+
+            GrabSim_pb2.ObjectList.Object(x=190, y=40, z=87, roll=0, pitch=0, yaw=0,
+                                          type=38), #矿泉水
+
+
+            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 75, z=95, roll=0, pitch=0, yaw=0,
+                                          type=48),  # 48是薯片
+            # GrabSim_pb2.ObjectList.Object(x=190, y=40, z=87, roll=0, pitch=0, yaw=0,
+            #                               type=48), #48是薯片
+            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 65, z=95, roll=0, pitch=0, yaw=0,
+                                          type=37), #37是NFC果汁
+            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 55, z=95, roll=0, pitch=0, yaw=0,
+                                          type=8), #8是贝尔纳松
+            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 45, z=95, roll=0, pitch=0, yaw=0,
+                                          type=6), #6是AD钙奶
+            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 35, z=95, roll=0, pitch=0, yaw=0,
+                                          type=9), #9是冰红(瓶)
+            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 25, z=95, roll=0, pitch=0, yaw=0,
+                                          type=5),  # 5是酸奶
+
+            # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 30, z=95, roll=0, pitch=0, yaw=0,
+            #                               type=13),
             # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z=95, roll=0, pitch=0, yaw=0,
-            #                               type=5),  #48是薯片，6是AD钙奶
-            GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 40, z=95, roll=0, pitch=0, yaw=0,
-                                          type=57),
-            # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 50, y=ginger_loc[1] - 40, z=h, roll=0, pitch=0, yaw=0, type=9),
+            #                               type=48),
             # GrabSim_pb2.ObjectList.Object(x=340, y=960, z=88, roll=0, pitch=0, yaw=90, type=7),
             # GrabSim_pb2.ObjectList.Object(x=340, y=960, z = 88, roll=0, pitch=0, yaw=90, type=9),
+
+            GrabSim_pb2.ObjectList.Object(x=320, y=400, z=95, roll=0, pitch=0, yaw=0,
+                                          type=20),
 
             # 斜桌三瓶冰红茶
             GrabSim_pb2.ObjectList.Object(x=340, y=965, z=88, roll=0, pitch=0, yaw=90, type=4),
             GrabSim_pb2.ObjectList.Object(x=320, y=940, z=88, roll=0, pitch=0, yaw=90, type=4),
             GrabSim_pb2.ObjectList.Object(x=300, y=930, z=88, roll=0, pitch=0, yaw=90, type=4),
+            # GrabSim_pb2.ObjectList.Object(x=300, y=930, z=88, roll=0, pitch=0, yaw=90, type=38), #矿泉水
 
+            GrabSim_pb2.ObjectList.Object(x=370, y=1000, z=88, roll=0, pitch=0, yaw=90, type=1), #香蕉
+            GrabSim_pb2.ObjectList.Object(x=380, y=1000, z=88, roll=0, pitch=0, yaw=90, type=65),  # 番茄
+            GrabSim_pb2.ObjectList.Object(x=380, y=1020, z=88, roll=0, pitch=0, yaw=90, type=42),  # 山竹
+            GrabSim_pb2.ObjectList.Object(x=360, y=1020, z=88, roll=0, pitch=0, yaw=90, type=27),  # 橙子
+
+            # BrightTable2
+            # GrabSim_pb2.ObjectList.Object(x=-30, y=1000, z=35, roll=0, pitch=0, yaw=90, type=64), #西瓜
+            GrabSim_pb2.ObjectList.Object(x=-15, y=1050, z=40, roll=0, pitch=0, yaw=90, type=17), #a午餐盒
+
+            # 保温杯
             GrabSim_pb2.ObjectList.Object(x=-102, y=10, z=90, roll=0, pitch=0, yaw=90, type=7),
             # GrabSim_pb2.ObjectList.Object(x=ginger_loc[0] - 55, y=ginger_loc[1] - 70, z=95, roll=0, pitch=0, yaw=0,
             #                               type=9),
+
+            # Table3上由两套军旗，一个模仿
             GrabSim_pb2.ObjectList.Object(x=-115, y=200, z=85, roll=0, pitch=0, yaw=90, type=26), # Chess
+            GrabSim_pb2.ObjectList.Object(x=-130, y=225, z=85, roll=0, pitch=0, yaw=90, type=55), # 玩具狗
+            GrabSim_pb2.ObjectList.Object(x=-110, y=225, z=85, roll=0, pitch=0, yaw=90, type=56), #玩具熊
             GrabSim_pb2.ObjectList.Object(x=-115, y=250, z=85, roll=0, pitch=0, yaw=90, type=26),  # Chess
-            GrabSim_pb2.ObjectList.Object(x=-115, y=280, z=85, roll=0, pitch=0, yaw=90, type=35),  # Chess
+            GrabSim_pb2.ObjectList.Object(x=-115, y=280, z=85, roll=0, pitch=0, yaw=90, type=35),  # 魔方
+
+            # 靠窗边的桌子上
+            GrabSim_pb2.ObjectList.Object(x=-400, y=520, z=70, roll=0, pitch=0, yaw=0, type=63),  # 小说
+            GrabSim_pb2.ObjectList.Object(x=-410, y=550, z=70, roll=0, pitch=0, yaw=0, type=59),  # 围巾
+            GrabSim_pb2.ObjectList.Object(x=-395, y=570, z=70, roll=0, pitch=0, yaw=0, type=18), # 手镯
+
 
         ]
         scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
@@ -823,13 +868,13 @@ class Scene:
         scene = self.status
 
         # 低头
-        # value = [0] * 21
-        # for i in range(21):
-        #     value[i] = self.status.joints[i].angle
-        # value[5] = 30
-        # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
-        # scene = stub.Do(action)
-        # time.sleep(1.0)
+        value = [0] * 21
+        for i in range(21):
+            value[i] = self.status.joints[i].angle
+        value[5] = 30
+        action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
+        scene = stub.Do(action)
+        time.sleep(1.0)
 
         if self.take_picture:
             self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
@@ -916,6 +961,7 @@ class Scene:
 
     # 执行过程: Robot输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
     def op_task_execute(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
+        #id = 196  # Glass = 188+x, Plate = 150+x
         self.control_robot_action(0, 1, "开始" + self.op_dialog[op_type])  # 输出正在执行的任务
         if op_type < 8:
             if self.take_picture:

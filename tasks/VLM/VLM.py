@@ -114,12 +114,12 @@ class SceneVLM(Scene):
         #
         # self.find_obj("Plate")
         # #
-        # id = 158
-        # self.move_task_area(16, obj_id=id)
-        # self.op_task_execute(16, obj_id=id)
-        # pos = [-70.0, 500.0, 107]   # 107  98
-        # self.move_task_area(17, release_pos=pos)
-        # self.op_task_execute(17, release_pos=pos)
+        id = 0
+        self.move_task_area(16, obj_id=id)
+        self.op_task_execute(16, obj_id=id)
+        pos = [-70.0, 500.0, 111]   # 107  98
+        self.move_task_area(17, release_pos=pos)
+        self.op_task_execute(17, release_pos=pos)
         #
         # # 倒水:倒完的水放到旁边桌子上
         # self.move_task_area(2)

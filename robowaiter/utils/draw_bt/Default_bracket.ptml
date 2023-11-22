@@ -2,27 +2,28 @@ selector
 {
     sequence
 {
-        cond CustomerChatting()
+        cond Chatting()
         act DealChat()
-
-}    sequence
+    }    sequence
 {
         cond HasSubTask()
         sequence
 {
             act SubTaskPlaceHolder()
-
-}    sequence
+        }    }    sequence
+{
         cond FocusingCustomer()
         act ServeCustomer()
-
-}    sequence
+    }    sequence
 {
-        cond NewCustomerComing()
+        cond NewCustomer()
         selector
 {
             cond At(Robot,Bar)
             act MoveTo(Bar)
-
-}        act GreetCustomer()
-}}
+        }        act GreetCustomer()
+    }    sequence
+{
+        cond AnomalyDetected()
+        act ResolveAnomaly()
+    }}

@@ -18,6 +18,9 @@ from robowaiter.utils import get_root_path
 from sklearn.cluster import DBSCAN
 from matplotlib import pyplot as plt
 from robowaiter.algos.navigator.dstar_lite import euclidean_distance
+from PIL import Image
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
@@ -56,7 +59,7 @@ def show_image(camera_data):
     # matplotlib中的plt方法 对矩阵d 进行图形绘制，如果 深度相机拍摄的带深度的图片（图片名字中有depth信息），则转换成黑白图即灰度图
     plt.imshow(d, cmap="gray" if "depth" in im.name.lower() else None)
     # 图像展示在屏幕上
-    plt.show()
+    # plt.show()
 
     return d
 
@@ -68,6 +71,9 @@ class Scene:
     signal_event_list = []
     # show_bubble = True
     event_signal = "None"
+    # step_interval = 1
+    # camera_interval = 1.5
+    output_path = os.path.join(os.path.dirname(__file__), "outputs")
 
     default_state = {
         "map": {
@@ -113,6 +119,7 @@ class Scene:
         self.start_time = time.time()
         self.time = 0
         self.sub_task_seq = None
+        os.makedirs(self.output_path,exist_ok=True)
 
         self.show_bubble = True
         # 图像分割
@@ -129,14 +136,13 @@ class Scene:
             with open(file_name, 'rb') as file:
                 self.map_map_real = pickle.load(file)
 
-        # init robot
-        if robot:
-            robot.set_scene(self)
-            robot.load_BT()
-        self.robot = robot
+
+        self.init_robot(robot)
 
         self.robot_changed = False
         self.last_event_time = 0
+        self.last_camera_time = -99999
+        self.last_step_time = -99999
 
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["", "制作咖啡", "倒水", "夹点心", "拖地", "擦桌子", "开筒灯", "搬椅子",  # 1-7
@@ -212,6 +218,14 @@ class Scene:
 
         self.init_algos()  # 初始化各种算法类
 
+    def init_robot(self, robot):
+        # init robot
+        self.robot = robot
+
+        if robot:
+            robot.set_scene(self)
+            return robot.load_BT()
+
     def init_algos(self):
         '''
             初始化各种各种算法
@@ -250,11 +264,13 @@ class Scene:
         # 基类step，默认执行行为树tick操作
         self.time = time.time() - self.start_time
 
+        # if self.time - self.last_step_time > self.step_interval:
         self.deal_event()
         self.deal_new_event()
         self.deal_signal_event()
         self._step()
         self.robot_changed = self.robot.step()
+        self.last_step_time = self.time
 
     def deal_new_event(self):
         if len(self.new_event_list) > 0:
@@ -306,9 +322,7 @@ class Scene:
 
         return set_sub_task
 
-    def new_set_goal(self, goal):
-        g = eval("{'" + goal + "'}")
-        self.state['chat_list'].append(("Goal", g))
+
     def new_set_goal(self,goal):
         self.state['chat_list'].append(("Goal",goal))
 
@@ -1162,6 +1176,9 @@ class Scene:
         # print("物体世界偏移的坐标: ", world_offest_coordinates)
         return world_coordinates
 
+    def ui_func(self,args):
+        pass
+
     def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0):
 
         # if abs(self.last_take_pic_tim - self.time)<
@@ -1176,10 +1193,8 @@ class Scene:
 
         not_key_objs_id = {255, 254, 253, 107, 81}
 
-        img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
-        img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
-        img_data_color = get_camera([GrabSim_pb2.CameraName.Head_Color])
 
+        img_data_segment,img_data_depth,img_data_color = self.get_cameras()
         im_segment = img_data_segment.images[0]
         im_depth = img_data_depth.images[0]
         im_color = img_data_color.images[0]
@@ -1190,6 +1205,7 @@ class Scene:
             (im_depth.height, im_depth.width, im_depth.channels))
         d_color = np.frombuffer(im_color.data, dtype=im_color.dtype).reshape(
             (im_color.height, im_color.width, im_color.channels))
+
 
         items = img_data_segment.info.split(";")
         objs_id = {}
@@ -1267,6 +1283,10 @@ class Scene:
         plt.axis('off')
         plt.title("目标检测")
 
+        # self.ui_func(("draw_img","img_label_obj",d_color))
+
+
+
         for key, value in object_pixels.items():
             if key == 0:
                 continue
@@ -1336,7 +1356,25 @@ class Scene:
         plt.text(0, 0.3, f'更新语义信息：{update_info_count}', fontsize=10)
         # plt.text(0, 0.1, f'已存语义信息：{self.infoCount}', fontsize=10)
 
-        plt.show()
+        output_path = os.path.join(self.output_path,"vision.png")
+        plt.savefig(output_path)
+
+        # canvas = FigureCanvas(plt.gcf())
+        # fig = plt.gcf()  # 获取当前figure
+        # image = fig.canvas.print_to_buffer()
+        # width, height = fig.get_size_inches()  # 获取图像的宽度和高度（单位：英寸）
+        # dpi = fig.dpi  # 获取图像的DPI
+        #
+        # width_px = int(width * dpi)  # 转换为像素
+        # height_px = int(height * dpi)  # 转换为像素
+        #
+        # image_pil = Image.frombuffer('RGB', (width, height), image, 'raw')
+        #
+        # # 转换为numpy数组
+        # image_np = np.asarray(image_pil)
+        self.ui_func(("draw_from_file","img_label_canvas",output_path))
+        plt.close()
+        # plt.show()
         # return cur_obstacle_world_points
 
     def updateMap(self, points):
@@ -1369,10 +1407,12 @@ class Scene:
     def get_id_object_world(self, id, scene):
         pixels = []
         world_points = []
-        img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
+
+        img_data_segment,img_data_depth,_ = self.get_cameras()
+        # img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
         im_segment = img_data_segment.images[0]
 
-        img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
+        # img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
         im_depth = img_data_depth.images[0]
 
         d_segment = np.frombuffer(im_segment.data, dtype=im_segment.dtype).reshape(
@@ -1390,3 +1430,14 @@ class Scene:
         for pixel in pixels:
             world_points.append(self.transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0]))
         return world_points
+
+    def get_cameras(self):
+        # if self.time - self.last_camera_time > self.camera_interval:
+        self.img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
+        time.sleep(0.2)
+        self.img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
+        time.sleep(0.2)
+        self.img_data_color = get_camera([GrabSim_pb2.CameraName.Head_Color])
+        self.last_camera_time = self.time
+
+        return self.img_data_segment,self.img_data_depth,self.img_data_color

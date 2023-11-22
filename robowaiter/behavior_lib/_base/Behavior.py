@@ -103,7 +103,7 @@ class Bahavior(ptree.behaviour.Behaviour):
 
 
 
-    # let behavior node interact with the scene
+    # let behavior node Interact with the scene
     def set_scene(self, scene=None):
         if scene:
             self.scene = scene

@@ -1,3 +1,4 @@
+import io
 import pickle
 import sys
 import time
@@ -33,21 +34,9 @@ channel = grpc.insecure_channel(
         ("grpc.max_receive_message_length", 1024 * 1024 * 1024),
     ],
 )
-stub = GrabSim_pb2_grpc.GrabSimStub(channel)
-
 animation_step = [4, 5, 7, 3, 3]
 loc_offset = [-700, -1400]
 
-
-def init_world(scene_num=1, mapID=11):
-    stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
-    time.sleep(3)  # wait for the map to load
-
-
-def get_camera(part, scene_id=0):
-    # print('------------------get_camera----------------------')
-    action = GrabSim_pb2.CameraList(cameras=part, scene=scene_id)
-    return stub.Capture(action)
 
 
 def show_image(camera_data):
@@ -114,6 +103,11 @@ class Scene:
     """
 
     def __init__(self, robot=None, sceneID=0):
+        self.stub = GrabSim_pb2_grpc.GrabSimStub(channel)
+
+
+        self.robot = robot
+
         self.sceneID = sceneID
         self.use_offset = False
         self.start_time = time.time()
@@ -137,12 +131,18 @@ class Scene:
                 self.map_map_real = pickle.load(file)
 
 
-        self.init_robot(robot)
 
         self.robot_changed = False
         self.last_event_time = 0
         self.last_camera_time = -99999
         self.last_step_time = -99999
+
+        self.img_cache = {
+            "img_label_canvas":None,
+            "img_label_seg":None,
+            "img_label_obj":None,
+            "img_label_map":None,
+        }
 
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
         self.op_dialog = ["", "制作咖啡", "倒水", "夹点心", "拖地", "擦桌子", "开筒灯", "搬椅子",  # 1-7
@@ -218,13 +218,22 @@ class Scene:
 
         self.init_algos()  # 初始化各种算法类
 
-    def init_robot(self, robot):
-        # init robot
-        self.robot = robot
 
-        if robot:
-            robot.set_scene(self)
-            return robot.load_BT()
+    def init_world(self,scene_num=1, mapID=11):
+        self.stub.SetWorld(GrabSim_pb2.BatchMap(count=scene_num, mapID=mapID))
+        time.sleep(3)  # wait for the map to load
+
+    def get_camera(self,part, scene_id=0):
+        # print('------------------get_camera----------------------')
+        action = GrabSim_pb2.CameraList(cameras=part, scene=scene_id)
+        return self.stub.Capture(action)
+
+    def init_robot(self):
+        # init robot
+
+        if self.robot:
+            self.robot.set_scene(self)
+            self.robot.load_BT()
 
     def init_algos(self):
         '''
@@ -243,18 +252,19 @@ class Scene:
     def reset(self):
         # 基类reset，默认执行仿真器初始化操作
         self.reset_sim()
+        self.init_robot()
+        self.init_algos()
 
         # reset state
         self.state = copy.deepcopy(self.default_state)
 
-        print("场景初始化完成")
         self._reset()
+        print("场景初始化完成")
 
         self.running = True
 
     def run(self):
         # 基类run
-
         self._run()
         # 运行并由robot打印每步信息
         while True:
@@ -329,13 +339,13 @@ class Scene:
 
     @property
     def status(self):
-        return stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+        return self.stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
 
     def reset_sim(self):
         # reset world
-        stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
-        init_world()
-        stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
+        self.stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
+        self.init_world()
+        self.stub.Reset(GrabSim_pb2.ResetParams(scene=self.sceneID))
 
     def _reset(self):
         # 场景自定义的reset
@@ -364,7 +374,7 @@ class Scene:
         action = GrabSim_pb2.Action(
             scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v
         )
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
 
         return scene
 
@@ -375,7 +385,7 @@ class Scene:
     def reachable_check(self, X, Y, Yaw):
         if self.use_offset:
             X, Y = X + loc_offset[0], Y + loc_offset[1]
-        navigation_info = stub.Do(
+        navigation_info = self.stub.Do(
             GrabSim_pb2.Action(
                 scene=self.sceneID,
                 action=GrabSim_pb2.Action.ActionType.WalkTo,
@@ -390,7 +400,7 @@ class Scene:
     def add_walker(self, id, x, y, yaw=0, v=0, scope=100):
         loc = [x, y, yaw, v, scope]
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=loc)
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         # print(scene.info)
         walker_list = []
         if (str(scene.info).find('unreachable') > -1):
@@ -398,7 +408,7 @@ class Scene:
         else:
             walker_list.append(
                 GrabSim_pb2.WalkerList.Walker(id=id, pose=GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=loc[2])))
-        stub.AddWalker(GrabSim_pb2.WalkerList(walkers=walker_list, scene=self.sceneID))
+        self.stub.AddWalker(GrabSim_pb2.WalkerList(walkers=walker_list, scene=self.sceneID))
 
         w = self.status.walkers
         num_customer = len(w)
@@ -431,15 +441,15 @@ class Scene:
                 # Since status.walkers is a list, some walkerIDs would change after removing a walker.
                 remove_list.append(walkerID)
 
-        stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
+        self.stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
         self.state["customer_mem"] = {}
         w = self.status.walkers
         for i in range(len(w)):
             self.state["customer_mem"][w[i].name] = i
 
     def remove_walkers(self, IDs=[0]):
-        s = stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
-        scene = stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=IDs, scene=self.sceneID))
+        s = self.stub.Observe(GrabSim_pb2.SceneID(value=self.sceneID))
+        scene = self.stub.RemoveWalkers(GrabSim_pb2.RemoveList(IDs=IDs, scene=self.sceneID))
         time.sleep(2)
         self.state["customer_mem"] = {}
         w = self.status.walkers
@@ -448,7 +458,7 @@ class Scene:
         return
 
     def clean_walkers(self):
-        scene = stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
+        scene = self.stub.CleanWalkers(GrabSim_pb2.SceneID(value=self.sceneID))
         self.state["customer_mem"] = {}
         return scene
 
@@ -458,13 +468,13 @@ class Scene:
             walkerID = self.walker_index2mem(walkerID)
 
         pose = GrabSim_pb2.Pose(X=X, Y=Y, Yaw=Yaw)
-        scene = stub.ControlWalkers(
+        scene = self.stub.ControlWalkers(
             GrabSim_pb2.WalkerControls(
                 controls=[GrabSim_pb2.WalkerControls.WControl(id=walkerID, autowalk=autowalk, speed=speed, pose=pose)],
                 scene=self.sceneID)
         )
         return scene
-        # stub.ControlWalkers(
+        # self.stub.ControlWalkers(
         #     GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
         # )
 
@@ -487,7 +497,7 @@ class Scene:
                 self.walker_control_generator(walkerID=control[0], autowalk=control[1], speed=control[2], X=control[3],
                                               Y=control[4], Yaw=control[5]))
         # 收集没有对话的统一控制
-        scene = stub.ControlWalkers(
+        scene = self.stub.ControlWalkers(
             GrabSim_pb2.WalkerControls(controls=control_list, scene=self.sceneID)
         )
         return scene
@@ -502,7 +512,7 @@ class Scene:
             is_autowalk = is_autowalk
             pose = GrabSim_pb2.Pose(X=loc[0], Y=loc[1], Yaw=180)
             controls.append(GrabSim_pb2.WalkerControls.WControl(id=i, autowalk=is_autowalk, speed=80, pose=pose))
-        scene = stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
+        scene = self.stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
         return scene
 
     def control_walker_ls(self, walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]]):
@@ -522,12 +532,12 @@ class Scene:
             elif len(walker) == 6:
                 self.control_walker(walker[0], walker[1], walker[2], walker[3], walker[4], walker[5])
         #     self.control_walker()
-        # scene = stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
+        # scene = self.stub.ControlWalkers(GrabSim_pb2.WalkerControls(controls=controls, scene=self.sceneID))
         # return scene
         return
 
     def control_joints(self, angles):
-        stub.Do(
+        self.stub.Do(
             GrabSim_pb2.Action(
                 scene=self.sceneID,
                 action=GrabSim_pb2.Action.ActionType.RotateJoints,
@@ -538,7 +548,7 @@ class Scene:
     def add_object(self, type, X, Y, Z, Yaw=0):
         if self.use_offset:
             X, Y = X + loc_offset[0], Y + loc_offset[1]
-        stub.AddObjects(
+        self.stub.AddObjects(
             GrabSim_pb2.ObjectList(
                 objects=[
                     GrabSim_pb2.ObjectList.Object(x=X, y=Y, yaw=Yaw, z=Z, type=type)
@@ -554,13 +564,13 @@ class Scene:
         else:
             for objectID in args:
                 remove_list.append(objectID)
-        stub.RemoveObjects(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
+        self.stub.RemoveObjects(GrabSim_pb2.RemoveList(IDs=remove_list, scene=self.sceneID))
 
     def clean_object(self):
-        stub.CleanObjects(GrabSim_pb2.SceneID(value=self.sceneID))
+        self.stub.CleanObjects(GrabSim_pb2.SceneID(value=self.sceneID))
 
     def grasp(self, handID, objectID):
-        stub.Do(
+        self.stub.Do(
             GrabSim_pb2.Action(
                 scene=self.sceneID,
                 action=GrabSim_pb2.Action.ActionType.Grasp,
@@ -569,7 +579,7 @@ class Scene:
         )
 
     def release(self, handID):
-        stub.Do(
+        self.stub.Do(
             GrabSim_pb2.Action(
                 scene=self.sceneID,
                 action=GrabSim_pb2.Action.ActionType.Release,
@@ -578,7 +588,7 @@ class Scene:
         )
 
     def get_camera_color(self, image_only=True):
-        camera_data = stub.Capture(
+        camera_data = self.stub.Capture(
             GrabSim_pb2.CameraList(
                 cameras=[GrabSim_pb2.CameraName.Head_Color], scene=self.sceneID
             )
@@ -589,7 +599,7 @@ class Scene:
             return camera_data
 
     def get_camera_depth(self, image_only=True):
-        camera_data = stub.Capture(
+        camera_data = self.stub.Capture(
             GrabSim_pb2.CameraList(
                 cameras=[GrabSim_pb2.CameraName.Head_Depth], scene=self.sceneID
             )
@@ -600,7 +610,7 @@ class Scene:
             return camera_data
 
     def get_camera_segment(self, show=True):
-        camera_data = stub.Capture(
+        camera_data = self.stub.Capture(
             GrabSim_pb2.CameraList(
                 cameras=[GrabSim_pb2.CameraName.Head_Segment], scene=self.sceneID
             )
@@ -611,7 +621,7 @@ class Scene:
         return camera_data
 
     def chat_bubble(self, message):
-        stub.ControlRobot(
+        self.stub.ControlRobot(
             GrabSim_pb2.ControlInfo(
                 scene=self.sceneID, type=0, action=1, content=message.strip()
             )
@@ -635,7 +645,7 @@ class Scene:
 
     # def control_robot_action(self, scene_id=0, type=0, action=0, message="你好"):
     #     print('------------------control_robot_action----------------------')
-    #     scene = stub.ControlRobot(
+    #     scene = self.stub.ControlRobot(
     #         GrabSim_pb2.ControlInfo(scene=scene_id, type=type, action=action, content=message))
     #     if (str(scene.info).find("Action Success") > -1):
     #         print(scene.info)
@@ -646,19 +656,19 @@ class Scene:
 
     def animation_control(self, animation_type):
         # animation_type: 1:make coffee 2: pour water 3: grab food 4: mop floor 5: clean table
-        scene = stub.ControlRobot(
+        scene = self.stub.ControlRobot(
             GrabSim_pb2.ControlInfo(scene=self.sceneID, type=animation_type, action=1)
         )
         if scene.info == "action success":
             for i in range(2, animation_step[animation_type - 1] + 1):
-                stub.ControlRobot(
+                self.stub.ControlRobot(
                     GrabSim_pb2.ControlInfo(
                         scene=self.sceneID, type=animation_type, action=i
                     )
                 )
 
     def animation_reset(self):
-        stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))
+        self.stub.ControlRobot(GrabSim_pb2.ControlInfo(scene=self.sceneID, type=0, action=0))
 
     # 手指移动到指定位置
     def ik_control_joints(self, handNum=2, x=30, y=40, z=80):
@@ -668,7 +678,7 @@ class Scene:
             GrabSim_pb2.HandPostureInfos.HandPostureObject(handNum=handNum, x=x, y=y, z=z, roll=0, pitch=0, yaw=0),
             # GrabSim_pb2.HandPostureInfos.HandPostureObject(handNum=1, x=0, y=0, z=0, roll=0, pitch=0, yaw=0),
         ]
-        temp = stub.GetIKControlInfos(
+        temp = self.stub.GetIKControlInfos(
             GrabSim_pb2.HandPostureInfos(scene=self.sceneID, handPostureObjects=HandPostureObject))
 
     def move_to_obj(self, obj_id):
@@ -680,7 +690,7 @@ class Scene:
         #     value[i] = self.status.joints[i].angle
         # value[5] = 0
         # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
-        # scene = stub.Do(action)
+        # scene = self.stub.Do(action)
         # time.sleep(1.0)
 
         obj_info = scene.objects[obj_id]
@@ -697,7 +707,7 @@ class Scene:
             self.navigator.navigate(goal=(walk_v[0], walk_v[1]), animation=False)
         else:
             action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-            scene = stub.Do(action)
+            scene = self.stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
 
     # 移动到进行操作任务的指定地点
@@ -710,7 +720,7 @@ class Scene:
         #     value[i] = self.status.joints[i].angle
         # value[5] = 0
         # action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
-        # scene = stub.Do(action)
+        # scene = self.stub.Do(action)
         # time.sleep(1.0)
 
         cur_pos = [scene.location.X, scene.location.Y, scene.rotation.Yaw]
@@ -745,12 +755,12 @@ class Scene:
                 walk_v[2] = 130
         # 移动到目标位置
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         print("After Walk Position:", [scene.location.X, scene.location.Y, scene.rotation.Yaw])
 
     # 相应的行动，由主办方封装
     def control_robot_action(self, type=0, action=0, message="你好"):
-        scene = stub.ControlRobot(
+        scene = self.stub.ControlRobot(
             GrabSim_pb2.ControlInfo(
                 scene=self.sceneID, type=type, action=action, content=message
             )
@@ -770,7 +780,7 @@ class Scene:
             value[i] = self.status.joints[i].angle
         value[5] = 30
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         time.sleep(1.0)
 
         if self.take_picture:
@@ -806,7 +816,7 @@ class Scene:
             GrabSim_pb2.ObjectList.Object(x=-115, y=280, z=85, roll=0, pitch=0, yaw=90, type=35),  # Chess
 
         ]
-        scene = stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
+        scene = self.stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 
     # 实现抓握操作
@@ -820,7 +830,7 @@ class Scene:
             value[i] = self.status.joints[i].angle
         value[5] = 30
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         time.sleep(1.0)
 
         if self.take_picture:
@@ -833,7 +843,7 @@ class Scene:
             # obj_y -= 1
             # values = [0,0,0,0,0, 10,-25,-45,-45,-45]
             # values= [-6, 0, 0, 0, 0, -6, 0, 45, 45, 45]
-            # stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
+            # self.stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
             pass
         if obj_info.name == "Glass":
             pass
@@ -844,7 +854,7 @@ class Scene:
         print('------------------grasp_obj----------------------')
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Grasp,
                                     values=[hand_id, obj_id])
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         time.sleep(3.0)
         return True
 
@@ -852,12 +862,12 @@ class Scene:
     def robo_recover(self):
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints,  # 恢复原位
                                     values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
 
     # 恢复手指关节
     def standard_finger(self):
         values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
+        self.stub.Do(GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Finger, values=values))
         time.sleep(1.0)
 
     # 弯腰以及手掌与放置面平齐
@@ -870,7 +880,7 @@ class Scene:
         angle[20] = -30
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints,  # 弯腰
                                     values=angle)
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         time.sleep(1.0)
 
     # 实现放置操作
@@ -882,7 +892,7 @@ class Scene:
             value[i] = self.status.joints[i].angle
         value[5] = 30
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.RotateJoints, values=value)
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         time.sleep(1.0)
 
         if self.take_picture:
@@ -897,7 +907,7 @@ class Scene:
             self.robo_stoop_parallel()
         print("------------------release_obj----------------------")
         action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.Release, values=[1])
-        scene = stub.Do(action)
+        scene = self.stub.Do(action)
         time.sleep(2.0)
         self.robo_recover()  # 恢复肢体关节
         self.standard_finger()  # 恢复手指关节
@@ -942,12 +952,12 @@ class Scene:
             walk_v = walk_v + [scene.rotation.Yaw - 90, 600, 100]
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=self.sceneID, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-            scene = stub.Do(action)
+            scene = self.stub.Do(action)
             print(scene.info)
 
     def navigation_move(self, plt, cur_objs, cur_obstacle_world_points, v_list, map_ratio, db, scene_id=0, map_id=11):
         print('------------------navigation_move----------------------')
-        scene = stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
+        scene = self.stub.Observe(GrabSim_pb2.SceneID(value=scene_id))
         walk_value = [scene.location.X, scene.location.Y]
         print("position:", walk_value)
 
@@ -958,7 +968,7 @@ class Scene:
             walk_v = walk_value + [yaw, 250, 10]
             print("walk_v", walk_v)
             action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-            scene = stub.Do(action)
+            scene = self.stub.Do(action)
             # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
             #                                                   objs_name_set)
 
@@ -980,7 +990,7 @@ class Scene:
                 walk_v = walk_v + [yaw, 250, 10]
                 print("walk_v", walk_v)
                 action = GrabSim_pb2.Action(scene=scene_id, action=GrabSim_pb2.Action.ActionType.WalkTo, values=walk_v)
-                scene = stub.Do(action)
+                scene = self.stub.Do(action)
 
                 # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                 #                                                   objs_name_set)
@@ -1008,7 +1018,7 @@ class Scene:
         return x, y
 
     def explore(self, map, explore_range):
-        scene = stub.Observe(GrabSim_pb2.SceneID(value=0))
+        scene = self.stub.Observe(GrabSim_pb2.SceneID(value=0))
         cur_pos = [int(scene.location.X), int(scene.location.Y)]
         for i in range(cur_pos[0] - explore_range, cur_pos[0] + explore_range + 1):
             for j in range(cur_pos[1] - explore_range, cur_pos[1] + explore_range + 1):
@@ -1191,13 +1201,14 @@ class Scene:
         cur_obstacle_world_points = []
         obj_detect_count = 0
         walker_detect_count = 0
-        fig = plt.figure()
         object_pixels = {}
 
         not_key_objs_id = {255, 254, 253, 107, 81}
 
 
         img_data_segment,img_data_depth,img_data_color = self.get_cameras()
+        if len(img_data_segment.images) <1:
+            return
         im_segment = img_data_segment.images[0]
         im_depth = img_data_depth.images[0]
         im_color = img_data_color.images[0]
@@ -1218,10 +1229,7 @@ class Scene:
         objs_id[251] = "walker"
         # plt.imshow(d_depth, cmap="gray" if "depth" in im_depth.name.lower() else None)
         # plt.show()
-        plt.subplot(2, 2, 1)
-        plt.imshow(d_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
-        plt.axis("off")
-        plt.title("相机分割")
+        img_segment = d_segment
 
 
         d_depth = np.transpose(d_depth, (1, 0, 2))
@@ -1281,14 +1289,24 @@ class Scene:
         #     world_point = self.transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
         #     cur_obstacle_world_points.append([world_point[0], world_point[1]])
         # print(f"{pixel}：{[world_point[0], world_point[1]]}")
-        plt.subplot(2, 2, 2)
-        plt.imshow(d_color, cmap="gray" if "depth" in im_depth.name.lower() else None)
-        plt.axis('off')
-        plt.title("目标检测")
+        img_obj = d_color
 
         # self.ui_func(("draw_img","img_label_obj",d_color))
 
+        # 画分隔图
+        # plt.subplot(2, 2, 1)
+        plt.figure()
+        plt.imshow(img_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
+        plt.axis("off")
+        # plt.title("相机分割")
+        self.send_img("img_label_seg")
 
+        # 画目标检测图
+        # plt.subplot(2, 2, 2)
+        plt.figure()
+        plt.imshow(img_obj, cmap="gray" if "depth" in im_depth.name.lower() else None)
+        plt.axis('off')
+        # plt.title("目标检测")
 
         for key, value in object_pixels.items():
             if key == 0:
@@ -1348,36 +1366,58 @@ class Scene:
                          ha='center',
                          va='center')
                 plt.gca().add_patch(rect)
+
+        self.send_img("img_label_obj")
+
+
+
+
         new_map = self.updateMap(cur_obstacle_world_points)
         self.draw_map(plt,new_map)
 
-        plt.subplot(2, 7, 14)
         plt.axis("off")
-        plt.text(0, 0.9, f'检测行人数量：{walker_detect_count}', fontsize=10)
-        plt.text(0, 0.7, f'检测物体数量：{obj_detect_count}', fontsize=10)
-        plt.text(0, 0.5, f'新增语义信息：{walker_detect_count}', fontsize=10)
-        plt.text(0, 0.3, f'更新语义信息：{update_info_count}', fontsize=10)
+        self.send_img("img_label_map")
+
+
+
+        # plt.subplot(2, 7, 14)
+        # plt.text(0, 0.9, f'检测行人数量：{walker_detect_count}', fontsize=10)
+        # plt.text(0, 0.7, f'检测物体数量：{obj_detect_count}', fontsize=10)
+        # plt.text(0, 0.5, f'新增语义信息：{walker_detect_count}', fontsize=10)
+        # plt.text(0, 0.3, f'更新语义信息：{update_info_count}', fontsize=10)
         # plt.text(0, 0.1, f'已存语义信息：{self.infoCount}', fontsize=10)
 
-        output_path = os.path.join(self.output_path,"vision.png")
 
-        # canvas = FigureCanvas(plt.gcf())
-        # fig = plt.gcf()  # 获取当前figure
-        # image = fig.canvas.print_to_buffer()
-        # width, height = fig.get_size_inches()  # 获取图像的宽度和高度（单位：英寸）
-        # dpi = fig.dpi  # 获取图像的DPI
-        #
-        # width_px = int(width * dpi)  # 转换为像素
-        # height_px = int(height * dpi)  # 转换为像素
-        #
-        # image_pil = Image.frombuffer('RGB', (width, height), image, 'raw')
-        #
+        # draw figures
+
+        # output_path = os.path.join(self.output_path,"vision.png")
+
+
+
+
         # # 转换为numpy数组
         # image_np = np.asarray(image_pil)
-        self.ui_func(("draw_from_file","img_label_canvas",output_path))
-        plt.close()
+        # self.ui_func(("draw_from_file","img_label_canvas",output_path))
+        # plt.close()
         # plt.show()
         # return cur_obstacle_world_points
+
+    def send_img(self,name):
+        # 将图像保存到内存
+        buffer = io.BytesIO()
+        plt.savefig(buffer, bbox_inches='tight', pad_inches=0,format='png')
+        image_data = buffer.getvalue()
+
+        # 关闭当前图像
+        plt.close()
+
+        if not self.img_cache[name] == image_data:
+            self.img_cache[name] = image_data
+            self.ui_func(("draw_img",name,image_data))
+
+
+
+
 
     def updateMap(self, points):
         # map = copy.deepcopy(self.map_map)
@@ -1400,11 +1440,11 @@ class Scene:
         return map
 
     def draw_map(self,plt, map):
-        plt.subplot(2, 1, 2)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
+        # plt.subplot(2, 1, 2)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
         plt.imshow(map, cmap='binary', alpha=0.5, origin='lower',
                    extent=(-400 / self.map_ratio, 1450 / self.map_ratio,
                            -350 / self.map_ratio, 600 / self.map_ratio))
-        plt.title('可达性地图')
+        # plt.title('可达性地图')
 
     def get_id_object_world(self, id, scene):
         pixels = []
@@ -1435,11 +1475,11 @@ class Scene:
 
     def get_cameras(self):
         # if self.time - self.last_camera_time > self.camera_interval:
-        self.img_data_segment = get_camera([GrabSim_pb2.CameraName.Head_Segment])
+        self.img_data_segment = self.get_camera([GrabSim_pb2.CameraName.Head_Segment])
         time.sleep(0.2)
-        self.img_data_depth = get_camera([GrabSim_pb2.CameraName.Head_Depth])
+        self.img_data_depth = self.get_camera([GrabSim_pb2.CameraName.Head_Depth])
         time.sleep(0.2)
-        self.img_data_color = get_camera([GrabSim_pb2.CameraName.Head_Color])
-        self.last_camera_time = self.time
+        self.img_data_color = self.get_camera([GrabSim_pb2.CameraName.Head_Color])
+        # self.last_camera_time = self.time
 
         return self.img_data_segment,self.img_data_depth,self.img_data_color

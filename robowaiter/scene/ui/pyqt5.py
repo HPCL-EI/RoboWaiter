@@ -1,40 +1,52 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
-from PyQt5.QtCore import QTimer, QCoreApplication
-import sys
+import importlib
 import os
 
-from robowaiter.utils.ui.window import Ui_MainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtCore import QTimer
+import sys
+
+from robowaiter.scene.ui.window import Ui_MainWindow
 from robowaiter.utils.basic import get_root_path
 from PyQt5.QtCore import QThread
 import queue
 import numpy as np
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import Qt
-
-# 创建线程安全的队列
-scene_queue = queue.Queue()
-ui_queue = queue.Queue()
+from PyQt5.QtCore import QThread, pyqtSignal
+from robowaiter.scene.ui.scene_ui import SceneUI
+from  robowaiter.scene.ui import scene_ui
 
 root_path = get_root_path()
 
 class TaskThread(QThread):
-    def __init__(self, task, scene_cls,robot_cls, *args, **kwargs):
+    stop_signal = pyqtSignal()
+
+    def __init__(self, task, scene_cls,robot_cls,scene_queue,ui_queue, *args, **kwargs):
         super(TaskThread, self).__init__(*args, **kwargs)
         self.task = task
         self.scene_cls = scene_cls
         self.robot_cls = robot_cls
+        self.scene_queue = scene_queue
+        self.ui_queue = ui_queue
+        self.stoped = True
 
     def run(self):
-        self.task(self.scene_cls,self.robot_cls)
+        self.scene = self.task(self.scene_cls,self.robot_cls,self.scene_queue,self.ui_queue)
+        self.scene._run()
+        # scene._run()
 
-def run_scene(scene_cls,robot_cls):
+        while not self.isInterruptionRequested():
+            self.scene.step()
+
+    # def stop(self):
+    #     del self.scene
+
+def run_scene(scene_cls,robot_cls,scene_queue,ui_queue):
     scene = scene_cls(robot_cls(),scene_queue,ui_queue)
 
     scene.reset()
-    scene.run()
-    #
+    # scene.run()
+    return scene
     # try:
     #     # 机器人系统的主循环
     #
@@ -42,22 +54,30 @@ def run_scene(scene_cls,robot_cls):
     #     # 打印异常信息到命令行
     #     print("Robot system error:", str(e))
 
-
+example_list = ("AEM","VLN","VLM",'GQA',"OT","AT","reset")
 
 class UI(QMainWindow, Ui_MainWindow):
     scene = None
 
-    def __init__(self,scene_cls,robot_cls):
+    def __init__(self,robot_cls):
         app = QApplication(sys.argv)
         MainWindow = QMainWindow()
         super(UI, self).__init__(MainWindow)
-        self.scene_cls = scene_cls
+        # 创建线程安全的队列
+        self.scene_queue = queue.Queue()
+        self.ui_queue = queue.Queue()
+
+        self.scene_cls = SceneUI
         self.robot_cls = robot_cls
 
         self.setupUi(MainWindow)  # 初始化UI
 
-        # 初始化
+        # 绑定说话按钮
         self.btn_say.clicked.connect(self.btn_say_on_click)
+        # 绑定任务演示按钮
+        for example in example_list:
+            btn = getattr(self,f"btn_{example}")
+            btn.clicked.connect(self.create_example_click(example))
 
         # 设置一个定时器，每隔100ms检查一次队列
         timer = QTimer()
@@ -67,10 +87,23 @@ class UI(QMainWindow, Ui_MainWindow):
 
         MainWindow.show()
 
-        thread = TaskThread(run_scene,scene_cls,robot_cls)
-        thread.start()
+        self.thread = TaskThread(run_scene,self.scene_cls,self.robot_cls,self.scene_queue,self.ui_queue)
+        self.thread.start()
 
         sys.exit(app.exec_())
+
+    def create_example_click(self,name):
+        def btn_example_on_click():
+            self.thread.requestInterruption()
+            self.thread.wait()  # 等待线程安全退出
+
+            self.scene_queue = queue.Queue()
+            self.ui_queue = queue.Queue()
+            self.thread = TaskThread(run_scene, self.scene_cls, self.robot_cls,self.scene_queue,self.ui_queue)
+            self.thread.start()
+
+            self.scene_func((f"run_example",name))
+        return btn_example_on_click
 
     def btn_say_on_click(self):
         question = self.edit_say.text()
@@ -83,11 +116,11 @@ class UI(QMainWindow, Ui_MainWindow):
             # self.scene.customer_say("System", question)
 
     def scene_func(self,args):
-        scene_queue.put(args)
+        self.scene_queue.put(args)
 
     def handle_queue_messages(self):
-        while not ui_queue.empty():
-            message = ui_queue.get()
+        while not self.ui_queue.empty():
+            message = self.ui_queue.get()
             function_name = message[0]
             function = getattr(self, function_name, None)
 
@@ -116,13 +149,18 @@ class UI(QMainWindow, Ui_MainWindow):
 
     def draw_img(self,control_name,img):
         control = getattr(self,control_name,None)
-        # 加载并显示图片
-        print(img)
-        img = self.ndarray_to_qimage(img)
-        print(img)
-        pixmap = QPixmap.fromImage(img) # 替换为你的图片路径
+        # # 加载并显示图片
+        # print(img)
+        # img = self.ndarray_to_qimage(img)
+        # print(img)
+
+        # image = Image.open(io.BytesIO(img))
+        # print(image)
+        pixmap = QPixmap.fromImage(QImage.fromData(img))
+
         # self.label.setPixmap(pixmap)
         control.setPixmap(self.scale_pixmap_to_label(pixmap, control))
+        # control.setPixmap(pixmap)
 
     def draw_canvas(self,control_name,canvas):
         control = getattr(self,control_name,None)

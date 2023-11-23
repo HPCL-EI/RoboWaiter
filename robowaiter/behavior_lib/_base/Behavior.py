@@ -15,8 +15,12 @@ class Bahavior(ptree.behaviour.Behaviour):
     scene = None
     print_name_prefix = ""
     tables_for_placement = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3',"BrightTable6"}
-    all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
-                  'VacuumCup'}
+    # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
+    #               'VacuumCup'}
+
+    all_object = {
+        'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
+        'Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater'}
 
     # BrightTable5 = Table4
     tables_for_guiding = {"QuietTable1","QuietTable2",

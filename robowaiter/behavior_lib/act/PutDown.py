@@ -48,6 +48,9 @@ class PutDown(Act):
         Act.num_of_obj_on_place[self.target_place]+=1
 
         self.scene.move_task_area(op_type, release_pos=release_pos)
+
+        if self.target_obj == "Chips":
+            release_pos[2] +=3
         self.scene.op_task_execute(op_type, release_pos=release_pos)
         if self.scene.take_picture:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio,update_info_count=1)

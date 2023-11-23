@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>960</width>
+    <width>936</width>
     <height>1080</height>
    </rect>
   </property>
@@ -20,11 +20,17 @@
    <widget class="QLineEdit" name="edit_say">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>200</y>
-      <width>191</width>
-      <height>21</height>
+      <x>520</x>
+      <y>390</y>
+      <width>221</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Is(AC,On)</string>
@@ -33,11 +39,17 @@
    <widget class="QPushButton" name="btn_say">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>200</y>
-      <width>75</width>
-      <height>23</height>
+      <x>760</x>
+      <y>390</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>说话</string>
@@ -46,10 +58,10 @@
    <widget class="QLabel" name="img_label_seg">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>280</y>
-      <width>311</width>
-      <height>241</height>
+      <x>60</x>
+      <y>530</y>
+      <width>341</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -62,10 +74,10 @@
    <widget class="QLabel" name="img_label_bt">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>40</x>
       <y>830</y>
-      <width>811</width>
-      <height>151</height>
+      <width>831</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -78,11 +90,17 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>410</x>
       <y>800</y>
-      <width>111</width>
-      <height>16</height>
+      <width>121</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>当前行为树</string>
@@ -91,10 +109,10 @@
    <widget class="QLabel" name="img_label_obj">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>280</y>
+      <x>510</x>
+      <y>530</y>
       <width>331</width>
-      <height>241</height>
+      <height>251</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -107,10 +125,10 @@
    <widget class="QLabel" name="img_label_map">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>580</y>
-      <width>411</width>
-      <height>191</height>
+      <x>60</x>
+      <y>320</y>
+      <width>331</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -123,11 +141,17 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>540</y>
-      <width>111</width>
-      <height>16</height>
+      <x>180</x>
+      <y>290</y>
+      <width>121</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>可达性地图</string>
@@ -136,11 +160,17 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>250</y>
+      <x>180</x>
+      <y>490</y>
       <width>111</width>
-      <height>16</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>实例分割</string>
@@ -149,11 +179,17 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>240</y>
+      <x>630</x>
+      <y>490</y>
       <width>111</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>目标检测</string>
@@ -163,10 +199,16 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>30</y>
-      <width>121</width>
-      <height>21</height>
+      <y>70</y>
+      <width>151</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>环境主动探索</string>
@@ -175,11 +217,17 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>331</width>
-      <height>16</height>
+      <x>10</x>
+      <y>20</y>
+      <width>371</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>任务演示：（播放动画时需等待动画播放完毕才会重置场景）</string>
@@ -189,10 +237,16 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>60</y>
-      <width>121</width>
-      <height>21</height>
+      <y>120</y>
+      <width>151</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>视觉语言导航</string>
@@ -202,10 +256,16 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>90</y>
-      <width>121</width>
-      <height>21</height>
+      <y>170</y>
+      <width>151</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>视觉语言操作</string>
@@ -214,11 +274,17 @@
    <widget class="QPushButton" name="btn_GQA">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>30</y>
-      <width>121</width>
-      <height>21</height>
+      <x>200</x>
+      <y>70</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>具身多轮对话</string>
@@ -227,11 +293,17 @@
    <widget class="QPushButton" name="btn_OT">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>60</y>
-      <width>121</width>
-      <height>21</height>
+      <x>200</x>
+      <y>120</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>开放具身任务</string>
@@ -240,11 +312,17 @@
    <widget class="QPushButton" name="btn_AT">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>90</y>
-      <width>121</width>
-      <height>21</height>
+      <x>200</x>
+      <y>170</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>自主具身任务</string>
@@ -254,10 +332,16 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>120</y>
-      <width>251</width>
-      <height>21</height>
+      <y>220</y>
+      <width>311</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>重置</string>
@@ -266,11 +350,16 @@
    <widget class="QListWidget" name="list_customer">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>30</y>
+      <x>380</x>
+      <y>50</y>
       <width>151</width>
       <height>161</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <item>
      <property name="text">
@@ -281,11 +370,17 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>10</y>
-      <width>71</width>
+      <x>390</x>
+      <y>20</y>
+      <width>121</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>顾客列表：</string>
@@ -294,11 +389,17 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>10</y>
-      <width>71</width>
+      <x>560</x>
+      <y>20</y>
+      <width>141</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>顾客历史对话：</string>
@@ -307,11 +408,17 @@
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>10</y>
-      <width>71</width>
+      <x>740</x>
+      <y>20</y>
+      <width>131</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>全局历史对话：</string>
@@ -323,11 +430,16 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>30</y>
-      <width>161</width>
-      <height>161</height>
+      <x>550</x>
+      <y>50</y>
+      <width>171</width>
+      <height>261</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -339,11 +451,16 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>30</y>
+      <x>740</x>
+      <y>50</y>
       <width>161</width>
-      <height>161</height>
+      <height>261</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -355,7 +472,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>960</width>
+     <width>936</width>
      <height>23</height>
     </rect>
    </property>

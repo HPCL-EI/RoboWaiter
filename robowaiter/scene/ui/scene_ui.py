@@ -33,39 +33,52 @@ class SceneUI(Scene):
         while not self.stoped:
             self.step()
 
-    def run_example(self,example_name):
-        if example_name == 'VLN':
-            self.gen_obj()
-            self.add_walkers([
-                [29, 60, 520],  # 顾客 0
-                [23, 0, 220],  # 秃头老头子  1
-                [0, -55, 150],  # 小男孩d走来走去 2
-                [10, -55, 750],  # 3
-                [19, 70, -200],  # 后门站着不动的 4
-                [21, 65, 1000, -90],  # 大胖男占了一号桌 5
-                [5, 230, 1200],  # 小女孩 6
-                [26, -28, -10, 90],
-                # [26, 60, 0, 90],
-                # [26, -28, 0, 90] , #在设置一个在后门随机游走的 7
-                # 设置为 26, 60, 0, 90]
-                [31, 280, 1200, -45]  # 8
-            ])
-            self.control_walker(2, True, 200, -55, 155, 90)  # 飞速奔跑的小男孩
-            # self.control_walker(7, True, 80, -25, -150, 90)
-            self.control_walker(5, True, 65, 995, 520, 90)
-            self.control_walker(4, True, 65, 70, -200, 90)
+    def run_AEM(self):
+        pass
 
-            self.new_event_list = [
-                (5, self.customer_say, (0, "请问哪里有空位啊？")),
-                (13, self.customer_say, (0, "我想坐高凳子。")),
-                (3, self.customer_say, (0, "你带我去吧。")),
-                (45, self.control_walker, (0, False, 100, -250, 480, -90)),
-                (-1, self.customer_say, (0, "谢谢你！这儿还不错！")),
-            ]
+    def run_VLN(self):
+        self.gen_obj()
+        self.add_walkers([
+            [29, 60, 520],  # 顾客 0
+            [23, 0, 220],  # 秃头老头子  1
+            [0, -55, 150],  # 小男孩d走来走去 2
+            [10, -55, 750],  # 3
+            [19, 70, -200],  # 后门站着不动的 4
+            [21, 65, 1000, -90],  # 大胖男占了一号桌 5
+            [5, 230, 1200],  # 小女孩 6
+            [26, -28, -10, 90],
+            # [26, 60, 0, 90],
+            # [26, -28, 0, 90] , #在设置一个在后门随机游走的 7
+            # 设置为 26, 60, 0, 90]
+            [31, 280, 1200, -45]  # 8
+        ])
+        self.control_walker(2, True, 200, -55, 155, 90)  # 飞速奔跑的小男孩
+        # self.control_walker(7, True, 80, -25, -150, 90)
+        self.control_walker(5, True, 65, 995, 520, 90)
+        self.control_walker(4, True, 65, 70, -200, 90)
 
-        if example_name == 'AEM':
-            pass
+        self.new_event_list = [
+            (5, self.customer_say, (0, "请问哪里有空位啊？")),
+            (13, self.customer_say, (0, "我想坐高凳子。")),
+            (3, self.customer_say, (0, "你带我去吧。")),
+            (45, self.control_walker, (0, False, 100, -250, 480, -90)),
+            (-1, self.customer_say, (0, "谢谢你！这儿还不错！")),
+        ]
 
+    def run_VLM(self):
+        pass
+
+    def run_GQA(self):
+        pass
+
+    def run_OT(self):
+        pass
+
+    def run_AT(self):
+        pass
+
+    def run_reset(self):
+        pass
 
     def init_robot(self):
         # init robot

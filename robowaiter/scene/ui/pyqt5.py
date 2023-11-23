@@ -102,7 +102,7 @@ class UI(QMainWindow, Ui_MainWindow):
             self.thread = TaskThread(run_scene, self.scene_cls, self.robot_cls,self.scene_queue,self.ui_queue)
             self.thread.start()
 
-            self.scene_func((f"run_example",name))
+            self.scene_func((f"run_{name}",))
         return btn_example_on_click
 
     def btn_say_on_click(self):

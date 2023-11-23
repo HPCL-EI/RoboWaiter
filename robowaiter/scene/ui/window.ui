@@ -58,10 +58,10 @@
    <widget class="QLabel" name="img_label_seg">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>530</y>
-      <width>341</width>
-      <height>251</height>
+      <x>80</x>
+      <y>540</y>
+      <width>321</width>
+      <height>231</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -109,10 +109,10 @@
    <widget class="QLabel" name="img_label_obj">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>530</y>
-      <width>331</width>
-      <height>251</height>
+      <x>520</x>
+      <y>540</y>
+      <width>321</width>
+      <height>231</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -125,9 +125,9 @@
    <widget class="QLabel" name="img_label_map">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>80</x>
       <y>320</y>
-      <width>331</width>
+      <width>321</width>
       <height>161</height>
      </rect>
     </property>
@@ -141,7 +141,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>190</x>
       <y>290</y>
       <width>121</width>
       <height>21</height>
@@ -160,8 +160,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>490</y>
+      <x>200</x>
+      <y>500</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -180,8 +180,8 @@
     <property name="geometry">
      <rect>
       <x>630</x>
-      <y>490</y>
-      <width>111</width>
+      <y>510</y>
+      <width>121</width>
       <height>21</height>
      </rect>
     </property>
@@ -353,7 +353,7 @@
       <x>380</x>
       <y>50</y>
       <width>151</width>
-      <height>161</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="font">

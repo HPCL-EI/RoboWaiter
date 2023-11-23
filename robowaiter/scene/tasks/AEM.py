@@ -54,8 +54,8 @@ class SceneAEM(Scene):
         # navigation_test(i,map_id)
         # map_map = np.zeros((math.ceil(950 / map_ratio), math.ceil(1850 / map_ratio)))
 
-        # self.add_walker(0, 30, 520, )
-        # self.add_walker(10, 30, 420)
+        self.add_walker(31, 30, 520, )
+        self.add_walker(15, 30, 420)
         while True:
             walker_count = 0
             fig = plt.figure()

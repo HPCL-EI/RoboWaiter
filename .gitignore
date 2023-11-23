@@ -19,6 +19,7 @@ share/python-wheels/
 MANIFEST
 MO-VLN/
 GLIP/
+pytorch_model.bin
 
 sub_task.ptml
 

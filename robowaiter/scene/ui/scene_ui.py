@@ -93,8 +93,8 @@ class SceneUI(Scene):
             # plt.imshow(self.map_map, cmap='binary', alpha=0.5, origin='lower',
             #            extent=(-400 / map_ratio, 1450 / map_ratio,
             #                    -350 / map_ratio, 600 / map_ratio))
-            new_map = self.updateMap(cur_obstacle_world_points)
-            self.draw_map(plt, new_map)
+            # new_map = self.updateMap(cur_obstacle_world_points)
+            self.draw_map(plt, self.map_map)
             plt.axis("off")
             self.send_img("img_label_map")
             # plt.title("地图构建过程")

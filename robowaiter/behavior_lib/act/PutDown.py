@@ -24,6 +24,14 @@ class PutDown(Act):
         info["del_set"] = {f'Holding({arg[0]})'}
 
         info['cost'] = 1
+
+        # if arg[0]!='Anything':
+        #     info['cost'] = 1
+        # else:
+        #     info['cost'] = 0
+        #     info["pre"] = {}
+        #     info["add"] = {f'Holding(Nothing)'}
+        #     info["del_set"] = {f'Holding({obj})' for obj in cls.valid_args if obj[0] != arg}
         return info
 
 
@@ -40,8 +48,11 @@ class PutDown(Act):
         Act.num_of_obj_on_place[self.target_place]+=1
 
         self.scene.move_task_area(op_type, release_pos=release_pos)
+
+        if self.target_obj == "Chips":
+            release_pos[2] +=3
         self.scene.op_task_execute(op_type, release_pos=release_pos)
-        if self.scene.take_picture:
+        if self.scene.show_ui:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio,update_info_count=1)
 
         self.scene.state["condition_set"] |= (self.info["add"])

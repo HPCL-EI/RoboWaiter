@@ -7,6 +7,7 @@ class PickUp(Act):
     can_be_expanded = True
     num_args = 1
     valid_args = Act.all_object
+    # valid_args.add("Anything")
     def __init__(self, *args):
         super().__init__(*args)
         self.target_obj = self.args[0]
@@ -20,6 +21,15 @@ class PickUp(Act):
         info["del_set"] = {f'Holding(Nothing)'}
         for place in cls.valid_args:
             info["del_set"] |= {f'On({arg},{place})'}
+        info['cost'] = 1
+
+        # if arg != 'Anything':
+        #     info['cost'] = 1
+        # else:
+        #     info['cost'] = 0
+        #
+        #     info["pre"] = {}
+
         return info
 
 
@@ -56,7 +66,7 @@ class PickUp(Act):
         self.scene.move_task_area(op_type=16, obj_id=obj_id)
         self.scene.op_task_execute(op_type=16, obj_id=obj_id)
 
-        if self.scene.take_picture:
+        if self.scene.show_ui:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio,update_info_count=1)
 
         self.scene.state["condition_set"] |= (self.info["add"])

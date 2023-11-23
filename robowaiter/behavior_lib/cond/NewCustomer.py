@@ -14,8 +14,9 @@ class NewCustomer(Cond):
 
     def _update(self) -> ptree.common.Status:
 
-        if self.scene.take_picture:
+        if self.scene.show_ui:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
+
         # 获取customer的位置
         # bar (247.0, 520.0, 100.0)
         close_to_bar = False

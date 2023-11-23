@@ -3,10 +3,21 @@ from robowaiter.behavior_lib._base.Act import Act
 
 from robowaiter.llm_client.multi_rounds import ask_llm, new_history
 import random
+from collections import deque
 
 
 # import spacy
 # nlp = spacy.load('en_core_web_lg')
+
+class History(deque):
+    def __init__(self,scene,customer_name):
+        super().__init__(maxlen=7)
+        self.scene = scene
+        self.customer_name = customer_name
+
+    def append(self, __x) -> None:
+        super().append(__x)
+        self.scene.ui_func(("new_history",self.customer_name, __x))
 
 
 class DealChat(Act):
@@ -27,10 +38,15 @@ class DealChat(Act):
 
         if name == "Goal":
             self.create_sub_task(goal=sentence)
+            self.scene.ui_func(("new_history", "System", {
+                "role": "user",
+                "content": "set goal: " + sentence
+            }))
+
             return ptree.common.Status.RUNNING
 
         if name not in self.scene.state["chat_history"]:
-            self.scene.state["chat_history"][name] = new_history()
+            self.scene.state["chat_history"][name] = History(self.scene,name)
 
         history = self.scene.state["chat_history"][name]
         self.scene.state["attention"]["customer"] = name
@@ -63,6 +79,7 @@ class DealChat(Act):
             print("参数解析错误")
 
         self.scene.robot.expand_sub_task_tree(goal_set)
+
 
     def get_object_info(self,**args):
         try:

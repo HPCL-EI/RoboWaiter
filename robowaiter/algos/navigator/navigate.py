@@ -114,7 +114,7 @@ class Navigator:
                 self.scene.walk_to(next_pos[0], next_pos[1], math.degrees(yaw), velocity=self.v, dis_limit=10)
 
                 # 拍照片
-                if self.scene.take_picture:
+                if self.scene.show_ui:
                     self.scene.get_obstacle_point(self.scene.db, self.scene.status, map_ratio=self.scene.map_ratio)
 
                 self.planner.path = self.planner.path[next_step - 1:]  # 去除已走过的路径

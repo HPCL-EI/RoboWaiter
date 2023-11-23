@@ -9,7 +9,7 @@ ok, 有需要您再找我。
 做一杯咖啡
 好的，我马上做咖啡
 create_sub_task
-{"goal":"On(Coffee,CoffeeTable)"}00
+{"goal":"On(Coffee,CoffeeTable)"}
 
 不用了。
 好的，您有需要再跟我说
@@ -74,7 +74,7 @@ create_sub_task
 没事儿，为您服务是我的荣幸！
 
 大厅的桌子好啊，快带我去呀！
-好的好的，跟我来，我带你去找找。
+好的好的，请跟我来。
 create_sub_task
 {"goal":"At(Robot,WaterTable)"}
 
@@ -97,9 +97,9 @@ create_sub_task
 
 
 下班啦！别忘了打扫卫生。
-收到！请问您需要来点什么吗？
+收到！下班啦！
 create_sub_task
-"{""Is(Floor,Clean)"",""Is(Table1,Clean)"",""Is(Chairs,Clean)"",""Is(AC,Off)"",""Is(HallLight,Off)"",""Is(TubeLight,Off)"",""Is(Curtain,Off)""}"
+{"goal":"Is(Floor,Clean),Is(Table1,Clean),Is(Chairs,Clean),Is(AC,Off),Is(HallLight,Off),Is(TubeLight,Off),Is(Curtain,Off)"}
 
 
 请问洗手间在哪里？
@@ -110,6 +110,12 @@ get_object_info
 
 
 给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。
+好的，请稍等。
+create_sub_task
+{"goal":"On(Chips,WaterTable),On(NFCJuice,WaterTable)"}
+
+
+给我来份薯片和果汁，我坐在对面的桌子那儿。
 好的，请稍等。
 create_sub_task
 {"goal":"On(BottledDrink,WaterTable),On(Yogurt,WaterTable)"}
@@ -186,7 +192,17 @@ get_object_info
 get_object_info
 {"obj":"洗手间"}
 
+我带着孩子呢，想要宽敞亮堂的地方。
+好的，我明白了，那么我们推荐您到大厅的桌子，那里的空间比较宽敞，环境也比较明亮，适合带着孩子一起用餐。
+
+冰红茶
+好的
+create_sub_task
+{"goal":"On(Softdrink,Bar)"}
 
 
-
+水杯
+好的
+create_sub_task
+{"goal":"On(Glass,Bar)"}
 

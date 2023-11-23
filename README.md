@@ -12,6 +12,10 @@ pip install -e .
 ```
 以上步骤将完成robowaiter项目以及相关依赖库的安装
 
+### 安装UI
+1. 安装 [graphviz-9.0.0](https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/9.0.0/windows_10_cmake_Release_graphviz-install-9.0.0-win64.exe) (详见[官网](https://www.graphviz.org/download/#windows))
+
+
 ### 快速入门
 1. 安装UE及Harix插件，打开默认项目并运行
 2. 运行 tasks 文件夹下的任意场景即可实现机器人控制端与仿真器的交互

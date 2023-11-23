@@ -37,7 +37,7 @@ class MoveTo(Act):
         # navigator.navigate_old(goal, animation=False)
 
         # 拍照片
-        if self.scene.take_picture:
+        if self.scene.show_ui:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
 
         # #####################################
@@ -73,7 +73,7 @@ class MoveTo(Act):
             self.scene.move_to_obj(obj_id=obj_id)
             # #####################################
 
-        if self.scene.take_picture:
+        if self.scene.show_ui:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
 
 

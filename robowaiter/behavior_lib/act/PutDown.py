@@ -52,7 +52,7 @@ class PutDown(Act):
         if self.target_obj == "Chips":
             release_pos[2] +=3
         self.scene.op_task_execute(op_type, release_pos=release_pos)
-        if self.scene.take_picture:
+        if self.scene.show_ui:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio,update_info_count=1)
 
         self.scene.state["condition_set"] |= (self.info["add"])

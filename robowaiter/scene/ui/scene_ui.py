@@ -16,7 +16,7 @@ class SceneUI(Scene):
 
         super().__init__(robot)
         # 在这里加入场景中发生的事件
-        self.take_picture = True
+        self.show_ui = True
 
         # while True:
         #     if not self.scene_queue.empty():

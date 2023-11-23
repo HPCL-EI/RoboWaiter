@@ -20,10 +20,10 @@
    <widget class="QLineEdit" name="edit_say">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>40</y>
-      <width>221</width>
-      <height>31</height>
+      <x>320</x>
+      <y>200</y>
+      <width>191</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -33,8 +33,8 @@
    <widget class="QPushButton" name="btn_say">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>40</y>
+      <x>530</x>
+      <y>200</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -47,7 +47,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>200</y>
+      <y>280</y>
       <width>311</width>
       <height>241</height>
      </rect>
@@ -63,9 +63,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>810</y>
+      <y>830</y>
       <width>811</width>
-      <height>171</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -79,7 +79,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>780</y>
+      <y>800</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -92,7 +92,7 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>200</y>
+      <y>280</y>
       <width>331</width>
       <height>241</height>
      </rect>
@@ -108,9 +108,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>510</y>
-      <width>471</width>
-      <height>241</height>
+      <y>580</y>
+      <width>411</width>
+      <height>191</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -123,8 +123,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>470</y>
+      <x>150</x>
+      <y>540</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -136,8 +136,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>170</y>
+      <x>120</x>
+      <y>250</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -149,8 +149,8 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>170</y>
+      <x>580</x>
+      <y>240</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -261,6 +261,92 @@
     </property>
     <property name="text">
      <string>重置</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="list_customer">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>30</y>
+      <width>151</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>System</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>10</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>顾客列表：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>10</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>顾客历史对话：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>10</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>全局历史对话：</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="edit_local_history">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>30</y>
+      <width>161</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="edit_global_history">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>30</y>
+      <width>161</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

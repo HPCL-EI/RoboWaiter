@@ -1,7 +1,7 @@
 import importlib
 import os
 
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PyQt5.QtCore import QTimer
 import sys
 
@@ -58,6 +58,9 @@ example_list = ("AEM","VLN","VLM",'GQA',"OT","AT","reset")
 
 class UI(QMainWindow, Ui_MainWindow):
     scene = None
+    history_dict = {
+        "System": ""
+    }
 
     def __init__(self,robot_cls):
         app = QApplication(sys.argv)
@@ -89,11 +92,49 @@ class UI(QMainWindow, Ui_MainWindow):
 
         self.thread = TaskThread(run_scene,self.scene_cls,self.robot_cls,self.scene_queue,self.ui_queue)
         self.thread.start()
+        self.list_customer.itemClicked.connect(self.show_customer_history)
 
         sys.exit(app.exec_())
 
+    def new_history(self,customer_name,chat):
+        role = chat["role"]
+        content = chat["content"].strip()
+        function_call = chat.get("function_call",None)
+        if function_call:
+            return
+        if role == "function":
+            new_chat = f'Robot:\n 工具调用-{chat["name"]}\n'
+        elif role == "user":
+            new_chat = f'{customer_name}:\n {content}\n'
+        else:
+            new_chat = f'Robot:\n {content}\n'
+
+        self.edit_global_history.append(f'{new_chat}')
+        self.history_dict[customer_name] += new_chat + "\n"
+        items = self.list_customer.findItems(customer_name, Qt.MatchExactly)
+        if items:
+            index = self.list_customer.indexFromItem(items[0])
+            self.list_customer.setCurrentIndex(index)
+        self.edit_local_history.clear()
+        self.edit_local_history.append(self.history_dict[customer_name])
+
+    def reset(self):
+        self.history_dict = {
+            "System": ""
+        }
+        self.edit_local_history.clear()
+        self.edit_global_history.clear()
+        self.list_customer.clear()
+        item = QListWidgetItem("System")
+        self.list_customer.addItem(item)
+
+
+
+
     def create_example_click(self,name):
         def btn_example_on_click():
+            self.reset()
+
             self.thread.requestInterruption()
             self.thread.wait()  # 等待线程安全退出
 
@@ -104,6 +145,18 @@ class UI(QMainWindow, Ui_MainWindow):
 
             self.scene_func((f"run_{name}",))
         return btn_example_on_click
+
+    def add_walker(self,name):
+        self.history_dict[name] = ""
+        item = QListWidgetItem(name)
+        self.list_customer.addItem(item)
+
+
+    def show_customer_history(self, item):
+        # 此处为示例，实际上你可能需要从数据库或其他地方获取聊天记录
+        name = item.text()
+        self.edit_local_history.clear()
+        self.edit_local_history.append(self.history_dict[name])
 
     def btn_say_on_click(self):
         question = self.edit_say.text()

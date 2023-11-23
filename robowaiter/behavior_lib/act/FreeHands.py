@@ -24,7 +24,7 @@ class FreeHands(Act):
     def _update(self) -> ptree.common.Status:
 
 
-        if self.scene.take_picture:
+        if self.scene.show_ui:
             self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio,update_info_count=1)
 
         self.scene.state["condition_set"] |= (self.info["add"])

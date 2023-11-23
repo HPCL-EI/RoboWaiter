@@ -119,8 +119,10 @@ class Scene:
         os.makedirs(self.output_path,exist_ok=True)
 
         self.show_bubble = True
+        # 是否展示UI
+        self.show_ui = False
         # 图像分割
-        self.take_picture = False
+
         self.map_ratio = 5
         self.map_map = np.zeros((math.ceil(950 / self.map_ratio), math.ceil(1850 / self.map_ratio)))
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
@@ -415,7 +417,11 @@ class Scene:
 
         w = self.status.walkers
         num_customer = len(w)
-        self.state["customer_mem"][w[-1].name] = num_customer - 1
+        name = w[-1].name
+        self.state["customer_mem"][name] = num_customer - 1
+
+        self.ui_func(("add_walker",name))
+
 
     def walker_index2mem(self, index):
         for mem, i in self.state["customer_mem"].items():
@@ -732,15 +738,15 @@ class Scene:
             return
         print('------------------moveTo_Area----------------------')
         if op_type < 8:  # 动画控制相关任务的移动目标
-            if self.take_picture:
+            if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             walk_v = self.op_v_list[op_type] + [scene.rotation.Yaw, 180, 0]
         if 8 <= op_type <= 10:  # 控灯相关任务的移动目标
-            if self.take_picture:
+            if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             walk_v = self.op_v_list[6] + [scene.rotation.Yaw, 180, 0]
         if op_type in [13, 14, 15]:  # 空调相关任务的移动目标
-            if self.take_picture:
+            if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             walk_v = [240, -140.0] + [0, 180, 0]
         if op_type == 16:  # 抓握物体，移动到物体周围的可达区域
@@ -786,7 +792,7 @@ class Scene:
         scene = self.stub.Do(action)
         time.sleep(1.0)
 
-        if self.take_picture:
+        if self.show_ui:
             self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio,update_info_count=1)
 
 
@@ -886,7 +892,7 @@ class Scene:
         scene = self.stub.Do(action)
         time.sleep(1.0)
 
-        if self.take_picture:
+        if self.show_ui:
             self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
 
         obj_info = scene.objects[obj_id]
@@ -951,7 +957,7 @@ class Scene:
         scene = self.stub.Do(action)
         time.sleep(1.0)
 
-        if self.take_picture:
+        if self.show_ui:
             self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
 
         if release_pos == [340.0, 900.0, 99.0]:
@@ -974,11 +980,11 @@ class Scene:
         #id = 196  # Glass = 188+x, Plate = 150+x
         self.control_robot_action(0, 1, "开始" + self.op_dialog[op_type])  # 输出正在执行的任务
         if op_type < 8:
-            if self.take_picture:
+            if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             result = self.control_robot_action(op_type, 1)
         if 8 <= op_type <= 12:
-            if self.take_picture:
+            if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)
             result = self.control_robot_action(self.op_typeToAct[op_type][0], self.op_typeToAct[op_type][1])
         if op_type in [13, 14, 15]:  # 调整空调:13代表按开关,14升温,15降温

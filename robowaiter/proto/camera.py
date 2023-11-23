@@ -342,7 +342,8 @@ def save_obj_info(img_data, objs_name):
     return objs_name
 
 
-def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
+# def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
+def get_obstacle_point(sence, db, scene, cur_obstacle_world_points, map_ratio):
     cur_obstacle_pixel_points = []
     object_pixels = {}
     obj_detect_count = 0
@@ -380,10 +381,11 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
     objs_id[251] = "walker"
     # plt.imshow(d_depth, cmap="gray" if "depth" in im_depth.name.lower() else None)
     # plt.show()
-    plt.subplot(2, 2, 1)
+    # plt.subplot(2, 2, 1)
     plt.imshow(d_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
     plt.axis("off")
-    plt.title("相机分割")
+    # plt.title("相机分割")
+    sence.send_img("img_label_seg")
     # plt.show()
 
     d_depth = np.transpose(d_depth, (1, 0, 2))
@@ -416,10 +418,11 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
         world_point = transform_co(img_data_depth, pixel[0], pixel[1], d_depth[pixel[0]][pixel[1]][0], scene)
         cur_obstacle_world_points.append([world_point[0], world_point[1]])
         # print(f"{pixel}：{[world_point[0], world_point[1]]}")
-    plt.subplot(2, 2, 2)
+    # plt.subplot(2, 2, 2)
     plt.imshow(d_color, cmap="gray" if "depth" in im_depth.name.lower() else None)
     plt.axis('off')
-    plt.title("目标检测")
+    # plt.title("目标检测")
+    # sence.send_img("img_label_obj")
     # plt.tight_layout()
 
     for key, value in object_pixels.items():
@@ -472,10 +475,9 @@ def get_obstacle_point(plt, db, scene, cur_obstacle_world_points, map_ratio):
         # height = point2[0] - point1[0]
         # rect = patches.Rectangle((0, 255), 15, 30, linewidth=1, edgecolor='g',
         #                          facecolor='none')
-
-    plt.subplot(2, 7, 14)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
-
-    plt.text(0, 0.7, f'检测物体数量：{obj_detect_count}', fontsize=10)
+    sence.send_img("img_label_obj")
+    # plt.subplot(2, 7, 14)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
+    # plt.text(0, 0.7, f'检测物体数量：{obj_detect_count}', fontsize=10)
 
     # plt.show()
     return cur_obstacle_world_points, cur_objs_id

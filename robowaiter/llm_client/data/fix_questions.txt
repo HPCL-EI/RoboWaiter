@@ -112,6 +112,12 @@ get_object_info
 给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。
 好的，请稍等。
 create_sub_task
+{"goal":"On(Chips,WaterTable),On(NFCJuice,WaterTable)"}
+
+
+给我来份薯片和果汁，我坐在对面的桌子那儿。
+好的，请稍等。
+create_sub_task
 {"goal":"On(BottledDrink,WaterTable),On(Yogurt,WaterTable)"}
 
 

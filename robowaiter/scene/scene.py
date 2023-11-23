@@ -122,7 +122,7 @@ class Scene:
         # 是否展示UI
         self.show_ui = False
         # 图像分割
-
+        self.take_picture = False
         self.map_ratio = 5
         self.map_map = np.zeros((math.ceil(950 / self.map_ratio), math.ceil(1850 / self.map_ratio)))
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
@@ -1035,8 +1035,13 @@ class Scene:
             # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
             #                                                   objs_name_set)
 
-            cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(plt, db, scene,
+            # cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(plt, db, scene,
+            #                                                                    cur_obstacle_world_points, map_ratio)
+            cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(self, db, scene,
                                                                                cur_obstacle_world_points, map_ratio)
+            # cur_obstacle_world_points, cur_objs_id = self.get_obstacle_point(db, scene, map_ratio)
+            # # self.get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio)
+
 
             # if scene.info == "Unreachable":
             print(scene.info)
@@ -1431,8 +1436,6 @@ class Scene:
                 plt.gca().add_patch(rect)
 
         self.send_img("img_label_obj")
-
-
 
 
         new_map = self.updateMap(cur_obstacle_world_points)

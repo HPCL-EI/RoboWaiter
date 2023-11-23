@@ -14,7 +14,7 @@ pip install -e .
 
 ### 安装UI
 1. 安装 [graphviz-9.0.0](https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/9.0.0/windows_10_cmake_Release_graphviz-install-9.0.0-win64.exe) (详见[官网](https://www.graphviz.org/download/#windows))
-
+2. 将软件安装目录的bin文件添加到系统环境中。如电脑是Windows系统，Graphviz安装在D:\Program Files (x86)\Graphviz2.38，该目录下有bin文件，将该路径添加到电脑系统环境变量path中，即D:\Program Files (x86)\Graphviz2.38\bin。
 
 ### 快速入门
 1. 安装UE及Harix插件，打开默认项目并运行

@@ -9,6 +9,7 @@ from sklearn.cluster import DBSCAN
 import pickle
 import time
 import os
+
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
@@ -93,8 +94,8 @@ class SceneUI(Scene):
             # plt.imshow(self.map_map, cmap='binary', alpha=0.5, origin='lower',
             #            extent=(-400 / map_ratio, 1450 / map_ratio,
             #                    -350 / map_ratio, 600 / map_ratio))
-            new_map = self.updateMap(cur_obstacle_world_points)
-            self.draw_map(plt, new_map)
+            # new_map = self.updateMap(cur_obstacle_world_points)
+            self.draw_map(plt, self.map_map)
             plt.axis("off")
             self.send_img("img_label_map")
             # plt.title("地图构建过程")
@@ -121,8 +122,8 @@ class SceneUI(Scene):
                 obj_json_data.append(
                     {"id": f"{i}", "name": f"{cur_objs[i].name}", "location": f"{cur_objs[i].location}",
                      "height": f"{cur_objs[i].location.Z}"})
-
-        with open('../../robowaiter/proto/objs.json', 'w') as file:
+        file_json_name = os.path.join(root_path, 'robowaiter/proto/objs.json')
+        with open(file_json_name, 'w') as file:
             json.dump(obj_json_data, file)
 
         print("已绘制完成地图！！！")
@@ -225,7 +226,7 @@ class SceneUI(Scene):
 
     def draw_current_bt(self):
         render_dot_tree(self.robot.bt.root,target_directory=self.output_path,name="current_bt")
-        self.ui_queue.put(('draw_from_file',"img_label_bt", f"{self.output_path}/current_bt.png"))
+        self.ui_queue.put(('draw_from_file',"img_view_bt", f"{self.output_path}/current_bt.png"))
 
     def ui_func(self,args):
         # _,_,output_path = args
@@ -267,7 +268,7 @@ if __name__ == '__main__':
     from robowaiter.robot.robot import Robot
 
     robot = Robot()
-    ui = UI( Robot)
+    ui = UI(Robot)
 
     # create task
     # task = SceneUI(robot,ui)

@@ -5,10 +5,10 @@ import sys
 import logging
 import torch
 import errno
-from typing import Union, Tuple, Dict
+from typing import Union, Tuple, List, Dict
 from collections import defaultdict
 
-from robowaiter.algos.retrieval.retrieval_lm.src import dist_utils
+from src import dist_utils
 
 Number = Union[float, int]
 

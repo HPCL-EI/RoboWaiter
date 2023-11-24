@@ -7,9 +7,20 @@
 import os
 
 import argparse
+import csv
+import logging
 import pickle
 
+import numpy as np
 import torch
+
+import transformers
+
+import src.slurm
+import src.contriever
+import src.utils
+import src.data
+import src.normalize_text
 
 
 def embed_passages(args, passages, model, tokenizer):
@@ -20,15 +31,15 @@ def embed_passages(args, passages, model, tokenizer):
         for k, p in enumerate(passages):
             batch_ids.append(p["id"])
 
-            """if args.no_title or not "title" in p:
+            if args.no_title or not "title" in p:
                 text = p["text"]
             else:
-                text = p["title"] + " " + p["text"]"""
+                text = p["title"] + " " + p["text"]
             text = p["title"]
             if args.lowercase:
                 text = text.lower()
             if args.normalize_text:
-                text = robowaiter.llm_client.retrieval_lm.src.normalize_text.normalize(text)
+                text = src.normalize_text.normalize(text)
             batch_text.append(text)
 
             if len(batch_text) == args.per_gpu_batch_size or k == len(passages) - 1:
@@ -41,7 +52,7 @@ def embed_passages(args, passages, model, tokenizer):
                     truncation=True,
                 )
 
-                encoded_batch = {k: v.cuda() for k, v in encoded_batch.items()}
+                encoded_batch = {k: v for k, v in encoded_batch.items()}
                 embeddings = model(**encoded_batch)
 
                 embeddings = embeddings.cpu()
@@ -59,14 +70,14 @@ def embed_passages(args, passages, model, tokenizer):
 
 
 def main(args):
-    model, tokenizer, _ = robowaiter.llm_client.retrieval_lm.src.contriever.load_retriever(args.model_name_or_path)
+    model, tokenizer, _ = src.contriever.load_retriever(args.model_name_or_path)
     print(f"Model loaded from {args.model_name_or_path}.", flush=True)
     model.eval()
-    model = model.cuda()
+    #model = model.cuda()
     if not args.no_fp16:
         model = model.half()
 
-    passages = robowaiter.llm_client.retrieval_lm.src.data.load_passages(args.passages)
+    passages = src.data.load_passages(args.passages)
 
     shard_size = len(passages) // args.num_shards
     start_idx = args.shard_id * shard_size
@@ -110,6 +121,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    robowaiter.llm_client.retrieval_lm.src.slurm.init_distributed_mode(args)
+    #src.slurm.init_distributed_mode(args)
 
     main(args)

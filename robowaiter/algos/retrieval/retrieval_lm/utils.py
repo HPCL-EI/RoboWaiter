@@ -10,6 +10,9 @@ PROMPT_DICT = {
     "prompt_no_input": (
         "### Instruction:\n{instruction}\n\n### Response:\n"
     ),
+    "prompt_no_input_retrieval": (
+        "### Instruction:\n{instruction}\n\n### Response:\n"
+    ),
 }
 
 TASK_INST = {"wow": "Given a chat history separated by new lines, generates an informative, knowledgeable and engaging response. ",
@@ -152,8 +155,9 @@ def postprocess_output(input_instance, prediction, task, intermediate_results=No
         input_instance["docs"] = docs
         return input_instance
 
-def process_arc_instruction(item, instruction):
+def process_instruction(item, task):
     choices = item["choices"]
+    instruction = TASK_INST[task]
     answer_labels = {}
     for i in range(len(choices["label"])):
         answer_key = choices["label"][i]
@@ -174,7 +178,46 @@ def process_arc_instruction(item, instruction):
     choices = "\nA: {0}\nB: {1}\nC: {2}\nD: {3}".format(answer_labels["A"], answer_labels["B"], answer_labels["C"], answer_labels["D"])
     if "E" in answer_labels:
         choices += "\nE: {}".format(answer_labels["E"])
-    processed_instruction = instruction + "\n\n### Input:\n" + item["instruction"] + choices
+    #print("instruction:",instruction)
+    #print("choices:",choices)
+    #print("question:",item['question'])
+    processed_instruction = instruction + "\n\n### Input:\n" + item["question"] + choices
+    return processed_instruction
+def preprocess_input_data(item, task=None):
+    if task in TASK_INST:
+        instruction = TASK_INST[task]
+    else:
+        instruction = None
+    if task == "arc_c":
+        choices = item["choices"]
+        answer_labels = {}
+        for i in range(len(choices["label"])):
+            answer_key = choices["label"][i]
+            text = choices["text"][i]
+            if answer_key == "1":
+                answer_labels["A"] = text
+            if answer_key == "2":
+                answer_labels["B"] = text
+            if answer_key == "3":
+                answer_labels["C"] = text
+            if answer_key == "4":
+                answer_labels["D"] = text
+            if answer_key in ["A", "B", "C", "D"]:
+                answer_labels[answer_key] = text
+
+        if "D" not in answer_labels:
+            answer_labels["D"] = ""
+        choices = "\nA: {0}\nB: {1}\nC: {2}\nD: {3}".format(
+            answer_labels["A"], answer_labels["B"], answer_labels["C"], answer_labels["D"])
+        if "E" in answer_labels:
+            choices += "\nE: {}".format(answer_labels["E"])
+        processed_instruction = instruction + \
+            "\n\n### Input:\n" + item["question"] + choices
+        item["answers"] = [item["answerKey"]]
+    else:
+        processed_instruction = instruction + "\n\n## Input:\n\n" + \
+            item["question"] if instruction is not None else item["question"]
+
     return processed_instruction
 
 

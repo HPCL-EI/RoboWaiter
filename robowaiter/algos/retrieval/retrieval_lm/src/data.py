@@ -10,8 +10,9 @@ import numpy as np
 import numpy.random
 import logging
 from collections import defaultdict
+import torch.distributed as dist
 
-from robowaiter.algos.retrieval.retrieval_lm.src import dist_utils
+from src import dist_utils
 
 logger = logging.getLogger(__name__)
 
@@ -229,7 +230,7 @@ def load_passages(path):
         return
     logger.info(f"Loading passages from: {path}")
     passages = []
-    with open(path,encoding='UTF-8') as fin:
+    with open(path,encoding='utf-8') as fin:
         if path.endswith(".jsonl"):
             for k, line in enumerate(fin):
                 ex = json.loads(line)

@@ -3,7 +3,6 @@ import re
 
 from colorama import init, Fore
 from loguru import logger
-import json
 from robowaiter.llm_client.tool_register import get_tools, dispatch_tool
 import requests
 import json
@@ -75,7 +74,7 @@ def run_conversation(query: str, stream=False, max_retry=5):
 
 def run_conversation_for_test_only(query: str, stream=False, max_retry=5):
     params = dict(model="chatglm3", messages=[{"role": "user", "content": query}], stream=stream)
-    params["functions"] = functions
+    params["functions"] = ""
     response = get_response(**params)
 
     response_string = ''

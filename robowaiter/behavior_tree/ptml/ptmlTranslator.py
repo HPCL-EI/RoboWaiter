@@ -82,25 +82,20 @@ class ptmlTranslator(ptmlListener):
         args = []
         if len(ctx.children) > 4:
             params = ctx.action_parm()
-
             for i in params.children:
                 if isinstance(i, ptmlParser.BooleanContext):
                     args.append(str(i.children[0]))
-                elif str(i)==',':
+                elif str(i) == ',':
                     args.append(',')
                 else:
                     args.append(f"'{i}'")
-
         args = "".join(args)
 
-
         exec(f"from {name} import {name}")
-        #
         # tag = "cond_" + short_uuid() if node_type == "cond" else "task_" + short_uuid()
 
         node = eval(f"{name}({args})")
         node.set_scene(self.scene)
-
         # connect
         self.stack[-1].add_child(node)
 

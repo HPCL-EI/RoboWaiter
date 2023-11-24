@@ -57,41 +57,6 @@ def run_scene(scene_cls,robot_cls,scene_queue,ui_queue):
 
 example_list = ("AEM","VLN","VLM",'GQA',"OT","AT","reset")
 
-class ImageView(QGraphicsView):
-    def __init__(self, parent=None):
-        super(ImageView, self).__init__(parent)
-        self.scene = QGraphicsScene(self)
-        self.pixmap_item = QGraphicsPixmapItem()
-        self.scene.addItem(self.pixmap_item)
-        self.setScene(self.scene)
-        self.setInteractive(True)
-        self.setDragMode(QGraphicsView.ScrollHandDrag)
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self.drag_start_position = event.pos()
-
-    def mouseMoveEvent(self, event):
-        if (event.buttons() & Qt.LeftButton) and (
-                event.pos() - self.drag_start_position).manhattanLength() >= QApplication.startDragDistance():
-            drag = QDrag(self)
-            drag.setMimeData(self.mimeData())
-            drag.setPixmap(self.grab())
-            drag.exec_(Qt.CopyAction | Qt.MoveAction)
-            self.drag_start_position = event.pos()
-
-    def wheelEvent(self, event):
-        if event.angleDelta().y() > 0:
-            self.scaleView(1.2)  # 放大图片
-        elif event.angleDelta().y() < 0:
-            self.scaleView(1 / 1.2)  # 缩小图片
-
-    def scaleView(self, scale):
-        factor = self.transform().scale(scale, scale).mapRect(QRectF(0, 0, 100, 100)).size().width()
-        if factor < 50:  # 设置最小缩放限制，避免过度缩小导致无法看清内容
-            return
-        self.scale(scale, scale)  # 缩小或放大视图中的所有内容，包括图形项和网格/坐标轴
-
 class UI(QMainWindow, Ui_MainWindow):
     scene = None
     history_dict = {

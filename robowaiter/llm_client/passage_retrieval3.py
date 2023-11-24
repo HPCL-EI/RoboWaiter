@@ -21,7 +21,8 @@ from robowaiter.algos.retrieval.retrieval_lm.src.data import load_passages
 
 from robowaiter.algos.retrieval.retrieval_lm.src.evaluation import calculate_matches
 import warnings
-
+from robowaiter.utils.basic import get_root_path
+root_path = get_root_path()
 warnings.filterwarnings('ignore')
 os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
@@ -244,8 +245,8 @@ def retri(query):
     )
     # parser.add_argument("--passages", type=str, default='C:/Users/huangyu/Desktop/RoboWaiter-main/RoboWaiter-main/train_robot.jsonl', help="Path to passages (.tsv file)")
     # parser.add_argument("--passages_embeddings", type=str, default='C:/Users/huangyu/Desktop/RoboWaiter-main/RoboWaiter-main/robot_embeddings/*', help="Glob path to encoded passages")
-    parser.add_argument("--passages", type=str, default='D:/AAAAA_EI_LLM/UnrealProject/RobotProject/Plugins/RoboWaiter/robowaiter/llm_client/train_robot.jsonl', help="Path to passages (.tsv file)")
-    parser.add_argument("--passages_embeddings", type=str, default='D:/AAAAA_EI_LLM/UnrealProject/RobotProject/Plugins/RoboWaiter/robowaiter/algos/retrieval/robot_embeddings/*', help="Glob path to encoded passages")
+    parser.add_argument("--passages", type=str, default=f'{root_path}/robowaiter/llm_client/train_robot.jsonl', help="Path to passages (.tsv file)")
+    parser.add_argument("--passages_embeddings", type=str, default=f'{root_path}/robowaiter/algos/retrieval/robot_embeddings/*', help="Glob path to encoded passages")
 
     parser.add_argument(
         "--output_dir", type=str, default='robot_result', help="Results are written to outputdir with data suffix"
@@ -262,7 +263,7 @@ def retri(query):
     #     "--model_name_or_path", type=str, default='C:\\Users\\huangyu\\Desktop\\RoboWaiter-main\\RoboWaiter-main\\contriever-msmarco',help="path to directory containing model weights and config file"
     # )
     parser.add_argument(
-        "--model_name_or_path", type=str, default='D:\\AAAAA_EI_LLM\\UnrealProject\\RobotProject\\Plugins\\RoboWaiter\\robowaiter\\algos\\retrieval\\contriever-msmarco',help="path to directory containing model weights and config file"
+        "--model_name_or_path", type=str, default=f'{root_path}/robowaiter/algos/retrieval/contriever-msmarco',help="path to directory containing model weights and config file"
     )
     parser.add_argument("--no_fp16", action="store_true", help="inference in fp32")
     parser.add_argument("--question_maxlength", type=int, default=512, help="Maximum number of tokens in a question")

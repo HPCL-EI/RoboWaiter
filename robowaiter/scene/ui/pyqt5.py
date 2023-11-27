@@ -80,6 +80,9 @@ class UI(QMainWindow, Ui_MainWindow):
         self.btn_say.clicked.connect(self.btn_say_on_click)
         self.img_view_bt.setDragMode(QGraphicsView.ScrollHandDrag)
 
+        # 下拉菜单绑定函数
+        # 下拉菜单.seleted.connect(self.你写的函数)
+
         # # BT树的显示
         # self.setScaledContents(True)  # 图片将根据label的大小自动缩放
         # self.label_moved = False  # 用于判断是否移动了标签
@@ -238,6 +241,7 @@ class UI(QMainWindow, Ui_MainWindow):
         # self.label.setPixmap(pixmap)
         control.setPixmap(self.scale_pixmap_to_label(pixmap, control))
         # control.setPixmap(pixmap)
+
 
     def draw_canvas(self,control_name,canvas):
         control = getattr(self,control_name,None)

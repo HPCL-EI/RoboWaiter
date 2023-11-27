@@ -1063,7 +1063,7 @@ class Scene:
                 # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                 #                                                   objs_name_set)
 
-                cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(plt, db, scene,
+                cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(self, db, scene,
                                                                                    cur_obstacle_world_points, map_ratio)
 
                 # if scene.info == "Unreachable":

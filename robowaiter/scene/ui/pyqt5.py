@@ -80,6 +80,7 @@ class UI(QMainWindow, Ui_MainWindow):
         self.btn_say.clicked.connect(self.btn_say_on_click)
         self.img_view_bt.setDragMode(QGraphicsView.ScrollHandDrag)
 
+
         # 下拉菜单绑定函数
         # 下拉菜单.seleted.connect(self.你写的函数)
 
@@ -88,8 +89,13 @@ class UI(QMainWindow, Ui_MainWindow):
         # self.label_moved = False  # 用于判断是否移动了标签
         # self.drag_start_position = QPoint()  # 记录鼠标按下时的位置
 
+        self.cb_task.setCurrentIndex(-1)
+        self.cb_task.setPlaceholderText("请选择城市")
 
-
+        # 多个添加条目
+        self.cb_task.addItems(['Java', 'C#', 'PHP'])
+        # 当下拉索引发生改变时发射信号触发绑定的事件
+        self.cb_task.currentIndexChanged.connect(self.selectionchange)
 
         # 绑定任务演示按钮
         for example in example_list:
@@ -109,6 +115,25 @@ class UI(QMainWindow, Ui_MainWindow):
         self.list_customer.itemClicked.connect(self.show_customer_history)
 
         sys.exit(app.exec_())
+
+    def selectionchange(self, i):
+        print(i)
+        # self.create_example_click(dic[i])
+        # 标签用来显示选中的文本
+        # currentText()：返回选中选项的文本
+        # self.btn1.setText(self.cb.currentText())
+        # print('Items in the list are:')
+        # # 输出选项集合中每个选项的索引与对应的内容
+        # # count()：返回选项集合中的数目
+        # for count in range(self.cb.count()):
+        #     print('Item' + str(count) + '=' + self.cb.itemText(count))
+        #     print('current index', i, 'selection changed', self.cb.currentText())
+
+    def get_info(self, walker_detect_count, obj_detect_count, update_info_count, infoCount):
+        print(obj_detect_count)
+        self.textEdit_5.clear()
+        self.textEdit_5.append(str(obj_detect_count))
+        # self.textEdit_5.setText(walker_detect_count + "_" + obj_detect_count + "_" + update_info_count + "_" + infoCount)
 
     def new_history(self,customer_name,chat):
         role = chat["role"]

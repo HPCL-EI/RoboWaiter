@@ -101,8 +101,14 @@ class SceneUI(Scene):
             # plt.title("地图构建过程")
             # self.send_img("img_label_map")
             # plt.subplot(2, 7, 14)  # 这里的2,1表示总共2行，1列，2表示这个位置是第2个子图
+
+            # walker_count 新增行人信息
+
+            # 新增语义信息
             new_add_info = len(cur_objs) - added_info + walker_count
             # plt.text(0, 0.5, f'新增语义信息：{new_add_info}', fontsize=10)  # 在图中添加文字，x和y坐标是在这个图片大小内的相对位置，fontsize是字体大小
+
+            # 已存语义信息
             added_info += new_add_info
             # plt.text(0, 0.3, f'已存语义信息：{added_info}', fontsize=10)  # 在图中添加文字，x和y坐标是在这个图片大小内的相对位置，fontsize是字体大小
             self.infoCount = added_info
@@ -125,6 +131,7 @@ class SceneUI(Scene):
         file_json_name = os.path.join(root_path, 'robowaiter/proto/objs.json')
         with open(file_json_name, 'w') as file:
             json.dump(obj_json_data, file)
+
 
         print("已绘制完成地图！！！")
         print("------------检测到的所有物品信息--------------")

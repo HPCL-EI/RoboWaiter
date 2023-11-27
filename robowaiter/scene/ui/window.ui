@@ -422,7 +422,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="cb_task">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -435,6 +435,9 @@
           <height>25</height>
          </size>
         </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
         <property name="currentText">
          <string/>
         </property>
@@ -445,7 +448,7 @@
          <enum>QComboBox::InsertAtBottom</enum>
         </property>
         <property name="placeholderText">
-         <string>其他任务</string>
+         <string extracomment="其他任务">其他任务</string>
         </property>
        </widget>
       </item>

@@ -120,23 +120,25 @@ class UI(QMainWindow, Ui_MainWindow):
         else:
             new_chat = f'Robot:\n {content}\n'
 
-        self.edit_global_history.append(f'{new_chat}')
         self.history_dict[customer_name] += new_chat + "\n"
+        self.history_dict["Global"] += new_chat + "\n"
         items = self.list_customer.findItems(customer_name, Qt.MatchExactly)
         if items:
             index = self.list_customer.indexFromItem(items[0])
             self.list_customer.setCurrentIndex(index)
         self.edit_local_history.clear()
-        self.edit_local_history.append(self.history_dict[customer_name])
+        self.edit_local_history.append(self.history_dict["Global"])
 
     def reset(self):
         self.history_dict = {
-            "System": ""
+            "Global":"",
+            "System": "",
         }
         self.edit_local_history.clear()
-        self.edit_global_history.clear()
         self.list_customer.clear()
         item = QListWidgetItem("System")
+        self.list_customer.addItem(item)
+        item = QListWidgetItem("Global")
         self.list_customer.addItem(item)
 
 

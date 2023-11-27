@@ -9,26 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QPainter
-from PyQt5.QtWidgets import QGraphicsView
 
 
-class GraphicsView(QGraphicsView):
-    def __init__(self, parent=None):
-        super(GraphicsView, self).__init__(parent)
-        self.setRenderHint(QPainter.Antialiasing)
-        self.setOptimizationFlag(QGraphicsView.DontAdjustForAntialiasing, True)
-        self.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
-        self.setDragMode(QGraphicsView.ScrollHandDrag)
-        self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-
-    def wheelEvent(self, event):
-        factor = 1.15
-        if event.angleDelta().y() > 0:
-            self.scale(factor, factor)
-        else:
-            self.scale(1.0 / factor, 1.0 / factor)
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -131,13 +113,6 @@ class Ui_MainWindow(object):
         self.label_11.setFont(font)
         self.label_11.setObjectName("label_11")
         self.horizontalLayout_2.addWidget(self.label_11)
-        self.label_12 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setFamily("黑体")
-        font.setPointSize(14)
-        self.label_12.setFont(font)
-        self.label_12.setObjectName("label_12")
-        self.horizontalLayout_2.addWidget(self.label_12)
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 1, 1, 3)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -146,6 +121,8 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         self.list_customer.setFont(font)
         self.list_customer.setObjectName("list_customer")
+        item = QtWidgets.QListWidgetItem()
+        self.list_customer.addItem(item)
         item = QtWidgets.QListWidgetItem()
         self.list_customer.addItem(item)
         self.horizontalLayout_3.addWidget(self.list_customer)
@@ -157,14 +134,6 @@ class Ui_MainWindow(object):
         self.edit_local_history.setReadOnly(True)
         self.edit_local_history.setObjectName("edit_local_history")
         self.horizontalLayout_3.addWidget(self.edit_local_history)
-        self.edit_global_history = QtWidgets.QTextEdit(self.centralwidget)
-        self.edit_global_history.setEnabled(True)
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.edit_global_history.setFont(font)
-        self.edit_global_history.setReadOnly(True)
-        self.edit_global_history.setObjectName("edit_global_history")
-        self.horizontalLayout_3.addWidget(self.edit_global_history)
         self.gridLayout.addLayout(self.horizontalLayout_3, 2, 1, 1, 3)
         self.gridLayout_4.addLayout(self.gridLayout, 0, 0, 1, 1)
         self.gridLayout_3 = QtWidgets.QGridLayout()
@@ -178,7 +147,7 @@ class Ui_MainWindow(object):
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.verticalLayout_2.addWidget(self.label_5)
-        self.img_view_bt = GraphicsView(self.centralwidget)
+        self.img_view_bt = QtWidgets.QGraphicsView(self.centralwidget)
         self.img_view_bt.setObjectName("img_view_bt")
         self.verticalLayout_2.addWidget(self.img_view_bt)
         self.gridLayout_3.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
@@ -292,10 +261,11 @@ class Ui_MainWindow(object):
         self.btn_reset.setText(_translate("MainWindow", "重置"))
         self.label_10.setText(_translate("MainWindow", "顾客列表："))
         self.label_11.setText(_translate("MainWindow", "顾客历史对话："))
-        self.label_12.setText(_translate("MainWindow", "全局历史对话："))
         __sortingEnabled = self.list_customer.isSortingEnabled()
         self.list_customer.setSortingEnabled(False)
         item = self.list_customer.item(0)
+        item.setText(_translate("MainWindow", "Global"))
+        item = self.list_customer.item(1)
         item.setText(_translate("MainWindow", "System"))
         self.list_customer.setSortingEnabled(__sortingEnabled)
         self.label_5.setText(_translate("MainWindow", "当前行为树"))

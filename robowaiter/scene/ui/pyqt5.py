@@ -136,9 +136,9 @@ class UI(QMainWindow, Ui_MainWindow):
         }
         self.edit_local_history.clear()
         self.list_customer.clear()
-        item = QListWidgetItem("System")
-        self.list_customer.addItem(item)
         item = QListWidgetItem("Global")
+        self.list_customer.addItem(item)
+        item = QListWidgetItem("System")
         self.list_customer.addItem(item)
 
 

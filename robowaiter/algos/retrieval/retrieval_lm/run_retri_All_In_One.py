@@ -21,4 +21,4 @@ cmd_test_retri = f" passage_retrieval2.py --data {output_test_path}  --model_nam
 # os.system(conda_path + cmd_goal_states_with_descrip_to_train)
 # os.system(conda_path + cmd_goal_states_with_descrip_to_test)
 os.system("python " + cmd_get_embedding)
-os.system("python " + cmd_test_retri)
+# os.system("python " + cmd_test_retri)

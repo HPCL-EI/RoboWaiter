@@ -101,7 +101,7 @@ class UI(QMainWindow, Ui_MainWindow):
 
         self.setupUi(MainWindow)  # 初始化UI
 
-        MainWindow.setWindowTitle("测试V1.0")
+        MainWindow.setWindowTitle("RoboWatier")
         # MainWindow.setWindowIcon(QIcon("icons/umbrella.ico"))
 
         # 绑定说话按钮

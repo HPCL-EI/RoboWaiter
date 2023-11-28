@@ -1603,9 +1603,9 @@ class Scene:
 
         # self.ui_func(("get_info", walker_detect_count, obj_detect_count, update_info_count, self.infoCount))
         semantic_info_str=""
-        semantic_info_str+=  f'检测行人数量：{walker_detect_count}'+"\n"
-        semantic_info_str += f'检测物体数量：{obj_detect_count}' + "\n"
-        semantic_info_str += f'更新语义信息：{update_info_count}' + "\n"
+        semantic_info_str+=  f'检测行人数量：{walker_detect_count}'+"\n\n"
+        semantic_info_str += f'检测物体数量：{obj_detect_count}' + "\n\n"
+        semantic_info_str += f'更新语义信息：{update_info_count}' + "\n\n"
         semantic_info_str += f'已存语义信息：{self.infoCount}' + "\n"
 
         # print("======semantic_info_str===========")

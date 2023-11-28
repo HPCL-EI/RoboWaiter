@@ -233,6 +233,7 @@ def get_answer():
             answer = example["ctxs"][0]["text"]
             score = example["ctxs"][0]["score"]
             return score, answer
+
 def retri(query):
     get_json(query)
     parser = argparse.ArgumentParser()

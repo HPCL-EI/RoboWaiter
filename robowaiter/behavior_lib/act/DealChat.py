@@ -1,13 +1,13 @@
 import py_trees as ptree
 from robowaiter.behavior_lib._base.Act import Act
 
-from robowaiter.llm_client.multi_rounds import ask_llm, new_history
+from robowaiter.llm_client.multi_rounds_retri import ask_llm, new_history
 import random
 from collections import deque
 
 
-# import spacy
-# nlp = spacy.load('en_core_web_lg')
+import spacy
+nlp = spacy.load('en_core_web_lg')
 
 class History(deque):
     def __init__(self,scene,customer_name):

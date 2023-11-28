@@ -101,6 +101,9 @@ class UI(QMainWindow, Ui_MainWindow):
 
         self.setupUi(MainWindow)  # 初始化UI
 
+        MainWindow.setWindowTitle("测试V1.0")
+        # MainWindow.setWindowIcon(QIcon("icons/umbrella.ico"))
+
         # 绑定说话按钮
         self.btn_say.clicked.connect(self.btn_say_on_click)
         self.verticalLayout_2.removeWidget(self.img_view_bt)

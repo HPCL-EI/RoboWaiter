@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>895</width>
-    <height>967</height>
+    <height>980</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>RoboWatier</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -147,7 +147,20 @@
          </widget>
         </item>
         <item>
-         <widget class="QGraphicsView" name="img_view_bt"/>
+         <widget class="QGraphicsView" name="img_view_bt">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>240</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

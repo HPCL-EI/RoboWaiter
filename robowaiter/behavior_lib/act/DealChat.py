@@ -127,12 +127,12 @@ class DealChat(Act):
             for item in self.scene.status.objects:
                 cur_things.add(self.scene.objname_en2zh_dic[item.name])
             # obj与现有物品进行相似度匹配 中文的匹配
-            print("==========obj==========:",obj)
+            # print("==========obj==========:",obj)
             query_token = nlp_zh(obj)
             for w in cur_things:
                 word_token = nlp_zh(w)
                 similarity = query_token.similarity(word_token)
-                print("similarity:", similarity, w)
+                # print("similarity:", similarity, w)
                 if similarity > max_similarity:
                     max_similarity = similarity
                     similar_word = w

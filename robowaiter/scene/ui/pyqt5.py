@@ -3,7 +3,7 @@ import os
 
 from PyQt5.QtSvg import QGraphicsSvgItem, QSvgWidget
 from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem, QGraphicsView, QGraphicsScene, \
-    QGraphicsPixmapItem, QGraphicsProxyWidget
+    QGraphicsPixmapItem, QGraphicsProxyWidget, QLineEdit
 from PyQt5.QtCore import QTimer, QPoint, QRectF
 from PyQt5 import QtCore
 import sys
@@ -111,6 +111,13 @@ class UI(QMainWindow, Ui_MainWindow):
         self.img_view_bt.setObjectName("img_view_bt")
         self.verticalLayout_2.addWidget(self.img_view_bt)
         self.img_view_bt.setDragMode(QGraphicsView.ScrollHandDrag)
+
+        lineEdit = QLineEdit()
+        lineEdit.setReadOnly(True)  # 设置只读
+        lineEdit.setAlignment(Qt.AlignCenter)  # 设置文字居中
+        lineEdit.setPlaceholderText("请选择其他任务")
+        self.cb_task.setLineEdit(lineEdit)
+
 
 
         # 下拉菜单绑定函数

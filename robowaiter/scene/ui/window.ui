@@ -521,7 +521,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="editable">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="currentText">
          <string/>

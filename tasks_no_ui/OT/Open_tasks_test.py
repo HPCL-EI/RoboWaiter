@@ -18,7 +18,32 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.signal_event_list = [
-            (3, self.customer_say, ("System", "冰红茶")),
+            # (3, self.customer_say, ("System", "有多少盒装饮料")),
+            # (3, self.customer_say, ("System", "桌子有几张")),
+            # (3, self.customer_say, ("System", "你们这儿有军棋吗")),
+            # (3, self.customer_say, ("System", "军棋有几个")),
+            # (3, self.customer_say, ("System", "有几把椅子呀")),
+            # (3, self.customer_say, ("System", "有多少顾客")),
+            # (3, self.customer_say, ("System", "你们这儿有多少军棋")),
+
+            # (3, self.customer_say, ("System", "哪里有盒装饮料？")),
+            # (3, self.customer_say, ("System", "洗手间在哪里？")),卫生间
+            # (3, self.customer_say, ("System", "卫生间在哪里？")),
+
+            # (3, self.customer_say, ("System", "你们这里有棋吗，在哪里")),
+
+            # (3, self.customer_say, ("System", "有几副棋")),
+            # (3, self.customer_say, ("System", "我的手镯，你有看到吗")),
+            # (3, self.customer_say, ("System", "你们这有小说吗？")),
+            # (3, self.customer_say, ("System", "我昨天保温杯落在你们咖啡厅了，你看到了吗？")),
+            # (3, self.customer_say, ("System", "你们这有魔方吗？")),
+            # (3, self.customer_say, ("System", "垃圾桶在哪呀？")),
+
+            # (3, self.customer_say, ("System", "这有小说吗？在哪里")),
+
+
+            # (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),
+            # (3, self.customer_say, ("System", "冰红茶")),
             # (3, self.customer_say, ("System", "酸奶。")),
             # (3, self.customer_say, ("System","来一号桌")),
             # (-1, self.customer_say, ("System","回去吧")),
@@ -30,7 +55,7 @@ class SceneOT(Scene):
         # ]
 
     def _reset(self):
-        # self.add_walkers([[0, 880], [250, 1200]])
+        self.add_walkers([[0, 880], [250, 1200]])
         self.gen_obj()
         pass
 

@@ -10,13 +10,15 @@ import pickle
 import time
 import os
 
+from robowaiter.scene.scene import Scene
+
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
 from robowaiter.utils import get_root_path
 root_path = get_root_path()
 
-from robowaiter.scene.scene import Scene
+
 from robowaiter.utils.bt.draw import render_dot_tree
 
 
@@ -160,20 +162,30 @@ class SceneUI(Scene):
 
         self.new_event_list = [
             (5, self.customer_say, (0, "请问哪里有空位啊？")),
-            (13, self.customer_say, (0, "我想坐高凳子。")),
+            (13, self.customer_say, (0, "我想坐高脚凳子。")),
             (3, self.customer_say, (0, "你带我去吧。")),
-            (45, self.control_walker, (0, False, 100, -250, 480, -90)),
+            (60, self.control_walker, (0, False, 100, -250, 480, -90)), #45
             (-1, self.customer_say, (0, "谢谢你！这儿还不错！")),
         ]
 
     def run_VLM(self):
+        # 场景一  拿放物品
         self.gen_obj()
+        self.state["condition_set"]={'At(Robot,Bar)', 'Is(AC,Off)',
+                          'Holding(Nothing)', 'Exist(Yogurt)', 'Exist(BottledDrink)',
+                          'Exist(Softdrink)',
+                          'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)'
+                          'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
+                          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+                          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'}
+
         self.add_walkers([[4,1, 880], [31,250, 1200],[6,-55, 750],[10,70, -200],[27,-290, 400, 180],[26, 60,-320,90]])
-        self. control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
+        # self.control_walkers(walker_loc=[[-55, 750], [70, -200], [250, 1200], [0, 880]],is_autowalk = True)
+        self.control_walkers(walker_loc=[[-55, 750]], is_autowalk=True)
         self.signal_event_list = [
             (3, self.add_walker,  (20,0,700)),
             (1, self.control_walker, (6, False,100, 60, 520,0)),
-            (1, self.customer_say, (6, "给我来份薯片和果汁，我坐在对面的桌子那儿。")),
+            (1, self.customer_say, (6, "给我来份薯片和果汁，我坐在对面的水杯桌那儿。")), #给我来份薯片和果汁，我坐在对面的桌子那儿。
             (5, self.control_walker, (6, False, 100, -250, 480, 0)),
         ]
         pass
@@ -220,6 +232,26 @@ class SceneUI(Scene):
         ]
         pass
 
+
+    def run_VLM_AC(self):
+        # 开关空调
+        # 场景二  开和调节空调温度
+        self.gen_obj()
+        self.add_walkers([[4,1, 880], [31,250, 1200],[6,-55, 750],[10,70, -200],[27,-290, 400, 180],[26, 60,-320,90]])
+        self.control_walkers(walker_loc=[[-55, 750]],is_autowalk = True)
+        self.signal_event_list = [
+            (3, self.add_walker,  (0,0,700)),
+            (1, self.control_walker, (6, False,100, 60, 520,0)), #[walkerID,autowalk,speed,X,Y,Yaw]
+            (2, self.customer_say, (6, "好热呀，想开空调，想要温度调低点！")),
+            (6, self.control_walker, (6, False, 200, 60, 80, 0)),
+            (-1, self.customer_say, (6, "谢谢！这下凉快了！")),  #(-100,600)
+        ]
+        pass
+
+    def run_CafeDaily(self):
+        pass
+
+
     def run_reset(self):
         pass
 
@@ -232,8 +264,9 @@ class SceneUI(Scene):
             self.draw_current_bt()
 
     def draw_current_bt(self):
-        render_dot_tree(self.robot.bt.root,target_directory=self.output_path,name="current_bt")
+        render_dot_tree(self.robot.bt.root,target_directory=self.output_path,name="current_bt",png_only=True)
         self.ui_queue.put(('draw_from_file',"img_view_bt", f"{self.output_path}/current_bt.png"))
+        # self.ui_queue.put(('draw_from_file', "img_view_bt", f"{self.output_path}/current_bt.svg"))
 
     def ui_func(self,args):
         # _,_,output_path = args

@@ -16,7 +16,7 @@ from robowaiter.proto import GrabSim_pb2_grpc
 import copy
 import os
 
-from robowaiter.scene.ui import scene_ui
+# from robowaiter.scene.ui import scene_ui
 from robowaiter.utils import get_root_path
 from sklearn.cluster import DBSCAN
 from matplotlib import pyplot as plt
@@ -39,7 +39,143 @@ channel = grpc.insecure_channel(
 animation_step = [4, 5, 7, 3, 3]
 loc_offset = [-700, -1400]
 
-
+objname_en2zh_dic_goal = {
+'Customer':'顾客',
+'Banana': '香蕉',
+'Toothpaste': '牙膏',
+'Bread': '面包',
+'Softdrink': '盒装饮料',
+'Yogurt': '酸奶',
+'ADMilk': '安佳牛奶',
+'VacuumCup': '真空杯',
+'Bernachon': '贝尔纳松',
+'BottledDrink': '瓶装饮料',
+'PencilVase': '铅笔花瓶',
+'Teacup': '茶杯',
+'Dictionary': '字典',
+'Cake': '蛋糕',
+'Stapler': '订书机',
+'LunchBox': '午餐盒',
+'Bracelet': '手镯',
+'CoconutWater': '椰水',
+'Walnut': '核桃',
+'HamSausage': '火腿肠',
+'GlueStick': '胶棒',
+'AdhesiveTape': '胶带',
+'Calculator': '计算器',
+'Chess': '棋',
+'Orange': '橙子',
+'Glass': '玻璃杯',
+'Washbowl': '洗碗盆',
+'Durian': '榴莲',
+'Gum': '口香糖',
+'Towel': '毛巾',
+'OrangeJuice': '橙汁',
+'Cardcase': '卡包',
+'RubikCube': '魔方',
+'StickyNotes': '便签',
+'NFCJuice': 'NFC果汁',
+'SpringWater': '矿泉水',
+'Apple': '苹果',
+'Coffee': '咖啡',
+'Gauze': '纱布',
+'Mangosteen': '山竹',
+'SesameSeedCake': '芝麻糕',
+'Glove': '手套',
+'Mouse': '鼠标',
+'Kettle': '水壶',
+'Atomize': '喷雾器',
+'Chips': '薯片',
+'SpongeGourd': '丝瓜',
+'Garlic': '大蒜',
+'Potato': '土豆',
+'Tray': '托盘',
+'Hemomanometer': '血压计',
+'TennisBall': '网球',
+'ToyDog': '玩具狗',
+'ToyBear': '玩具熊',
+'TeaTray': '茶盘',
+'Sock': '袜子',
+'Scarf': '围巾',
+'ToiletPaper': '卫生纸',
+'Milk': '牛奶',
+'Novel': '小说',
+'Watermelon': '西瓜',
+'Tomato': '番茄',
+'CleansingFoam': '洁面泡沫',
+'CoconutMilk': '椰奶',
+'SugarlessGum': '无糖口香糖',
+'MedicalAdhesiveTape': '医用胶带',
+'PaperCup': '纸杯',
+'Caddy': '茶匙',
+'Date': '日期',
+'MilkDrink': '牛奶饮品',
+'CocountWater': '椰水',
+'AdhensiveTape': '胶带',
+'Towl': '毛巾',
+'Soap': '肥皂',
+'CocountMilk': '椰奶',
+'MedicalAdhensiveTape': '医用胶带',
+'SourMilkDrink': '酸奶饮品',
+'Tissue': '纸巾',
+'YogurtDrink': '酸奶饮品',
+'Newspaper': '报纸',
+'Box': '盒子',
+'PaperCupStarbucks': '星巴克纸杯',
+'CoffeeMachine': '咖啡机',
+'GingerLHand': '机器人左手',
+'GingerRHand': '机器人右手',
+'Straw': '吸管',
+'Door': '门',
+'Machine': '机器',
+'PackagedCoffee': '包装咖啡',
+'CubeSugar': '方糖',
+'Spoon': '勺子',
+'Drinks': '饮料',
+'Drink': '饮料',
+'Take-AwayCup': '外带杯',
+'Saucer': '茶杯',
+'TrashBin': '垃圾桶',
+'Knife': '刀',
+'Ginger': '姜',
+'Floor': '地板',
+'Roof': '屋顶',
+'Wall': '墙',
+'Broom':'扫帚',
+'CoffeeCup': '咖啡杯',
+'Mug': '马克杯',
+'ZhuZi': '著子',
+'LaJiTong': '垃圾桶',
+'ZaoTai': '灶台',
+'Sofa': '沙发',
+'ChaTou': '插头',
+'Plate': '盘子',
+'CoffeeBag': '咖啡袋',
+'TuoBu': '拖布',
+'KaiGuan': '开关',
+'ChaZuo': '插座',
+'Sugar': '糖',
+'BaTai': '吧台',
+'BaoJing': '报警',
+'DrinkMachine': '饮料机',
+'KongTiao': '空调',
+'Desk': '桌子',
+'Clip': '夹子',
+'TuoPan': '托盘',
+'BoJi': '簸箕',
+'ZhiBeiHe': '纸杯盒',
+'WaterCup': '水杯',
+'Chair': '椅子',
+'Hand': '手',
+'XiGuan': '吸管',
+'Container': '容器',
+'IceMachine': '制冰机',
+'KaoXiang': '烤箱',
+'SaoBa': '扫把',
+'XiangGui': '香柜',
+}
+objname_zh2en_dic_goal = dict(zip(objname_en2zh_dic_goal.values(), objname_en2zh_dic_goal.keys()))
+# print(objname_zh2eh_dic)
 
 def show_image(camera_data):
     print('------------------show_image----------------------')
@@ -65,6 +201,9 @@ class Scene:
     # step_interval = 1
     # camera_interval = 1.5
     output_path = os.path.join(os.path.dirname(__file__), "outputs")
+
+    objname_en2zh_dic = objname_en2zh_dic_goal
+    objname_zh2en_dic = objname_zh2en_dic_goal
 
     default_state = {
         "map": {
@@ -124,7 +263,7 @@ class Scene:
         # 是否展示UI
         self.show_ui = False
         # 图像分割
-        self.take_picture = False
+        self.take_picture = True
         self.map_ratio = 5
         self.map_map = np.zeros((math.ceil(950 / self.map_ratio), math.ceil(1850 / self.map_ratio)))
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
@@ -880,6 +1019,8 @@ class Scene:
         scene = self.stub.AddObjects(GrabSim_pb2.ObjectList(objects=obj_list, scene=self.sceneID))
         time.sleep(1.0)
 
+
+
     # 实现抓握操作
     def grasp_obj(self, obj_id, hand_id=1):
         print('------------------adjust_joints----------------------')
@@ -1141,6 +1282,10 @@ class Scene:
 
     def getDistance(self, pos1, pos2):
         return math.sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2)
+
+    def getDistanc3D(self, pos1, pos2):
+        return math.sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2+ (pos1[2] - pos2[2]) ** 2)
+
 
     def getNearestFrontier(self, cur_pos, frontiers):
         dis_min = sys.maxsize
@@ -1456,7 +1601,16 @@ class Scene:
         # plt.text(0, 0.1, f'已存语义信息：{self.infoCount}', fontsize=10)
         # 元组传参 pyqt5中的函数名， 四个参数
 
-        self.ui_func(("get_info", walker_detect_count, obj_detect_count, update_info_count, self.infoCount))
+        # self.ui_func(("get_info", walker_detect_count, obj_detect_count, update_info_count, self.infoCount))
+        semantic_info_str=""
+        semantic_info_str+=  f'检测行人数量：{walker_detect_count}'+"\n"
+        semantic_info_str += f'检测物体数量：{obj_detect_count}' + "\n"
+        semantic_info_str += f'更新语义信息：{update_info_count}' + "\n"
+        semantic_info_str += f'已存语义信息：{self.infoCount}' + "\n"
+
+        # print("======semantic_info_str===========")
+
+        self.ui_func(("get_semantic_info", semantic_info_str))
 
         # draw figures
 

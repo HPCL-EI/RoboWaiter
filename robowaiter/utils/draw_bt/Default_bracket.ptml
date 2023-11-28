@@ -1,29 +1,38 @@
-selector
+Selector
 {
-    sequence
+    cond On(Yogurt,Bar)
+    Sequence
 {
-        cond Chatting()
-        act DealChat()
-    }    sequence
+        cond Holding(Yogurt)
+        cond At(Robot,Bar)
+        act PutDown(Yogurt,Bar)
+    }    Sequence
 {
-        cond HasSubTask()
-        sequence
+        cond Holding(Yogurt)
+        act MoveTo(Bar)
+    }    Sequence
 {
-            act SubTaskPlaceHolder()
-        }    }    sequence
+        cond Holding(Nothing)
+        cond At(Robot,Yogurt)
+        cond At(Robot,Bar)
+        act PickUp(Yogurt)
+    }    Sequence
 {
-        cond FocusingCustomer()
-        act ServeCustomer()
-    }    sequence
+        cond Holding(Nothing)
+        cond At(Robot,Yogurt)
+        act PickUp(Yogurt)
+    }    Sequence
 {
-        cond NewCustomer()
-        selector
+        cond At(Robot,Yogurt)
+        cond At(Robot,Bar)
+        act FreeHands()
+    }    Sequence
 {
-            cond At(Robot,Bar)
-            act MoveTo(Bar)
-        }        act GreetCustomer()
-    }    sequence
+        cond At(Robot,Yogurt)
+        act FreeHands()
+    }    Sequence
 {
-        cond AnomalyDetected()
-        act ResolveAnomaly()
+        cond Holding(Nothing)
+        cond Exist(Yogurt)
+        act MoveTo(Yogurt)
     }}

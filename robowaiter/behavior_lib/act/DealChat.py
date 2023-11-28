@@ -94,7 +94,7 @@ class DealChat(Act):
         if obj in d.keys():
             result = d[obj]
         else:
-            result = "None"
+            result = "没有"
         return result
 
     #     max_similarity = 0.02

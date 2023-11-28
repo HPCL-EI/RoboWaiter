@@ -90,7 +90,7 @@ def get_response(sentence, history, allow_function_call = True):
 
     if sentence in fix_questions_dict:
         time.sleep(2)
-        return parse_fix_question(sentence)
+        return True, parse_fix_question(sentence)
 
     params = dict(model="RoboWaiter")
     params['messages'] = role_system + list(history)
@@ -100,7 +100,7 @@ def get_response(sentence, history, allow_function_call = True):
 
     response = requests.post(f"{base_url}/v1/chat/completions", json=params, stream=False, verify=False)
     decoded_line = response.json()
-    return decoded_line
+    return False, decoded_line
 
 def deal_response(response, history, func_map=None ):
     if response["choices"][0]["message"].get("function_call"):
@@ -143,7 +143,7 @@ def deal_response(response, history, func_map=None ):
 
 
 def ask_llm(question,history, func_map=None, retry=3):
-    response = get_response(question, history)
+    fixed, response = get_response(question, history)
 
     function_call,result = deal_response(response, history, func_map)
     if function_call:
@@ -161,7 +161,7 @@ def ask_llm(question,history, func_map=None, retry=3):
             history.append(message)
 
         else:
-            response = get_response(None, history,allow_function_call=False)
+            fixed, response = get_response(None, history,allow_function_call=False)
             _,result = deal_response(response, history, func_map)
 
 

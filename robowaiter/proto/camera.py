@@ -480,7 +480,7 @@ def get_obstacle_point(sence, db, scene, cur_obstacle_world_points, map_ratio):
     # plt.text(0, 0.7, f'检测物体数量：{obj_detect_count}', fontsize=10)
 
     # plt.show()
-    return cur_obstacle_world_points, cur_objs_id
+    return cur_obstacle_world_points, cur_objs_id, obj_detect_count
 
 
 

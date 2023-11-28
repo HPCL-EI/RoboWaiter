@@ -344,7 +344,7 @@ class Ui_MainWindow(object):
         self.btn_VLN.setText(_translate("MainWindow", "视觉语言导航"))
         self.btn_VLM.setText(_translate("MainWindow", "视觉语言操作"))
         self.btn_GQA.setText(_translate("MainWindow", "具身多轮对话"))
-        self.btn_OT.setText(_translate("MainWindow", "开放具身任务"))
+        self.btn_OT.setText(_translate("MainWindow", "复杂具身任务"))
         self.btn_AT.setText(_translate("MainWindow", "自主具身任务"))
         self.cb_task.setPlaceholderText(_translate("MainWindow", "其他任务"))
 

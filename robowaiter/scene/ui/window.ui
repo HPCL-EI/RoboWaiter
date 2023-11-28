@@ -496,7 +496,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>开放具身任务</string>
+         <string>复杂具身任务</string>
         </property>
        </widget>
       </item>

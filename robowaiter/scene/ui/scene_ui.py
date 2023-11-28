@@ -77,7 +77,7 @@ class SceneUI(Scene):
                 break
             # cur_obstacle_world_points, cur_objs_id = self.navigation_move(plt, cur_objs, cur_obstacle_world_points,
             #                                                               [[goal[0], goal[1]]], map_ratio, db, 0, 11)
-            cur_obstacle_world_points, cur_objs_id = self.navigation_move(self, cur_objs, cur_obstacle_world_points,
+            cur_obstacle_world_points, cur_objs_id, obj_detect_count = self.navigation_move(self, cur_objs, cur_obstacle_world_points,
                                                                           [[goal[0], goal[1]]], map_ratio, db, 0, 11)
             for point in cur_obstacle_world_points:
                 if point[0] < -350 or point[0] > 600 or point[1] < -400 or point[1] > 1450:
@@ -113,7 +113,19 @@ class SceneUI(Scene):
             # 已存语义信息
             added_info += new_add_info
             # plt.text(0, 0.3, f'已存语义信息：{added_info}', fontsize=10)  # 在图中添加文字，x和y坐标是在这个图片大小内的相对位置，fontsize是字体大小
+
+
+            semantic_info_str = ""
+            # semantic_info_str += f'检测行人数量：{walker_detect_count}' + "\n\n"
+            semantic_info_str += f'检测物体数量：{obj_detect_count}' + "\n\n"
+            semantic_info_str += f'更新语义信息：{new_add_info}' + "\n\n"
+            semantic_info_str += f'已存语义信息：{self.infoCount}' + "\n"
+
             self.infoCount = added_info
+
+            # print("======semantic_info_str===========")
+
+            self.ui_func(("get_semantic_info", semantic_info_str))
             plt.axis("off")
             # plt.show()
             print("------------当前检测到的物品信息--------------")

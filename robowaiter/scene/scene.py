@@ -1,4 +1,5 @@
 import io
+import json
 import pickle
 import sys
 import time
@@ -1180,7 +1181,7 @@ class Scene:
 
             # cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(plt, db, scene,
             #                                                                    cur_obstacle_world_points, map_ratio)
-            cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(self, db, scene,
+            cur_obstacle_world_points, cur_objs_id, obj_detect_count= camera.get_obstacle_point(self, db, scene,
                                                                                cur_obstacle_world_points, map_ratio)
             # cur_obstacle_world_points, cur_objs_id = self.get_obstacle_point(db, scene, map_ratio)
             # # self.get_obstacle_point(db, scene, cur_obstacle_world_points, map_ratio)
@@ -1206,12 +1207,12 @@ class Scene:
                 # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                 #                                                   objs_name_set)
 
-                cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(self, db, scene,
+                cur_obstacle_world_points, cur_objs_id, obj_detect_count= camera.get_obstacle_point(self, db, scene,
                                                                                    cur_obstacle_world_points, map_ratio)
 
                 # if scene.info == "Unreachable":
                 print(scene.info)
-        return cur_obstacle_world_points, cur_objs_id
+        return cur_obstacle_world_points, cur_objs_id, obj_detect_count
 
     def isOutMap(self, pos, min_x=-200, max_x=600, min_y=-250, max_y=1300):
         if pos[0] <= min_x or pos[0] >= max_x or pos[1] <= min_y or pos[1] >= max_y:
@@ -1610,7 +1611,12 @@ class Scene:
         semantic_info_str+=  f'检测行人数量：{walker_detect_count}'+"\n\n"
         semantic_info_str += f'检测物体数量：{obj_detect_count}' + "\n\n"
         semantic_info_str += f'更新语义信息：{update_info_count}' + "\n\n"
-        semantic_info_str += f'已存语义信息：{self.infoCount}' + "\n"
+
+
+        file_json_name = os.path.join(root_path, 'robowaiter/proto/objs.json')
+        with open(file_json_name) as f:
+            data = json.load(f)
+        semantic_info_str += f'已存语义信息：{len(data)}' + "\n"
 
         # print("======semantic_info_str===========")
 

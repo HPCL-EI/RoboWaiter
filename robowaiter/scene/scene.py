@@ -269,7 +269,7 @@ class Scene:
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
         self.infoCount = 0
 
-        self.is_nav_walk = False
+        self.is_nav_walk = True
 
         file_name = os.path.join(root_path,'robowaiter/algos/navigator/map_5.pkl')
         if os.path.exists(file_name):
@@ -1407,7 +1407,7 @@ class Scene:
     def draw_current_bt(self):
         pass
 
-    def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0):
+    def get_obstacle_point(self, db, scene, map_ratio, update_info_count=0, is_nav=False):
 
         # if abs(self.last_take_pic_tim - self.time)<
 
@@ -1584,9 +1584,13 @@ class Scene:
 
         self.send_img("img_label_obj")
 
+        if is_nav:
+            self.navigator.planner.draw_graph(self.navigator.cur_step_num, self.navigator.yaw)
+        else:
+            new_map = self.updateMap(cur_obstacle_world_points)
+            self.draw_map(plt,new_map)
 
-        new_map = self.updateMap(cur_obstacle_world_points)
-        self.draw_map(plt,new_map)
+
 
         plt.axis("off")
         self.send_img("img_label_map")

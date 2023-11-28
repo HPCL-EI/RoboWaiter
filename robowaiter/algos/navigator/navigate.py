@@ -24,7 +24,7 @@ class Navigator:
                  map,
                  scale_ratio=5,
                  step_length=120,
-                 velocity=250,
+                 velocity=300,
                  react_radius=300,
                  dyna_obs_radius=40,
                  vision_radius=math.pi*3/7,
@@ -35,6 +35,7 @@ class Navigator:
         self.scale_ratio = scale_ratio      # 地图缩放率s
         self.step_length = step_length      # 步长(单次移动)
         self.step_num = self.step_length // self.scale_ratio  # 单次移动地图格数
+        self.cur_step_num = self.step_num
         self.v = velocity  # 速度
         self.react_radius = react_radius    # robot反应半径
         self.dyna_obs_radius = dyna_obs_radius
@@ -42,6 +43,7 @@ class Navigator:
         self.max_iteration = max_iteration  # 最大规划迭代次数
 
         self.planner = DStarLite(area_range=area_range, map=map, scale_ratio=scale_ratio, react_radius=react_radius, vision_radius=vision_radius, dyna_obs_radius=dyna_obs_radius)
+        self.yaw = None
 
     def validate_goal(self, goal):
         '''
@@ -91,31 +93,31 @@ class Navigator:
         '''
         goal = np.array(self.validate_goal(goal))  # 目标合法化
         pos = np.array((self.scene.status.location.X, self.scene.status.location.Y))  # 机器人当前: 位置 和 朝向
-        yaw = None
+        self.yaw = None
         print('------------------navigation_start----------------------')
         for i in range(self.max_iteration):
-            dyna_obs = self.get_dyna_obs(pos, yaw)
+            dyna_obs = self.get_dyna_obs(pos, self.yaw)
             # dyna_obs = [np.array((walker.pose.X, walker.pose.Y)) for walker in self.scene.status.walkers]
             # 周围有dyna_obs则步长根据离dyna_obs的最短距离相应减小
             if dyna_obs:
                 min_dist = min([euclidean_distance(obs, pos) for obs in dyna_obs])
-                step_num = math.floor(self.step_num / (2 + self.dyna_obs_radius/min_dist))
+                self.cur_step_num = math.floor(self.step_num / (2 + self.dyna_obs_radius/min_dist))
                 # step_num = self.step_num // 2
             else:
-                step_num = self.step_num
+                self.cur_step_num = self.step_num
             path = self.planner.planning(pos, goal, dyna_obs)
             if path:
                 if animation:
-                    self.planner.draw_graph(step_num, yaw)  # 画出搜索路径
-                next_step = min(step_num, len(path))
+                    self.planner.draw_graph(self.cur_step_num, self.yaw)  # 画出搜索路径
+                next_step = min(self.cur_step_num, len(path))
                 next_pos = path[next_step - 1]
                 print('plan pos:', next_pos, end=' ')
-                yaw = self.get_yaw(pos, next_pos)
-                self.scene.walk_to(next_pos[0], next_pos[1], math.degrees(yaw), velocity=self.v, dis_limit=10)
+                self.yaw = self.get_yaw(pos, next_pos)
+                self.scene.walk_to(next_pos[0], next_pos[1], math.degrees(self.yaw), velocity=self.v, dis_limit=10)
 
                 # 拍照片
                 if self.scene.show_ui:
-                    self.scene.get_obstacle_point(self.scene.db, self.scene.status, map_ratio=self.scene.map_ratio)
+                    self.scene.get_obstacle_point(self.scene.db, self.scene.status, map_ratio=self.scene.map_ratio, is_nav=True)
 
                 self.planner.path = self.planner.path[next_step - 1:]  # 去除已走过的路径
             pos = np.array((self.scene.status.location.X, self.scene.status.location.Y))

@@ -38,7 +38,7 @@ class MoveTo(Act):
 
         # 拍照片
         if self.scene.show_ui:
-            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio, is_nav=True)
 
         # #####################################
         # 走到固定的地点
@@ -74,7 +74,7 @@ class MoveTo(Act):
             # #####################################
 
         if self.scene.show_ui:
-            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio)
+            self.scene.get_obstacle_point(self.scene.db, self.status, map_ratio=self.scene.map_ratio, is_nav=True)
 
 
         self.scene.state["condition_set"] |= (self.info["add"])

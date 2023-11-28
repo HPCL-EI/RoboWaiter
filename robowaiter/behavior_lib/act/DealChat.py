@@ -104,8 +104,14 @@ class DealChat(Act):
             obj = None
             print("参数解析错误")
 
-        near_object = None
-        d = {"保温杯": "二号桌子","洗手间":"前门","卫生间":"前门"}
+
+        d = {"保温杯": "二号桌子"}
+        if obj in d.keys():
+            result = d[obj]
+        else:
+            result = "没有"
+        return result
+
 
         # 先把 obj 转成中文
 

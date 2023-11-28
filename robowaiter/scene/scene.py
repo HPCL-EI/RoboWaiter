@@ -15,6 +15,8 @@ from robowaiter.proto import GrabSim_pb2
 from robowaiter.proto import GrabSim_pb2_grpc
 import copy
 import os
+
+from robowaiter.scene.ui import scene_ui
 from robowaiter.utils import get_root_path
 from sklearn.cluster import DBSCAN
 from matplotlib import pyplot as plt
@@ -1063,7 +1065,7 @@ class Scene:
                 # cur_objs, objs_name_set = camera.get_semantic_map(GrabSim_pb2.CameraName.Head_Segment, cur_objs,
                 #                                                   objs_name_set)
 
-                cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(plt, db, scene,
+                cur_obstacle_world_points, cur_objs_id = camera.get_obstacle_point(self, db, scene,
                                                                                    cur_obstacle_world_points, map_ratio)
 
                 # if scene.info == "Unreachable":
@@ -1452,7 +1454,9 @@ class Scene:
         # plt.text(0, 0.5, f'新增语义信息：{walker_detect_count}', fontsize=10)
         # plt.text(0, 0.3, f'更新语义信息：{update_info_count}', fontsize=10)
         # plt.text(0, 0.1, f'已存语义信息：{self.infoCount}', fontsize=10)
+        # 元组传参 pyqt5中的函数名， 四个参数
 
+        self.ui_func(("get_info", walker_detect_count, obj_detect_count, update_info_count, self.infoCount))
 
         # draw figures
 

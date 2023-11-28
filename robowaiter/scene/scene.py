@@ -1510,17 +1510,17 @@ class Scene:
 
         # 画分隔图
         # plt.subplot(2, 2, 1)
-        # plt.figure()
-        # plt.imshow(img_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
-        # plt.axis("off")
+        plt.figure()
+        plt.imshow(img_segment, cmap="gray" if "depth" in im_segment.name.lower() else None)
+        plt.axis("off")
         # plt.title("相机分割")
         self.send_img("img_label_seg")
 
         # 画目标检测图
         # plt.subplot(2, 2, 2)
-        # plt.figure()
-        # plt.imshow(img_obj, cmap="gray" if "depth" in im_depth.name.lower() else None)
-        # plt.axis('off')
+        plt.figure()
+        plt.imshow(img_obj, cmap="gray" if "depth" in im_depth.name.lower() else None)
+        plt.axis('off')
         # plt.title("目标检测")
 
         for key, value in object_pixels.items():

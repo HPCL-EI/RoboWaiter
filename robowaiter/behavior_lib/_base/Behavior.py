@@ -56,6 +56,35 @@ class Bahavior(ptree.behaviour.Behaviour):
         'BrightTable6': (5, -315, 116.5),
     }
 
+    place_have_obj_xyz_dic = {
+        'QuietTable1': (480, 1300, 70),
+        'QuietTable2': (250, -240, 70),
+        'BrightTable1': (230, 1200, 35),
+        'BrightTable2': (65, 1000, 35),
+        'BrightTable3': (-80, 850, 35),
+        'BrightTable4': (-270, 520, 70),
+        'BrightTable5': (-270, 420, 35)
+    }
+    place_have_obj_xyz_dic.update(place_xyz_dic)
+
+    place_en2zh_name={
+        'Bar': "吧台",
+        'Bar2': "另一侧的吧台",
+        'WaterTable': "大厅的茶水桌",
+        'CoffeeTable': "咖啡桌",
+        'Table1': "前门的斜桌子",
+        'Table2': "大厅长桌子",
+        'Table3': "大厅长桌子",
+        'BrightTable6': "后门靠窗边圆桌",
+        'QuietTable1': "前门角落双人圆桌",
+        'QuietTable2': "后门角落三人圆桌",
+        'BrightTable1': "靠窗边第一个四人矮桌",
+        'BrightTable2': "靠窗边第二个四人矮桌",
+        'BrightTable3': "靠窗边第三个四人矮桌",
+        'BrightTable4': "大厅里靠窗边长桌子",
+        'BrightTable5': "大厅里靠窗边多人矮桌",
+    }
+
     place_xy_yaw_dic={
         'Bar': (247.0, 520.0, 180),  # (247.0, 520.0, 100.0)
         'Bar2': (240.0, 40.0, 100.0),

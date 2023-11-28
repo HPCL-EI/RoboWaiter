@@ -15,6 +15,7 @@ from robowaiter.utils import get_root_path
 import os
 import re
 from robowaiter.llm_client.single_round import single_round
+from robowaiter.algos.retrieval.retrieval_lm.retrieval import Retrieval
 ########################################
 #   该文件实现了与大模型的通信以及工具调用
 ########################################
@@ -26,30 +27,15 @@ base_url = "https://45.125.46.134:25344" # 本地部署的地址,或者使用你
 
 root_path = get_root_path()
 # load test questions
-file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions.txt")
+# file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions.txt")
+#
+# fix_questions_dict = {}
+# no_reply_functions = ["create_sub_task"]
+#
+
 
 functions = get_tools()
-
-fix_questions_dict = {}
-no_reply_functions = ["create_sub_task"]
-
-with open(file_path,'r',encoding="utf-8") as f:
-     #读取所有行
-    lines = f.read().strip()
-    sections = re.split(r'\n\s*\n', lines)
-    for s in sections:
-        x = s.strip().splitlines()
-        if len(x) == 2:
-            fix_questions_dict[x[0]] = {
-                "answer": x[1],
-                "function": None
-            }
-        else:
-            fix_questions_dict[x[0]] = {
-                "answer": x[1],
-                "function": x[2],
-                "args": x[3]
-            }
+retrieval = Retrieval(threshold=1.8)
 
 
 role_system = [{
@@ -67,7 +53,7 @@ def new_response():
 
 def parse_fix_question(question):
     response = new_response()
-    fix_ans = fix_questions_dict[question]
+    fix_ans = question
     if not fix_ans['function']: #简单对话
         message = {'role': 'assistant', 'content': fix_ans["answer"], 'name': None,
          'function_call': None}
@@ -82,15 +68,27 @@ def parse_fix_question(question):
          'function_call': {'name': func, 'arguments': args}}
 
     response["choices"][0]["message"] = message
-    return response
+    return response, question["answer"]
 
 def get_response(sentence, history, allow_function_call = True):
     if sentence:
         history.append({"role": "user", "content": sentence})
 
-    if sentence in fix_questions_dict:
-        time.sleep(2)
-        return True, parse_fix_question(sentence)
+        retrieval_result = retrieval.get_result(sentence)
+        if retrieval_result is not None:
+            time.sleep(1.2)
+            # 处理多轮
+            if retrieval_result["answer"] == "multi_rounds" and len(history) >= 2:
+                print("触发多轮检索")
+                last_content = ""
+                for i in range(-2,-len(history)):
+                    if history[i]["role"] == "user":
+                        last_content = history[i]["content"]
+                        break
+                retrieval_result = retrieval.get_result(last_content + sentence)
+            if retrieval_result is not None:
+                response, answer = parse_fix_question(retrieval_result)
+                return True,response, answer
 
     params = dict(model="RoboWaiter")
     params['messages'] = role_system + list(history)
@@ -100,7 +98,7 @@ def get_response(sentence, history, allow_function_call = True):
 
     response = requests.post(f"{base_url}/v1/chat/completions", json=params, stream=False, verify=False)
     decoded_line = response.json()
-    return False, decoded_line
+    return False, decoded_line, None
 
 def deal_response(response, history, func_map=None ):
     if response["choices"][0]["message"].get("function_call"):
@@ -143,25 +141,26 @@ def deal_response(response, history, func_map=None ):
 
 
 def ask_llm(question,history, func_map=None, retry=3):
-    fixed, response = get_response(question, history)
+    fixed, response, answer = get_response(question, history)
+
+    print(f"response: {response}")
 
     function_call,result = deal_response(response, history, func_map)
+
     if function_call:
-        if question in fix_questions_dict:
-            if fix_questions_dict[question]['function'] in  no_reply_functions:
-                reply = fix_questions_dict[question]["answer"]
-                result = single_round(reply,
-                                      "你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
+        if fixed:
+            if function_call == "create_sub_task":
+                result = single_round(answer,
+                                  "你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
+            # elif function_call in ["get_object_info","find_location"] :
             else:
-                reply = fix_questions_dict[question]["answer"]
-                result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},把返回的英文名词翻译成中文,请把按照以下句子对顾客说，{reply}, 尽量简短。\n")
+                result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},把返回的英文名词翻译成中文,请把按照以下句子对顾客说，{answer}, 尽量简短。\n")
 
             message = {'role': 'assistant', 'content': result, 'name': None,
                        'function_call': None}
             history.append(message)
-
         else:
-            fixed, response = get_response(None, history,allow_function_call=False)
+            _,response,_ = get_response(None, history,allow_function_call=False)
             _,result = deal_response(response, history, func_map)
 
 
@@ -178,6 +177,5 @@ if __name__ == "__main__":
 
     while question != 'end':
         function_call, return_message = ask_llm(question,history)
-
 
         question = input("\n顾客：")

@@ -1,0 +1,41 @@
+{"id": 0, "title": "你好", "text": "{'answer': '您好，我是这家咖啡厅的服务员，请问您要点什么？', 'function': None}"}
+{"id": 1, "title": "感谢，这些够啦，你去忙吧。", "text": "{'answer': 'ok, 有需要您再找我。', 'function': None}"}
+{"id": 2, "title": "做一杯咖啡", "text": "{'answer': '好的，我马上做咖啡', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Coffee,CoffeeTable)\"}'}"}
+{"id": 3, "title": "不用了。", "text": "{'answer': '好的，您有需要再跟我说', 'function': 'stop_serve', 'args': '{}'}"}
+{"id": 4, "title": "来一号桌", "text": "{'answer': '好的，我马上来一号桌', 'function': 'create_sub_task', 'args': '{\"goal\":\"At(Robot,Table1)\"}'}"}
+{"id": 5, "title": "早上好呀，我想找个能晒太阳的地方。", "text": "{'answer': '您右手边就有能晒太阳的位置呢。', 'function': None}"}
+{"id": 6, "title": "可以带我过去嘛？", "text": "{'answer': '当然，请跟我来！', 'function': 'create_sub_task', 'args': '{\"goal\":\"At(Robot,BrightTable1)\"}'}"}
+{"id": 7, "title": "嘿，RoboWaiter，过来一下！", "text": "{'answer': '我在来的路上啦，请稍等噢！', 'function': 'create_sub_task', 'args': '{\"goal\":\"At(Robot,BrightTable6)\"}'}"}
+{"id": 8, "title": "你们这有什么饮料嘛？", "text": "{'answer': '我们咖啡厅提供各种口味咖啡，水，冰红茶，酸奶等饮品，还提供点心蛋糕等甜品。您想点什么？', 'function': None}"}
+{"id": 9, "title": "来杯卡布奇诺吧。", "text": "{'answer': 'ok，请稍等！', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Coffee,BrightTable6)\"}'}"}
+{"id": 10, "title": "我昨天保温杯好像落在你们咖啡厅了，你看到了吗？", "text": "{'answer': '是的，我有印象，保温杯在大厅的2号桌子上。', 'function': 'get_object_info', 'args': '{\"obj\":\"保温杯\"}'}"}
+{"id": 11, "title": "给我来份午餐套餐。", "text": "{'answer': '本店的午餐套餐包括咖啡和点心，请问您是打包还是堂食？', 'function': None}"}
+{"id": 12, "title": "打包吧，快点！", "text": "{'answer': '请稍等，马上就好！', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Dessert,Bar),On(Coffee,Bar)\"}'}"}
+{"id": 13, "title": "你可以帮我拿来吗，我在前门的桌子前等你。", "text": "{'answer': '当然，请稍等！', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(VacuumCup,Table1)\"}'}"}
+{"id": 14, "title": "麻烦啦！", "text": "{'answer': '没事儿，为您服务是我的荣幸！', 'function': None}"}
+{"id": 15, "title": "大厅的桌子好啊，快带我去呀！", "text": "{'answer': '好的好的，请跟我来。', 'function': 'create_sub_task', 'args': '{\"goal\":\"At(Robot,WaterTable)\"}'}"}
+{"id": 16, "title": "我想来杯水，帮我孩子拿个酸奶吧。", "text": "{'answer': 'ok，没问题，请稍等！', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Water,WaterTable),On(Yogurt,WaterTable)\"}'}"}
+{"id": 17, "title": "来杯酸奶吧。", "text": "{'answer': '好的没问题，请稍等！', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Yogurt,WaterTable)\"}'}"}
+{"id": 18, "title": "好热呀！太阳也好大！", "text": "{'answer': '抱歉，我这就去开空调和关窗帘。', 'function': 'create_sub_task', 'args': '{\"goal\":\"Is(AC,On),Is(Curtain,Off)\"}'}"}
+{"id": 19, "title": "下班啦！别忘了打扫卫生。", "text": "{'answer': '收到！下班啦！', 'function': 'create_sub_task', 'args': '{\"goal\":\"Is(Floor,Clean),Is(Table1,Clean),Is(Chairs,Clean),Is(AC,Off),Is(HallLight,Off),Is(TubeLight,Off),Is(Curtain,Off)\"}'}"}
+{"id": 20, "title": "请问洗手间在哪里？", "text": "{'answer': '洗手间在这附近', 'function': 'get_object_info', 'args': '{\"obj\":\"洗手间\"}'}"}
+{"id": 21, "title": "给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。", "text": "{'answer': '好的，请稍等。', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Chips,WaterTable),On(NFCJuice,WaterTable)\"}'}"}
+{"id": 22, "title": "给我来份薯片和果汁，我坐在对面的桌子那儿。", "text": "{'answer': '好的，请稍等。', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(BottledDrink,WaterTable),On(Yogurt,WaterTable)\"}'}"}
+{"id": 23, "title": "好热呀，想开空调，想要温度调低点！", "text": "{'answer': '抱歉，我马上去开空调并调低空调温度。', 'function': 'create_sub_task', 'args': '{\"goal\":\"Is(ACTemperature,Down)\"}'}"}
+{"id": 24, "title": "请问哪里有空位啊？", "text": "{'answer': '现在有不少空位呢，请问您有什么要求嘛？', 'function': None}"}
+{"id": 25, "title": "我想坐高脚凳子。", "text": "{'answer': '没问题，大厅里就有这样的位置呢！', 'function': None}"}
+{"id": 26, "title": "你带我去吧。", "text": "{'answer': 'OK，请跟我来！', 'function': 'create_sub_task', 'args': '{\"goal\":\"At(Robot,BrightTable5)\"}'}"}
+{"id": 27, "title": "可以关筒灯和关窗帘吗？", "text": "{'answer': '好的，请稍等。', 'function': 'create_sub_task', 'args': '{\"goal\":\"Is(TubeLight,Off),Is(Curtain,Off)\"}'}"}
+{"id": 28, "title": "给我来杯咖啡，哦对，再倒一杯水。", "text": "{'answer': '速速就好，请稍等！', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Water,WaterTable),On(Coffee,WaterTable)\"}'}"}
+{"id": 29, "title": "我想来份点心和酸奶。", "text": "{'answer': '稍等片刻噢~', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Yogurt,Bar),On(Dessert,Bar)\"}'}"}
+{"id": 30, "title": "酸奶。", "text": "{'answer': '稍等片刻噢~', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Yogurt,Bar)\"}'}"}
+{"id": 31, "title": "你好呀，你们这有啥好吃的？", "text": "{'answer': '我们咖啡厅有咖啡，还有饮料和点心蛋糕呢？您想点什么不？', 'function': None}"}
+{"id": 32, "title": "听起来都好甜呀，我女朋友爱吃水果。", "text": "{'answer': '没问题，我们也提供草莓、橘子和苹果等水果呢。', 'function': None}"}
+{"id": 33, "title": "你们这人可真多。", "text": "{'answer': '目前还有空位呢，你们可以坐下来一起品尝水果呢？', 'function': 'get_object_info', 'args': '{\"obj\":\"空位\"}'}"}
+{"id": 34, "title": "我女朋友怕晒，有空余的阴凉位置嘛？", "text": "{'answer': '我查询完毕，阴凉位置有两个。在你们右侧往里走，就有适合你们二位的沙发呢。', 'function': 'get_object_info', 'args': '{\"obj\":\"阴凉空位\"}'}"}
+{"id": 35, "title": "那还不错。", "text": "{'answer': '是的，那边安静，不会晒到太阳呢。', 'function': None}"}
+{"id": 36, "title": "我们还想一起下下棋,切磋切磋。", "text": "{'answer': '我们这有两份军棋呢,在大厅的三号桌上。', 'function': 'get_object_info', 'args': '{\"obj\":\"棋\"}'}"}
+{"id": 37, "title": "请问洗手间在哪呢？", "text": "{'answer': '在后门，你们的左侧往里走就是了呢。', 'function': 'get_object_info', 'args': '{\"obj\":\"洗手间\"}'}"}
+{"id": 38, "title": "我带着孩子呢，想要宽敞亮堂的地方。", "text": "{'answer': '好的，我明白了，那么我们推荐您到大厅的桌子，那里的空间比较宽敞，环境也比较明亮，适合带着孩子一起用餐。', 'function': None}"}
+{"id": 39, "title": "冰红茶", "text": "{'answer': '好的', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Softdrink,Bar)\"}'}"}
+{"id": 40, "title": "水杯", "text": "{'answer': '好的', 'function': 'create_sub_task', 'args': '{\"goal\":\"On(Glass,Bar)\"}'}"}

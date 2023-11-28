@@ -1,10 +1,26 @@
+selector{
+cond On(Yogurt,Bar)
 sequence{
-cond Holding(Nothing)
-sequence{
-cond Is(Curtain,Off)
-act Turn(Curtain,On)
+cond Holding(Yogurt)
+ cond At(Robot,Bar)
+act PutDown(Yogurt,Bar)
 }
 sequence{
-cond Is(AC,Off)
-act Turn(AC,On)
-}}
+cond Holding(Yogurt)
+act MoveTo(Bar)
+}
+sequence{
+cond Holding(Nothing)
+ cond At(Robot,Yogurt)
+act PickUp(Yogurt)
+}
+sequence{
+cond At(Robot,Yogurt)
+act FreeHands()
+}
+sequence{
+cond Holding(Nothing)
+ cond Exist(Yogurt)
+act MoveTo(Yogurt)
+}
+}

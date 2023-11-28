@@ -1,9 +1,11 @@
 import importlib
 import os
 
+from PyQt5.QtSvg import QGraphicsSvgItem, QSvgWidget
 from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem, QGraphicsView, QGraphicsScene, \
-    QGraphicsPixmapItem
+    QGraphicsPixmapItem, QGraphicsProxyWidget
 from PyQt5.QtCore import QTimer, QPoint, QRectF
+from PyQt5 import QtCore
 import sys
 
 from robowaiter.scene.ui.window import Ui_MainWindow
@@ -11,7 +13,7 @@ from robowaiter.utils.basic import get_root_path
 from PyQt5.QtCore import QThread
 import queue
 import numpy as np
-from PyQt5.QtGui import QImage, QPixmap, QDrag
+from PyQt5.QtGui import QImage, QPixmap, QDrag, QPainter
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QThread, pyqtSignal
 from robowaiter.scene.ui.scene_ui import SceneUI
@@ -56,6 +58,29 @@ def run_scene(scene_cls,robot_cls,scene_queue,ui_queue):
     #     print("Robot system error:", str(e))
 
 example_list = ("AEM","VLN","VLM",'GQA',"OT","AT","reset")
+more_example_list = ("VLM_AC","CafeDaily")
+dic_more2zh={
+    "VLM_AC":"开空调并调节空调温度",
+    "CafeDaily":"咖啡厅的一天"
+}
+more_example_list_zh = [value for value in dic_more2zh.values()]
+
+class GraphicsView(QGraphicsView):
+    def __init__(self, parent=None):
+        super(GraphicsView, self).__init__(parent)
+        self.setRenderHint(QPainter.Antialiasing)
+        self.setOptimizationFlag(QGraphicsView.DontAdjustForAntialiasing, True)
+        self.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
+        self.setDragMode(QGraphicsView.ScrollHandDrag)
+        self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+
+    def wheelEvent(self, event):
+        factor = 1.15
+        if event.angleDelta().y() > 0:
+            self.scale(factor, factor)
+        else:
+            self.scale(1.0 / factor, 1.0 / factor)
 
 class UI(QMainWindow, Ui_MainWindow):
     scene = None
@@ -78,6 +103,10 @@ class UI(QMainWindow, Ui_MainWindow):
 
         # 绑定说话按钮
         self.btn_say.clicked.connect(self.btn_say_on_click)
+        self.verticalLayout_2.removeWidget(self.img_view_bt)
+        self.img_view_bt = GraphicsView(self.centralwidget)
+        self.img_view_bt.setObjectName("img_view_bt")
+        self.verticalLayout_2.addWidget(self.img_view_bt)
         self.img_view_bt.setDragMode(QGraphicsView.ScrollHandDrag)
 
 
@@ -90,12 +119,12 @@ class UI(QMainWindow, Ui_MainWindow):
         # self.drag_start_position = QPoint()  # 记录鼠标按下时的位置
 
         self.cb_task.setCurrentIndex(-1)
-        self.cb_task.setPlaceholderText("请选择城市")
+        self.cb_task.setPlaceholderText("请选择更多任务")
 
         # 多个添加条目
-        self.cb_task.addItems(['Java', 'C#', 'PHP'])
+        self.cb_task.addItems(more_example_list_zh)
         # 当下拉索引发生改变时发射信号触发绑定的事件
-        self.cb_task.currentIndexChanged.connect(self.selectionchange)
+        self.cb_task.currentIndexChanged.connect(self.cb_selectionchange)
 
         # 绑定任务演示按钮
         for example in example_list:
@@ -116,24 +145,15 @@ class UI(QMainWindow, Ui_MainWindow):
 
         sys.exit(app.exec_())
 
-    def selectionchange(self, i):
+    def cb_selectionchange(self, i):
         print(i)
-        # self.create_example_click(dic[i])
-        # 标签用来显示选中的文本
-        # currentText()：返回选中选项的文本
-        # self.btn1.setText(self.cb.currentText())
-        # print('Items in the list are:')
-        # # 输出选项集合中每个选项的索引与对应的内容
-        # # count()：返回选项集合中的数目
-        # for count in range(self.cb.count()):
-        #     print('Item' + str(count) + '=' + self.cb.itemText(count))
-        #     print('current index', i, 'selection changed', self.cb.currentText())
+        self.create_example_click(more_example_list[i])()
 
-    def get_info(self, walker_detect_count, obj_detect_count, update_info_count, infoCount):
-        print(obj_detect_count)
-        self.textEdit_5.clear()
-        self.textEdit_5.append(str(obj_detect_count))
-        # self.textEdit_5.setText(walker_detect_count + "_" + obj_detect_count + "_" + update_info_count + "_" + infoCount)
+    def get_semantic_info(self, semantic_info_str):
+        # self.textEdit_5.clear()
+        # self.textEdit_5.append(semantic_info_str)
+        self.textBrowser_5.clear()
+        self.textBrowser_5.append(semantic_info_str)
 
     def new_history(self,customer_name,chat):
         role = chat["role"]
@@ -246,6 +266,17 @@ class UI(QMainWindow, Ui_MainWindow):
             self.img_view_bt.setScene(scene)
             pixmap_item = QGraphicsPixmapItem(pixmap)
             scene.addItem(pixmap_item)
+
+
+            # widget = QSvgWidget(file_name)
+            # # widget.resize(10000, 1600)
+            # svg_width = widget.width()
+            # widget.resize(svg_width*2, 1600)
+            # proxy = QGraphicsProxyWidget()
+            # proxy.setWidget(widget)
+            # scene.addItem(+proxy)
+
+
         elif control_name == "img_label_obj":
             return
             # self.label.setPixmap(pixmap)

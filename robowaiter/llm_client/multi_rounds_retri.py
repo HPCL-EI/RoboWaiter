@@ -35,7 +35,7 @@ root_path = get_root_path()
 
 
 functions = get_tools()
-retrieval = Retrieval(threshold=1.8)
+retrieval = Retrieval(threshold=1.9)
 
 
 role_system = [{
@@ -156,13 +156,15 @@ def ask_llm(question,history, func_map=None, retry=3):
             else:
                 result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},把返回的英文名词翻译成中文,请把按照以下句子对顾客说，{answer}, 尽量简短。\n")
 
-            message = {'role': 'assistant', 'content': result, 'name': None,
-                       'function_call': None}
-            history.append(message)
-        else:
-            _,response,_ = get_response(None, history,allow_function_call=False)
-            _,result = deal_response(response, history, func_map)
 
+        else:
+            # _,response,_ = get_response(None, history,allow_function_call=False)
+            # _,result = deal_response(response, history, func_map)
+            result = single_round(history[-1]["content"],
+                                  "你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
+        message = {'role': 'assistant', 'content': result, 'name': None,
+                   'function_call': None}
+        history.append(message)
 
     print(f'{len(history)}条历史记录:')
     for x in history:

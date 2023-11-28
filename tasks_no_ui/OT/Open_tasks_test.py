@@ -27,11 +27,11 @@ class SceneOT(Scene):
             # (3, self.customer_say, ("System", "你们这儿有多少军棋")),
 
             # (3, self.customer_say, ("System", "哪里有盒装饮料？")),
-            # (3, self.customer_say, ("System", "洗手间在哪里？")),卫生间
+            # (3, self.customer_say, ("System", "洗手间在哪里？")),#卫生间
             # (3, self.customer_say, ("System", "卫生间在哪里？")),
 
             # (3, self.customer_say, ("System", "你们这里有棋吗，在哪里")),
-
+            # (3, self.customer_say, ("System", "棋在哪里"))
             # (3, self.customer_say, ("System", "有几副棋")),
             # (3, self.customer_say, ("System", "我的手镯，你有看到吗")),
             # (3, self.customer_say, ("System", "你们这有小说吗？")),
@@ -40,6 +40,10 @@ class SceneOT(Scene):
             # (3, self.customer_say, ("System", "垃圾桶在哪呀？")),
 
             # (3, self.customer_say, ("System", "这有小说吗？在哪里")),
+
+            # (3, self.customer_say, ("System", "还有空位吗")),
+
+            (3, self.customer_say, ("System", "有空桌子吗")),
 
 
             # (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),

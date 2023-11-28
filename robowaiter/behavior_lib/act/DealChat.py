@@ -105,12 +105,8 @@ class DealChat(Act):
             print("参数解析错误")
 
 
-        d = {"保温杯": "二号桌子"}
-        if obj in d.keys():
-            result = d[obj]
-        else:
-            result = "没有"
-        return result
+        near_object = None
+        d = {"保温杯": "二号桌子","洗手间":"前门","卫生间":"前门"}
 
 
         # 先把 obj 转成中文
@@ -269,7 +265,7 @@ class DealChat(Act):
         #         similar_word = real_obj_name
         # if similar_word:
         #     print("max_similarity:",max_similarity,"similar_word:",similar_word)
-        return count
+        return "有"+str(count)+"个"+obj
 
 
 

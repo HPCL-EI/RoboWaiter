@@ -46,7 +46,6 @@ pip install -e .
    pip install spacy 
    python -m spacy download zh_core_web_lg
    ```
-
    `zh_core_web_lg` 如果下载较慢，可以直接通过分享的网盘链接下载
 
    链接：https://pan.baidu.com/s/1vr7dqHsgnh6UChymQc26VA 

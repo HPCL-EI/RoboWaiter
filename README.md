@@ -1,4 +1,4 @@
-![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/fd7a6acf-7c0a-454f-95c3-4f33da0f0815)# RoboWaiter
+# RoboWaiter
 
 本项目为参加达闼杯“机器人大模型与具身智能挑战赛”的参赛作品。我们的目标是结合前沿的大模型技术和具身智能技术，开发能在模拟的咖啡厅场景中承担服务员角色并自主完成各种具身任务的智能机器人。这里是我们的参赛作品《基于大模型和行为树和生成式具身智能体》的机器人控制端代码。
 
@@ -63,9 +63,7 @@ pip install -e .
 2. 不使用 UI 界面 ：运行 tasks_no_ui 文件夹下的任意场景即可实现机器人控制端与仿真器的交互
 
 3. 使用 UI 界面：运行 `run_ui.py` ，显示下面的界面。点击左侧的按钮，机器人就会执行相应的任务。也可以在右上方直接输出目标状态或者对话和机器人直接交互。
-
-![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/c436e297-baf8-4e6e-9f73-b9f9ad9ac415)
-
+<img src="[url_to_image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/c436e297-baf8-4e6e-9f73-b9f9ad9ac415)" height="300">
 
 # 3. 代码框架介绍
 

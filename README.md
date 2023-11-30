@@ -12,7 +12,7 @@
 
 3 而具身机器人是系统的躯体，在条件节点感知和动作节点控制的函数中，我们优化了接口调用和算法设计，提高感知高效性和控制准确性
 
-![image-20231130214312046](RoboWaiter.assets/image-20231130214312046.png)
+![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/9b807263-7458-4b5c-8d3a-101351a2fd41)
 
 # 2. 项目安装（必看）
 
@@ -65,7 +65,8 @@ pip install -e .
 
 3. 使用 UI 界面：运行 `run_ui.py` ，显示下面的界面。点击左侧的按钮，机器人就会执行相应的任务。也可以在右上方直接输出目标状态或者对话和机器人直接交互。
 
-   <img src="RoboWaiter.assets/image-20231130210759755.png" alt="image-20231130210759755" style="zoom:67%;" />	
+![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/c436e297-baf8-4e6e-9f73-b9f9ad9ac415)
+
 
 # 3. 代码框架介绍
 
@@ -82,7 +83,6 @@ pip install -e .
 cd robowaiter/llm_client
 python multi_rounds.py
 ```
-
 - **scene：**`scene` 是场景基类，该类实现了一些通用的场景操作接口，实现了与 UE 和咖啡厅仿真场景的通信。其中，包括了官方已经封装好的各种接口，如场景初始化、行人控制、操作动画设置、物品设置、机器人 IK 接口等。`task_map` 返回的任务场景都继承于 `Scene`。此外，在 `scene/ui` 中，我们实现了 UI 的界面设计和接口封装。
 - **utils：**`utils`为其它工具类，比如绘制行为树并输出为图片文件。
 - **algos：**`algos` 是其它算法类，包括MemGPT、导航算法 (`navigator`)、边界探索 (`explore`)、视觉算法 (`vision`)、向量数据库 (`retrieval`) 等。

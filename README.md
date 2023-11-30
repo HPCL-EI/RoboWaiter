@@ -1,4 +1,4 @@
-# RoboWaiter
+![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/fd7a6acf-7c0a-454f-95c3-4f33da0f0815)# RoboWaiter
 
 本项目为参加达闼杯“机器人大模型与具身智能挑战赛”的参赛作品。我们的目标是结合前沿的大模型技术和具身智能技术，开发能在模拟的咖啡厅场景中承担服务员角色并自主完成各种具身任务的智能机器人。这里是我们的参赛作品《基于大模型和行为树和生成式具身智能体》的机器人控制端代码。
 
@@ -97,5 +97,15 @@ python multi_rounds.py
 | AT                  | 自主任务               |
 | CafeDailyOperations | 整体展示：咖啡厅的一天 |
 | Interact            | 命令行自由交互         |
+# 4. 花絮
+
+**机器人根据顾客的点单，完成订单并送餐**
+![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/79cff908-9ebd-4e54-9b10-08466cae337a)
+
+**顾客询问物品位置，并要求机器人送回**
+![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/b8df6475-6889-4816-8e17-b0a1c57160b9)
+
+**咖啡厅生意兴隆，机器人正在依次服务排队的顾客**
+![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/312714b1-0fb6-45bc-9a71-bf469107e58d)
 
 版权所有 (c) [2023] [NUDT-HPCL-EI]

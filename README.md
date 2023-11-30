@@ -99,9 +99,12 @@ python multi_rounds.py
 # 4. 花絮
 
 **机器人根据顾客的点单，完成订单并送餐**
+
 ![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/79cff908-9ebd-4e54-9b10-08466cae337a)
 
+
 **顾客询问物品位置，并要求机器人送回**
+
 ![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/b8df6475-6889-4816-8e17-b0a1c57160b9)
 
 

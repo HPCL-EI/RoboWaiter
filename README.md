@@ -63,7 +63,8 @@ pip install -e .
 2. 不使用 UI 界面 ：运行 tasks_no_ui 文件夹下的任意场景即可实现机器人控制端与仿真器的交互
 
 3. 使用 UI 界面：运行 `run_ui.py` ，显示下面的界面。点击左侧的按钮，机器人就会执行相应的任务。也可以在右上方直接输出目标状态或者对话和机器人直接交互。
-<img src="[url_to_image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/c436e297-baf8-4e6e-9f73-b9f9ad9ac415)" height="300">
+![1701353768755](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/2e37f7ec-fc2a-420a-afda-9bf74593914f)
+
 
 # 3. 代码框架介绍
 
@@ -103,7 +104,5 @@ python multi_rounds.py
 **顾客询问物品位置，并要求机器人送回**
 ![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/b8df6475-6889-4816-8e17-b0a1c57160b9)
 
-**咖啡厅生意兴隆，机器人正在依次服务排队的顾客**
-![image](https://github.com/HPCL-EI/RoboWaiter/assets/39987654/312714b1-0fb6-45bc-9a71-bf469107e58d)
 
 版权所有 (c) [2023] [NUDT-HPCL-EI]

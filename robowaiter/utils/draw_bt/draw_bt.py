@@ -2,9 +2,8 @@
 # from robowaiter.behavior_tree.ptml.ptmlCompiler import load
 
 import os
-from robowaiter.robot.robot import Robot
-from robowaiter.utils.bt.draw import render_dot_tree
 from robowaiter.utils.basic import get_root_path
+from robowaiter.utils.bt.draw import render_dot_tree
 from robowaiter.utils.bt.load import load_bt_from_ptml
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ import pickle
 
 import matplotlib.pyplot as plt
 import numpy as np
-from robowaiter.scene import scene
+# from robowaiter.scene import scene
 
 from robowaiter.algos.navigator.dstar_lite import DStarLite, euclidean_distance
 

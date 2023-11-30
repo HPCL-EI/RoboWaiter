@@ -1,10 +1,23 @@
-sequence{
-cond Holding(Nothing)
-sequence{
-cond Is(Curtain,Off)
-act Turn(Curtain,On)
-}
-sequence{
-cond Is(AC,Off)
-act Turn(AC,On)
-}}
+selector
+    sequence
+        cond Chatting()
+        act DealChat()
+    sequence
+        cond HasSubTask()
+        sequence
+            act SubTaskPlaceHolder()
+    sequence
+        cond FocusingCustomer()
+        act ServeCustomer()
+    sequence
+        cond NewCustomer()
+        selector
+            cond At(Robot,Bar)
+            act MoveTo(Bar)
+        act GreetCustomer()
+    sequence
+        cond NeedExplore()
+        act ExploreEnv()
+    sequence
+        cond AnomalyDetected()
+        act ResolveAnomaly()

@@ -24,6 +24,10 @@ selector
         }        act GreetCustomer()
     }    sequence
 {
+        cond NeedExplore()
+        act ExploreEnv()
+    }    sequence
+{
         cond AnomalyDetected()
         act ResolveAnomaly()
     }}

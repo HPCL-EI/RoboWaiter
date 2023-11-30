@@ -71,7 +71,7 @@ pip install -e .
 代码库被组织成几个模块，每个模块负责系统功能的一部分：
 
 - **behavior_lib：** `behavior_lib` 是行为树节点库类，包括行为树的动作节点和条件节点。它们分别存放在 `act` 和 `cond` 文件夹下。
-- **behavior_tree： **`behavior_tree` 是行为树算法类，包括 `ptml` 编译器、最优行为树逆向扩展算法等。
+- **behavior_tree：** `behavior_tree` 是行为树算法类，包括 `ptml` 编译器、最优行为树逆向扩展算法等。
 - **robot：** `robot` 是机器人类，包括从 `ptml`加载行为树的方法，以及执行行为树的方法等。
 - **llm_client：** `llm_client` 是大模型类，主要实现了大模型的数据集构建、数据处理工具、大模型调用接口、大模型评测、工具调用、工具注册、向量数据库、单论对话、对轮对话等方法或接口。
 
@@ -81,10 +81,10 @@ pip install -e .
 cd robowaiter/llm_client
 python multi_rounds.py
 ```
-- **scene：**`scene` 是场景基类，该类实现了一些通用的场景操作接口，实现了与 UE 和咖啡厅仿真场景的通信。其中，包括了官方已经封装好的各种接口，如场景初始化、行人控制、操作动画设置、物品设置、机器人 IK 接口等。`task_map` 返回的任务场景都继承于 `Scene`。此外，在 `scene/ui` 中，我们实现了 UI 的界面设计和接口封装。
-- **utils：**`utils`为其它工具类，比如绘制行为树并输出为图片文件。
-- **algos：**`algos` 是其它算法类，包括MemGPT、导航算法 (`navigator`)、边界探索 (`explore`)、视觉算法 (`vision`)、向量数据库 (`retrieval`) 等。
-- **tasks：**tasks文件夹中存放的场景定义及运行代码。
+- **scene：** `scene` 是场景基类，该类实现了一些通用的场景操作接口，实现了与 UE 和咖啡厅仿真场景的通信。其中，包括了官方已经封装好的各种接口，如场景初始化、行人控制、操作动画设置、物品设置、机器人 IK 接口等。`task_map` 返回的任务场景都继承于 `Scene`。此外，在 `scene/ui` 中，我们实现了 UI 的界面设计和接口封装。
+- **utils：** `utils`为其它工具类，比如绘制行为树并输出为图片文件。
+- **algos：** `algos` 是其它算法类，包括MemGPT、导航算法 (`navigator`)、边界探索 (`explore`)、视觉算法 (`vision`)、向量数据库 (`retrieval`) 等。
+- **tasks：** `tasks` 文件夹中存放的场景定义及运行代码。
 
 | 缩写                | 任务                   |
 | ------------------- | ---------------------- |

@@ -24,6 +24,12 @@ create_sub_task
 
 早上好呀，我想找个能晒太阳的地方。
 您右手边就有能晒太阳的位置呢。
+get_object_info
+{"obj":"晒太阳的地方"}
+
+谢谢！
+不客气，希望你在阳光下有个愉快的时光。
+
 
 
 可以带我过去嘛？
@@ -95,7 +101,12 @@ create_sub_task
 {"goal":"On(Yogurt,WaterTable)"}
 
 
-好热呀！太阳也好大！
+还有酸奶吗
+不好意思，酸奶卖完了呢
+get_number_of_objects
+{"obj":"酸奶"}
+
+那好吧，那就先把窗帘给我关上，再开个空调
 抱歉，我这就去开空调和关窗帘。
 create_sub_task
 {"goal":"Is(AC,On),Is(Curtain,Off)"}
@@ -214,7 +225,7 @@ get_object_info
 冰红茶
 好的
 create_sub_task
-{"goal":"On(Softdrink,Bar)"}
+{"goal":"On(Yogurt,WaterTable)"}
 
 
 水杯
@@ -243,3 +254,8 @@ create_sub_task
 好的
 create_sub_task
 {"goal":"On(Softdrink,WaterTable)"}
+
+点心
+好的
+create_sub_task
+{"goal":"On(Dessert,Bar)"}

@@ -18,6 +18,7 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.signal_event_list = [
+            (3, self.customer_say, ("System", "冰红茶")),
             # (3, self.customer_say, ("System", "有多少盒装饮料")),
             # (3, self.customer_say, ("System", "桌子有几张")),
             # (3, self.customer_say, ("System", "你们这儿有军棋吗")),
@@ -43,7 +44,7 @@ class SceneOT(Scene):
 
             # (3, self.customer_say, ("System", "还有空位吗")),
 
-            (3, self.customer_say, ("System", "有空桌子吗")),
+            # (3, self.customer_say, ("System", "有空桌子吗")),
 
 
             # (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),
@@ -60,7 +61,8 @@ class SceneOT(Scene):
 
     def _reset(self):
         self.add_walkers([[0, 880], [250, 1200]])
-        self.gen_obj()
+        self.gen_obj_tmp()
+
         pass
 
 

@@ -20,7 +20,8 @@ class SceneOT(Scene):
         self.event_list = [
             # (5, self.set_goal("At(Robot,WaterTable)"))
             # (5, self.set_goal("On(Yogurt,Table4)"))
-            (5, self.set_goal("At(Robot,BrightTable4)"))
+            # (5, self.set_goal("At(Robot,BrightTable4)")),
+            (3, self.set_goal("On(Dessert,Bar)"))
         ]
 
     def _reset(self):

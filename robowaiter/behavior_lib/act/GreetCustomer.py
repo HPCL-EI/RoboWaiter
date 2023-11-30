@@ -24,6 +24,7 @@ class GreetCustomer(Act):
         goal = Act.place_xy_yaw_dic['Bar']
         if self.scene.is_nav_walk:
             self.scene.navigator.navigate(goal=(goal[0]-5,goal[1]), animation=False)
+            self.scene.walk_to(goal[0] - 4, goal[1], 180, 180, 0)
         else:
             self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
 

@@ -25,9 +25,9 @@ class SceneVLM(Scene):
 
             # 场景1：带小女孩找阳光下的空位
             (3, self.add_walker, (5, 230, 1200)),  # 0号"Girl02_C_3"
-            (1, self.control_walker, (0, False, 200, 60, 520, 0)),
-            (9, self.customer_say, (0, "早上好呀，我想找个能晒太阳的地方。")),
-            (1, self.customer_say, (0, "你可以带我过去嘛？")),#可以带我过去嘛？
+            # (1, self.control_walker, (0, False, 200, 60, 520, 0)),
+            # (9, self.customer_say, (0, "早上好呀，我想找个能晒太阳的地方。")),
+            (1, self.customer_say, (0, "可以带我过去嘛？")),#可以带我过去嘛？
             (13, self.control_walker, (0, False, 50, 140, 1200, 180)),  # 小女孩站在了 BrightTable1 旁边就餐啦
 
             # # 场景2：有个胖胖男人点单交流并要咖啡，帮他送去角落的桌子
@@ -35,11 +35,11 @@ class SceneVLM(Scene):
             # # # 上述准备
             (10, self.add_walker, (26, -28, -150, 90)),
             (0, self.add_walker, (10, -70, -200, -45)),
-            (5, self.customer_say, (1, "嘿，RoboWaiter，过来一下！")),
-            (10, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "你们这有什么饮料嘛？"]]])), #6
+            (6, self.customer_say, (1, "嘿，RoboWaiter，过来一下！")),
+            (12, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "你们这有什么饮料嘛？"]]])), #6
             # 20 胖胖男到了 BrightTable6
-            (2, self.customer_say, (1, "咖啡有哪些呢？")),  # 10
-            (2, self.customer_say, (1, "来杯卡布奇诺吧。")),  # 15
+            (4, self.customer_say, (1, "咖啡有哪些呢？")),  # 10
+            (4, self.customer_say, (1, "来杯卡布奇诺吧。")),  # 15
 
             # # 场景3：有位女士要杯水和冰红茶
             (3, self.add_walkers,
@@ -47,7 +47,7 @@ class SceneVLM(Scene):
             (0, self.control_walker, (5, True, 50, 250, 1200, 180)),  # 设置id=4 的2小男孩随机游走红随机游走
             (0, self.add_walker, (48, 60, 520, 0)),  # 生成他妈妈
             (0, self.add_walkers, ([[[48, 60, 520, 0], [31, 60, 600, -90], [20, 60, 680, -90], [9, 60, 760, -90]]])),
-            (55, self.customer_say, (7, "哎呦，今天这么多人，还有空位吗？")),  # 女士问 38
+            (38, self.customer_say, (7, "哎呦，今天这么多人，还有空位吗？")),  # 女士问 38
             (10, self.customer_say, (7, "我带着孩子呢，想要宽敞亮堂的地方。")),  # 女士问
             (8, self.customer_say, (7, "大厅的桌子好啊，快带我去呀！")),
             (15, self.control_walker, (7, False, 50, -250, 480, 0)),  # #290, 400

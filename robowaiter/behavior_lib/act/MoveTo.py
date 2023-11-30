@@ -46,6 +46,7 @@ class MoveTo(Act):
             goal = Act.place_xy_yaw_dic[self.target_place]
             if self.scene.is_nav_walk:
                 self.scene.navigator.navigate(goal=(goal[0] + 1, goal[1]), animation=False)
+                self.scene.walk_to(goal[0]+2, goal[1], goal[2])
             else:
                 self.scene.walk_to(goal[0]+1,goal[1],goal[2])
         # 走到物品边上

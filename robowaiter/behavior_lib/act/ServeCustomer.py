@@ -24,6 +24,8 @@ class ServeCustomer(Act):
             goal = Act.place_xy_yaw_dic['Bar']
             if self.scene.is_nav_walk:
                 self.scene.navigator.navigate(goal=(goal[0] - 5, goal[1]), animation=False)
+                self.scene.walk_to(goal[0] - 4, goal[1], 180, 180, 0)
+
             else:
                 self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
 
@@ -37,7 +39,7 @@ class ServeCustomer(Act):
 
         serve_state = self.scene.state["serve_state"][customer]
 
-        if self.scene.time - serve_state['last_chat_time'] > 3:
+        if self.scene.time - serve_state['last_chat_time'] > 6:
             serve_state['served'] = True
             del self.scene.state["attention"]["customer"]
 

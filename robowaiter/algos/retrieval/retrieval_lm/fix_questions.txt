@@ -112,25 +112,32 @@ get_object_info
 给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。
 好的，请稍等。
 create_sub_task
-{"goal":"On(Chips,WaterTable),On(NFCJuice,WaterTable)"}
+{"goal":"On(BottledDrink,WaterTable),On(Yogurt,WaterTable)"}
 
 
 给我来份薯片和果汁，我坐在对面的桌子那儿。
 好的，请稍等。
 create_sub_task
-{"goal":"On(BottledDrink,WaterTable),On(Yogurt,WaterTable)"}
+{"goal":"On(Chips,WaterTable),On(NFCJuice,WaterTable)"}
 
+给我来份薯片和果汁，我坐在对面的水杯桌那儿。
+好的，请稍等。
+create_sub_task
+{"goal":"On(Chips,WaterTable),On(NFCJuice,WaterTable)"}
 
 好热呀，想开空调，想要温度调低点！
 抱歉，我马上去开空调并调低空调温度。
 create_sub_task
 {"goal":"Is(ACTemperature,Down)"}
 
-请问哪里有空位啊？
+请问有空位吗？
 现在有不少空位呢，请问您有什么要求嘛？
 
 我想坐高脚凳子。
 没问题，大厅里就有这样的位置呢！
+get_object_info
+{"obj":"高脚凳子的空位"}
+
 
 你带我去吧。
 OK，请跟我来！
@@ -164,6 +171,9 @@ create_sub_task
 
 你好呀，你们这有啥好吃的？
 我们咖啡厅有咖啡，还有饮料和点心蛋糕呢？您想点什么不？
+get_object_info
+{"obj":"饮料,水果,点心"}
+
 
 听起来都好甜呀，我女朋友爱吃水果。
 没问题，我们也提供草莓、橘子和苹果等水果呢。
@@ -205,5 +215,26 @@ create_sub_task
 水杯
 好的
 create_sub_task
-{"goal":"On(Glass,Bar)"}
+{"goal":"On(Water,Bar)"}
 
+点心
+好的
+create_sub_task
+{"goal":"On(Dessert,Bar)"}
+
+酸奶
+好的
+create_sub_task
+{"goal":"On(Yogurt,Bar)"}
+
+
+做一杯咖啡
+好的，我马上做咖啡
+create_sub_task
+{"goal":"On(Coffee,CoffeeTable)"}
+
+
+把盒装冰红茶放到水桌
+好的
+create_sub_task
+{"goal":"On(Softdrink,WaterTable)"}

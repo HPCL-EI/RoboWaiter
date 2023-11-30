@@ -16,7 +16,6 @@ import matplotlib.colors as mcolors
 
 from robowaiter.robot.robot import root_path  # 项目根目录路径
 
-
 def diagonal_distance(start, end):  #
     return max(abs(start[0] - end[0]), abs(start[1] - end[1]))
 
@@ -437,11 +436,11 @@ class DStarLite:
         for (x, y) in changed_free:
             self.map[x, y] = self.object_to_idx['free']
             changed_pos.append((x, y, self.object_to_idx["free"], self.cost_map[x, y]))
-            # changed_pos.append((x, y, self.object_to_idx["free"], self.object_to_idx["dynamic obstacle"]))
+            # changed_pos.append((x, y, self.object_to_idx["free"], self.object_to_idx["obstacle"]))
         for (x, y) in changed_obs:
-            self.map[x, y] = self.object_to_idx['dynamic obstacle']
-            changed_pos.append((x, y, self.object_to_idx["dynamic obstacle"], self.cost_map[x, y]))
-            # changed_pos.append((x, y, self.object_to_idx["dynamic obstacle"], self.object_to_idx["free"]))
+            self.map[x, y] = self.object_to_idx['obstacle']
+            changed_pos.append((x, y, self.object_to_idx["obstacle"], self.cost_map[x, y]))
+            # changed_pos.append((x, y, self.object_to_idx["obstacle"], self.object_to_idx["free"]))
 
         # 更新dyna_obs 位置列表 和 占用位置列表
         self.dyna_obs_list = dyna_obs
@@ -557,51 +556,55 @@ class DStarLite:
             step_num: 移动步数
             yaw:      robot朝向 (弧度)
         '''
-        # 清空当前figure内容，保留figure对象
-        plt.clf()
-        # for stopping simulation with the esc key. 按esc结束
-        plt.gcf().canvas.mpl_connect(
-            'key_release_event',
-            lambda event: [exit(0) if event.key == 'escape' else None])
+        # # 清空当前figure内容，保留figure对象
+        # plt.clf()
+        # # for stopping simulation with the esc key. 按esc结束
+        # plt.gcf().canvas.mpl_connect(
+        #     'key_release_event',
+        #     lambda event: [exit(0) if event.key == 'escape' else None])
 
         # 缩放坐标偏移量
         offset = (self.x_min / self.scale_ratio, self.x_max / self.scale_ratio,
                   self.y_min / self.scale_ratio, self.y_max / self.scale_ratio)
-        start = (self.s_start[0] + offset[0], self.s_start[1] + offset[2])
-        goal = (self.s_goal[0] + offset[0], self.s_goal[1] + offset[2])
+        # 画起点和目标
+        if self.s_start:
+            start = (self.s_start[0] + offset[0], self.s_start[1] + offset[2])
+            plt.plot(start[1], start[0], 'x', color='r')
+        if self.s_goal:
+            goal = (self.s_goal[0] + offset[0], self.s_goal[1] + offset[2])
+            plt.plot(goal[1], goal[0], 'x', color='darkorange')
+
 
         # 画地图: X行Y列，第一行在下面
         # 范围: 横向Y[-80,290] 纵向X[-70,120]
         plt.imshow(self.map, cmap='binary', alpha=0.5, origin='lower',
                    extent=(offset[2], offset[3],
                            offset[0], offset[1]))
-        # 画起点和目标
-        plt.plot(start[1], start[0], 'x', color='r')
-        plt.plot(goal[1], goal[0], 'x', color='darkorange')
 
         # 画搜索路径
         plt.plot([y + offset[2] for (x, y) in self.path],
                  [x + offset[0] for (x, y) in self.path], "-g")
 
-        # 画移动路径
-        next_step = min(step_num, len(self.path))
-        plt.plot([start[1], self.path[next_step - 1][1] + offset[2]],
-                 [start[0], self.path[next_step - 1][0] + offset[0]], "-r")
-        # plt.plot([y + offset[2] for (x, y) in self.path[:next_step]],
-        #          [x + offset[0] for (x, y) in self.path[:next_step]], "-r")
+        if self.s_start:
+            # 画移动路径
+            next_step = min(step_num, len(self.path))
+            plt.plot([start[1], self.path[next_step - 1][1] + offset[2]],
+                     [start[0], self.path[next_step - 1][0] + offset[0]], "-r")
+            # plt.plot([y + offset[2] for (x, y) in self.path[:next_step]],
+            #          [x + offset[0] for (x, y) in self.path[:next_step]], "-r")
 
-        # 画感应半径和观测范围
-        self.plot_circle(start[1], start[0], self.react_radius, 'lightgrey')
-        if yaw is not None:
-            plt.plot([start[1], start[1] + self.react_radius * (math.sin(yaw + self.vision_radius))],
-                     [start[0], start[0] + self.react_radius * (math.cos(yaw + self.vision_radius))], "aqua", linewidth=1)
-            plt.plot([start[1], start[1] + self.react_radius * (math.sin(yaw - self.vision_radius))],
-                     [start[0], start[0] + self.react_radius * (math.cos(yaw - self.vision_radius))], "aqua", linewidth=1)
+            # 画感应半径和观测范围
+            self.plot_circle(start[1], start[0], self.react_radius, 'lightgrey')
+            if yaw is not None:
+                plt.plot([start[1], start[1] + self.react_radius * (math.sin(yaw + self.vision_radius))],
+                         [start[0], start[0] + self.react_radius * (math.cos(yaw + self.vision_radius))], "aqua", linewidth=1)
+                plt.plot([start[1], start[1] + self.react_radius * (math.sin(yaw - self.vision_radius))],
+                         [start[0], start[0] + self.react_radius * (math.cos(yaw - self.vision_radius))], "aqua", linewidth=1)
 
         plt.xlabel('y', loc='right')
         plt.ylabel('x', loc='top')
         plt.grid(color='black', linestyle='-', linewidth=0.5)
-        plt.show()
+        # plt.show()
 
     def draw_rhs(self, rhs):
         # 画地图: X行Y列，第一行在下面

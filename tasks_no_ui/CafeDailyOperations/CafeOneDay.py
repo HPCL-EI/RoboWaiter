@@ -27,7 +27,7 @@ class SceneVLM(Scene):
             (3, self.add_walker, (5, 230, 1200)),  # 0号"Girl02_C_3"
             (1, self.control_walker, (0, False, 200, 60, 520, 0)),
             (9, self.customer_say, (0, "早上好呀，我想找个能晒太阳的地方。")),
-            (1, self.customer_say, (0, "可以带我过去嘛？")),
+            (1, self.customer_say, (0, "你可以带我过去嘛？")),#可以带我过去嘛？
             (13, self.control_walker, (0, False, 50, 140, 1200, 180)),  # 小女孩站在了 BrightTable1 旁边就餐啦
 
             # # 场景2：有个胖胖男人点单交流并要咖啡，帮他送去角落的桌子

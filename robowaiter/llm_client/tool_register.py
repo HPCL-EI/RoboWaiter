@@ -160,14 +160,33 @@ def stop_serve(
 
 @register_tool
 def get_object_info(
-        obj: Annotated[str, '需要获取信息的物体名称', True]
+        obj: Annotated[str, '需要获取位置的物体名称', True]
 ) -> str:
     """
-    获取场景中指定物体 `object` 在哪里，不涉及到具体的执行任务
-    如果`object` 是一个地点，例如洗手间，则输出大门。
-    如果`object`是咖啡，则输出桌子，咖啡在桌子上。
-    如果`object` 是空桌子，则输出一号桌
+    获取场景中`object`的位置信息。在询问物品位置时调用该函数，以辅助场景交互，不执行动作
+    例如：
+        `object`在哪里？
+        哪有`object`
+        哪里有`object`？
+         `object`在哪里
+        哪里有`object`
+        `object`放在哪里
+        我在哪儿能找到`object`
+        你们这儿有`object`吗？
+        你们这里有`object`
+        你看见`object`了吗？
+        `object`在你们这里吗
+        `object`，你看见过吗？
+    遇到上述问题时，调用该函数，并根据返回的结果回复物体位置信息，例如
     """
+
+    # 回答：
+    #     `object`在输出的物品附近
+    #     如果`object` 是一个地点，例如洗手间，则输出大门。
+    #     如果`object`是咖啡，输出桌子，则咖啡在桌子上。
+    #     如果`object`是酸奶，输出冰红茶，则酸奶在冰红茶附近。
+    #     如果`object` 是空桌子，则输出一号桌
+
     near_object = None
     # if obj == "Table":
     #     near_object = "Bar"
@@ -192,22 +211,44 @@ def get_object_info(
 #     获取的location为英文
 #     用户想找某个地点
 #     """
-#     near_location = None
-#     query_token = nlp(location)
-#     max_similarity = 0
-#     similar_word = None
-#     for w in find_obj_utils.all_loc_en:
-#         word_token = nlp(w)
-#         similarity = query_token.similarity(word_token)
-#
-#         if similarity > max_similarity:
-#             max_similarity = similarity
-#             similar_word = w
-#     print("similarity:", max_similarity, "similar_word:", similar_word)
-#     if similar_word:
-#         mp = list(find_obj_utils.loc_map_en[similar_word])
-#         near_location = random.choice(mp)
-#     return near_location
+    # near_location = None
+    # query_token = nlp(location)
+    # max_similarity = 0
+    # similar_word = None
+    # for w in find_obj_utils.all_loc_en:
+    #     word_token = nlp(w)
+    #     similarity = query_token.similarity(word_token)
+    #
+    #     if similarity > max_similarity:
+    #         max_similarity = similarity
+    #         similar_word = w
+    # print("similarity:", max_similarity, "similar_word:", similar_word)
+    # if similar_word:
+    #     mp = list(find_obj_utils.loc_map_en[similar_word])
+    #     near_location = random.choice(mp)
+    # return near_location
+
+
+@register_tool
+def get_number_of_objects(
+        obj: Annotated[str, '需要获取数量的物体名称', True]
+) -> str:
+    """
+    获取场景中物体数量。当询问场景中的物体数量时，需要调用这个工具。
+    例如询问：
+        `obj`有多少？
+        有多少`obj`
+        你们还有`obj`
+        '桌子有几张'
+        `obj`还有多的吗？
+        `obj`有几个
+        `obj`有多少个
+    这个工具用于获取场景中指定物体 `obj` 的数量，返回一个整数，不涉及到具体的执行任务。
+    如果`obj`是咖啡，如果场景中有5杯咖啡，就返回 5
+    如果`obj`是桌子，如果场景中有7张桌子，就返回 7
+    如果`obj`是行人，如果场景中有10个顾客，就返回 10
+    """
+
 
 if __name__ == "__main__":
     print(dispatch_tool("get_weather", {"city_name": "beijing"}))

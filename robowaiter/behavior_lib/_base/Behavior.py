@@ -15,24 +15,17 @@ class Bahavior(ptree.behaviour.Behaviour):
     scene = None
     print_name_prefix = ""
     tables_for_placement = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3',"BrightTable6"}
-    # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk',
-    #               'VacuumCup'}
-
     all_object = {
         'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
         'Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater'}
-
-    # BrightTable5 = Table4
     tables_for_guiding = {"QuietTable1","QuietTable2",
                           "BrightTable1","BrightTable2","BrightTable3","BrightTable4","BrightTable5","BrightTable6"
                           'CoffeeTable','WaterTable','Table1', 'Table2', 'Table3'}
 
-    # all_place = {'Bar', 'WaterTable', 'CoffeeTable'}
-    # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'Yogurt'}
-    # all_object = {'Coffee', 'Water'}
 
-    # all_object = set()
-    # all_place=set()
+    # tables_for_placement = {'Bar', 'WaterTable', 'CoffeeTable'}
+    # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'Yogurt'}
+
 
     num_of_obj_on_place={
         'Bar': 0,  # (247.0, 520.0, 100.0)

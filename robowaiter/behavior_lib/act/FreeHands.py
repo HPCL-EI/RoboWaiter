@@ -15,7 +15,8 @@ class FreeHands(Act):
     @classmethod
     def get_info(cls):
         info = {}
-        info["pre"]= set()
+        # info["pre"]= set()
+        info["pre"] ={f'Holding(Nothing)'}
         info['add'] = {f'Holding(Nothing)'}
         info['del_set'] = {f'Holding({obj})' for obj in cls.all_object}
         info['cost'] = 0

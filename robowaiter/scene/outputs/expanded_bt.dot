@@ -1,0 +1,37 @@
+digraph pastafarianism {
+ordering=out;
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+"87355232-8ad6-484e-b363-38536e737846" [fillcolor=cyan, fontcolor=black, fontsize=20, height=0.01, label=Selector, shape=diamond, style=filled, width=0.01];
+"3f017683-7aa3-40d3-b2be-cc32784313a1" [fillcolor=yellow, fontcolor=black, fontsize=20, label="Is(ACTemperature,Down)", shape=ellipse, style=filled];
+"87355232-8ad6-484e-b363-38536e737846" -> "3f017683-7aa3-40d3-b2be-cc32784313a1";
+"b900e9cb-c0a8-4e8d-8a9b-d871012abefb" [fillcolor=orange, fontcolor=black, fontsize=20, height=0.01, label=Sequence, shape=octagon, style=filled, width=0.01];
+"87355232-8ad6-484e-b363-38536e737846" -> "b900e9cb-c0a8-4e8d-8a9b-d871012abefb";
+"10ef3ff4-7acb-4991-9e63-6e489c3ef22d" [fillcolor=yellow, fontcolor=black, fontsize=20, label="Holding(Nothing)", shape=ellipse, style=filled];
+"b900e9cb-c0a8-4e8d-8a9b-d871012abefb" -> "10ef3ff4-7acb-4991-9e63-6e489c3ef22d";
+"a3869371-404d-4085-932b-232e188fb133" [fillcolor=yellow, fontcolor=black, fontsize=20, label="Is(AC,On)", shape=ellipse, style=filled];
+"b900e9cb-c0a8-4e8d-8a9b-d871012abefb" -> "a3869371-404d-4085-932b-232e188fb133";
+"3a5cbe8f-7672-4a34-91d1-87502aed457c" [fillcolor=lawngreen, fontcolor=black, fontsize=20, label="Turn(ACTemperature,Down)", shape=box, style=filled];
+"b900e9cb-c0a8-4e8d-8a9b-d871012abefb" -> "3a5cbe8f-7672-4a34-91d1-87502aed457c";
+"b64db1a4-d79f-47b4-99db-f184b38d1361" [fillcolor=orange, fontcolor=black, fontsize=20, height=0.01, label=Sequence, shape=octagon, style=filled, width=0.01];
+"87355232-8ad6-484e-b363-38536e737846" -> "b64db1a4-d79f-47b4-99db-f184b38d1361";
+"c6eca6dd-9fca-4bd3-b054-9b43fe02613a" [fillcolor=yellow, fontcolor=black, fontsize=20, label="Is(AC,On)", shape=ellipse, style=filled];
+"b64db1a4-d79f-47b4-99db-f184b38d1361" -> "c6eca6dd-9fca-4bd3-b054-9b43fe02613a";
+"df04f6f4-d471-4519-ab9e-5d5bd8dfbd4c" [fillcolor=lawngreen, fontcolor=black, fontsize=20, label="FreeHands()", shape=box, style=filled];
+"b64db1a4-d79f-47b4-99db-f184b38d1361" -> "df04f6f4-d471-4519-ab9e-5d5bd8dfbd4c";
+"8108bcba-dbeb-4784-8f1f-eb9ede4ffb0e" [fillcolor=orange, fontcolor=black, fontsize=20, height=0.01, label=Sequence, shape=octagon, style=filled, width=0.01];
+"87355232-8ad6-484e-b363-38536e737846" -> "8108bcba-dbeb-4784-8f1f-eb9ede4ffb0e";
+"82a23405-c3c6-47dc-bf7b-0636e3efe52c" [fillcolor=yellow, fontcolor=black, fontsize=20, label="Holding(Nothing)", shape=ellipse, style=filled];
+"8108bcba-dbeb-4784-8f1f-eb9ede4ffb0e" -> "82a23405-c3c6-47dc-bf7b-0636e3efe52c";
+"010d42ee-18b3-4a0e-9be1-eab67afaca60" [fillcolor=yellow, fontcolor=black, fontsize=20, label="Is(AC,Off)", shape=ellipse, style=filled];
+"8108bcba-dbeb-4784-8f1f-eb9ede4ffb0e" -> "010d42ee-18b3-4a0e-9be1-eab67afaca60";
+"90cdf2ff-98b0-4454-803b-feee5f5475bf" [fillcolor=lawngreen, fontcolor=black, fontsize=20, label="Turn(AC,On)", shape=box, style=filled];
+"8108bcba-dbeb-4784-8f1f-eb9ede4ffb0e" -> "90cdf2ff-98b0-4454-803b-feee5f5475bf";
+"e65ce322-edaa-4677-ab68-4795e57648da" [fillcolor=orange, fontcolor=black, fontsize=20, height=0.01, label=Sequence, shape=octagon, style=filled, width=0.01];
+"87355232-8ad6-484e-b363-38536e737846" -> "e65ce322-edaa-4677-ab68-4795e57648da";
+"7d0c1403-c5d9-4bcd-a0db-f3e527a3be93" [fillcolor=yellow, fontcolor=black, fontsize=20, label="Is(AC,Off)", shape=ellipse, style=filled];
+"e65ce322-edaa-4677-ab68-4795e57648da" -> "7d0c1403-c5d9-4bcd-a0db-f3e527a3be93";
+"931d4ea6-c661-4ea8-9016-2d4e17d30b19" [fillcolor=lawngreen, fontcolor=black, fontsize=20, label="FreeHands()", shape=box, style=filled];
+"e65ce322-edaa-4677-ab68-4795e57648da" -> "931d4ea6-c661-4ea8-9016-2d4e17d30b19";
+}

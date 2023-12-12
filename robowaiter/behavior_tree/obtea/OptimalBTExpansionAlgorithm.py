@@ -20,6 +20,24 @@ class Action:
 
     def __str__(self):
         return self.name
+    # 从状态随机生成一个行动
+    def generate_from_state(self,state,num):
+        for i in range(0,num):
+            if i in state:
+                if random.random() >0.5:
+                    self.pre.add(i)
+                    if random.random() >0.5:
+                        self.del_set.add(i)
+                    continue
+            if random.random() > 0.5:
+                self.add.add(i)
+                continue
+            if random.random() >0.5:
+                self.del_set.add(i)
+    def print_action(self):
+        print (self.pre)
+        print(self.add)
+        print(self.del_set)
 
 #生成随机状态
 def generate_random_state(num):
@@ -68,9 +86,9 @@ class OptBTExpAlgorithm:
         self.conditions_index = []
 
     #运行规划算法，从初始状态、目标状态和可用行动，计算行为树self.bt
-    def run_algorithm(self,goal,actions,scene):
-
-        self.scene = scene
+    # def run_algorithm(self,goal,actions,scene):
+    def run_algorithm(self, start, goal, actions):
+        # self.scene = scene
 
         if self.verbose:
             print("\n算法开始！")
@@ -113,7 +131,6 @@ class OptBTExpAlgorithm:
                     min_cost = cond_anc_pair.cond_leaf.mincost
                     pair_node = copy.deepcopy(cond_anc_pair)
                     index = i
-                    break
 
             if self.verbose:
                 print("选择扩展条件结点：",pair_node.cond_leaf.content)
@@ -141,7 +158,8 @@ class OptBTExpAlgorithm:
                     subtree.add_child([copy.deepcopy(sequence_structure)])  # subtree 是回不断变化的，它的父亲是self.bt
                     self.expanded.append(copy.deepcopy(pair_node))
                     # 增加实时条件判断，满足条件就不再扩展
-                    if c <= self.scene.state["condition_set"]:
+                    # if c <= self.scene.state["condition_set"]:
+                    if c <= start:
                         return True
                 else:
                     subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
@@ -158,6 +176,11 @@ class OptBTExpAlgorithm:
             current_mincost = pair_node.cond_leaf.mincost # 当前的最短路径是多少
 
             for i in range(0, len(actions)):
+
+
+                if actions[i].name == 'FreeHands()':
+                    kk=1
+
                 if not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set():
                     if (c - actions[i].del_set) == c:
                         if self.verbose:

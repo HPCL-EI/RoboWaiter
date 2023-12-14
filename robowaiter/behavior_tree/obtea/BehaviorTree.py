@@ -1,7 +1,7 @@
 
 #叶结点
 class Leaf:
-    def __init__(self,type,content,mincost):
+    def __init__(self,type,content,mincost=0):
         self.type=type
         self.content=content #conditionset or action
         self.parent=None

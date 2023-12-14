@@ -21,7 +21,7 @@ class PickUp(Act):
         info["del_set"] = {f'Holding(Nothing)'}
         for place in cls.valid_args:
             info["del_set"] |= {f'On({arg},{place})'}
-        info['cost'] = 1
+        info['cost'] = 2
 
         # if arg != 'Anything':
         #     info['cost'] = 1

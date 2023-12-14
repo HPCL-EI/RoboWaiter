@@ -274,7 +274,7 @@ class Scene:
 
         self.is_nav_walk = False
 
-        self.bt_algo_opt = True
+        self.bt_algo_opt = False
 
         file_name = os.path.join(root_path,'robowaiter/algos/navigator/map_5.pkl')
         if os.path.exists(file_name):

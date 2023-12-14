@@ -24,8 +24,8 @@ class SceneOT(Scene):
         # ]
         self.signal_event_list =[
             # (3, self.set_goal,("On(Yogurt,Bar)",)),
-            # (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),
-            (3, self.customer_say, ("System", "打开空调并降低空调温度")),
+            (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),
+            # (3, self.customer_say, ("System", "打开空调并降低空调温度")),
         ]
 
     def _reset(self):

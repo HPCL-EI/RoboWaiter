@@ -57,10 +57,17 @@ def state_transition(state,action):
 
 def conflict(c):
     have_at = False
+    have_holding = False
     for str in c:
-        if 'At' in  str:
+        if 'At' in str:
             if not have_at:
                 have_at = True
+            else:
+                return True
+
+        if 'Holding' in str:
+            if not have_holding:
+                have_holding = True
             else:
                 return True
     return False
@@ -76,9 +83,11 @@ class OptBTExpAlgorithm:
         self.conditions=[]
         self.conditions_index=[]
         self.verbose=verbose
+        self.goal=None
 
     def clear(self):
         self.bt = None
+        self.goal = None
         self.nodes = []
         self.traversed = [] #存cond
         self.expanded = [] #存整个
@@ -89,7 +98,7 @@ class OptBTExpAlgorithm:
     # def run_algorithm(self,goal,actions,scene):
     def run_algorithm(self, start, goal, actions):
         # self.scene = scene
-
+        self.goal = goal
         if self.verbose:
             print("\n算法开始！")
 
@@ -160,6 +169,7 @@ class OptBTExpAlgorithm:
                     # 增加实时条件判断，满足条件就不再扩展
                     # if c <= self.scene.state["condition_set"]:
                     if c <= start:
+                        self.merge_adjacent_conditions_stack()
                         return True
                 else:
                     subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
@@ -176,10 +186,6 @@ class OptBTExpAlgorithm:
             current_mincost = pair_node.cond_leaf.mincost # 当前的最短路径是多少
 
             for i in range(0, len(actions)):
-
-
-                if actions[i].name == 'FreeHands()':
-                    kk=1
 
                 if not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set():
                     if (c - actions[i].del_set) == c:
@@ -209,10 +215,113 @@ class OptBTExpAlgorithm:
                             # 把符合条件的动作节点都放到列表里
                             if self.verbose:
                                 print("———— -- %s 符合条件放入列表,对应的c为 %s" % (actions[i].name,c_attr))
-
+        self.merge_adjacent_conditions_stack()
         if self.verbose:
             print("算法结束！\n")
         return True
+
+    def merge_adjacent_conditions_stack(self):
+        # 递归合并
+        bt = ControlBT(type='cond')
+        sbtree = ControlBT(type='?')
+        gc_node = Leaf(type='cond', content=self.goal, mincost=0)  # 为了统一，都成对出现
+        sbtree.add_child([copy.deepcopy(gc_node)])  # 子树首先保留所扩展结
+        bt.add_child([sbtree])
+
+        parnode = copy.deepcopy(self.bt.children[0])
+
+        stack=[]
+
+        for child in parnode.children:
+
+            if isinstance(child, ControlBT) and child.type == '>':
+
+                if stack==[]:
+                    stack.append(child)
+                    continue
+
+                # 检查合并的条件，前面一个的条件包含了后面的条件，把包含部分提取出来
+                last_child = stack[-1]
+                set1 = last_child.children[0].content
+                set2 = child.children[0].content
+
+                if set1>=set2:
+                    inter = set1 & set2
+                    dif = set1 - set2
+
+                    tmp_sub_seq = ControlBT(type='>')
+                    c2 = Leaf(type='cond', content=dif)
+                    a1 = copy.deepcopy(last_child.children[1])
+                    tmp_sub_seq.add_child(
+                        [copy.deepcopy(c2), copy.deepcopy(a1)])
+
+                    tmp_sub_tree_sel = ControlBT(type='?')
+                    a2 = copy.deepcopy(child.children[1])
+                    tmp_sub_tree_sel.add_child(
+                        [copy.deepcopy(tmp_sub_seq), copy.deepcopy(a2)])
+
+                    tmp_tree = ControlBT(type='>')
+                    c1 = Leaf(type='cond', content=inter)
+                    tmp_tree.add_child(
+                        [copy.deepcopy(c1), copy.deepcopy(tmp_sub_tree_sel)])
+
+                    stack.pop()
+                    stack.append(tmp_tree)
+                else:
+                    stack.append(child)
+
+        for tree in stack:
+            sbtree.add_child([tree])
+        self.bt = copy.deepcopy(bt)
+
+
+    def merge_cond_node(self):
+        # bt合并====================================================
+        bt = ControlBT(type='cond')
+        sbtree = ControlBT(type='?')
+        gc_node = Leaf(type='cond', content=self.goal, mincost=0)  # 为了统一，都成对出现
+        sbtree.add_child([copy.deepcopy(gc_node)])  # 子树首先保留所扩展结
+        bt.add_child([sbtree])
+
+        parnode = copy.deepcopy(self.bt.children[0])
+        skip_next = False
+        for i in range(len(parnode.children) - 1):
+            current_child = parnode.children[i]
+            next_child = parnode.children[i + 1]
+
+            if isinstance(current_child, ControlBT) and current_child.type == '>':
+
+                if not skip_next:
+                    # 检查合并的条件，前面一个的条件包含了后面的条件，把包含部分提取出来
+                    set1 = current_child.children[0].content
+                    set2 = next_child.children[0].content
+                    if set1>=set2:
+                        inter = set1 & set2
+                        dif = set1 - set2
+
+
+                        tmp_sub_seq = ControlBT(type='>')
+                        c2 = Leaf(type='cond', content=dif)
+                        a1 = Leaf(type='act', content=current_child.children[1].content)
+                        tmp_sub_seq.add_child(
+                            [copy.deepcopy(c2), copy.deepcopy(a1)])
+
+                        tmp_sub_tree_sel = ControlBT(type='?')
+                        a2 = Leaf(type='act', content=next_child.children[1].content)
+                        tmp_sub_tree_sel.add_child(
+                            [copy.deepcopy(tmp_sub_seq), copy.deepcopy(a2)])
+
+                        tmp_tree = ControlBT(type='>')
+                        c1 = Leaf(type='cond', content=inter)
+                        tmp_tree.add_child(
+                            [copy.deepcopy(c1), copy.deepcopy(tmp_sub_tree_sel)])
+
+                        sbtree.add_child([tmp_tree])
+                        skip_next = True
+                elif skip_next:
+                    skip_next = False
+        self.bt = copy.deepcopy(bt)
+        # bt合并====================================================
 
     def print_solution(self):
         print("========= BT ==========")  # 树的bfs遍历

@@ -84,6 +84,7 @@ class OptBTExpAlgorithm:
         self.conditions_index=[]
         self.verbose=verbose
         self.goal=None
+        self.bt_merge = True
 
     def clear(self):
         self.bt = None
@@ -169,7 +170,8 @@ class OptBTExpAlgorithm:
                     # 增加实时条件判断，满足条件就不再扩展
                     # if c <= self.scene.state["condition_set"]:
                     if c <= start:
-                        self.merge_adjacent_conditions_stack()
+                        if self.bt_merge:
+                            self.merge_adjacent_conditions_stack()
                         return True
                 else:
                     subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
@@ -215,12 +217,96 @@ class OptBTExpAlgorithm:
                             # 把符合条件的动作节点都放到列表里
                             if self.verbose:
                                 print("———— -- %s 符合条件放入列表,对应的c为 %s" % (actions[i].name,c_attr))
-        self.merge_adjacent_conditions_stack()
+        if self.bt_merge:
+            self.merge_adjacent_conditions_stack()
         if self.verbose:
             print("算法结束！\n")
         return True
 
     def merge_adjacent_conditions_stack(self):
+        # 只针对第一层合并，之后要考虑层层递归合并
+        bt = ControlBT(type='cond')
+        sbtree = ControlBT(type='?')
+        gc_node = Leaf(type='cond', content=self.goal, mincost=0)  # 为了统一，都成对出现
+        sbtree.add_child([copy.deepcopy(gc_node)])  # 子树首先保留所扩展结
+        bt.add_child([sbtree])
+
+        parnode = copy.deepcopy(self.bt.children[0])
+
+        stack=[]
+
+        for child in parnode.children:
+
+            if isinstance(child, ControlBT) and child.type == '>':
+
+                if stack==[]:
+                    stack.append(child)
+                    continue
+
+                # 检查合并的条件，前面一个的条件包含了后面的条件，把包含部分提取出来
+                last_child = stack[-1]
+                set1 = last_child.children[0].content
+                set2 = child.children[0].content
+
+                # 如果后面的动作和前面的一样,删掉前面的
+                # 应该是两棵子树完全相同的情况，先暂时只判断动作
+                if set1>=set2 or set1<=set2:
+                    if isinstance(last_child.children[1], Leaf) and isinstance(child.children[1], Leaf): # 将来这些地方都写成递归的
+                        if last_child.children[1].content.name == child.children[1].content.name: # a1=a2
+                            stack.pop()
+                            stack.append(child)
+                            continue
+
+                inter = set1 & set2
+                if inter!=set():
+                    c1 = set1-set2
+                    c2 = set2-set1
+
+                    if c1!=set():
+                        seq1 = ControlBT(type='>')
+                        c1 = Leaf(type='cond', content=c1)
+                        a1 = copy.deepcopy(last_child.children[1])
+                        seq1.add_child(
+                            [copy.deepcopy(c1), copy.deepcopy(a1)])
+                    else:
+                        seq1 = copy.deepcopy(last_child.children[1])
+
+                    if c2!=set():
+                        seq2 = ControlBT(type='>')
+                        c2 = Leaf(type='cond', content=c2)
+                        a2 = copy.deepcopy(child.children[1])
+                        seq2.add_child(
+                            [copy.deepcopy(c2), copy.deepcopy(a2)])
+                    else:
+                        seq2 = copy.deepcopy(child.children[1])
+
+
+                    sel = ControlBT(type='?')
+
+                    if isinstance(last_child.children[1], Leaf) and isinstance(child.children[1], Leaf) \
+                        and last_child.children[1].content.name == child.children[1].content.name: # a1=a2
+                        # 第三次优化合并
+                        # 将来这些地方都写成递归的
+                        sel.add_child([copy.deepcopy(c1), copy.deepcopy(c2),copy.deepcopy(last_child.children[1])])
+                    else:
+                        sel.add_child([copy.deepcopy(seq1), copy.deepcopy(seq2)])
+
+
+                    tmp_tree = ControlBT(type='>')
+                    c1 = Leaf(type='cond', content=inter)
+                    tmp_tree.add_child(
+                        [copy.deepcopy(c1), copy.deepcopy(sel)])
+
+                    stack.pop()
+                    stack.append(tmp_tree)
+                else:
+                    stack.append(child)
+
+        for tree in stack:
+            sbtree.add_child([tree])
+        self.bt = copy.deepcopy(bt)
+
+    def merge_adjacent_conditions_stack_old(self):
         # 递归合并
         bt = ControlBT(type='cond')
         sbtree = ControlBT(type='?')
@@ -273,7 +359,6 @@ class OptBTExpAlgorithm:
         for tree in stack:
             sbtree.add_child([tree])
         self.bt = copy.deepcopy(bt)
-
 
     def merge_cond_node(self):
         # bt合并====================================================

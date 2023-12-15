@@ -2,32 +2,38 @@ selector
 {
     sequence
 {
-        cond Chatting()
-        act DealChat()
-    }    sequence
-{
-        cond HasSubTask()
-        sequence
-{
-            act SubTaskPlaceHolder()
-        }    }    sequence
-{
-        cond FocusingCustomer()
-        act ServeCustomer()
-    }    sequence
-{
-        cond NewCustomer()
+        cond At(Robot, Coffee)
         selector
 {
-            cond At(Robot,Bar)
-            act MoveTo(Bar)
-        }        act GreetCustomer()
-    }    sequence
+            sequence
 {
-        cond NeedExplore()
-        act ExploreEnv()
-    }    sequence
+                cond Holding(Nothing)
+                act PickUp(Coffee)
+            }            act PutDown(Anything, Anywhere)
+        }        selector
 {
-        cond AnomalyDetected()
-        act ResolveAnomaly()
-    }}
+            sequence
+{
+                cond Holding(Coffee)
+                cond At(Robot, WaterTable)
+                act PutDown(Coffee, WaterTable)
+            }            act MoveTo(WaterTable)
+        }    }    sequence
+{
+        cond At(Robot, Coffee)
+        selector
+{
+            sequence
+{
+                cond Holding(Nothing)
+                act PickUp(Coffee)
+            }            act PutDown(Anything, Anywhere)
+        }        selector
+{
+            sequence
+{
+                cond Holding(Coffee)
+                cond At(Robot, BrightTable6)
+                act PutDown(Coffee, BrightTable6)
+            }            act MoveTo(BrightTable6)
+        }    }}

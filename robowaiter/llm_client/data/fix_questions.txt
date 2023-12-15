@@ -254,6 +254,27 @@ create_sub_task
 create_sub_task
 {"goal":"On(Dessert,Bar)"}
 
+把咖啡放到吧台上
+好的
+create_sub_task
+{"goal":"On(Coffee,Bar)"}
+
+把咖啡放到水桌
+好的
+create_sub_task
+{"goal":"On(Coffee,Bar)"}
+
+把咖啡放到6号桌
+好的
+create_sub_task
+{"goal":"On(Coffee,BrightTable6)"}
+
+把咖啡放到吧台上，再拿一杯咖啡放到6号桌
+好的
+create_sub_task
+{"goal":"On(Coffee,WaterTable),On(Coffee,BrightTable6)"}
+
+
 打开空调并降低空调温度
 好的，没问题
 create_sub_task

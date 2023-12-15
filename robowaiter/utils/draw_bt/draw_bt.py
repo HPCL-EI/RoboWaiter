@@ -16,5 +16,5 @@ if __name__ == '__main__':
 
 
 
-    render_dot_tree(bt.root,name="test")
+    render_dot_tree(bt.root,name="test",png_only = False)
     # build and tick

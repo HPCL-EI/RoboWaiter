@@ -24,11 +24,17 @@ class SceneOT(Scene):
         # ]
         self.signal_event_list =[
             # (3, self.set_goal,("On(Yogurt,Bar)",)),
-            (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),
+            # (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),
             # (3, self.customer_say, ("System", "打开空调并降低空调温度")),
+            # (3, self.customer_say, ("System", "点心")),
+            # (3, self.customer_say, ("System", "把咖啡放到水桌")),
+            # (3, self.customer_say, ("System", "把咖啡放到吧台上")),
+            # (3, self.customer_say, ("System", "把咖啡放到吧台上，再拿一杯咖啡放到6号桌")),
+            (3, self.customer_say, ("System", "把咖啡放到6号桌")),
         ]
 
     def _reset(self):
+        self.gen_obj()
         scene = self.add_walkers([[0, 0], [250, 1200], [-55, 750], [70, -200]])
         pass
 

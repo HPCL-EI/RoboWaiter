@@ -19,12 +19,12 @@ class Bahavior(ptree.behaviour.Behaviour):
         'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
         'Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater'}
     tables_for_guiding = {"QuietTable1","QuietTable2",
-                          "BrightTable1","BrightTable2","BrightTable3","BrightTable4","BrightTable5","BrightTable6"
+                          "BrightTable1","BrightTable2","BrightTable3","BrightTable4","BrightTable5","BrightTable6",
                           'CoffeeTable','WaterTable','Table1', 'Table2', 'Table3'}
 
 
-    # tables_for_placement = {'Bar', 'WaterTable', 'CoffeeTable'}
-    # all_object = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'Yogurt'}
+    # tables_for_placement = {'Bar', 'CoffeeTable', 'Table2',"BrightTable6", 'WaterTable'}
+    # all_object = {'Coffee'}
 
 
     num_of_obj_on_place={

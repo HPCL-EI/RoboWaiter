@@ -222,12 +222,6 @@ get_object_info
 好的，我明白了，那么我们推荐您到大厅的桌子，那里的空间比较宽敞，环境也比较明亮，适合带着孩子一起用餐。
 
 
-冰红茶
-好的
-create_sub_task
-{"goal":"On(Yogurt,WaterTable)"}
-
-
 水杯
 好的
 create_sub_task
@@ -259,3 +253,29 @@ create_sub_task
 好的
 create_sub_task
 {"goal":"On(Dessert,Bar)"}
+
+把咖啡放到吧台上
+好的
+create_sub_task
+{"goal":"On(Coffee,Bar)"}
+
+把咖啡放到水桌
+好的
+create_sub_task
+{"goal":"On(Coffee,Bar)"}
+
+把咖啡放到6号桌
+好的
+create_sub_task
+{"goal":"On(Coffee,BrightTable6)"}
+
+把咖啡放到吧台上，再拿一杯咖啡放到6号桌
+好的
+create_sub_task
+{"goal":"On(Coffee,WaterTable),On(Coffee,BrightTable6)"}
+
+
+打开空调并降低空调温度
+好的，没问题
+create_sub_task
+{"goal":"Is(ACTemperature,Down)"}

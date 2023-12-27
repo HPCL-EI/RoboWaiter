@@ -18,10 +18,10 @@ class PickUp(Act):
         info = {}
         info["pre"] = {f'At(Robot,{arg})','Holding(Nothing)'}
         info["add"] = {f'Holding({arg})'}
-        info["del_set"] = {f'Holding(Nothing)'}
+        info["del_set"] = {f'Holding(Nothing)',f'Exist({arg})'} #,
         for place in cls.valid_args:
             info["del_set"] |= {f'On({arg},{place})'}
-        info['cost'] = 1
+        info['cost'] = 2
 
         # if arg != 'Anything':
         #     info['cost'] = 1

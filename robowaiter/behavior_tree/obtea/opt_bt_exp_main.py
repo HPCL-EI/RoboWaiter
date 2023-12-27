@@ -1,5 +1,6 @@
 
 from robowaiter.behavior_tree.obtea.OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm,state_transition # 调用最优行为树扩展算法
+from robowaiter.behavior_tree.obtea.BTExpansionAlgorithm import BTalgorithm # 调用最优行为树扩展算法
 
 from robowaiter.behavior_tree.obtea.examples import *
 
@@ -23,6 +24,8 @@ class BTOptExpInterface:
         self.has_processed = False
 
         self.scene = scene
+        self.bt_algo_opt = self.scene.bt_algo_opt
+
 
     def process(self, goal):
         """
@@ -31,9 +34,15 @@ class BTOptExpInterface:
         :return: A PTML string representing the outcome of the behavior tree.
         """
         self.goal = goal
-        self.algo = OptBTExpAlgorithm(verbose=False)
+        if self.bt_algo_opt:
+            self.algo = OptBTExpAlgorithm(verbose=False)
+        else:
+            self.algo = BTalgorithm(verbose=False)
+
         self.algo.clear()
-        self.algo.run_algorithm(self.goal, self.actions,self.scene) # 调用算法得到行为树保存至 algo.bt
+        self.algo.run_algorithm(self.scene.state["condition_set"],self.goal, self.actions) # 调用算法得到行为树保存至 algo.bt
+
+
         self.ptml_string = self.algo.get_ptml()
         self.has_processed = True
         # algo.print_solution() # print behavior tree

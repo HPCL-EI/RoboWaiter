@@ -19,7 +19,7 @@ root_path = get_root_path()
 ptml_path = os.path.join(root_path, 'robowaiter/robot/Default.ptml')
 behavior_lib_path = os.path.join(root_path, 'robowaiter/behavior_lib')
 
-
+from robowaiter.utils.bt.draw import render_dot_tree
 
 class Robot(object):
     scene = None
@@ -79,6 +79,7 @@ class Robot(object):
             file.write(ptml_string)
 
         sub_task_bt = load_bt_from_ptml(self.scene, file_path,self.behavior_lib_path)
+        render_dot_tree(sub_task_bt.root, target_directory=self.scene.output_path, name="expanded_bt", png_only=False)
 
         # 加入删除子树的节点
         seq = Sequence(name="Sequence", memory=False)

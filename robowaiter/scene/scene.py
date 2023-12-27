@@ -214,17 +214,39 @@ class Scene:
         "chat_list": [],  # 未处理的顾客的对话, (顾客的位置,顾客对话的内容)
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
+        # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
+        #                   'Exist(Yogurt)', 'Exist(BottledDrink)','Exist(Softdrink)',
+        #                   # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
+        #                   # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
+        #                   'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)'
+        #                   'Holding(Nothing)',
+        #                   # 'Holding(Yogurt)',
+        #                   'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
+        #                   'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+        #                   'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-                          'Holding(Nothing)', 'Exist(Yogurt)', 'Exist(BottledDrink)',
-                          'Exist(Softdrink)',
-                          # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
-                          # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
-                          'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)',
-                          
-                          'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
-                          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
-                          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
-        "obj_mem": {},
+                  'Exist(Yogurt)','Exist(VacuumCup)',
+                  'Holding(Nothing)',
+                  'On(Yogurt,Bar)','On(VacuumCup,Table2)',
+                  'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+                  'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+
+        # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
+        #                   'Exist(VacuumCup)','Exist(Coffee)',
+        #                   'On(VacuumCup,Table2)', 'On(Coffee,CoffeeTable)',
+        #                   'Holding(Nothing)',
+        #                   'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+        #                   'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+
+        # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
+        #                   'Exist(Yogurt)', 'Exist(VacuumCup)', 'Exist(Coffee)',
+        #                   'Holding(Nothing)',
+        #                   'On(Yogurt,Bar)', 'On(VacuumCup,Table2)', 'On(Coffee,CoffeeTable)',
+        #                    'Is(HallLight,Off)', 'Is(TubeLight,On)',
+        #                   'Is(Curtain,On)',
+        #                   'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+    "obj_mem": {},
         "customer_mem": {},
         "served_mem": {},
         "greeted_customers": set(),
@@ -264,13 +286,15 @@ class Scene:
         # 是否展示UI
         self.show_ui = False
         # 图像分割
-        self.take_picture = True
+        self.take_picture = False
         self.map_ratio = 5
         self.map_map = np.zeros((math.ceil(950 / self.map_ratio), math.ceil(1850 / self.map_ratio)))
         self.db = DBSCAN(eps=self.map_ratio, min_samples=int(self.map_ratio / 2))
         self.infoCount = 0
 
         self.is_nav_walk = False
+
+        self.bt_algo_opt = True
 
         file_name = os.path.join(root_path,'robowaiter/algos/navigator/map_5.pkl')
         if os.path.exists(file_name):
@@ -451,6 +475,7 @@ class Scene:
             print(f'event: {t}, {func.__name__}')
             self.signal_event_list.pop(0)
             self.last_event_time = self.time
+            print("==== *args ======:",*args)
             func(*args)
 
     def deal_event(self):
@@ -474,6 +499,7 @@ class Scene:
     def set_goal(self, goal):
         g = eval("{'" + goal + "'}")
 
+        print("====== g =======:",g)
         def set_sub_task():
             self.state['chat_list'].append(("Goal", g))
 

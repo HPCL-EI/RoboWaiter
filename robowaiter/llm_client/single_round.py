@@ -19,7 +19,8 @@ def single_round(question, prefix=""):
         "messages": [
             {
                 "role": "system",
-                "content": "你是一个机器人服务员：RoboWaiter. 你的职责是为顾客提供对话及具身服务。"
+                # "content": "你是一个机器人服务员：RoboWaiter. 你的职责是为顾客提供对话及具身服务。"
+                "content": ""
                 # "content":
                 # """
                 # 你是一个熟悉行为树的工程师，你的职责是根据用户需求，为一个人型的机器人设计完成用户需求的行为树序列。
@@ -46,10 +47,11 @@ def single_round(question, prefix=""):
 
 if __name__ == '__main__':
     question = '''
-    嘿！能做一杯咖啡吗？咖啡就行！
+    给我来杯咖啡
     '''
     import timeit
 
     cur_time = time.time()
+    # print(single_round(question))
     print(single_round(question, prefix='现在给出符合这句话要求的目标状态: '))
     print(f"单次生成耗时：{time.time() - cur_time} s \n")

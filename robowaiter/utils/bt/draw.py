@@ -53,17 +53,17 @@ def dot_tree(
                                  common.BlackBoxLevel.BIG_PICTURE: "white"
                                  }
         if node.type =="Selector":
-            attributes = ('diamond', 'cyan', 'black')  # octagon
+            attributes = ('box', '#B0FFFF', 'black')  # octagon
         elif node.type =="Sequence":
-            attributes = ('octagon', 'orange', 'black')
+            attributes = ('box', '#FF8080', 'black')
         elif isinstance(node, composites.Parallel):
-            attributes = ('parallelogram', 'gold', 'black')
+            attributes = ('parallelogram', 'lightgold', 'black')
         elif isinstance(node, decorators.Decorator):
             attributes = ('ellipse', 'ghostwhite', 'black')
         elif node.type =="Act":
-            attributes = ('box', 'lawngreen', 'black')
+            attributes = ('box', 'lightgreen', 'black')
         else:
-            attributes = ('ellipse', 'yellow', 'black')
+            attributes = ('ellipse', '#FFFF80', 'black')
 
         try:
             if node.blackbox_level != common.BlackBoxLevel.NOT_A_BLACKBOX:
@@ -111,10 +111,10 @@ def dot_tree(
         if with_qualified_names:
             node_label += f"\n({utilities.get_fully_qualified_name(behaviour)})"
         '''
-        # if node_name == "Sequence":
-        #     node_name = ">"
-        # if node_name == "Selector":
-        #     node_name = "?"
+        if node_name == "Sequence":
+            node_name = "&rarr;"
+        if node_name == "Selector":
+            node_name = "?"
         return node_name
 
     fontsize = 20

@@ -80,7 +80,8 @@ class ptmlTranslator(ptmlListener):
 
         # if have params
         args = []
-        if len(ctx.children) > 4:
+        # if str(ctx.children[0]) != 'not' and len(ctx.children) > 4:
+        if ctx.action_parm():
             params = ctx.action_parm()
             for i in params.children:
                 if isinstance(i, ptmlParser.BooleanContext):
@@ -96,8 +97,15 @@ class ptmlTranslator(ptmlListener):
 
         node = eval(f"{name}({args})")
         node.set_scene(self.scene)
-        # connect
-        self.stack[-1].add_child(node)
+
+        # if have 'not' decorator
+        if str(ctx.children[0]) == 'not':
+            upper_node = ptree.decorators.Inverter(node)
+            # connect
+            self.stack[-1].add_child(upper_node)
+        else:
+            # connect
+            self.stack[-1].add_child(node)
 
     # Exit a parse tree produced by ptmlParser#action_sign.
     def exitAction_sign(self, ctx: ptmlParser.Action_signContext):

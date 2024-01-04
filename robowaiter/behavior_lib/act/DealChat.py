@@ -7,6 +7,7 @@ import random
 from collections import deque
 
 from translate import Translator
+from sympy import to_dnf
 
 
 translator = Translator(to_lang="zh")
@@ -82,17 +83,58 @@ class DealChat(Act):
     def create_sub_task(self, **args):
         try:
             goal = args['goal']
+            #
+            # w = goal.split(")")
+            # goal_set = set()
+            # goal_set.add(w[0] + ")")
+            # if len(w) > 1:
+            #     for x in w[1:]:
+            #         if x != "":
+            #             goal_set.add(x[1:] + ")")
+            # self.function_success = True
 
-            w = goal.split(")")
-            goal_set = set()
-            goal_set.add(w[0] + ")")
-            if len(w) > 1:
-                for x in w[1:]:
-                    if x != "":
-                        goal_set.add(x[1:] + ")")
+            # 解析谓词公式
+            # 如果不正确，
+
+            # 如果正确，传入两个set
+            # goal = "On_Coffee_Bar | On_Yogur_Bar & At_Robot_Bar"
+            goal_dnf = str(to_dnf(goal, simplify=True))
+            # print(goal_dnf)
+            goal_set = []
+            if '|' in goal or '&' in goal or 'Not' in goal or '_' in goal:
+                goal_ls = goal_dnf.split("|")
+                for g in goal_ls:
+                    g_set = set()
+                    g = g.replace(" ", "").replace("(", "").replace(")", "")
+                    g = g.split("&")
+                    for literal in g:
+                        if '_' in literal:
+                            first_part, rest = literal.split('_', 1)
+                            literal = first_part + '(' + rest
+                            # 添加 ')' 到末尾
+                            literal += ')'
+                            # 替换剩余的 '_' 为 ','
+                            literal = literal.replace('_', ',')
+                        g_set.add(literal)
+                    goal_set.append(g_set)
+            else:
+                g_set = set()
+                w = goal.split(")")
+                g_set.add(w[0] + ")")
+                if len(w) > 1:
+                    for x in w[1:]:
+                        if x != "":
+                            g_set.add(x[1:] + ")")
+                goal_set.append(g_set)
+
+            print("goal_set:",goal_set)
+            # goal_set = [set(["On(Coffee,Bar)", "At(Robot,Bar)"]), set(["On(Yogurt,Bar)", "At(Robot,Bar)"])]
             self.function_success = True
+
         except:
             print("参数解析错误")
+
+        # 添加相似性比较
 
         self.scene.robot.expand_sub_task_tree(goal_set)
 

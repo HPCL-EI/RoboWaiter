@@ -25,7 +25,7 @@ class PutDown(Act):
             info["pre"] = {f'Holding({arg[0]})',f'At(Robot,{arg[1]})'}
             info["add"] = {f'Holding(Nothing)',f'On({arg[0]},{arg[1]})'}
             info["del_set"] = {f'Holding({arg[0]})'}
-            info['cost'] = 3
+            info['cost'] = 100 #1000
         else:
             info = {}
             info["pre"] = set()

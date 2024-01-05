@@ -6,7 +6,7 @@ from BehaviorTree import Leaf,ControlBT # 行为结点类：叶子结点和非�
 from OptimalBTExpansionAlgorithm_single_goal import Action,OptBTExpAlgorithm # 调用最优行为树扩展算法
 from BTExpansionAlgorithm import BTExpAlgorithm
 from OptimalBTExpansionAlgorithm_single_goal import generate_random_state,state_transition
-from tools import print_action_data_table,BTTest
+from tools import print_action_data_table,BTTest,BTTest_act_start_goal,get_act_start_goal
 from Examples import MoveBtoB_num,MoveBtoB,Cond2BelongsToCond3 # 导入三个例子
 from Examples import *
 # from utils.bt.draw import render_dot_tree
@@ -157,9 +157,16 @@ if __name__ == '__main__' :
     # # 设置生成规划问题集的超参数：文字数、解深度、迭代次数
     seed=1
     literals_num= 10
-    depth = 50
+    depth = 10
     iters= 10
-    BTTest(bt_algo_opt=True,seed=seed,literals_num=literals_num,depth=depth,iters=iters)
+
+
+    act_list, start_list, goal_list = get_act_start_goal(seed=seed,literals_num=literals_num,depth=depth,iters=iters,total_count=1)
+    BTTest_act_start_goal(bt_algo_opt=True,act_list=act_list, start_list=start_list, goal_list=goal_list)
     print("\n")
+    BTTest_act_start_goal(bt_algo_opt=False, act_list=act_list, start_list=start_list, goal_list=goal_list)
+
+    # BTTest(bt_algo_opt=True,seed=seed,literals_num=literals_num,depth=depth,iters=iters)
+    # print("\n")
     # 对比
-    BTTest(bt_algo_opt=False,seed=seed,literals_num=literals_num,depth=depth,iters=iters)
+    # BTTest(bt_algo_opt=False,seed=seed,literals_num=literals_num,depth=depth,iters=iters)

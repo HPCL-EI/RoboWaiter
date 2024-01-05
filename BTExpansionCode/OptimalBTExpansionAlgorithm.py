@@ -172,7 +172,7 @@ class OptBTExpAlgorithm:
 
                     if c <= start:
                         if self.bt_merge:
-                            bt = copy.deepcopy(self.merge_adjacent_conditions_stack(bt))
+                            bt = self.merge_adjacent_conditions_stack(bt)
                         return bt,min_cost
                 else:
                     subtree.add_child([copy.deepcopy(pair_node.act_leaf)])
@@ -188,7 +188,13 @@ class OptBTExpAlgorithm:
             # 遍历所有动作, 寻找符合条件的动作
             current_mincost = pair_node.cond_leaf.mincost # 当前的最短路径是多少
 
+            traversed_current=[]
+
             for i in range(0, len(actions)):
+
+                # if "MoveTo(WaterTable)" in actions[i].name:
+                #     print(actions[i].name,"cost=",actions[i].cost)
+
 
                 if not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set()  :
                     if (c - actions[i].del_set) == c:
@@ -214,19 +220,14 @@ class OptBTExpAlgorithm:
                             a_attr_node = Leaf(type='act', content=actions[i], mincost=current_mincost + actions[i].cost)
                             cond_anc_pair = CondActPair(cond_leaf=c_attr_node, act_leaf=a_attr_node)
                             self.nodes.append(copy.deepcopy(cond_anc_pair))  # condition node list
-                            self.traversed.append(c_attr) # 重点 the set of expanded conditions
+                            traversed_current.append(c_attr)
+                            # self.traversed.append(c_attr) # 重点 the set of expanded conditions
                             # 把符合条件的动作节点都放到列表里
                             if self.verbose:
                                 print("———— -- %s 符合条件放入列表,对应的c为 %s" % (actions[i].name,c_attr))
-
-        # self.merge_adjacent_conditions_stack()
-        # self.merge_adjacent_conditions_stack_old()
-        # self.merge_adjacent_conditions()
-        # if self.verbose:
-        #     print("算法结束！\n")
-        # return True
+            self.traversed.extend(traversed_current)
         if self.bt_merge:
-            bt = copy.deepcopy(self.merge_adjacent_conditions_stack(bt))
+            bt = self.merge_adjacent_conditions_stack(bt)
         if self.verbose:
             print("算法结束！\n")
         return bt,min_cost
@@ -251,6 +252,10 @@ class OptBTExpAlgorithm:
             self.bt.add_child([subtree])
         else:
             self.bt,mincost = self.run_algorithm_selTree(start, goal[0], actions)
+        return True
+
+    def run_algorithm_test(self, start, goal, actions):
+        self.bt,mincost = self.run_algorithm_selTree(start, goal, actions)
         return True
 
 
@@ -296,7 +301,7 @@ class OptBTExpAlgorithm:
                                 and isinstance(last_child.children[2].content, Action) and isinstance( child.children[1].content, Action) \
                                 and last_child.children[2].content.name == child.children[1].content.name \
                                 and c1==set() and c2!=set():
-                                    last_child.children[1].add_child([copy.deepcopy(c2_node)])
+                                    last_child.children[1].add_child([c2_node])
                                     continue
                         elif len(last_child.children)==3:
                             stack.append(child)
@@ -310,30 +315,30 @@ class OptBTExpAlgorithm:
                             if c2==set():
                                 tmp_tree = ControlBT(type='>')
                                 tmp_tree.add_child(
-                                    [copy.deepcopy(inter_node), copy.deepcopy(a1_node)])
+                                    [inter_node, a1_node])
                             else:
                                 _sel = ControlBT(type='?')
-                                _sel.add_child([copy.deepcopy(c1_node), copy.deepcopy(c2_node)])
+                                _sel.add_child([c1_node, c2_node])
                                 tmp_tree = ControlBT(type='>')
                                 tmp_tree.add_child(
-                                    [copy.deepcopy(inter_node), copy.deepcopy(_sel),copy.deepcopy(a1_node)])
+                                    [inter_node, _sel,a1_node])
                         else:
                             if c1 == set():
-                                seq1 = copy.deepcopy(last_child.children[1])
+                                seq1 = last_child.children[1]
                             else:
                                 seq1 = ControlBT(type='>')
-                                seq1.add_child([copy.deepcopy(c1_node), copy.deepcopy(a1_node)])
+                                seq1.add_child([c1_node, a1_node])
 
                             if c2 == set():
-                                seq2 = copy.deepcopy(child.children[1])
+                                seq2 = child.children[1]
                             else:
                                 seq2 = ControlBT(type='>')
-                                seq2.add_child([copy.deepcopy(c2_node), copy.deepcopy(a2_node)])
+                                seq2.add_child([c2_node, a2_node])
                             sel = ControlBT(type='?')
                             sel.add_child([seq1, seq2])
                             tmp_tree = ControlBT(type='>')
                             tmp_tree.add_child(
-                                [copy.deepcopy(inter_node), copy.deepcopy(sel)])
+                                [inter_node,sel])
 
                         stack.pop()
                         stack.append(tmp_tree)
@@ -347,7 +352,7 @@ class OptBTExpAlgorithm:
 
         for tree in stack:
             sbtree.add_child([tree])
-        bt_sel = copy.deepcopy(bt)
+        bt_sel = bt
         return bt_sel
 
 

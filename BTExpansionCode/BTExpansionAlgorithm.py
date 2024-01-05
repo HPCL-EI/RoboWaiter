@@ -66,8 +66,8 @@ class BTExpAlgorithm:
                         valid = True
 
                         # 这样剪枝存在错误性
-                        if conflict(c_attr):
-                            continue
+                        # if conflict(c_attr):
+                        #     continue
 
                         for j in self.traversed:  # 剪枝操作
                             if j <= c_attr:
@@ -96,6 +96,11 @@ class BTExpAlgorithm:
             if val == 'success' or val == 'running':
                 canrun = True
         return bt
+
+
+    def run_algorithm_test(self, start, goal, actions):
+        self.bt = self.run_algorithm_selTree(start, goal, actions)
+        return True
 
 
 

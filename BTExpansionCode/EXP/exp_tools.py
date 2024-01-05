@@ -3,7 +3,7 @@
 
 from utils.bt.load import load_behavior_tree_lib
 from OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm
-import random
+
 import copy
 from tabulate import tabulate
 import numpy as np
@@ -50,11 +50,45 @@ def goal_transfer_str(goal):
         goal_set.append(g_set)
     return goal_set
 
-
-def collect_action_nodes():
+def collect_action_nodes(random):
+    multiple_num=2
     action_list = []
     behavior_dict = load_behavior_tree_lib()
+
     for cls in behavior_dict["act"].values():
+        if cls.can_be_expanded:
+            print(f"可扩展动作：{cls.__name__}, 存在{len(cls.valid_args)}个有效论域组合")
+            if cls.num_args == 0:
+                for num in range(multiple_num):
+                    info = cls.get_info()
+                    action_list.append(Action(name=cls.get_ins_name() + str(num), **info))
+            if cls.num_args == 1:
+                for num in range(multiple_num):
+                    for arg in cls.valid_args:
+                        info = cls.get_info(arg)
+                        action_list.append(Action(name=cls.get_ins_name(arg) + str(num), **info))
+            if cls.num_args > 1:
+                for num in range(multiple_num):
+                    for args in cls.valid_args:
+                        info = cls.get_info(*args)
+                        action_list.append(Action(name=cls.get_ins_name(*args) + str(num),**info))
+
+    action_list = sorted(action_list, key=lambda x: x.name)
+    for i in range(len(action_list)):
+        cost = random.randint(1, 100)
+        action_list[i].cost=cost
+    return action_list
+
+def collect_action_nodes_old(random):
+    action_list = []
+    behavior_dict = load_behavior_tree_lib()
+    behavior_ls = list()
+    # behavior_ls.sort()
+
+    behavior_ls = [cls for cls in behavior_ls]
+    behavior_ls =  sorted(behavior_ls, key=lambda x: x.__class__.__name__)
+
+    for cls in behavior_ls:
         if cls.can_be_expanded:
             print(f"可扩展动作：{cls.__name__}, 存在{len(cls.valid_args)}个有效论域组合")
             if cls.num_args == 0:
@@ -126,28 +160,17 @@ def BTTest(bt_algo_opt,goal_states,action_list,start_robowaiter):
     success_count = 0
     failure_count = 0
     planning_time_total = 0.0
-
-    states = []
+    states=[] ####？？？
     actions = copy.deepcopy(action_list)
     start = copy.deepcopy(start_robowaiter)
-    state = copy.deepcopy(start)
-    states.append(state)
+
     error=False
 
     for count, goal_str in enumerate(goal_states):
 
-        # if count>=2:
-        #     break
-        # goal = goal_str
         goal = copy.deepcopy(goal_transfer_str(goal_str))
         print("count:", count, "goal:", goal)
 
-        # 生成一个规划问题，包括随机的状态和行动，以及目标状态
-        states = []
-        actions = copy.deepcopy(action_list)
-        start = copy.deepcopy(start_robowaiter)
-        state = copy.deepcopy(start)
-        states.append(state)
 
         if bt_algo_opt:
             # if count==874:
@@ -165,21 +188,24 @@ def BTTest(bt_algo_opt,goal_states,action_list,start_robowaiter):
         # print_action_data_table(goal, start, list(actions))
         if algo.run_algorithm(start, goal, actions):  # 运行算法，规划后行为树为algo.bt
             total_tree_size.append(algo.bt.count_size() - 1)
-            # if count==11:
+            # if count==10:
             #     algo.print_solution()
             # algo.print_solution()  # 打印行为树
 
             # 画出行为树
-            # ptml_string = algo.get_ptml()
-            ptml_string = algo.get_ptml_many_act()
-            file_name = "sub_task"
-            file_path = f'./{file_name}.ptml'
-            with open(file_path, 'w') as file:
-                file.write(ptml_string)
-            ptml_path = os.path.join(root_path, 'BTExpansionCode/EXP/sub_task.ptml')
-            behavior_lib_path = os.path.join(root_path, 'BTExpansionCode/EXP/behavior_lib')
-            bt = load_bt_from_ptml(None, ptml_path, behavior_lib_path)
-            render_dot_tree(bt.root, target_directory="", name="expanded_bt", png_only=False)
+            # if count == 11:
+            #     ptml_string = algo.get_ptml_many_act()
+            #     file_name = "sub_task"
+            #     file_path = f'./{file_name}.ptml'
+            #     with open(file_path, 'w') as file:
+            #         file.write(ptml_string)
+            #     ptml_path = os.path.join(root_path, 'BTExpansionCode/EXP/sub_task.ptml')
+            #     behavior_lib_path = os.path.join(root_path, 'BTExpansionCode/EXP/behavior_lib')
+            #     bt = load_bt_from_ptml(None, ptml_path, behavior_lib_path)
+            #     if bt_algo_opt:
+            #         render_dot_tree(bt.root, target_directory="", name="expanded_bt_obt", png_only=False)
+            #     else:
+            #         render_dot_tree(bt.root, target_directory="", name="expanded_bt_xiaocai", png_only=False)
 
         else:
             print("error")

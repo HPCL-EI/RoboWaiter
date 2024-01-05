@@ -47,11 +47,43 @@ def single_round(question, prefix=""):
 
 if __name__ == '__main__':
     question = '''
-    给我来杯咖啡
+    [Condition] 
+Near_Robot_<food_place>, On_<food>_<place>, Holding_<food>, Exist_<food>, Is_<furniture>_<furniture_state>
+
+[Object] 
+<food>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater']
+<place>=['Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3','BrightTable6']
+<food_place>=<food>+<place>
+<furniture>=['AC','TubeLight','HallLight','Curtain','ACTemperature','Table1','Floor','Chairs']
+<furniture_state>=['On','Off','Up','Down','Clean','Dirty']
+
+[Examples]
+Please put the soft drink on the watertable.
+On_Softdrink_WaterTable
+
+Please deliver the coffee to table number one and turn on the hall light.
+On_Coffee_Table & Is_HallLight_On
+
+Do not place the water on the bar counter, and please remember to deliver coffee or bernachon to table 2
+~On_Water_Bar & (On_Coffee_Table2 | On_Bernachon_Table2)
+
+Please raise the air conditioning temperature and tidy up the chairs.
+Is_ACTemperature_On & Is_Chairs_Clean
+
+[Prompt]
+[Condition] Lists all predicates representing conditions and their optional parameter sets.
+[Object] Lists all parameter sets.
+[Examples] Provide several examples of Instruction to Goal mapping.
+Please follow the predicate format requirements strictly and, based on the given Instructions, generate Goals that comply with the specifications in predicate formula format. Please generate directly interpretable predicate formulas without additional explanations.
+For example, if the Instruction is: "Please raise the air conditioning temperature and tidy up the chairs," your output should only be: 
+Is_ACTemperature_On & Is_Chairs_Clean
+without any additional information. do not start with Goal:!!
+
+Please put the soft drink on the watertable.
     '''
     import timeit
 
     cur_time = time.time()
     # print(single_round(question))
-    print(single_round(question, prefix='现在给出符合这句话要求的目标状态: '))
+    print(single_round(question))
     print(f"单次生成耗时：{time.time() - cur_time} s \n")

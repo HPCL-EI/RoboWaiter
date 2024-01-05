@@ -114,7 +114,7 @@ def dot_tree(
         if node_name == "Sequence":
             node_name = "&rarr;"
         if node_name == "Selector":
-            node_name = "?"
+            node_name = " ? "
         return node_name
 
     fontsize = 20

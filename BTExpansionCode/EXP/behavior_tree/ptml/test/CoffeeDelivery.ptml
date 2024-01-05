@@ -1,0 +1,35 @@
+//sequence:
+//    act action1()
+//    act action2(2, 2.3, True)
+//
+//    parallel 2:
+//        act action3(int a, float b)
+//        act action4()
+
+sequence{
+    selector{
+        cond CoffeeCupFound()
+        act FindCoffeeCup()
+        sequence{
+            cond SeqTest()
+            act Move(1.2, 2, 2.3, True)
+            act Grasp()
+            parallel 3 {
+                cond Isact()
+                act Testact()
+            }
+        }
+    }
+    selector{
+        cond CoffeeCupGrasped()
+        act GraspCoffeeCup()
+    }
+    selector{
+        cond DestinationAReached()
+        act ReachDestinationA()
+    }
+    selector{
+        cond CoffeeCupPlaced()
+        act PlaceCoffeeCup()
+    }
+}

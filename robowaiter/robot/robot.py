@@ -13,6 +13,7 @@ from robowaiter.behavior_tree.obtea.opt_bt_exp_main import BTOptExpInterface
 from robowaiter.behavior_lib.act.DelSubTree import DelSubTree
 from robowaiter.behavior_lib._base.Sequence import Sequence
 from robowaiter.utils.bt.load import load_behavior_tree_lib
+from robowaiter.behavior_lib._base.Behavior import Bahavior
 
 from robowaiter.utils import get_root_path
 root_path = get_root_path()
@@ -63,13 +64,47 @@ class Robot(object):
             print("--------------------\n")
 
         # 如果目标是下班，规划的时候就直接快捷导入？
-        end_goal = {"Is(Floor,Clean)","Is(Table1,Clean)","Is(Chairs,Clean)","Is(AC,Off)","Is(HallLight,Off)","Is(TubeLight,Off)","Is(Curtain,Off)"}
-        if goal & end_goal == goal:
-            tmp_list = copy.deepcopy(self.action_list)
-            self.action_list=[]
-            self.action_list = [action for action in tmp_list if "Turn" in action.name or "Clean" in action.name]
+        # end_goal = {"Is(Floor,Clean)","Is(Table1,Clean)","Is(Chairs,Clean)","Is(AC,Off)","Is(HallLight,Off)","Is(TubeLight,Off)","Is(Curtain,Off)"}
+        # if goal & end_goal == goal:
+        #     tmp_list = copy.deepcopy(self.action_list)
+        #     self.action_list=[]
+        #     self.action_list = [action for action in tmp_list if "Turn" in action.name or "Clean" in action.name]
 
-        algo = BTOptExpInterface(self.action_list,self.scene)
+        # 这里对action做一个挑选，就是物品的挑选，只对环境有的物品+目标的物品进行挑选
+        ##############################
+        # all_obj_ls = {'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
+        # 'Chips', 'NFCJuice', 'Bernachon', 'SpringWater'}
+        # all_place_ls = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3','BrightTable6'}
+        all_obj_ls = Bahavior.all_object
+        all_place_ls = Bahavior.tables_for_placement
+        obj_need = set()
+        place_need=set()
+        for state_curr in self.scene.state["condition_set"]:
+            if 'Holding' in state_curr:
+                if 'Holding(Nothing)' in state_curr:
+                    break
+                else:
+                    for obj in all_obj_ls:
+                        if obj in state_curr:
+                            obj_need.add(obj)
+        for g in goal:
+            obj_need_ls = [s1 for s1 in all_obj_ls if any(s1 in s2 for s2 in g)]
+            obj_need.update(obj_need_ls)
+            place_need_ls = [s1 for s1 in all_place_ls if any("On" in s2 and s1 in s2 for s2 in g)]
+            place_need.update(place_need_ls)
+            # for state in g:
+            #     for obj in all_obj_ls:
+            #         if obj in state:
+            #             obj_need.add(obj)
+        obj_not_need = all_obj_ls-obj_need
+        place_not_need = all_place_ls-place_need
+        action_need_ls_tmp = [action for action in self.action_list if not any(('PutDown' in action.name and s in action.name ) for s in obj_not_need)]
+        action_need_ls = [action for action in action_need_ls_tmp if not any(('PutDown' in action.name and s in action.name) for s in place_not_need)]
+        ##############################
+
+
+        algo = BTOptExpInterface(action_need_ls, self.scene)
+        # algo = BTOptExpInterface(self.action_list,self.scene)
 
         ptml_string = algo.process(goal)
 

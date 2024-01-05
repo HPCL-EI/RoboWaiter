@@ -3,7 +3,7 @@ from robowaiter.behavior_lib._base.Act import Act
 from robowaiter.algos.navigator.navigate import Navigator
 
 class GreetCustomer(Act):
-    can_be_expanded = True
+    can_be_expanded = False
     num_args = 0
     valid_args = ()
 
@@ -30,7 +30,8 @@ class GreetCustomer(Act):
 
         if self.scene.show_bubble:
             # self.scene.chat_bubble("欢迎光临！")
-            self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
+            # self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
+            self.scene.chat_bubble("Welcome! How may I assist you today?")
 
         customer_name = self.scene.state['attention']['customer']
         self.scene.state['greeted_customers'].add(customer_name)

@@ -25,7 +25,8 @@ class Clean(Act):
     @classmethod
     def get_info(cls,arg):
         info = {}
-        info["pre"]= {f'Holding(Nothing)',f'Is(HallLight,On)'}
+        # info["pre"]= {f'Holding(Nothing)',f'Is(HallLight,On)'}
+        info["pre"] = {f'Holding(Nothing)'}
         if arg == "Table1":
             info["add"]= {f'Is(Table1,Clean)'}
             info["del_set"] = {f'Is(Table1,Dirty)'}

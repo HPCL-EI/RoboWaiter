@@ -26,7 +26,7 @@ base_url = "https://45.125.46.134:25344" # 本地部署的地址,或者使用你
 
 root_path = get_root_path()
 # load test questions
-file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions.txt")
+file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions_en.txt")
 
 functions = get_tools()
 

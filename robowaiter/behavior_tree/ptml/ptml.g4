@@ -4,7 +4,7 @@ root            : tree+ EOF;
 
 tree    		: internal_node '{' (action_sign|tree)* '}' ;
 internal_node   : 'sequence' | 'selector' | 'parallel' Integer ;
-action_sign     : 'not'? ('act'|'cond') String '(' action_parm? ')';
+action_sign     : ('act'|'cond') 'Not'? String '(' action_parm? ')';
 action_parm     : (Integer|Float|boolean|String) (',' (Integer|Float|boolean|String))* ;
 // var_decls		: var_type Names ;
 // var_type		: 'int' | 'float' | 'bool' | 'string' ;

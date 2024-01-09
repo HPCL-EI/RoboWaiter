@@ -1,0 +1,113 @@
+Hello!
+Hello, I am the waiter of this coffee shop. What would you like to order?
+
+Thanks, that's enough. You can go on with your work.
+Ok, if you need anything, just let me know.
+
+Make a cup of coffee, please.
+Sure, I'll make the coffee right away.
+create_sub_task
+{"goal":"On(Coffee,CoffeeTable)"}
+
+No need anymore.
+Alright, if you need anything, just tell me.
+stop_serve
+{}
+
+
+
+Good morning! I'm looking for a place where I can enjoy the sunshine.
+There's a sunny spot right on your right.
+get_object_info
+{"obj":"BrightTable"}
+
+Thank you!
+You're welcome, I hope you have a pleasant time in the sunshine.
+
+Could you take me there?
+Of course, please follow me!
+create_sub_task
+{"goal":"At(Robot,BrightTable1)"}
+
+
+Hey, RoboWaiter, come here for a moment!
+I'm on my way, please wait a moment!
+create_sub_task
+{"goal":"At(Robot,BrightTable6)"}
+
+What drinks do you have here?
+Our coffee shop offers a variety of flavored coffees, water, iced black tea, yogurt drinks, and also desserts like pastries and cakes. What would you like to order?
+
+What kinds of coffee do you have?
+We offer espresso, latte, and our specialty, the delicious cappuccino. Enjoy your coffee experience!
+
+I'll have a cappuccino, please.
+Ok, please wait a moment!
+create_sub_task
+{"goal":"On(Coffee,BrightTable6)"}
+
+
+I'm with my child, I'd like a spacious and well-lit spot.
+Alright, I understand. We recommend the tables in the hall, where the space is more spacious and the environment is brighter, making it suitable for dining with children.
+
+The tables in the hall look good, please take me there!
+Okay, great, please follow me.
+create_sub_task
+{"goal":"At(Robot,WaterTable)"}
+
+I'd like a glass of water, and please get a yogurt for my child.
+Ok, no problem, please wait a moment!
+create_sub_task
+{"goal":"On(Water,WaterTable),On(Yogurt,WaterTable)"}
+
+
+I think I left my VacuumCup in your café yesterday, have you seen it?
+Yes, I remember seeing it. The thermos is on table number 2 in the hall.
+get_object_info
+{"obj":"VacuumCup"}
+
+Can you bring it to me? I'm waiting at the table near the front door.
+Of course, please wait a moment!
+create_sub_task
+{"goal":"On(VacuumCup,Table1)"}
+
+
+
+
+
+打开空调并降低空调温度
+好的，没问题
+create_sub_task
+{"goal":"Is(ACTemperature,Down)"}
+
+
+把咖啡或者酸奶放到吧台
+好的，没问题
+create_sub_task
+{"goal":"On_Coffee_Bar | On_Yogurt_Bar & At_Robot_Bar"}
+
+Don't stand at table 6. Please wipe down table 1 or mop the floor, and don't set the air conditioning temperature too low.
+好的，没问题
+create_sub_task
+{"goal":"At_Robot_Bar & (Is_Table1_Clean | Is_Floor_Clean) & Is_ACTemperature_Up"}
+
+Don't stand at table 6. Please wipe down table 1, and don't set the air conditioning temperature too low.
+好的，没问题
+create_sub_task
+{"goal":"Is_Table1_Clean & Is_ACTemperature_Up"}
+
+
+Please wipe down table 1, and don't set the air conditioning temperature too low.
+好的，没问题
+create_sub_task
+{"goal":"Is_Table1_Clean & Is_ACTemperature_Up"}
+
+Please turn on the air conditioning and mop the floor.
+好的，没问题
+create_sub_task
+{"goal":"Is_Floor_Clean & Is_AC_On"}
+
+I'll have a cappuccino, please.
+Ok, please wait a moment!
+create_sub_task
+{"goal":"On(Coffee,BrightTable6)"}

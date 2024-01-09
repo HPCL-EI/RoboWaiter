@@ -1,7 +1,7 @@
 selector
     cond On(Coffee,Bar)
     sequence
-        cond Holding(Coffee)
+        not cond Holding(Coffee)
         selector
             sequence
                 cond At(Robot,Bar)

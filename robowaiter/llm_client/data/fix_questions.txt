@@ -1,75 +1,282 @@
-Hello!
-Hello, I am the waiter of this coffee shop. What would you like to order?
+你好
+您好，我是这家咖啡厅的服务员，请问您要点什么？
 
-Thanks, that's enough. You can go on with your work.
-Ok, if you need anything, just let me know.
 
-Make a cup of coffee, please.
-Sure, I'll make the coffee right away.
+感谢，这些够啦，你去忙吧。
+ok, 有需要您再找我。
+
+
+做一杯咖啡
+好的，我马上做咖啡
 create_sub_task
 {"goal":"On(Coffee,CoffeeTable)"}
 
-No need anymore.
-Alright, if you need anything, just tell me.
+不用了。
+好的，您有需要再跟我说
 stop_serve
 {}
 
+来一号桌
+好的，我马上来一号桌
+create_sub_task
+{"goal":"At(Robot,Table1)"}
 
 
-Good morning! I'm looking for a place where I can enjoy the sunshine.
-There's a sunny spot right on your right.
+早上好呀，我想找个能晒太阳的地方。
+您右手边就有能晒太阳的位置呢。
 get_object_info
-{"obj":"BrightTable"}
+{"obj":"晒太阳的地方"}
 
-Thank you!
-You're welcome, I hope you have a pleasant time in the sunshine.
+谢谢！
+不客气，希望你在阳光下有个愉快的时光。
 
-Could you take me there?
-Of course, please follow me!
+
+可以带我过去嘛？
+当然，请跟我来！
+create_sub_task
+{"goal":"At(Robot,BrightTable1)"}
+
+你可以带我过去嘛？
+当然，请跟我来！
 create_sub_task
 {"goal":"At(Robot,BrightTable1)"}
 
 
-Hey, RoboWaiter, come here for a moment!
-I'm on my way, please wait a moment!
+嘿，RoboWaiter，过来一下！
+我在来的路上啦，请稍等噢！
 create_sub_task
 {"goal":"At(Robot,BrightTable6)"}
 
-What drinks do you have here?
-Our coffee shop offers a variety of flavored coffees, water, iced black tea, yogurt drinks, and also desserts like pastries and cakes. What would you like to order?
 
-I'll have a cappuccino, please.
-Ok, please wait a moment!
+你们这有什么饮料嘛？
+我们咖啡厅提供各种口味咖啡，水，冰红茶，酸奶等饮品，还提供点心蛋糕等甜品。您想点什么？
+
+
+来杯卡布奇诺吧。
+ok，请稍等！
 create_sub_task
 {"goal":"On(Coffee,BrightTable6)"}
 
 
-I'm with my child, I'd like a spacious and well-lit spot.
-Alright, I understand. We recommend the tables in the hall, where the space is more spacious and the environment is brighter, making it suitable for dining with children.
-
-The tables in the hall look good, please take me there!
-Okay, great, please follow me.
-create_sub_task
-{"goal":"At(Robot,WaterTable)"}
-
-I'd like a glass of water, and please get a yogurt for my child.
-Ok, no problem, please wait a moment!
-create_sub_task
-{"goal":"On(Water,WaterTable),On(Yogurt,WaterTable)"}
 
 
-I think I left my VacuumCup in your café yesterday, have you seen it?
-Yes, I remember seeing it. The thermos is on table number 2 in the hall.
+我昨天保温杯好像落在你们咖啡厅了，你看到了吗？
+是的，我有印象，保温杯在大厅的2号桌子上。
 get_object_info
-{"obj":"VacuumCup"}
+{"obj":"保温杯"}
 
-Can you bring it to me? I'm waiting at the table near the front door.
-Of course, please wait a moment!
+
+给我来份午餐套餐。
+本店的午餐套餐包括咖啡和点心，请问您是打包还是堂食？
+
+打包吧，快点！
+请稍等，马上就好！
+create_sub_task
+{"goal":"On(Dessert,Bar),On(Coffee,Bar)"}
+
+
+你可以帮我拿来吗，我在前门的桌子前等你。
+当然，请稍等！
 create_sub_task
 {"goal":"On(VacuumCup,Table1)"}
 
+麻烦啦！
+没事儿，为您服务是我的荣幸！
+
+大厅的桌子好啊，快带我去呀！
+好的好的，请跟我来。
+create_sub_task
+{"goal":"At(Robot,WaterTable)"}
 
 
+我想来杯水，帮我孩子拿个酸奶吧。
+ok，没问题，请稍等！
+create_sub_task
+{"goal":"On(Water,WaterTable),On(Yogurt,WaterTable)"}
+
+来杯酸奶吧。
+好的没问题，请稍等！
+create_sub_task
+{"goal":"On(Yogurt,WaterTable)"}
+
+
+还有酸奶吗
+不好意思，酸奶卖完了呢
+get_number_of_objects
+{"obj":"酸奶"}
+
+那好吧，那就先把窗帘给我关上，再开个空调
+抱歉，我这就去开空调和关窗帘。
+create_sub_task
+{"goal":"Is(AC,On),Is(Curtain,Off)"}
+
+
+下班啦！别忘了打扫卫生。
+收到！下班啦！
+create_sub_task
+{"goal":"Is(Floor,Clean),Is(Table1,Clean),Is(Chairs,Clean),Is(AC,Off),Is(HallLight,Off),Is(TubeLight,Off),Is(Curtain,Off)"}
+
+
+请问洗手间在哪里？
+洗手间在这附近
+get_object_info
+{"obj":"洗手间"}
+
+
+
+给我来杯酸奶和冰红茶，我坐在对面的桌子那儿。
+好的，请稍等。
+create_sub_task
+{"goal":"On(BottledDrink,WaterTable),On(Yogurt,WaterTable)"}
+
+
+给我来份薯片和果汁，我坐在对面的桌子那儿。
+好的，请稍等。
+create_sub_task
+{"goal":"On(Chips,WaterTable),On(NFCJuice,WaterTable)"}
+
+给我来份薯片和果汁，我坐在对面的水杯桌那儿。
+好的，请稍等。
+create_sub_task
+{"goal":"On(Chips,WaterTable),On(NFCJuice,WaterTable)"}
+
+好热呀，想开空调，想要温度调低点！
+抱歉，我马上去开空调并调低空调温度。
+create_sub_task
+{"goal":"Is(ACTemperature,Down)"}
+
+请问有空位吗？
+现在有不少空位呢，请问您有什么要求嘛？
+
+我想坐高脚凳子。
+没问题，大厅里就有这样的位置呢！
+get_object_info
+{"obj":"高脚凳子的空位"}
+
+
+你带我去吧。
+OK，请跟我来！
+create_sub_task
+{"goal":"At(Robot,BrightTable5)"}
+
+
+可以关筒灯和关窗帘吗？
+好的，请稍等。
+create_sub_task
+{"goal":"Is(TubeLight,Off),Is(Curtain,Off)"}
+
+
+给我来杯咖啡，哦对，再倒一杯水。
+速速就好，请稍等！
+create_sub_task
+{"goal":"On(Water,WaterTable),On(Coffee,WaterTable)"}
+
+
+我想来份点心和酸奶。
+稍等片刻噢~
+create_sub_task
+{"goal":"On(Yogurt,Bar),On(Dessert,Bar)"}
+
+酸奶。
+稍等片刻噢~
+create_sub_task
+{"goal":"On(Yogurt,Bar)"}
+
+
+
+你好呀，你们这有啥好吃的？
+我们咖啡厅有咖啡，还有饮料和点心蛋糕呢？您想点什么不？
+get_object_info
+{"obj":"饮料,水果,点心"}
+
+
+听起来都好甜呀，我女朋友爱吃水果。
+没问题，我们也提供草莓、橘子和苹果等水果呢。
+
+
+你们这人可真多。
+目前还有空位呢，你们可以坐下来一起品尝水果呢？
+get_object_info
+{"obj":"空位"}
+
+我女朋友怕晒，有空余的阴凉位置嘛？
+我查询完毕，阴凉位置有两个。在你们右侧往里走，就有适合你们二位的沙发呢。
+get_object_info
+{"obj":"阴凉空位"}
+
+那还不错。
+是的，那边安静，不会晒到太阳呢。
+
+我们还想一起下下棋,切磋切磋。
+我们这有两份军棋呢,在大厅的三号桌上。
+get_object_info
+{"obj":"棋"}
+
+请问洗手间在哪呢？
+在后门，你们的左侧往里走就是了呢。
+get_object_info
+{"obj":"洗手间"}
+
+我带着孩子呢，想要宽敞亮堂的地方。
+好的，我明白了，那么我们推荐您到大厅的桌子，那里的空间比较宽敞，环境也比较明亮，适合带着孩子一起用餐。
+
+
+水杯
+好的
+create_sub_task
+{"goal":"On(Water,Bar)"}
+
+点心
+好的
+create_sub_task
+{"goal":"On(Dessert,Bar)"}
+
+酸奶
+好的
+create_sub_task
+{"goal":"On(Yogurt,Bar)"}
+
+
+做一杯咖啡
+好的，我马上做咖啡
+create_sub_task
+{"goal":"On(Coffee,CoffeeTable)"}
+
+
+把盒装冰红茶放到水桌
+好的
+create_sub_task
+{"goal":"On(Softdrink,WaterTable)"}
+
+点心
+好的
+create_sub_task
+{"goal":"On(Dessert,Bar)"}
+
+把咖啡放到吧台上
+好的
+create_sub_task
+{"goal":"On(Coffee,Bar)"}
+
+把咖啡放到水桌
+好的
+create_sub_task
+{"goal":"On(Coffee,Bar)"}
+
+把咖啡放到6号桌
+好的
+create_sub_task
+{"goal":"On(Coffee,BrightTable6)"}
+
+把咖啡放到3号桌
+好的
+create_sub_task
+{"goal":"On(Coffee,Table3)"}
+
+把咖啡放到吧台上，再拿一杯咖啡放到6号桌
+好的
+create_sub_task
+{"goal":"On(Coffee,WaterTable),On(Coffee,BrightTable6)"}
 
 
 打开空调并降低空调温度

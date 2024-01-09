@@ -18,7 +18,9 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.signal_event_list = [
-            (3, self.customer_say, ("System", "冰红茶")),
+            (3, self.customer_say, ("System", "I'll have a cappuccino, please.")),
+
+            # (3, self.customer_say, ("System", "冰红茶")),
             # (3, self.customer_say, ("System", "有多少盒装饮料")),
             # (3, self.customer_say, ("System", "桌子有几张")),
             # (3, self.customer_say, ("System", "你们这儿有军棋吗")),

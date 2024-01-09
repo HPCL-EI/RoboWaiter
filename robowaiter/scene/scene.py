@@ -282,7 +282,7 @@ class Scene:
         self.sub_task_seq = None
         os.makedirs(self.output_path,exist_ok=True)
 
-        self.show_bubble = True
+        self.show_bubble = False
         # 是否展示UI
         self.show_ui = False
         # 图像分割

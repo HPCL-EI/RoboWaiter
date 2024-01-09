@@ -31,7 +31,7 @@ class GreetCustomer(Act):
         if self.scene.show_bubble:
             # self.scene.chat_bubble("欢迎光临！")
             # self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
-            self.scene.chat_bubble("Welcome! How may I assist you today?")
+            self.scene.chat_bubble("Welcome! How can I help you?")
 
         customer_name = self.scene.state['attention']['customer']
         self.scene.state['greeted_customers'].add(customer_name)

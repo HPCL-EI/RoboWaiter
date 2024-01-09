@@ -99,8 +99,8 @@ class ptmlTranslator(ptmlListener):
         node.set_scene(self.scene)
 
         # if have 'not' decorator
-        if str(ctx.children[0]) == 'not':
-            upper_node = ptree.decorators.Inverter(node)
+        if str(ctx.children[1]) == 'Not':
+            upper_node = ptree.decorators.Inverter(name="Inverter", child=node)
             # connect
             self.stack[-1].add_child(upper_node)
         else:

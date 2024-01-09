@@ -2,7 +2,7 @@ selector
 {
     sequence
 {
-        cond At(Robot, Coffee)
+        cond Not At(Robot, Coffee)
         selector
 {
             sequence

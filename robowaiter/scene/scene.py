@@ -214,23 +214,23 @@ class Scene:
         "chat_list": [],  # 未处理的顾客的对话, (顾客的位置,顾客对话的内容)
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
-        # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-        #                   'Exist(Yogurt)', 'Exist(BottledDrink)','Exist(Softdrink)',
-        #                   # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
-        #                   # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
-        #                   'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)'
-        #                   'Holding(Nothing)',
-        #                   # 'Holding(Yogurt)',
-        #                   'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
-        #                   'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
-        #                   'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
-
         "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-                  'Exist(Yogurt)','Exist(VacuumCup)',
-                  'Holding(Nothing)',
-                  'On(Yogurt,Bar)','On(VacuumCup,Table2)',
-                  'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
-                  'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+                          'Exist(Yogurt)', 'Exist(BottledDrink)','Exist(Softdrink)',
+                          # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
+                          # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
+                          'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)',
+                          'Holding(Nothing)',
+                          # 'Holding(Yogurt)',
+                          'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
+                          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+                          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+
+        # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
+        #           'Exist(Yogurt)','Exist(VacuumCup)',
+        #           'Holding(Nothing)',
+        #           'On(Yogurt,Bar)','On(VacuumCup,Table2)',
+        #           'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+        #           'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
 
         # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
         #                   'Exist(VacuumCup)','Exist(Coffee)',
@@ -282,7 +282,7 @@ class Scene:
         self.sub_task_seq = None
         os.makedirs(self.output_path,exist_ok=True)
 
-        self.show_bubble = True
+        self.show_bubble = False
         # 是否展示UI
         self.show_ui = False
         # 图像分割

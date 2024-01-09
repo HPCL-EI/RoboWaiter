@@ -1,0 +1,23 @@
+selector
+    cond On(Coffee,Bar)
+    sequence
+        cond Holding(Coffee)
+        selector
+            sequence
+                cond At(Robot,Bar)
+                act PutDown(Coffee,Bar)
+            act MoveTo(Bar)
+    sequence
+        cond At(Robot,Coffee)
+        selector
+            sequence
+                cond Holding(Nothing)
+                act PickUp(Coffee)
+            act PutDown(Anything,Anywhere)
+    sequence
+        cond Exist(Coffee)
+        act MoveTo(Coffee)
+    sequence
+        cond Holding(Nothing)
+        act Make(Coffee)
+    act PutDown(Anything,Anywhere)

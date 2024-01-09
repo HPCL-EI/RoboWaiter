@@ -25,12 +25,21 @@ class SceneOT(Scene):
         self.signal_event_list =[
             # (3, self.set_goal,("On(Yogurt,Bar)",)),
             # (3, self.customer_say, ("System", "把盒装冰红茶放到水桌")),
-            # (3, self.customer_say, ("System", "打开空调并降低空调温度")),
+            (3, self.customer_say, ("System", "打开空调并降低空调温度")),
             # (3, self.customer_say, ("System", "点心")),
             # (3, self.customer_say, ("System", "把咖啡放到水桌")),
             # (3, self.customer_say, ("System", "把咖啡放到吧台上")),
             # (3, self.customer_say, ("System", "把咖啡放到吧台上，再拿一杯咖啡放到6号桌")),
-            (3, self.customer_say, ("System", "把咖啡放到6号桌")),
+            # (3, self.customer_say, ("System", "把咖啡放到3号桌")),
+            # (3, self.customer_say, ("System", "我想来份点心和酸奶。")),
+
+            # (3, self.customer_say, ("System", "把咖啡或者酸奶放到吧台")),
+            # (3, self.customer_say, ("System", "给我来杯咖啡，哦对，再倒一杯水。")),
+
+            # (3, self.customer_say, ("System", "Don't stand at table 6. Please wipe down table 1 or mop the floor, and don't set the air conditioning temperature too low.")),
+            # (3, self.customer_say, (" System",
+            #                         "Don't stand at table 6. Please wipe down table 1, and don't set the air conditioning temperature too low.")),
+
         ]
 
     def _reset(self):

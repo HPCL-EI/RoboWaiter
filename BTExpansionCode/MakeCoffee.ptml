@@ -1,0 +1,63 @@
+selector{
+cond At(Table,Coffee)
+sequence{
+cond At(Robot,Table)
+ cond Holding(Coffee)
+act PutDown(Table,Coffee)
+}
+sequence{
+cond Available(Table)
+ cond Holding(Coffee)
+act MoveTo(Table)
+}
+sequence{
+cond At(Robot,Coffee)
+ cond Available(Table)
+ cond NotHolding
+act PickUp(Coffee)
+}
+sequence{
+cond Available(Coffee)
+ cond Available(Table)
+ cond NotHolding
+act MoveTo(Coffee)
+}
+sequence{
+cond Holding(VacuumCup)
+ cond At(Robot,Table)
+ cond Available(Table)
+ cond Available(Coffee)
+act PutDown(Table,VacuumCup)
+}
+sequence{
+cond At(Robot,CoffeeMachine)
+ cond Available(Table)
+ cond NotHolding
+act OpCoffeeMachine()
+}
+sequence{
+cond Holding(VacuumCup)
+ cond Available(Table)
+ cond Available(Coffee)
+act MoveTo(Table)
+}
+sequence{
+cond Available(CoffeeMachine)
+ cond Available(Table)
+ cond NotHolding
+act MoveTo(CoffeeMachine)
+}
+sequence{
+cond Holding(VacuumCup)
+ cond At(Robot,Table)
+ cond Available(Table)
+ cond Available(CoffeeMachine)
+act PutDown(Table,VacuumCup)
+}
+sequence{
+cond Holding(VacuumCup)
+ cond Available(Table)
+ cond Available(CoffeeMachine)
+act MoveTo(Table)
+}
+}

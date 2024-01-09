@@ -26,7 +26,7 @@ base_url = "https://45.125.46.134:25344" # 本地部署的地址,或者使用你
 
 root_path = get_root_path()
 # load test questions
-file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions.txt")
+file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions_en.txt")
 
 functions = get_tools()
 
@@ -150,12 +150,15 @@ def ask_llm(question,history, func_map=None, retry=3):
         if question in fix_questions_dict:
             if fix_questions_dict[question]['function'] in  no_reply_functions:
                 reply = fix_questions_dict[question]["answer"]
+                # result = single_round(reply,
+                #                       "你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
                 result = single_round(reply,
-                                      "你是机器人服务员，请把以下句子换一种表述方式对顾客说，但是意思不变，尽量简短：\n")
+                                      "You are a robot waiter. Please change the following sentence to the customer in a different way, but the meaning remains the same and be as brief as possible:\n")
             else:
                 reply = fix_questions_dict[question]["answer"]
-                result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},把返回的英文名词翻译成中文,请把按照以下句子对顾客说，{reply}, 尽量简短。\n")
-
+                # result = single_round(f"你是机器人服务员，顾客想知道{question}, 你的具身场景查询返回的是{result},把返回的英文名词翻译成中文,请把按照以下句子对顾客说，{reply}, 尽量简短。\n")
+                result = single_round(
+                    f"You are a robot waiter. The customer wants to know {question}. Your embodied scene query returns {result}. Translate the returned Chinese nouns into English. Please tell the customer according to the following sentence, {reply}, keep it as short as possible.\n")
             message = {'role': 'assistant', 'content': result, 'name': None,
                        'function_call': None}
             history.append(message)
@@ -165,13 +168,14 @@ def ask_llm(question,history, func_map=None, retry=3):
             _,result = deal_response(response, history, func_map)
 
 
-    print(f'{len(history)}条历史记录:')
+    # print(f'{len(history)}条历史记录:')
+    print(f'{len(history)} history records:')
     for x in history:
         print(x)
     return function_call, result
 
 if __name__ == "__main__":
-    question = input("\n顾客：")
+    question = input("\nCustomer:")
     history = new_history()
     n = 1
     max_retry = 2
@@ -180,4 +184,5 @@ if __name__ == "__main__":
         function_call, return_message = ask_llm(question,history)
 
 
-        question = input("\n顾客：")
+        # question = input("\n顾客：")
+        question = input("\nCustomer:")

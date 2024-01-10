@@ -7,7 +7,7 @@ selector
 {
             sequence
 {
-                cond Holding(Nothing)
+                cond Not Holding(Nothing)
                 act PickUp(Coffee)
             }            act PutDown(Anything, Anywhere)
         }        selector

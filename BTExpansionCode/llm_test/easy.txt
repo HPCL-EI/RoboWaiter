@@ -1,0 +1,149 @@
+Could I have a bottle of water on my table?
+On_Water_Table1
+
+I'd like a yogurt, please bring it to table two.
+On_Yogurt_Table2
+
+Can you turn on the air conditioning?
+Is_AC_On
+
+I've finished my drink, can you take away the bottle?
+Exist_BottledDrink
+
+Please bring my dessert to the bar.
+On_Dessert_Bar
+
+Can we have some more chips at table three?
+On_Chips_Table3
+
+It's a bit dark here, could you turn on the tube light?
+Is_TubeLight_On
+
+Please lower the curtains, the sun is in my eyes.
+At_Curtain_Down
+
+Can you clean up table one? It's dirty.
+Is_Table1_Clean
+
+I'd like to try the Bernachon, please serve it at the bright table six.
+On_Bernachon_BrightTable6
+
+Could you bring a milk drink to bar number two?
+On_MilkDrink_Bar2
+
+Please switch off the air conditioning, it's too cold.
+Is_AC_Off
+
+I need a vacuum cup at the water table.
+On_VacuumCup_WaterTable
+
+Can you turn up the hall light? It's a bit dim.
+Is_HallLight_On
+
+Please bring a glass of NFC juice to table two.
+On_NFCJuice_Table2
+
+I'd like some spring water at table number one.
+On_SpringWater_Table1
+
+Please, can you clean the floor? It looks dirty.
+Is_Floor_Clean
+
+Can you put the chairs back under the table?
+Is_Chairs_UnderTable
+
+It's getting warm, could you lower the air conditioning temperature?
+At_ACTemperature_Down
+
+I'd like an ADMilk at coffee table, please.
+On_ADMilk_CoffeeTable
+
+Can you bring milk to the bar?
+On_Milk_Bar
+
+The curtains are too low, can you raise them a bit?
+At_Curtain_Up
+
+Please, switch off the tube light, it's too bright.
+Is_TubeLight_Off
+
+Could you bring a soft drink to table three?
+On_Softdrink_Table3
+
+Please clean the chairs, they seem dusty.
+Is_Chairs_Clean
+
+I need a dessert at the coffee table.
+On_Dessert_CoffeeTable
+
+Could you turn off the hall light?
+Is_HallLight_Off
+
+Please, can you increase the air conditioning temperature a little?
+At_ACTemperature_Up
+
+Bring some chips to the bright table six.
+On_Chips_BrightTable6
+
+I'd like a bottle of water on bar number two.
+On_Water_Bar2
+
+Please bring my coffee to table number three.
+On_Coffee_Table3
+
+Can you turn on the air conditioning at table one?
+Is_AC_On_Table1
+
+We need more yogurt at table two.
+On_Yogurt_Table2
+
+Please lower the air conditioning temperature, it's hot.
+At_ACTemperature_Down
+
+Can you bring a vacuum cup to the bar?
+On_VacuumCup_Bar
+
+Turn off the tube light, please.
+Is_TubeLight_Off
+
+I'd like NFC juice at the water table.
+On_NFCJuice_WaterTable
+
+Please bring spring water to table three.
+On_SpringWater_Table3
+
+The floor needs cleaning near the bar.
+Is_Floor_Clean_Bar
+
+Can you adjust the curtains at table one? It's too sunny.
+At_Curtain_Adjust_Table1
+
+Please place a hot coffee on my table.
+On_Coffee_Table2
+
+Could you turn up the air conditioning temperature a bit?
+At_ACTemperature_Up
+
+The bottled drink on the table is finished, please take it away.
+Exist_BottledDrink_Table1
+
+Could you draw the curtains? It's too bright outside.
+At_Curtain_Down
+
+Can you wipe this table? It's a bit dirty.
+Is_Table3_Clean
+
+I'd like to try the Bernachon at the bar.
+On_Bernachon_Bar
+
+Please bring a milk drink to table number two.
+On_MilkDrink_Table2
+
+The air conditioning is too cold, can you turn it off?
+Is_AC_Off
+
+Please place a vacuum cup on the coffee table.
+On_VacuumCup_CoffeeTable
+
+Could you turn on the light at the bar? It's a bit dark here.
+Is_BarLight_On

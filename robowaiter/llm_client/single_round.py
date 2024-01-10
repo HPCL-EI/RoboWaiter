@@ -46,40 +46,53 @@ def single_round(question, prefix=""):
 
 
 if __name__ == '__main__':
+    '''
+    [round 2]
+Invalid Output: Clear_Water_From_Table
+there are 3 errors: 
+Format Error: 0
+Predicate Error: Clear_Water_From_Table -- Clear is not a valid predicate
+Object Error: From is not a valid object
+Object Error: Or,Present  is not a valid object
+
+[round 3]
+Invalid Output: Clear_Water_From_Table & (On_Coffee_Table | On_Yogurt_Table)
+Invalid Predicates: Clear
+Invalid Objects: From
+
+
+please try again and output without errors.
+
+    '''
+
+
+
+
     question = '''
     [Condition] 
-Near_Robot_<food_place>, On_<food>_<place>, Holding_<food>, Exist_<food>, Is_<furniture>_<furniture_state>
+Near_Robot_<food_place>
 
 [Object] 
 <food>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater']
 <place>=['Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3','BrightTable6']
-<food_place>=<food>+<place>
-<furniture>=['AC','TubeLight','HallLight','Curtain','ACTemperature','Table1','Floor','Chairs']
-<furniture_state>=['On','Off','Up','Down','Clean','Dirty']
 
-[Examples]
-Please put the soft drink on the watertable.
-On_Softdrink_WaterTable
 
-Please deliver the coffee to table number one and turn on the hall light.
-On_Coffee_Table & Is_HallLight_On
+[Examples] 
+Input: Please put the soft drink on the watertable.
+Output: On_Softdrink_WaterTable
 
-Do not place the water on the bar counter, and please remember to deliver coffee or bernachon to table 2
-~On_Water_Bar & (On_Coffee_Table2 | On_Bernachon_Table2)
+Input: Please deliver the coffee to table number one and turn on the hall light.
+Output: On_Coffee_Table & Is_HallLight_On
 
-Please raise the air conditioning temperature and tidy up the chairs.
-Is_ACTemperature_On & Is_Chairs_Clean
+Input: Do not place the water on the bar counter, and please remember to deliver coffee or bernachon to table 2
+Output: ~On_Water_Bar & (On_Coffee_Table2 | On_Bernachon_Table2)
 
-[Prompt]
-[Condition] Lists all predicates representing conditions and their optional parameter sets.
-[Object] Lists all parameter sets.
-[Examples] Provide several examples of Instruction to Goal mapping.
-Please follow the predicate format requirements strictly and, based on the given Instructions, generate Goals that comply with the specifications in predicate formula format. Please generate directly interpretable predicate formulas without additional explanations.
-For example, if the Instruction is: "Please raise the air conditioning temperature and tidy up the chairs," your output should only be: 
-Is_ACTemperature_On & Is_Chairs_Clean
-without any additional information. do not start with Goal:!!
+Input: Please raise the air conditioning temperature and tidy up the chairs.
+Output: & Is_Chairs_Clean
 
-Please put the soft drink on the watertable.
+Input: Could you please clear the water from the table? I would like a cup of coffee or yogurt.
+
+please output the right well-formed formula, Clear_Water_From_Table is wrong, don't output it
     '''
     import timeit
 

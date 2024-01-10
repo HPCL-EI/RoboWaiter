@@ -25,7 +25,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 base_url = "https://45.125.46.134:25344" # 本地部署的地址,或者使用你访问模型的API地址
 
 root_path = get_root_path()
-# load test questions
+# load llm_test questions
 file_path = os.path.join(root_path,"robowaiter/llm_client/data/fix_questions.txt")
 
 functions = get_tools()

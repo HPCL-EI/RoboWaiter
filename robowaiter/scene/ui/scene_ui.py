@@ -41,7 +41,7 @@ class SceneUI(Scene):
         #         param = self.scene_queue.get()
         #         # 处理参数...
 
-        # self.ui_queue.put(('say',"test"))
+        # self.ui_queue.put(('say',"llm_test"))
         self.stoped = False
 
     def run(self):

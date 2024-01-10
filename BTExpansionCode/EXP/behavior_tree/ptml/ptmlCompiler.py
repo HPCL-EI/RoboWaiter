@@ -174,7 +174,7 @@ def format_trans_to_bracket(file_path: str) -> str:
         file.write(formatted_output)
     return new_path
 
-# format_trans_to_bracket('C:\\Users\\Estrella\\Desktop\\RoboWaiter\\robowaiter\\behavior_tree\\ptml\\test\\Default.ptml')
+# format_trans_to_bracket('C:\\Users\\Estrella\\Desktop\\RoboWaiter\\robowaiter\\behavior_tree\\ptml\\llm_test\\Default.ptml')
 
 if __name__ == '__main__':
     # 示例文本

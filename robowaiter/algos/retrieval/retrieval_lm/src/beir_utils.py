@@ -132,7 +132,7 @@ def evaluate_model(
     norm_query=False,
     norm_doc=False,
     is_main=True,
-    split="test",
+    split="llm_test",
     score_function="dot",
     beir_dir="BEIR/datasets",
     save_results_path=None,

@@ -14,7 +14,7 @@ from robowaiter.llm_client.tool_api import run_conversation
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 root_path = get_root_path()
-# load test questions
+# load llm_test questions
 file_path = os.path.join(root_path,"robowaiter/llm_client/data/test_questions.txt")
 
 with open(file_path,'r',encoding="utf-8") as f:

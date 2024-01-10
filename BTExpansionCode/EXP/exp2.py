@@ -25,13 +25,13 @@ print(goal_states)
 #     goal_set_ls.append(goal)
 # print(goal_set_ls)
 
-# goal_states={"On_Dessert_Bar"}
+goal_states={"On_Dessert_Bar"}
 # goal_states={"On_MilkDrink_Bar2"}
 # goal_states={"Is_TubeLight_On"}
 # goal_states = goal_set_ls
 # goal_states = {'On(VacuumCup,WaterTable)'}
 # goal_states = {'At(Robot,WaterTable)'}
-# goal_states = {'Is(Table1,Clean)'}
+# goal_states = {'At(Robot,Bar)'}
 
 # todo: 行为树鲁棒性测试，随机生成规划问题
 # # 设置生成规划问题集的超参数：文字数、解深度、迭代次数

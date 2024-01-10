@@ -14,10 +14,4 @@ selector
                 cond Holding(Nothing)
                 act PickUp(Coffee)
             act PutDown(Anything,Anywhere)
-    sequence
-        cond Exist(Coffee)
-        act MoveTo(Coffee)
-    sequence
-        cond Holding(Nothing)
-        act Make(Coffee)
     act PutDown(Anything,Anywhere)

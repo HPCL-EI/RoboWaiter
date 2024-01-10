@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     # create robot
     project_path = "../../../"
-    ptml_path = os.path.join(project_path, 'behavior_tree/ptml/test/Default.ptml')
+    ptml_path = os.path.join(project_path, 'behavior_tree/ptml/llm_test/Default.ptml')
     behavior_lib_path = os.path.join(project_path, 'behavior_lib')
 
     robot = Robot(ptml_path, behavior_lib_path)
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     # create task
     task = task_map[TASK_NAME](robot)
 
-    render_dot_tree(robot.bt.root,name="test")
+    render_dot_tree(robot.bt.root,name="llm_test")
     # build and tick
     # scene.BT = ptree.trees.BehaviourTree(scene.BT)
     # todo: tick this bt

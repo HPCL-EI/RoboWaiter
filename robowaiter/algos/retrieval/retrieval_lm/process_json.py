@@ -57,13 +57,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--passages", type=str, default=None, help="Path to passages")
-    parser.add_argument("--mode", type=str, default=None, help="train or test")
+    parser.add_argument("--mode", type=str, default=None, help="train or llm_test")
 
     args = parser.parse_args()
 
     if args.mode == 'train':
         train(args)
-    elif args.mode == 'test':
+    elif args.mode == 'llm_test':
         test(args)
     else:
         print("error mode!")

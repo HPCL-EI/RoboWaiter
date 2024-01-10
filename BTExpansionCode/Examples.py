@@ -63,7 +63,7 @@ def MakeCoffeeCost():
 
 
 
-# test
+# llm_test
 def Test():
     actions=[
         Action(name='a1', pre={6}, add={0,2,4}, del_set={1,5}, cost=1),

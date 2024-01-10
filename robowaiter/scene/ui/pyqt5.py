@@ -260,7 +260,7 @@ class UI(QMainWindow, Ui_MainWindow):
         # dir_path = os.path.dirname(__file__)
 
         # 加载并显示图片
-        # img_path = os.path.join(root_path, "robowaiter/utils/draw_bt/test.png")
+        # img_path = os.path.join(root_path, "robowaiter/utils/draw_bt/llm_test.png")
         # self.draw_from_file("img_label_bt",img_path)
         # self.label.setAlignment(Qt.AlignCenter)  # 图片居中显示
 

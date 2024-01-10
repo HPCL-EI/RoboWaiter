@@ -94,6 +94,11 @@ class OptBTExpAlgorithm:
 
         self.goal = goal
 
+        ########## neg ###############
+        self.neg_goal = {"At(Robot,Table)"}
+        ##############################
+
+
         if self.verbose:
             print("\n算法开始！")
 
@@ -170,7 +175,7 @@ class OptBTExpAlgorithm:
                     #     # self.merge_adjacent_conditions()
                     #     return True
 
-                    if c <= start:
+                    if (c <= start) and (self.neg_goal & c <=set()):
                         if self.bt_merge:
                             bt = self.merge_adjacent_conditions_stack(bt)
                         return bt,min_cost
@@ -196,8 +201,11 @@ class OptBTExpAlgorithm:
                 #     print(actions[i].name,"cost=",actions[i].cost)
 
 
-                if not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set()  :
+                # if not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set()  :
+                if (not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set()) or (not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set())  :
                     if (c - actions[i].del_set) == c:
+
+
                         if self.verbose:
                             print("———— 满足条件可以扩展")
                         c_attr = (actions[i].pre | c) - actions[i].add
@@ -226,6 +234,10 @@ class OptBTExpAlgorithm:
                             if self.verbose:
                                 print("———— -- %s 符合条件放入列表,对应的c为 %s" % (actions[i].name,c_attr))
             self.traversed.extend(traversed_current)
+
+
+
+
         if self.bt_merge:
             bt = self.merge_adjacent_conditions_stack(bt)
         if self.verbose:

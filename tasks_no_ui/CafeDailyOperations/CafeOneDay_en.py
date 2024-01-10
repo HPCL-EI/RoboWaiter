@@ -13,7 +13,7 @@ class SceneVLM(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件， (事件发生的时间，事件函数)
 
-        self.scene_flag = 1
+        self.scene_flag = 2
         self.st1 = 3
         # self.st2 = self.st1 + 30
         # self.st3 = self.st2 + 65
@@ -24,24 +24,28 @@ class SceneVLM(Scene):
         self.signal_event_list = [
 
             # 场景1：带小女孩找阳光下的空位
-            (3, self.add_walker, (5, 230, 1200)),  # 0号"Girl02_C_3"
-            (1, self.control_walker, (0, False, 200, 60, 520, 0)),
-            (9, self.customer_say, (0, "Good morning! I'm looking for a place where I can enjoy the sunshine.")),
-            (1, self.customer_say, (0, "Could you take me there?")),#可以带我过去嘛？
-            (13, self.control_walker, (0, False, 50, 140, 1200, 180)),  # 小女孩站在了 BrightTable1 旁边就餐啦
+            # (3, self.add_walker, (5, 230, 1200)),  # 0号"Girl02_C_3"
+            # (1, self.control_walker, (0, False, 200, 60, 520, 0)),
+            # (9, self.customer_say, (0, "Good morning! I'm looking for a place where I can enjoy the sunshine.")),
+            # (1, self.customer_say, (0, "Could you take me there?")),#可以带我过去嘛？
+            # (13, self.control_walker, (0, False, 50, 140, 1200, 180)),  # 小女孩站在了 BrightTable1 旁边就餐啦
 
             # # 场景2：有个胖胖男人点单交流并要咖啡，帮他送去角落的桌子
-            # (3, self.add_walker, (5, 230, 1200)), # 小女孩
-            # # # 上述准备
+            (3, self.add_walker, (5, 230, 1200)), # 小女孩
+            # # # # 上述准备
             (10, self.add_walker, (26, -28, -150, 90)),
             (0, self.add_walker, (10, -70, -200, -45)),
             (5, self.customer_say, (1, "Hey, RoboWaiter, come here for a moment!")),
-            (10, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "What drinks do you have here?"]]])), #6
+            (20, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "What drinks do you have here?"]]])), #6
             # 20 胖胖男到了 BrightTable6
             (2, self.customer_say, (1, "What kinds of coffee do you have?")),  # 10
             (2, self.customer_say, (1, "I'll have a cappuccino, please.")),  # 15
 
             # # 场景3：有位女士要杯水和冰红茶
+            (3, self.add_walker, (5, 230, 1200)),
+            (3, self.add_walker, (26, -30, -200, -90)),
+            (3, self.add_walker, (10, -80, -180, -45)),
+            ######
             (3, self.add_walkers,
              ([[[21, 65, 1000, -90], [32, -80, 850, 135], [1, 60, 420, 135], [29, -290, 400, 180]]])),
             (0, self.control_walker, (5, True, 50, 250, 1200, 180)),  # 设置id=4 的2小男孩随机游走红随机游走

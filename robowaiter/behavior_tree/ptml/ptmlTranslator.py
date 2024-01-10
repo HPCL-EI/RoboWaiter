@@ -1,6 +1,6 @@
 import shortuuid
 import py_trees as ptree
-from robowaiter.behavior_lib._base import Selector, Sequence
+from robowaiter.behavior_lib._base import Selector, Sequence, Inverter
 from antlr4 import *
 
 if "." in __name__:
@@ -99,8 +99,8 @@ class ptmlTranslator(ptmlListener):
         node.set_scene(self.scene)
 
         # if have 'not' decorator
-        if str(ctx.children[0]) == 'not':
-            upper_node = ptree.decorators.Inverter(node)
+        if str(ctx.children[1]) == 'Not':
+            upper_node = Inverter.Inverter(name="Inverter", child=node)
             # connect
             self.stack[-1].add_child(upper_node)
         else:

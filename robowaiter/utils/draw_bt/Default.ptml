@@ -1,17 +1,30 @@
-selector
-    cond On(Coffee,Bar)
-    sequence
-        cond Holding(Coffee)
-        selector
-            sequence
-                cond At(Robot,Bar)
-                act PutDown(Coffee,Bar)
-            act MoveTo(Bar)
-    sequence
-        cond At(Robot,Coffee)
-        selector
-            sequence
-                cond Holding(Nothing)
-                act PickUp(Coffee)
-            act PutDown(Anything,Anywhere)
-    act PutDown(Anything,Anywhere)
+    selector
+
+        sequence
+            cond At(Robot, Coffee)
+            selector
+                sequence
+                    cond Holding(Nothing)
+                    act PickUp(Coffee)
+                act PutDown(Anything, Anywhere)
+            selector
+                sequence
+                    cond Holding(Coffee)
+                    cond At(Robot, WaterTable)
+                    act PutDown(Coffee, WaterTable)
+                act MoveTo(WaterTable)
+
+
+        sequence
+            cond At(Robot, Coffee)
+            selector
+                sequence
+                    cond Holding(Nothing)
+                    act PickUp(Coffee)
+                act PutDown(Anything, Anywhere)
+            selector
+                sequence
+                    cond Holding(Coffee)
+                    cond At(Robot, BrightTable6)
+                    act PutDown(Coffee, BrightTable6)
+                act MoveTo(BrightTable6)

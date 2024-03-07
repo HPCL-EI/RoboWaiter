@@ -58,7 +58,7 @@ pip install -e .
 
 ## 2.4 快速入门
 
-1. 安装 UE 及 Harix 插件，打开默认项目并运行
+1. 下载[仿真器](https://drive.usercontent.google.com/open?id=1ZQ_Muf3b8kPgit-cIsf0VxsrMGKX8cx7&authuser=1)，解压并运行CafeSimulator.exe，即可打开仿真器，此时显示空场景，等待代码端生成场景并完成机器人交互。
 
 2. 不使用 UI 界面 ：运行 tasks_no_ui 文件夹下的任意场景即可实现机器人控制端与仿真器的交互
 

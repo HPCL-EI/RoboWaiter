@@ -40,7 +40,7 @@
            </font>
           </property>
           <property name="text">
-           <string>顾客列表：</string>
+           <string>Customer List</string>
           </property>
          </widget>
         </item>
@@ -59,7 +59,7 @@
            </font>
           </property>
           <property name="text">
-           <string>顾客历史对话：</string>
+           <string>History of Conversations</string>
           </property>
          </widget>
         </item>
@@ -142,7 +142,7 @@
            </font>
           </property>
           <property name="text">
-           <string>当前行为树</string>
+           <string>Current Behavior Tree</string>
           </property>
          </widget>
         </item>
@@ -195,7 +195,7 @@
              </font>
             </property>
             <property name="text">
-             <string>可达性地图</string>
+             <string>Accessibility Map</string>
             </property>
            </widget>
           </item>
@@ -220,7 +220,7 @@
              </font>
             </property>
             <property name="text">
-             <string>实例分割</string>
+             <string>Instance Segmentation</string>
             </property>
            </widget>
           </item>
@@ -245,7 +245,7 @@
              </font>
             </property>
             <property name="text">
-             <string>目标检测</string>
+             <string>Object Detection</string>
             </property>
            </widget>
           </item>
@@ -377,7 +377,7 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>任务演示：（播放动画时需等待动画播放完毕才会重置场景）</string>
+       <string>Task Demo: (Wait for animation to finish before resetting scene.)</string>
       </property>
      </widget>
     </item>
@@ -390,7 +390,7 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>说话</string>
+       <string>Speak</string>
       </property>
      </widget>
     </item>
@@ -416,7 +416,7 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>语义信息</string>
+       <string>Semantic Information</string>
       </property>
      </widget>
     </item>
@@ -431,7 +431,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>重置场景</string>
+         <string>Reset Scene</string>
         </property>
        </widget>
       </item>
@@ -444,7 +444,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>环境主动探索</string>
+         <string>Environment Exploration</string>
         </property>
        </widget>
       </item>
@@ -457,7 +457,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>视觉语言导航</string>
+         <string>Visual Language Navigation</string>
         </property>
        </widget>
       </item>
@@ -470,7 +470,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>视觉语言操作</string>
+         <string>Visual Language Manipulation</string>
         </property>
        </widget>
       </item>
@@ -483,7 +483,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>具身多轮对话</string>
+         <string>Embodied Multi-turn Dialogue</string>
         </property>
        </widget>
       </item>
@@ -496,7 +496,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>复杂具身任务</string>
+         <string>Complex Embodied Tasks</string>
         </property>
        </widget>
       </item>
@@ -509,7 +509,7 @@ p, li { white-space: pre-wrap; }
          </font>
         </property>
         <property name="text">
-         <string>自主具身任务</string>
+         <string>Autonomous Embodied Tasks</string>
         </property>
        </widget>
       </item>
@@ -545,7 +545,7 @@ p, li { white-space: pre-wrap; }
         <property name="insertPolicy">
          <enum>QComboBox::InsertAtBottom</enum>
         </property>
-        <property name="placeholderText">
+        <property name="placeholderText" stdset="0">
          <string extracomment="其他任务">其他任务</string>
         </property>
        </widget>

@@ -1,0 +1,6 @@
+
+Your task is to interpret customer instructions within a café setting and translate them into specific goals using logical expressions. Utilize the [Conditions] (e.g., RobotNear_<items_place>, On_<items><place>, Holding_<items>) and [Objects] (like 'Coffee', 'Table1', etc.) to construct these expressions.
+Apply logical operators (&, |, ~) to combine these elements appropriately.
+This process should accurately map each given instruction to a clear, actionable goal in the context of the café environment.
+
+

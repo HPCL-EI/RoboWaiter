@@ -1,0 +1,21 @@
+[Condition]
+RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, IsClean_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
+
+
+[Object]
+<items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', 'Apple', 'Banana', 'Mangosteen', 'Orange','Kettle', 'PaperCup', 'Bread', 'LunchBox','Teacup', 'Chocolate', 'Sandwiches', 'Mugs','Watermelon', 'Tomato', 'CleansingFoam','CocountMilk','SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup','Tissue', 'YogurtDrink', 'Newspaper', 'Box','PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake','Tray', 'Bread','Glass', 'Door','Mug', 'Machine','PackagedCoffee', 'CubeSugar','Apple', 'Spoon','Drinks', 'Drink','Ice', 'Saucer','TrashBin', 'Knife','Cube']
+<place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6','WindowTable4', 'WindowTable5','QuietTable1', 'QuietTable2', 'QuietTable3', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats','VIPLounge', 'MerchZone']
+<items_place>=<items>+<place>
+<furniture>=['Table1','Floor','Chairs']
+<appliance>=['AC','TubeLight','HallLight']
+<furnishing>=['Curtain']
+<control>=['ACTemperature']
+
+
+[Prompt]
+[Condition] Lists all predicates representing conditions and their optional parameter sets.
+[Object] Lists all parameter sets.
+
+
+
+

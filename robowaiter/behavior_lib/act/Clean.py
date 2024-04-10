@@ -25,17 +25,9 @@ class Clean(Act):
     @classmethod
     def get_info(cls,arg):
         info = {}
-        # info["pre"]= {f'Holding(Nothing)',f'Is(HallLight,On)'}
-        info["pre"] = {f'Holding(Nothing)'}
-        if arg == "Table1":
-            info["add"]= {f'Is(Table1,Clean)'}
-            info["del_set"] = {f'Is(Table1,Dirty)'}
-        elif arg == "Floor":
-            info["add"] = {f'Is(Floor,Clean)'}
-            info["del_set"] = {f'Is(Floor,Dirty)'}
-        elif arg == "Chairs":
-            info["add"] = {f'Is(Chairs,Clean)'}
-            info["del_set"] = {f'Is(Chairs,Dirty)'}
+        info["pre"]= {f'Holding(Nothing)',f'Not IsClean({arg})'}
+        info["add"] = {f'IsClean({arg})'}
+        info["del_set"] = {f'Not IsClean({arg})'}
         return info
 
     def _update(self) -> ptree.common.Status:

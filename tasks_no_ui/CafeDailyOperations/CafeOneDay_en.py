@@ -74,14 +74,14 @@ class SceneVLM(Scene):
 
             (8, self.remove_walkers, ([[0, 7, 8]])),
             (3, self.control_walker, (6, False, 100, 60, 520, 0)), # 10号变7号 男灰黑色排队往前,轮到他
-            (2, self.customer_say, (6, "好热呀！太阳也好大！可以")),
-            (20, self.control_walkers_and_say, ([[[6, True, 100, 60, 520, 0, "谢谢，这下凉快了"]]])),
+            (2, self.customer_say, (6, "It's so hot! The sun is so intense! Can we turn on the air conditioning?")),
+            (20, self.control_walkers_and_say, ([[[6, True, 100, 60, 520, 0, "Thank you, it's much cooler now."]]])),
 
 
             # # 场景8 结束了，删除所有顾客。此处增加自主探索发现空间比较暗，打开大厅灯
             (24, self.clean_walkers, ()),
             (1, self.add_walker, (17, 60, 1000)),# 增加警察，提醒下班啦
-            (3, self.control_walkers_and_say, ([[[0, False, 150, 60, 520, 0, "下班啦！别忘了打扫卫生。"]]])),
+            (3, self.control_walkers_and_say, ([[[0, False, 150, 60, 520, 0, "It's time to get off work! Don't forget to clean, tidy up the tables and chairs, mop the floor, and manage the curtains, air conditioning, and lights."]]])),
 
         ]
 

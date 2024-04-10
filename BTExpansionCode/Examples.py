@@ -1,5 +1,5 @@
 
-from OptimalBTExpansionAlgorithm_single_goal import Action
+from OptimalBTExpansionAlgorithm import Action
 
 
 # 本例子中，将 VacuumCup 放到 FrontDesk，比 MoveTo(Table) 再 Put(Table,VacuumCup) 的 cost 要小
@@ -63,7 +63,7 @@ def MakeCoffeeCost():
 
 
 
-# llm_test
+# test
 def Test():
     actions=[
         Action(name='a1', pre={6}, add={0,2,4}, del_set={1,5}, cost=1),

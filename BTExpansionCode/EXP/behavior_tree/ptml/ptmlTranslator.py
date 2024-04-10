@@ -1,6 +1,6 @@
 import shortuuid
 import py_trees as ptree
-from EXP.behavior_lib._base import Selector, Sequence
+from EXP.behavior_lib._base import Selector, Sequence, Inverter
 from antlr4 import *
 
 if "." in __name__:
@@ -39,19 +39,19 @@ class ptmlTranslator(ptmlListener):
     def enterTree(self, ctx: ptmlParser.TreeContext):
         type = str(ctx.internal_node().children[0])
 
-        if type== "sequence":
-            node = Sequence(name="Sequence", memory=False)
+        if type=="sequence":
+                node = Sequence(name="Sequence", memory=False)
         elif type=="selector":
-            node = Selector(name="Selector", memory=False)
-        elif type== "parallel":
-            tag = "parallel_" + short_uuid()
-            # threshold = int(ctx.children[1])
-            # default policy, success on all
-            node = ptree.composites.Parallel(
-                name=tag, policy=ptree.common.ParallelPolicy.SuccessOnAll
-            )
+                node = Selector(name="Selector", memory=False)
+        elif type =="parallel":
+                tag = "parallel_" + short_uuid()
+                # threshold = int(ctx.children[1])
+                # default policy, success on all
+                node = ptree.composites.Parallel(
+                    name=tag, policy=ptree.common.ParallelPolicy.SuccessOnAll
+                )
         else:
-            raise TypeError("Unknown Composite Type: {}".format(type))
+                raise TypeError("Unknown Composite Type: {}".format(type))
 
         self.stack.append(node)
 
@@ -79,7 +79,8 @@ class ptmlTranslator(ptmlListener):
 
         # if have params
         args = []
-        if len(ctx.children) > 4:
+        # if str(ctx.children[0]) != 'not' and len(ctx.children) > 4:
+        if ctx.action_parm():
             params = ctx.action_parm()
             for i in params.children:
                 if isinstance(i, ptmlParser.BooleanContext):
@@ -95,8 +96,15 @@ class ptmlTranslator(ptmlListener):
 
         node = eval(f"{name}({args})")
         node.set_scene(self.scene)
-        # connect
-        self.stack[-1].add_child(node)
+
+        # if have 'not' decorator
+        if str(ctx.children[1]) == 'Not':
+            upper_node = Inverter.Inverter(name="Inverter", child=node)
+            # connect
+            self.stack[-1].add_child(upper_node)
+        else:
+            # connect
+            self.stack[-1].add_child(node)
 
     # Exit a parse tree produced by ptmlParser#action_sign.
     def exitAction_sign(self, ctx: ptmlParser.Action_signContext):

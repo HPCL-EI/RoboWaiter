@@ -3,7 +3,7 @@ import numpy as np
 import copy
 import time
 
-from OptimalBTExpansionAlgorithm_single_goal import ControlBT,Leaf,generate_random_state,Action,state_transition,conflict
+from OptimalBTExpansionAlgorithm import ControlBT,Leaf,generate_random_state,Action,state_transition,conflict
 import re
 
 
@@ -24,15 +24,21 @@ class BTExpAlgorithm:
         self.traversed = []
         self.conditions = []
         self.conditions_index = []
+        self.traversed_state_num=0
+        self.fot_times =0
+        self.expand_conds = 0
+        self.tree_size = 0
 
     def run_algorithm_selTree(self, start, goal, actions):
+        self.traversed_state_num=0
         # 初始行为树只包含目标条件
         bt = ControlBT(type='cond')
         g_node = Leaf(type='cond', content=goal,mincost=0)
         bt.add_child([g_node])
-
+        self.expand_conds +=1
         self.conditions.append(goal)
         self.nodes.append(g_node)  # condition node list
+        self.traversed_state_num+=1
         # 尝试在初始状态执行行为树
         val, obj = bt.tick(start)
         canrun = False
@@ -40,6 +46,10 @@ class BTExpAlgorithm:
             canrun = True
         # 循环扩展，直到行为树能够在初始状态运行
         while not canrun:
+
+            self.fot_times += 1
+
+            # print("canrun:",canrun)
             index = -1
             for i in range(0, len(self.nodes)):
                 if self.nodes[i].content in self.traversed:
@@ -53,11 +63,25 @@ class BTExpAlgorithm:
                 return False
             # 根据所选择条件结点扩展子树
             subtree = ControlBT(type='?')
-            subtree.add_child([copy.deepcopy(c_node)])  # 子树首先保留所扩展结点
+            subtree.add_child([copy.deepcopy(c_node)])  # 子树首先保留所扩展结点 # copy
             c = c_node.content  # 子树所扩展结点对应的条件（一个文字的set）
+
+            if self.verbose:
+                print("选择扩展条件结点：",c)
+
+            if c != goal:
+                if c <= start:
+                    return bt
+
+            act_num = 0
 
             for i in range(0, len(actions)):  # 选择符合条件的行动，
                 # print("have action")
+
+                if c=={'RobotNear(Chips)', 'Holding(Nothing)'} and actions[i].name=='Clean(Chairs)0':
+                    xx=1
+
+
                 if not c & ((actions[i].pre | actions[i].add) - actions[i].del_set) <= set():
                     # print ("pass add")
                     if (c - actions[i].del_set) == c:
@@ -65,9 +89,11 @@ class BTExpAlgorithm:
                         c_attr = (actions[i].pre | c) - actions[i].add
                         valid = True
 
-                        # 这样剪枝存在错误性
-                        # if conflict(c_attr):
-                        #     continue
+                        # if "PickUp(ADMilk)0" in actions[i].name:
+                        #     xx = 1
+
+                        if conflict(c_attr):
+                            continue
 
                         for j in self.traversed:  # 剪枝操作
                             if j <= c_attr:
@@ -83,8 +109,16 @@ class BTExpAlgorithm:
                             sequence_structure.add_child([c_attr_node, a_node])
                             # 将顺序结构添加到子树
                             subtree.add_child([sequence_structure])
-
                             self.nodes.append(c_attr_node)
+                            self.expand_conds += 1
+                            act_num+=1
+                            # self.traversed_state_num+=1
+                            if self.verbose:
+                                print("完成扩展 a_node= %s,对应的新条件 c_attr= %s" \
+                                      % (actions[i].name, c_attr))
+
+            # print(act_num)
+            self.traversed_state_num += act_num
             # 将原条件结点c_node替换为扩展后子树subtree
             parent_of_c = c_node.parent
             parent_of_c.children[0] = subtree
@@ -95,6 +129,7 @@ class BTExpAlgorithm:
             canrun = False
             if val == 'success' or val == 'running':
                 canrun = True
+            self.tree_size = self.bfs_cal_tree_size_subtree(bt)
         return bt
 
 
@@ -111,11 +146,12 @@ class BTExpAlgorithm:
         subtree = ControlBT(type='?')
         if len(goal) > 1:
             for g in goal:
-                print("goal",g)
+                # print("goal",g)
                 bt_sel_tree = self.run_algorithm_selTree(start, g, actions)
-                print("bt_sel_tree.children",bt_sel_tree.children)
+                # print("bt_sel_tree.children",bt_sel_tree.children)
                 # print(bt_sel_tree.children[0])
-                subtree.add_child([copy.deepcopy(bt_sel_tree.children[0])])
+                # subtree.add_child([copy.deepcopy(bt_sel_tree.children[0])])
+                subtree.add_child([bt_sel_tree.children[0]])
             self.bt.add_child([subtree])
         else:
             self.bt = self.run_algorithm_selTree(start, goal[0], actions)
@@ -179,6 +215,46 @@ class BTExpAlgorithm:
         self.dfs_ptml_many_act(self.bt.children[0],is_root=True)
         self.ptml_string += '}\n'
         return self.ptml_string
+
+
+    def bfs_cal_tree_size(self):
+        from collections import deque
+        queue = deque([self.bt.children[0]])
+
+        if isinstance(self.bt.children[0], Leaf):
+            # print("扩展后的结点数=0")
+            return 0
+
+        count = 0
+        while queue:
+            current_node = queue.popleft()
+            count += 1
+            for child in current_node.children:
+                if isinstance(child, Leaf):
+                    count += 1
+                else:
+                    queue.append(child)
+        return count
+
+    def bfs_cal_tree_size_subtree(self,bt):
+        from collections import deque
+        queue = deque([bt.children[0]])
+
+        if isinstance(bt.children[0], Leaf):
+            # print("扩展后的结点数=0")
+            return 0
+
+        count = 0
+        while queue:
+            current_node = queue.popleft()
+            count += 1
+            for child in current_node.children:
+                if isinstance(child, Leaf):
+                    count += 1
+                else:
+                    queue.append(child)
+        return count
+
 
 if __name__ == '__main__':
 

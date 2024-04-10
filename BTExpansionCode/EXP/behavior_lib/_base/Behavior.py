@@ -14,13 +14,113 @@ class Bahavior(ptree.behaviour.Behaviour):
         '''
     scene = None
     print_name_prefix = ""
-    tables_for_placement = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3','BrightTable6'}
+
+    # tables_for_guiding = {"QuietTable1","QuietTable2",
+    #                       "BrightTable1","BrightTable2","BrightTable3","BrightTable4","BrightTable5","BrightTable6",
+    #                       'CoffeeTable','WaterTable','Table1', 'Table2', 'Table3'}
+    tables_for_guiding = set()
+
+    tables_for_placement = {
+        # 'Bar', 'Bar2',  'Table',
+        #                     'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3','WindowTable6',
+        #                     "QuietTable1", "QuietTable2",
+        #                     "BrightTable1", "BrightTable2", "BrightTable3", "BrightTable4", "BrightTable5",
+        'Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6', #'Table',
+        'WindowTable4', 'WindowTable5',
+        'QuietTable1', 'QuietTable2', 'QuietTable3', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats',
+        'VIPLounge', 'MerchZone' #20
+
+    }
+
+    all_place = tables_for_guiding | tables_for_placement
+
     all_object = {
-        'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
-        'Chips', 'NFCJuice', 'Bernachon', 'SpringWater'}
-    tables_for_guiding = {"QuietTable1","QuietTable2",
-                          "BrightTable1","BrightTable2","BrightTable3","BrightTable4","BrightTable5","BrightTable6",
-                          'CoffeeTable','WaterTable','Table1', 'Table2', 'Table3'}
+        'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup',
+        'Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', #'Tea' #15
+
+        'Apple', 'Banana', 'Mangosteen', 'Orange',
+        'Kettle', 'PaperCup', 'Bread', 'LunchBox',
+        'Teacup', 'Chocolate', 'Sandwiches', 'Mugs',
+        'Watermelon', 'Tomato', 'CleansingFoam','CocountMilk',
+        'SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup',
+        'Tissue', 'YogurtDrink', 'Newspaper', 'Box',
+        'PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake',
+        'Tray', 'Bread','Glass', 'Door',
+        'Mug', 'Machine','PackagedCoffee', 'CubeSugar',
+        'Apple', 'Spoon','Drinks', 'Drink',
+        'Ice', 'Saucer','TrashBin', 'Knife','Cube'
+        #45
+
+
+
+        # 'Coffee', 'Water', 'Dessert', 'Softdrink','Tea',
+        # 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
+        # 'Chips', 'NFCJuice', 'Bernachon', 'SpringWater',
+        # 'Watermelon', 'Tomato', 'CleansingFoam', 'CocountMilk',
+        #  'SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup',
+        #  'Tissue', 'YogurtDrink', 'Newspaper', 'Box',
+        #  'PaperCupStarbucks', 'CoffeeMachine', 'GingerLHand', 'GingerRHand',
+        #  'Straw', 'Cake', 'Tray', 'Bread',
+        #  'Glass', 'Door', 'Mug', 'Machine',
+        #  'PackagedCoffee', 'CubeSugar', 'Apple', 'Spoon',
+        #  'Drinks', 'Drink', 'Take-AwayCup', 'Saucer',
+        #  'TrashBin', 'Knife', 'Ginger', 'Floor',
+        #  'Roof', 'Wall'
+        }
+
+    # tables_for_placement = {'Bar', 'WaterTable', 'CoffeeTable', 'Table1'}
+
+    # easy——easy
+    # all_object = {
+    #     'Coffee', 'Water', 'Dessert', 'Yogurt'}
+
+
+
+    # all_object = {
+    #     'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
+    #     'Chips', 'NFCJuice', 'Bernachon', 'SpringWater',
+    #
+    #
+        # 'Watermelon', 'Tomato', 'CleansingFoam', 'CocountMilk',
+        #  'SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup',
+        #  'Tissue', 'YogurtDrink', 'Newspaper', 'Box',
+        #  'PaperCupStarbucks', 'CoffeeMachine', 'GingerLHand', 'GingerRHand',
+        #  'Straw', 'Cake', 'Tray', 'Bread',
+        #  'Glass', 'Door', 'Mug', 'Machine',
+        #  'PackagedCoffee', 'CubeSugar', 'Apple', 'Spoon',
+        #  'Drinks', 'Drink', 'Take-AwayCup', 'Saucer',
+        #  'TrashBin', 'Knife', 'Ginger', 'Floor',
+        #  'Roof', 'Wall'
+    # }
+
+    # all_object = {
+    #     'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
+    #     'Chips', 'NFCJuice', 'Bernachon', 'SpringWater'}
+
+    # all_object.update({'CleansingFoam', 'CocountMilk', 'Tomato'})
+
+    # all_object.update({'Watermelon', 'Tomato', 'CleansingFoam', 'CocountMilk',
+    #  'SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup',
+    #  'TrashBin', 'Knife', 'Ginger', 'Floor',
+    # 'Straw', 'Cake', 'Tray', 'Bread',
+    #  'Roof', 'Wall'})
+
+
+
+
+    # all_object.update({'Watermelon', 'Tomato', 'CleansingFoam', 'CocountMilk',
+    #  'SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup',
+    #  'Tissue', 'YogurtDrink', 'Newspaper', 'Box',
+    #  'PaperCupStarbucks', 'CoffeeMachine', 'GingerLHand', 'GingerRHand',
+    #  'Straw', 'Cake', 'Tray', 'Bread',
+    #  'Glass', 'Door', 'Mug', 'Machine',
+    #  'PackagedCoffee', 'CubeSugar', 'Apple', 'Spoon',
+    #  'Drinks', 'Drink', 'Take-AwayCup', 'Saucer',
+    #  'TrashBin', 'Knife', 'Ginger', 'Floor',
+    #  'Roof', 'Wall'})
+
+
+    # tables_for_guiding = set()
 
 
     # tables_for_placement = {'Bar', 'CoffeeTable', 'Table2',"BrightTable6", 'WaterTable'}

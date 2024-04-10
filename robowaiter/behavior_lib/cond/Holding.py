@@ -4,8 +4,8 @@ from robowaiter.behavior_lib._base.Cond import Cond
 
 class Holding(Cond):
     can_be_expanded = True
-    num_params = 2
-    valid_args = [tuple(Cond.all_object|{'Nothing'})]
+    num_params = 1
+    valid_args = tuple(Cond.all_object|{'Nothing'})
 
     def __init__(self,*args):
         super().__init__(*args)

@@ -128,8 +128,8 @@ class Robot(object):
         else:
             print('Warning: have none sub task sequence')
             self.scene.sub_task_seq = seq
-        # print("当前行为树为：")
-        # print_tree_from_root(self.bt.root)
+        print("当前行为树为：")
+        print_tree_from_root(self.bt.root)
         print("行为树扩展完成！")
 
         self.scene.draw_current_bt()

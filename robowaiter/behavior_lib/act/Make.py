@@ -25,13 +25,13 @@ class Make(Act):
     @classmethod
     def get_info(cls,arg):
         info = {}
-        info["pre"]= {f'Holding(Nothing)'}
-        info['del_set'] = set()
-        info['add'] = {f'Exist({arg})'}
+        info["pre"]= {f'Holding(Nothing)',f'Not Exists({arg})'}
+        info['del_set'] = {f'Not Exists({arg})'}
+        info['add'] = {f'Exists({arg})'}
         if arg == cls.valid_args[0]:
-            info["add"] |= {f'On({arg},CoffeeTable)'}
+            info["add"] |= {f'On({arg},CoffeeStation)'}
         elif arg == cls.valid_args[1]:
-            info["add"] |= {f'On({arg},WaterTable)'}
+            info["add"] |= {f'On({arg},WaterStation)'}
         elif arg == cls.valid_args[2]:
             info["add"] |= {f'On({arg},Bar)'}
         info['cost'] = 2

@@ -120,9 +120,12 @@ class SceneUI(Scene):
 
             semantic_info_str = ""
             # semantic_info_str += f'检测行人数量：{walker_detect_count}' + "\n\n"
-            semantic_info_str += f'检测物体数量：{obj_detect_count}' + "\n\n"
-            semantic_info_str += f'更新语义信息：{new_add_info}' + "\n\n"
-            semantic_info_str += f'已存语义信息：{self.infoCount}' + "\n"
+            # semantic_info_str += f'检测物体数量：{obj_detect_count}' + "\n\n"
+            # semantic_info_str += f'更新语义信息：{new_add_info}' + "\n\n"
+            # semantic_info_str += f'已存语义信息：{self.infoCount}' + "\n"
+            semantic_info_str += f'Object Count Detection：{obj_detect_count}' + "\n\n"
+            semantic_info_str += f'Updating Semantic Information：{new_add_info}' + "\n\n"
+            semantic_info_str += f'Stored Semantic Information：{self.infoCount}' + "\n"
 
             self.infoCount = added_info
 
@@ -280,8 +283,8 @@ class SceneUI(Scene):
             # 场景1：带小女孩找阳光下的空位
             (3, self.add_walker, (5, 230, 1200)),  # 0号"Girl02_C_3"
             (1, self.control_walker, (0, False, 200, 60, 520, 0)),
-            (9, self.customer_say, (0, "早上好呀，我想找个能晒太阳的地方。")),
-            (1, self.customer_say, (0, "你可以带我过去嘛？")),#可以带我过去嘛？
+            (9, self.customer_say, (0, "Good morning! I'm looking for a place where I can enjoy the sunshine.")),
+            (1, self.customer_say, (0, "Could you take me there?")),#可以带我过去嘛？
             (13, self.control_walker, (0, False, 50, 140, 1200, 180)),  # 小女孩站在了 BrightTable1 旁边就餐啦
             #
             # # # 场景2：有个胖胖男人点单交流并要咖啡，帮他送去角落的桌子
@@ -289,11 +292,11 @@ class SceneUI(Scene):
             # # # 上述准备
             (10, self.add_walker, (26, -28, -150, 90)),
             (0, self.add_walker, (10, -70, -200, -45)),
-            (9, self.customer_say, (1, "嘿，RoboWaiter，过来一下！")),
-            (10, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "你们这有什么饮料嘛？"]]])), #6
+            (9, self.customer_say, (1, "Hey, RoboWaiter, come here for a moment!")),
+            (10, self.control_walkers_and_say, ([[[1, False, 100, -18, -200, -90, "What drinks do you have here?"]]])), #6
             # 20 胖胖男到了 BrightTable6
-            (2, self.customer_say, (1, "咖啡有哪些呢？")),  # 10
-            (2, self.customer_say, (1, "来杯卡布奇诺吧。")),  # 15
+            (2, self.customer_say, (1, "What kinds of coffee do you have?")),  # 10
+            (2, self.customer_say, (1, "I'll have a cappuccino, please.")),  # 15
 
             # # 场景3：有位女士要杯水和冰红茶
             # (0, self.add_walker, (5, 230, 1200)),
@@ -305,15 +308,15 @@ class SceneUI(Scene):
             (0, self.control_walker, (5, True, 50, 250, 1200, 180)),  # 设置id=4 的2小男孩随机游走红随机游走
             (0, self.add_walker, (48, 60, 520, 0)),  # 生成他妈妈
             (0, self.add_walkers, ([[[48, 60, 520, 0], [31, 60, 600, -90], [20, 60, 680, -90], [9, 60, 760, -90]]])),
-            (50, self.customer_say, (7, "哎呦，今天这么多人，还有空位吗？")),  # 女士问 50
-            (10, self.customer_say, (7, "我带着孩子呢，想要宽敞亮堂的地方。")),  # 女士问
-            (8, self.customer_say, (7, "大厅的桌子好啊，快带我去呀！")),
+            (50, self.customer_say, (7, "Wow, it's so crowded today, are there any seats available?")),  # 女士问 50
+            (10, self.customer_say, (7, "I'm with my child, I'd like a spacious and well-lit spot.")),  # 女士问
+            (8, self.customer_say, (7, "The tables in the hall look good, please take me there!")),
             (15, self.control_walker, (7, False, 50, -250, 480, 0)),  # #290, 400
-            (3, self.customer_say, (7, "我想来杯水，帮我孩子拿个酸奶吧。")),
+            (3, self.customer_say, (7, "I'd like a glass of water, and please get a yogurt for my child.")),
             # # ### 9号灰色男 排队排着排着，不排了
             (0, self.control_walker, (10, False, 100, 100, 760, 180)),
             (0, self.control_walker, (10, True, 100, 0, 0, 180)),
-            (110, self.customer_say, (7, "谢谢你的水和酸奶！")),  # 倒水+取放酸奶 90s 这次是110
+            (110, self.customer_say, (7, "Thank you for the water and yogurt!")),  # 倒水+取放酸奶 90s 这次是110
 
             # # # 场景4：三人排队点单，女士要保温杯
             # (0, self.add_walker, (5, 230, 1200)),
@@ -328,27 +331,31 @@ class SceneUI(Scene):
             # (0, self.add_walker, (9, 60, 760, -90)), # 男灰黑色排队
             # (0, self.add_walker, (29, -290, 400, 180)), # # 青色女人占了位置 BrightTable5
             # # # # # # 上述准备 10开始
-            (10, self.control_walkers_and_say, ([[[8, False, 100, 60, 520, 180, "我昨天保温杯好像落在你们咖啡厅了，你看到了吗？"]]])),
-            (9, self.customer_say, (8,"你可以帮我拿来吗，我在前门的桌子前等你。")),
+            (10, self.control_walkers_and_say, ([[[8, False, 100, 60, 520, 180, "I think I left my VacuumCup in your café yesterday, have you seen it?"]]])),
+            (9, self.customer_say, (8,"Can you bring it to me? I'm waiting at the table near the front door.")),
             (1, self.control_walker,(8, False, 80, -10, 520, 90)),# 红女士在吧台前后退一步
             (1, self.control_walker, (8, False, 80, 240, 1000, -45)), # 红女士走到Table1前
             (1, self.control_walker, (9, False, 100, 60, 600, -90)), # 大胖男排队往前走一步
             (2, self.control_walker, (10, False, 100, 60, 680, -90)), # 男灰黑色排队往前走一步
-            (15, self.customer_say, (8,"就是这个杯子！找到啦，好开心！")), # 红女士在Table1前
-            (5, self.customer_say, (8, "不用了。")),  # 红女士在Table1前
+            (15, self.customer_say, (8,"That's the one! Found it, I'm so happy!")), # 红女士在Table1前
+            (5, self.customer_say, (8, "No need anymore.")),  # 红女士在Table1前
 
+
+            # (8, self.remove_walkers, ([[0, 7, 8]])),
+            # (3, self.control_walker, (6, False, 100, 60, 520, 0)), # 10号变7号 男灰黑色排队往前,轮到他
+            # (8, self.customer_say, (6, "还有酸奶吗")),
+            # (8, self.customer_say, (6, "那好吧，那就先把窗帘给我关上，再开个空调")),
+            # (35, self.control_walkers_and_say, ([[[6, True, 100, 60, 520, 0, "谢谢，这下凉快了"]]])),
 
             (8, self.remove_walkers, ([[0, 7, 8]])),
-            (3, self.control_walker, (6, False, 100, 60, 520, 0)), # 10号变7号 男灰黑色排队往前,轮到他
-            (8, self.customer_say, (6, "还有酸奶吗")),
-            (8, self.customer_say, (6, "那好吧，那就先把窗帘给我关上，再开个空调")),
-            (35, self.control_walkers_and_say, ([[[6, True, 100, 60, 520, 0, "谢谢，这下凉快了"]]])),
-
+            (3, self.control_walker, (6, False, 100, 60, 520, 0)),  # 10号变7号 男灰黑色排队往前,轮到他
+            (2, self.customer_say, (6, "It's so hot! The sun is so intense! Can we turn on the air conditioning?")),
+            (20, self.control_walkers_and_say, ([[[6, True, 100, 60, 520, 0, "Thank you, it's much cooler now."]]])),
 
             # # 场景8 结束了，删除所有顾客。此处增加自主探索发现空间比较暗，打开大厅灯
             (28, self.clean_walkers,()),
             (1, self.add_walker, (17, 60, 1000)),# 增加警察，提醒下班啦
-            (3, self.control_walkers_and_say, ([[[0, False, 150, 60, 520, 0, "下班啦！别忘了打扫卫生。"]]])),
+            (3, self.control_walkers_and_say, ([[[0, False, 150, 60, 520, 0, "It's time to get off work! Don't forget to clean, tidy up the tables and chairs, mop the floor, and manage the curtains, air conditioning, and lights."]]])),
             (10, self.control_walker, (0, False, 100, 60, 1000, 0)),
             (4, self.clean_walkers, ())
 

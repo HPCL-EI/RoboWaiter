@@ -1,0 +1,28 @@
+[Condition]
+RobotNear_<food_place>, On_<food>_<place>, Holding_<items>, Exists_<items>, IsClean_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
+
+[Object]
+<items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater',
+'Apple','Banana','Mangosteen','Orange','Glass','Tray','CoconutMilk','Kettle','PaperCup','Bread','Cake','LunchBox','Teacup','Tissue','Chocolate','Sandwiches','Mugs','Ice']
+<place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3','WindowTable4','WindowTable5','WindowTable6','QuietTable1','QuietTable2', 'QuietTable3','ReadingNook','Entrance','Exit','LoungeArea','HighSeats','VIPLounge','MerchZone']
+<food_place>=<food>+<place>
+<furniture>=['Table1','Floor','Chairs']
+<appliance>=['AC','TubeLight','HallLight']
+<furnishing>=['Curtain']
+<control>=['ACTemperature']
+
+
+[Prompt]
+[Condition] Lists all predicates representing conditions and their optional parameter sets.
+[Object] Lists all parameter sets.
+Your task is to interpret customer instructions within a café setting and translate them into specific goals using logical expressions. Utilize the 'Conditions' (e.g., RobotNear_<food_place>, On_<items><place>, Holding<food>) and 'Objects' (like 'Coffee', 'Table1', etc.) to construct these expressions.
+Apply logical operators (&, |, ~) to combine these elements appropriately.
+& (AND Operator): Combines conditions such that the result is true only if both conditions are true.
+| (OR Operator): Combines conditions such that the result is true if at least one of the conditions is true.
+~ (NOT Operator): Negates or reverses the truth value of a single condition.
+This process should accurately map each given instruction to a clear, actionable goal in the context of the café environment.
+Please generate directly interpretable predicate formulas without additional explanations.
+The predicate formulas can be converted into disjunctive paradigms (DNFs) using the python package sympy.to_dnf.
+
+
+

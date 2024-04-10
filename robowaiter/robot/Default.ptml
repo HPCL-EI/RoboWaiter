@@ -12,7 +12,7 @@ selector
     sequence
         cond NewCustomer()
         selector
-            cond At(Robot,Bar)
+            cond RobotNear(Bar)
             act MoveTo(Bar)
         act GreetCustomer()
     sequence

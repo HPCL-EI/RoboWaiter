@@ -59,9 +59,12 @@ def dot_tree(
         elif isinstance(node, composites.Parallel):
             attributes = ('parallelogram', 'lightgold', 'black')
         elif isinstance(node, decorators.Decorator):
-            attributes = ('ellipse', 'ghostwhite', 'black')
+            attributes = ('diamond', 'orange', 'black')
+            # attributes = ('ellipse', 'ghostwhite', 'black')
         elif node.type =="Act":
             attributes = ('box', 'lightgreen', 'black')
+        # elif node.type =="Inverter":
+        #     attributes = ('diamond', 'lightred', 'black')
         else:
             attributes = ('ellipse', '#FFFF80', 'black')
 
@@ -115,6 +118,8 @@ def dot_tree(
             node_name = "&rarr;"
         if node_name == "Selector":
             node_name = "?"
+        if node_name == "Inverter":
+            node_name = "!"
         return node_name
 
     fontsize = 20

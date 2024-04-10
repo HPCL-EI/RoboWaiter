@@ -33,7 +33,7 @@ create_sub_task
 Hey, RoboWaiter, come here for a moment!
 I'm on my way, please wait a moment!
 create_sub_task
-{"goal":"At(Robot,BrightTable6)"}
+{"goal":"RobotNear(BrightTable6)"}
 
 What drinks do you have here?
 Our coffee shop offers a variety of flavored coffees, water, iced black tea, yogurt drinks, and also desserts like pastries and cakes. What would you like to order?
@@ -53,12 +53,12 @@ Alright, I understand. We recommend the tables in the hall, where the space is m
 The tables in the hall look good, please take me there!
 Okay, great, please follow me.
 create_sub_task
-{"goal":"At(Robot,WaterTable)"}
+{"goal":"RobotNear(WaterTable)"}
 
 I'd like a glass of water, and please get a yogurt for my child.
 Ok, no problem, please wait a moment!
 create_sub_task
-{"goal":"On(Water,WaterTable),On(Yogurt,WaterTable)"}
+{"goal":"On(Water,WaterTable)&On(Yogurt,WaterTable)"}
 
 
 I think I left my VacuumCup in your café yesterday, have you seen it?
@@ -72,7 +72,16 @@ create_sub_task
 {"goal":"On(VacuumCup,Table1)"}
 
 
+It's so hot! The sun is so intense! Can we turn on the air conditioning?
+Yes, we can turn on the air conditioning.
+create_sub_task
+{"goal":"Low(ACTemperature)"}
 
+
+It's time to get off work! Don't forget to clean, tidy up the tables and chairs, mop the floor, and manage the curtains, air conditioning, and lights.
+Got it! Will do.
+create_sub_task
+{"goal":"IsClean(Table1)&IsClean(Floor)&IsClean(Chairs)&~Active(AC)&~Active(TubeLight)&~Active(HallLight)&Closed(Curtain)"}
 
 
 打开空调并降低空调温度
@@ -111,3 +120,25 @@ I'll have a cappuccino, please.
 Ok, please wait a moment!
 create_sub_task
 {"goal":"On(Coffee,BrightTable6)"}
+
+Coffee
+好的，没问题
+create_sub_task
+{"goal":"On_Coffee_WaterTable"}
+
+
+It's quite toasty inside, could you please lower the air conditioning temperature?
+Of course! I'll lower the air conditioning for you.
+create_sub_task
+{"goal":"Low_ACTemperature"}
+
+Could you please not put the carton drink on table one and close the curtain?
+Sure, I'll do that now.
+create_sub_task
+{"goal":"On_Softdrink_Bar & Closed_Curtain"}
+
+
+Could you please turn on the coffee machine at the bar, and make sure the floor is clean or the tube light is off? I enjoy my coffee in a cozy environment.
+Sure, I'll do that now.
+create_sub_task
+{"goal":"On_Coffee_Bar & IsClean_Floor"}

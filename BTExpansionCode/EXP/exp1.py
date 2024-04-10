@@ -1,14 +1,14 @@
 
 
 from utils.bt.load import load_behavior_tree_lib
-from OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm
+from OptimalBTExpansionAlgorithm_cond2act import Action,OptBTExpAlgorithm
 import random
 import copy
 from tabulate import tabulate
 import numpy as np
 
 from sympy import symbols, Not, Or, And, to_dnf
-from OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm
+from OptimalBTExpansionAlgorithm_cond2act import Action,OptBTExpAlgorithm
 from BTExpansionAlgorithm import BTExpAlgorithm # 调用最优行为树扩展算法
 import time
 

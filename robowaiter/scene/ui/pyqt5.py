@@ -60,8 +60,8 @@ def run_scene(scene_cls,robot_cls,scene_queue,ui_queue):
 example_list = ("AEM","VLN","VLM",'GQA',"OT","AT","reset")
 more_example_list = ("VLM_AC","CafeDaily")
 dic_more2zh={
-    "VLM_AC":"开空调并调节空调温度",
-    "CafeDaily":"咖啡厅的一天"
+    "VLM_AC":"AC Settings",
+    "CafeDaily":"A day at the café"
 }
 more_example_list_zh = [value for value in dic_more2zh.values()]
 
@@ -115,7 +115,7 @@ class UI(QMainWindow, Ui_MainWindow):
         lineEdit = QLineEdit()
         lineEdit.setReadOnly(True)  # 设置只读
         lineEdit.setAlignment(Qt.AlignCenter)  # 设置文字居中
-        lineEdit.setPlaceholderText("请选择其他任务")
+        lineEdit.setPlaceholderText("Please choose more tasks.")
         self.cb_task.setLineEdit(lineEdit)
 
 
@@ -129,7 +129,7 @@ class UI(QMainWindow, Ui_MainWindow):
         # self.drag_start_position = QPoint()  # 记录鼠标按下时的位置
 
         self.cb_task.setCurrentIndex(-1)
-        self.cb_task.setPlaceholderText("请选择更多任务")
+        self.cb_task.setPlaceholderText("Please choose more tasks.")
 
         # 多个添加条目
         self.cb_task.addItems(more_example_list_zh)
@@ -172,7 +172,7 @@ class UI(QMainWindow, Ui_MainWindow):
         if function_call:
             return
         if role == "function":
-            new_chat = f'Robot:\n 工具调用-{chat["name"]}\n'
+            new_chat = f'Robot:\n Function Call-{chat["name"]}\n'
         elif role == "user":
             new_chat = f'{customer_name}:\n {content}\n'
         else:

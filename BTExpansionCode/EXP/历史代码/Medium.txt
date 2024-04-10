@@ -1,0 +1,137 @@
+Instruction: Please bring coffee to Bar and turn on the tube light.
+Goal: On_Coffee_Bar & Active_TubeLight
+
+Instruction: Deliver water to Table3 and ensure the floor is clean.
+Goal: On_Water_Table3 & IsClean_Floor
+
+Instruction: Serve dessert at Table2 or bring a soft drink to Table1.
+Goal: On_Dessert_Table2 | On_Softdrink_Table1
+
+Instruction: Please place the bottled drink on CoffeeTable and check if the hall light is on.
+Goal: On_BottledDrink_CoffeeTable & Active_HallLight
+
+Instruction: Ensure yogurt is on Table1 and the air conditioner is active.
+Goal: On_Yogurt_Table1 & Active_AC
+
+Instruction: Deliver ADMilk to Bar2 and close the curtain.
+Goal: On_ADMilk_Bar2 & Closed_Curtain
+
+Instruction: Place milk drink on WaterTable or turn on the tube light.
+Goal: On_MilkDrink_WaterTable | Active_TubeLight
+
+Instruction: Bring milk to Table3 and ensure the chairs are clean.
+Goal: On_Milk_Table3 & IsClean_Chairs
+
+Instruction: Serve a vacuum cup at Bar or check if AC is active.
+Goal: On_VacuumCup_Bar | Active_AC
+
+Instruction: Deliver chips to Table1 and turn on the hall light.
+Goal: On_Chips_Table1 & Active_HallLight
+
+Instruction: Bring NFCJuice to Table2 or ensure the floor is clean.
+Goal: On_NFCJuice_Table2 | IsClean_Floor
+
+Instruction: Serve Bernachon at BrightTable6 and activate the air conditioner.
+Goal: On_Bernachon_BrightTable6 & Active_AC
+
+Instruction: Place ADMilk on CoffeeTable and close the curtain.
+Goal: On_ADMilk_CoffeeTable & Closed_Curtain
+
+Instruction: Ensure there is SpringWater at Table1 or Table2 has a soft drink.
+Goal: On_SpringWater_Table1 | On_Softdrink_Table2
+
+Instruction: Bring coffee to Bar and make sure the tube light is on.
+Goal: On_Coffee_Bar & Active_TubeLight
+
+Instruction: Deliver water to Bar2 or check if the hall light is active.
+Goal: On_Water_Bar2 | Active_HallLight
+
+Instruction: Serve dessert at WaterTable and turn on the air conditioner.
+Goal: On_Dessert_WaterTable & Active_AC
+
+Instruction: Place the bottled drink on Table3 and tidy up the chairs.
+Goal: On_BottledDrink_Table3 & IsClean_Chairs
+
+Instruction: Ensure yogurt is on BrightTable6 and the curtain is closed.
+Goal: On_Yogurt_BrightTable6 & Closed_Curtain
+
+Instruction: Deliver ADMilk to Table1 and turn on the tube light.
+Goal: On_ADMilk_Table1 & Active_TubeLight
+
+Instruction: Place milk drink on Table2 or ensure the floor is clean.
+Goal: On_MilkDrink_Table2 | IsClean_Floor
+
+Instruction: Bring milk to CoffeeTable and check if AC is active.
+Goal: On_Milk_CoffeeTable & Active_AC
+
+Instruction: Serve a vacuum cup at Table3 or close the curtain.
+Goal: On_VacuumCup_Table3 | Closed_Curtain
+
+Instruction: Deliver chips to WaterTable and turn on the hall light.
+Goal: On_Chips_WaterTable & Active_HallLight
+
+Instruction: Bring NFCJuice to BrightTable6 and ensure the chairs are clean.
+Goal: On_NFCJuice_BrightTable6 & IsClean_Chairs
+
+Instruction: Serve Bernachon at Table1 or activate the air conditioner.
+Goal: On_Bernachon_Table1 | Active_AC
+
+Instruction: Place ADMilk on Table2 and close the curtain.
+Goal: On_ADMilk_Table2 & Closed_Curtain
+
+Instruction: Ensure there is SpringWater at Bar or Bar2 has a soft drink.
+Goal: On_SpringWater_Bar | On_Softdrink_Bar2
+
+Instruction: Bring coffee to WaterTable and make sure the tube light is on.
+Goal: On_Coffee_WaterTable & Active_TubeLight
+
+Instruction: Deliver water to BrightTable6 or check if the hall light is active.
+Goal: On_Water_BrightTable6 | Active_HallLight
+
+Instruction: Serve dessert at Table1 and turn on the air conditioner.
+Goal: On_Dessert_Table1 & Active_AC
+
+Instruction: Place the bottled drink on Table2 and tidy up the chairs.
+Goal: On_BottledDrink_Table2 & IsClean_Chairs
+
+Instruction: Ensure yogurt is on Table3 and the curtain is closed.
+Goal: On_Yogurt_Table3 & Closed_Curtain
+
+Instruction: Deliver ADMilk to CoffeeTable and turn on the tube light.
+Goal: On_ADMilk_CoffeeTable & Active_TubeLight
+
+Instruction: Place milk drink on BrightTable6 or ensure the floor is clean.
+Goal: On_MilkDrink_BrightTable6 | IsClean_Floor
+
+Instruction: Bring milk to Table1 and check if AC is active.
+Goal: On_Milk_Table1 & Active_AC
+
+Instruction: Serve a vacuum cup at Table2 or close the curtain.
+Goal: On_VacuumCup_Table2 | Closed_Curtain
+
+Instruction: Deliver chips to WaterTable and turn on the hall light.
+Goal: On_Chips_WaterTable & Active_HallLight
+
+Instruction: Bring NFCJuice to CoffeeTable and ensure the chairs are clean.
+Goal: On_NFCJuice_CoffeeTable & IsClean_Chairs
+
+Instruction: Serve Bernachon at Table3 or activate the air conditioner.
+Goal: On_Bernachon_Table3 | Active_AC
+
+Instruction: Place ADMilk on BrightTable6 and close the curtain.
+Goal: On_ADMilk_BrightTable6 & Closed_Curtain
+
+Instruction: Ensure there is SpringWater at Table1 or Table2 has a soft drink.
+Goal: On_SpringWater_Table1 | On_Softdrink_Table2
+
+Instruction: Bring coffee to Table3 and make sure the tube light is on.
+Goal: On_Coffee_Table3 & Active_TubeLight
+
+Instruction: Deliver water to CoffeeTable or check if the hall light is active.
+Goal: On_Water_CoffeeTable | Active_HallLight
+
+Instruction: Serve dessert at Table2 and turn on the air conditioner.
+Goal: On_Dessert_Table2 & Active_AC
+
+Instruction: Place the bottled drink on Bar and tidy up the chairs.
+Goal: On_BottledDrink_Bar & IsClean_Chairs

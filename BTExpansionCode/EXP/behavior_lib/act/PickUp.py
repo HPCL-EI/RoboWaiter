@@ -16,19 +16,18 @@ class PickUp(Act):
     @classmethod
     def get_info(cls,arg):
         info = {}
-        info["pre"] = {f'At(Robot,{arg})','Holding(Nothing)'}
-        info["add"] = {f'Holding({arg})'}
-        info["del_set"] = {f'Holding(Nothing)',f'Exist({arg})'} #,
-        for place in cls.valid_args:
+        info["pre"] = {f'RobotNear({arg})','Holding(Nothing)'}
+
+        # info["pre"] = {f'RobotNear({arg})', 'Holding(Nothing)',f'Not Holding({arg})'}
+        # info["pre"] |= {f'Not Holding({obj})' for obj in cls.all_object}
+
+        info["add"] = {f'Holding({arg})','Not Holding(Nothing)',f'Not Exists({arg})'}
+        info["del_set"] = {f'Not Holding({arg})',f'Holding(Nothing)',f'Exists({arg})'}
+        for place in cls.all_place:
             info["del_set"] |= {f'On({arg},{place})'}
+            info["add"] |= {f'Not On({arg},{place})'}
         info['cost'] = 2
 
-        # if arg != 'Anything':
-        #     info['cost'] = 1
-        # else:
-        #     info['cost'] = 0
-        #
-        #     info["pre"] = {}
 
         return info
 

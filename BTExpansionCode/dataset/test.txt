@@ -1,0 +1,2 @@
+Instruction: Juice to table six, please. If you're out of juice, coffee's fine. Also, it's a bit chilly here – any chance you could turn up the heat?
+On_Chips_WindowTable6 & (On_NFCJuice_WindowTable6 | On_Coffee_WindowTable6) & (~Closed_Curtain | ~Low_ACTemperature)

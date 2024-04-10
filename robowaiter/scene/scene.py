@@ -214,16 +214,30 @@ class Scene:
         "chat_list": [],  # 未处理的顾客的对话, (顾客的位置,顾客对话的内容)
         "sub_goal_list": [],  # 子目标列表
         "status": None,  # 仿真器中的观测信息，见下方详细解释
-        "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
-                          'Exist(Yogurt)', 'Exist(BottledDrink)','Exist(Softdrink)',
-                          # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
-                          # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
-                          'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)',
-                          'Holding(Nothing)',
-                          # 'Holding(Yogurt)',
-                          'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
-                          'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
-                          'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+        # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
+        #                   'Exist(Yogurt)', 'Exist(BottledDrink)','Exist(Softdrink)',
+        #                   # 'On(Yogurt,Bar)','On(BottledDrink,Bar)',
+        #                   # 'Exist(Softdrink)', 'On(Softdrink,Table1)',
+        #                   'Exist(Chips)', 'Exist(NFCJuice)', 'Exist(Bernachon)', 'Exist(ADMilk)', 'Exist(SpringWater)',
+        #                   'Holding(Nothing)',
+        #                   # 'Holding(Yogurt)',
+        #                   'Exist(VacuumCup)', 'On(VacuumCup,Table2)',
+        #                   'Is(HallLight,Off)', 'Is(TubeLight,On)', 'Is(Curtain,On)',
+        #                   'Is(Table1,Dirty)', 'Is(Floor,Dirty)', 'Is(Chairs,Dirty)'},
+
+    "condition_set": {'RobotNear(Bar)',
+                        'Not Active(AC)','Not Active(HallLight)','Active(TubeLight)','Not Closed(Curtain)',
+                        'Not Exists(Coffee)','Not Exists(Water)','Not Exists(Dessert)',
+                        'Holding(Nothing)',
+                        'Not IsClean(Table1)', 'Not IsClean(Floor)', 'Not IsClean(Chairs)',
+                        'On(Softdrink,Table1)','On(VacuumCup,Table2)',
+
+            # 'On(Yogurt,Bar)','On(BottledDrink,Bar)','On(ADMilk,Bar)','On(Chips,Bar)',
+            # 'On(Softdrink,Table1)', 'On(Softdrink,Table3)',
+            # 'On(ADMilk,Bar)','On(Bernachon,Bar)','On(SpringWater,Bar2)','On(MilkDrink,Bar)',
+            # 'On(VacuumCup,Table2)',
+            },
+
 
         # "condition_set": {'At(Robot,Bar)', 'Is(AC,Off)',
         #           'Exist(Yogurt)','Exist(VacuumCup)',
@@ -272,7 +286,6 @@ class Scene:
     def __init__(self, robot=None, sceneID=0):
         self.stub = GrabSim_pb2_grpc.GrabSimStub(channel)
 
-
         self.robot = robot
 
         self.sceneID = sceneID
@@ -282,7 +295,7 @@ class Scene:
         self.sub_task_seq = None
         os.makedirs(self.output_path,exist_ok=True)
 
-        self.show_bubble = False
+        self.show_bubble = True
         # 是否展示UI
         self.show_ui = False
         # 图像分割
@@ -316,10 +329,31 @@ class Scene:
         }
 
         # 1-7 正常执行, 8-10 控灯操作移动到6, 11-12窗帘操作不需要移动,
-        self.op_dialog = ["", "制作咖啡", "倒水", "夹点心", "拖地", "擦桌子", "开筒灯", "搬椅子",  # 1-7
-                          "关筒灯", "开大厅灯", "关大厅灯", "关闭窗帘", "打开窗帘",  # 8-12
-                          "调整空调开关", "调高空调温度", "调低空调温度",  # 13-15
-                          "抓握物体", "放置物体"]  # 16-17
+        # self.op_dialog = ["", "制作咖啡", "倒水", "夹点心", "拖地", "擦桌子", "开筒灯", "搬椅子",  # 1-7
+        #                   "关筒灯", "开大厅灯", "关大厅灯", "关闭窗帘", "打开窗帘",  # 8-12
+        #                   "调整空调开关", "调高空调温度", "调低空调温度",  # 13-15
+        #                   "抓握物体", "放置物体"]  # 16-17
+        self.op_dialog = [
+            "",  # 空字符串，可能用作默认值或占位符
+            "Making Coffee",  # 制作咖啡
+            "Pouring Water",  # 倒水
+            "Grabbing Snacks",  # 抓取零食
+            "Mopping Floor",  # 拖地
+            "Wiping Table",  # 擦桌子
+            "Turning on Tube Light",  # 打开灯管灯
+            "Moving Chairs",  # 移动椅子
+            "Turning off Tube Light",  # 关闭灯管灯
+            "Turning on Hall Light",  # 打开大厅灯
+            "Turning off Hall Light",  # 关闭大厅灯
+            "Closing Curtains",  # 关闭窗帘
+            "Opening Curtains",  # 打开窗帘
+            "Toggling Air Conditioning",  # 切换空调状态
+            "Increasing AC Temperature",  # 提高空调温度
+            "Decreasing AC Temperature",  # 降低空调温度
+            "Grasping Object",  # 抓取物体
+            "Placing Object"  # 放置物体
+        ]
+
         # 动画控制的执行步骤数
         self.op_act_num = [0, 3, 4, 6, 3, 2, 0, 1,
                            0, 0, 0, 0, 0,
@@ -800,7 +834,7 @@ class Scene:
     def chat_bubble(self, message):
         self.stub.ControlRobot(
             GrabSim_pb2.ControlInfo(
-                scene=self.sceneID, type=0, action=1, content=message.strip()
+                scene=self.sceneID, type=0, action=1, content=message #message.strip()
             )
         )
 
@@ -1224,7 +1258,7 @@ class Scene:
     # 执行过程: Robot输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
     def op_task_execute(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         #id = 196  # Glass = 188+x, Plate = 150+x
-        self.control_robot_action(0, 1, "开始" + self.op_dialog[op_type])  # 输出正在执行的任务
+        self.control_robot_action(0, 1, "Start " + self.op_dialog[op_type])  # 输出正在执行的任务
         if op_type < 8:
             if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)

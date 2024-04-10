@@ -22,15 +22,18 @@ class PutDown(Act):
     def get_info(cls,*arg):
         if arg[0] != 'Anything':
             info = {}
-            info["pre"] = {f'Holding({arg[0]})',f'At(Robot,{arg[1]})'}
-            info["add"] = {f'Holding(Nothing)',f'On({arg[0]},{arg[1]})'}
-            info["del_set"] = {f'Holding({arg[0]})'}
+            info["pre"] = {f'Holding({arg[0]})',f'RobotNear({arg[1]})',f'Not Holding(Nothing)'}
+            info["add"] = {f'Not Holding({arg[0]})',f'On({arg[0]},{arg[1]})'}
+            info["add"] |= {f'Not On({arg[0]},{place})' for place in cls.tables_for_placement if place != arg[1]}
+
+            info["del_set"] = {f'Holding({arg[0]})',f'Not Holding(Nothing)'}
             info['cost'] = 100 #1000
         else:
             info = {}
             info["pre"] = set()
             info['add'] = {f'Holding(Nothing)'}
             info['del_set'] = {f'Holding({obj})' for obj in cls.all_object}
+            info['del_set'] |= {f'Not Holding(Nothing)'}
             info['cost'] = 0
 
         return info

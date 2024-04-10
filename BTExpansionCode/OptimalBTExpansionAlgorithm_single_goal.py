@@ -1,7 +1,7 @@
 import copy
 import random
 from BehaviorTree import Leaf,ControlBT
-
+import numpy as np
 
 
 class CondActPair:
@@ -21,23 +21,47 @@ class Action:
     def __str__(self):
         return self.name
     # 从状态随机生成一个行动
-    def generate_from_state(self,state,num):
-        for i in range(0,num):
-            if i in state:
-                if random.random() >0.5:
-                    self.pre.add(i)
-                    if random.random() >0.5:
-                        self.del_set.add(i)
-                    continue
-            if random.random() > 0.5:
-                self.add.add(i)
-                continue
-            if random.random() >0.5:
-                self.del_set.add(i)
-    def print_action(self):
-        print (self.pre)
-        print(self.add)
-        print(self.del_set)
+    # def generate_from_state(self,state,num):
+    #     for i in range(0,num):
+    #         if i in state:
+    #             if random.random() >0.5:
+    #                 self.pre.add(i)
+    #                 if random.random() >0.5:
+    #                     self.del_set.add(i)
+    #                 continue
+    #         if random.random() > 0.5:
+    #             self.add.add(i)
+    #             continue
+    #         if random.random() >0.5:
+    #             self.del_set.add(i)
+    def generate_from_state_local(self,state,literals_num_set):
+        # pre_num = random.randint(0, min(pre_max, len(state)))
+        # self.pre = set(np.random.choice(list(state), pre_num, replace=False))
+        #
+        # add_set = literals_num_set - self.pre
+        # add_num = random.randint(0, len(add_set))
+        # self.add = set(np.random.choice(list(add_set), add_num, replace=False))
+        #
+        # del_set = literals_num_set - self.add
+        # del_num = random.randint(0, len(del_set))
+        # self.del_set = set(np.random.choice(list(del_set), del_num, replace=False))
+
+        pre_num = random.randint(0, len(state))
+        self.pre = set(random.sample(state, pre_num))
+
+        add_set = literals_num_set - self.pre
+        add_num = random.randint(0, len(add_set))
+        self.add = set(random.sample(add_set, add_num))
+
+        del_set = literals_num_set - self.add
+        del_num = random.randint(0, len(del_set))
+        self.del_set = set(random.sample(del_set, del_num))
+
+
+    # def print_action(self):
+    #     print(self.pre)
+    #     print(self.add)
+    #     print(self.del_set)
 
 #生成随机状态
 def generate_random_state(num):

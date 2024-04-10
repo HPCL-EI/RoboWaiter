@@ -28,6 +28,7 @@ class SceneOT(Scene):
             # (0, self.add_walker, (48, 60, 520, 0)),  # 生成他妈妈
             # (0, self.add_walkers, ([[[48, 60, 520, 0], [31, 60, 600, -90], [20, 60, 680, -90], [9, 60, 760, -90]]])),
             (3, self.customer_say, ("System", "Please turn on the air conditioning and mop the floor.")),
+            # (3, self.customer_say, ("System", "Coffee ")),
         ]
 
     def _reset(self):

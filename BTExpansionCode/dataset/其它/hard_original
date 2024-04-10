@@ -1,0 +1,131 @@
+Instruction: "I need a coffee at Table 1, but please make sure the AC isn't too cold."
+Goal: On_Coffee_Table1 & ~Low_ACTemperature
+
+Instruction: "Can you bring me a dessert and water to Table 2, but don't turn on the tube light."
+Goal: On_Dessert_Table2 & On_Water_Table2 & ~Active_TubeLight
+
+Instruction: "Please clean the floor and turn off the hall light, but don't bring coffee."
+Goal: IsClean_Floor & ~Active_HallLight & ~Exists_Coffee
+
+Instruction: "I'd like NFCJuice at Bar, but only if the curtains are open."
+Goal: On_NFCJuice_Bar & ~Closed_Curtain
+
+Instruction: "Can you check if the chairs are clean and bring me a bottled drink to Table 3, but not milk."
+Goal: IsClean_Chairs & On_BottledDrink_Table3 & ~On_Milk_Table3
+
+Instruction: "Please bring yogurt to Table 1 and make sure the AC is active, but don't close the curtains."
+Goal: On_Yogurt_Table1 & Active_AC & ~Closed_Curtain
+
+Instruction: "I want ADMilk at Bar2, but don't bring it if the hall light is on."
+Goal: On_ADMilk_Bar2 & (~Active_HallLight | Active_HallLight)
+
+Instruction: "Bring chips to Table 3 only if the tube light is off."
+Goal: On_Chips_Table3 & ~Active_TubeLight
+
+Instruction: "Serve coffee at BrightTable6 and make sure the floor is clean, but don't turn on the AC."
+Goal: On_Coffee_BrightTable6 & IsClean_Floor & ~Active_AC
+
+Instruction: "I'd like spring water at Table 1, but don't bring it if the curtains are closed."
+Goal: On_SpringWater_Table1 & ~Closed_Curtain
+
+Instruction: "Can you turn off the tube light and serve bernachon at Table 2, but don't bring water."
+Goal: ~Active_TubeLight & On_Bernachon_Table2 & ~On_Water_Table2
+
+Instruction: "I need a soft drink at Table 3, but only if the chairs are clean."
+Goal: On_Softdrink_Table3 & IsClean_Chairs
+
+Instruction: "Please open the curtains and bring me yogurt to Table 2, but don't turn on the hall light."
+Goal: ~Closed_Curtain & On_Yogurt_Table2 & ~Active_HallLight
+
+Instruction: "Can you deliver ADMilk to the coffee table and check if the AC is on, but no NFCJuice."
+Goal: On_ADMilk_CoffeeTable & Active_AC & ~Exists_NFCJuice
+
+Instruction: "I want chips at BrightTable6, but only if the tube light is on."
+Goal: On_Chips_BrightTable6 & Active_TubeLight
+
+Instruction: "Please clean the chairs and bring me milk to Bar, but don't close the curtains."
+Goal: IsClean_Chairs & On_Milk_Bar & ~Closed_Curtain
+
+Instruction: "Turn down the air conditioning temperature, but only if the tube light is off and no dessert is available."
+Goal: Low_ACTemperature & ~Active_TubeLight & ~Exists_Dessert
+
+Instruction: "Bring a vacuum cup to WaterTable, but make sure the hall light is off first."
+Goal: Holding_VacuumCup & RobotNear_WaterTable & ~Active_HallLight
+
+Instruction: "I'd like spring water at Table 1, but don't bring it if it's not cold."
+Goal: On_SpringWater_Table1 & ~Low_ACTemperature
+
+Instruction: "Please serve ADMilk at CoffeeTable, but only if the AC is not too low and the floor is clean."
+Goal: On_ADMilk_CoffeeTable & ~Low_ACTemperature & IsClean_Floor
+
+Instruction: "I want a dessert at the bar, but don't bring it if the hall light is on."
+Goal: On_Dessert_Bar & ~Active_HallLight
+
+Instruction: "Bring me a bottled drink to Table 3, but only if the curtains are open."
+Goal: On_BottledDrink_Table3 & ~Closed_Curtain
+
+Instruction: "Can you clean the floor and bring yogurt to Table 1, but don't turn off the tube light."
+Goal: IsClean_Floor & On_Yogurt_Table1 & Active_TubeLight
+
+Instruction: "I'd like NFCJuice at Bar2, but only if there's no coffee available."
+Goal: On_NFCJuice_Bar2 & ~Exists_Coffee
+
+Instruction: "Please bring chips to Table 3, but only if the AC is not too cold."
+Goal: On_Chips_Table3 & ~Low_ACTemperature
+
+Instruction: "Turn on the tube light and serve bernachon at Table 2, but don't bring any water."
+Goal: Active_TubeLight & On_Bernachon_Table2 & ~On_Water_Table2
+
+Instruction: "Bring a soft drink to Table 3, but don't if the curtains are closed."
+Goal: On_Softdrink_Table3 & ~Closed_Curtain
+
+Instruction: "Please make sure the chairs at Bar are clean and bring me a dessert, but don't turn on the hall light."
+Goal: IsClean_Chairs & On_Dessert_Bar & ~Active_HallLight
+
+Instruction: "I need a coffee at Table 1, but only if the floor is clean and the AC is not too low."
+Goal: On_Coffee_Table1 & IsClean_Floor & ~Low_ACTemperature
+
+Instruction: "Can you deliver ADMilk to the coffee table and check if the chairs are clean, but don't turn off the tube light."
+Goal: On_ADMilk_CoffeeTable & IsClean_Chairs & Active_TubeLight
+
+Instruction: "I'd like spring water at Table 1, but only if the tube light is on."
+Goal: On_SpringWater_Table1 & Active_TubeLight
+
+Instruction: "Please serve bernachon at BrightTable6 and make sure the chairs are clean, but don't turn on the AC."
+Goal: On_Bernachon_BrightTable6 & IsClean_Chairs & ~Active_AC
+
+Instruction: "Can you bring a vacuum cup to WaterTable, but only if there's no dessert available?"
+Goal: Holding_VacuumCup & RobotNear_WaterTable & ~Exists_Dessert
+
+Instruction: "I want milk at Bar, but only if the floor is clean and the hall light is off."
+Goal: On_Milk_Bar & IsClean_Floor & ~Active_HallLight
+
+Instruction: "Please turn off the tube light and bring me yogurt to Table 2, but don't bring it if the AC is too cold."
+Goal: ~Active_TubeLight & On_Yogurt_Table2 & ~Low_ACTemperature
+
+Instruction: "Can you deliver ADMilk to the coffee table, but don't if the curtains are closed?"
+Goal: On_ADMilk_CoffeeTable & ~Closed_Curtain
+
+Instruction: "I need chips at BrightTable6, but only if the tube light is off and the AC isn't too cold."
+Goal: On_Chips_BrightTable6 & ~Active_TubeLight & ~Low_ACTemperature
+
+Instruction: "Please clean the chairs and bring me milk to Bar, but only if the hall light is on."
+Goal: IsClean_Chairs & On_Milk_Bar & Active_HallLight
+
+Instruction: "Bring a bottled drink to Table 3, but only if the floor is clean and the tube light is on."
+Goal: On_BottledDrink_Table3 & IsClean_Floor & Active_TubeLight
+
+Instruction: "I'd like NFCJuice at Bar2, but don't bring it if the AC is too low."
+Goal: On_NFCJuice_Bar2 & ~Low_ACTemperature
+
+Instruction: "Can you turn off the tube light and serve bernachon at Table 2, but only if the chairs are clean?"
+Goal: ~Active_TubeLight & On_Bernachon_Table2 & IsClean_Chairs
+
+Instruction: "Please bring chips to Table 3 and make sure the floor is clean, but don't turn on the hall light."
+Goal: On_Chips_Table3 & IsClean_Floor & ~Active_HallLight
+
+Instruction: "I want a soft drink at Table 3, but don't bring it if the curtains are closed and the AC is too cold."
+Goal: On_Softdrink_Table3 & (~Closed_Curtain | ~Low_ACTemperature)
+
+Instruction: "Can you clean the chairs at Bar and bring me a dessert, but only if the tube light is on?"
+Goal: IsClean_Chairs & On_Dessert_Bar & Active_TubeLight

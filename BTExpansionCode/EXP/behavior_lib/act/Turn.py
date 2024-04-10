@@ -49,27 +49,47 @@ class Turn(Act):
     def get_info(cls,*arg):
         info = {}
         info["pre"] = set()
-        if arg[0]=="TubeLight" or arg[0]=="HallLight" or arg[0]=="Curtain" or arg[0]=='AC':
-            if arg[0]!="Curtain":
-                info["pre"] |= {f'Holding(Nothing)'}
-            if arg[1]=="On":
-                info["pre"] |= {f'Is({arg[0]},Off)'}
-                info["add"] = {f'Is({arg[0]},On)'}
-                info["del_set"] = {f'Is({arg[0]},Off)'}
+        if arg[0] == "TubeLight" or arg[0] == "HallLight" or arg[0] == 'AC':
+            info["pre"] |= {f'Holding(Nothing)'}
+            if arg[1] == "On":
+                info["pre"] |= {f'Not Active({arg[0]})'}
+                info["add"] = {f'Active({arg[0]})'}
+                info["del_set"] = {f'Off({arg[0]})'}
             elif arg[1]=="Off":
-                info["pre"] |= {f'Is({arg[0]},On)'}
-                info["add"] = {f'Is({arg[0]},Off)'}
-                info["del_set"] = {f'Is({arg[0]},On)'}
+                info["pre"] |= {f'Active({arg[0]})'}
+                info["add"] = {f'Not Active({arg[0]})'}
+                info["del_set"] = {f'Active({arg[0]})'}
+
+        # elif arg[0] == 'AC':
+        #     if arg[1] == "On":
+        #         info["pre"] |= {f'Not Active({arg[0]})'}
+        #         info["add"] = {f'Active({arg[0]})',f'Not Low({arg[0]})'}
+        #         info["del_set"] = {f'Off({arg[0]})',f'Low({arg[0]})'}
+        #     elif arg[1]=="Off":
+        #         info["pre"] |= {f'Active({arg[0]})'}
+        #         info["add"] = {f'Not Active({arg[0]})'}
+        #         info["del_set"] = {f'Active({arg[0]})',f'Not Low({arg[0]})',f'Low({arg[0]})'}
+
         elif arg[0]=='ACTemperature':
-            info["pre"] = {f'Holding(Nothing)',f'Is(AC,On)'}
+            info["pre"] = {f'Holding(Nothing)',f'Active(AC)'}
             if arg[1]=="Up":
-                # info["pre"] |= {f'Is({arg[0]},Down)'}
-                info["add"] = {f'Is({arg[0]},Up)'}
-                info["del_set"] = {f'Is({arg[0]},Down)'}
+                # info["pre"] |= {f'Low({arg[0]})'}
+                info["add"] = {f'Not Low({arg[0]})'}
+                info["del_set"] = {f'Low({arg[0]})'}
             elif arg[1]=="Down":
-                # info["pre"] |= {f'Is({arg[0]},Up)'}
-                info["add"] = {f'Is({arg[0]},Down)'}
-                info["del_set"] = {f'Is({arg[0]},Up)'}
+                # info["pre"] |= {f'Not Low({arg[0]})'}
+                info["add"] = {f'Low({arg[0]})'}
+                info["del_set"] = {f'Not Low({arg[0]})'}
+
+        elif arg[0]=='Curtain':
+            if arg[1]=="On":
+                info["pre"] |= {f'Closed({arg[0]})'}
+                info["add"] = {f'Not Closed({arg[0]})'}
+                info["del_set"] = {f'Closed({arg[0]})'}
+            elif arg[1]=="Off":
+                info["pre"] |= {f'Not Closed({arg[0]})'}
+                info["add"] = {f'Closed({arg[0]})'}
+                info["del_set"] = {f'Not Closed({arg[0]})'}
         return info
 
     def _update(self) -> ptree.common.Status:

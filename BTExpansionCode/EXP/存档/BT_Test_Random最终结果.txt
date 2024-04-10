@@ -1,0 +1,396 @@
+D:\Users\caiyi\anaconda3\python.exe C:\Users\caiyi\Desktop\BTExpansionCode\EXP\exp4_bt_random_final_obj.py 
+
+------depth:10,obj: 100,cond_pred:10,act_pred:0,max_copy_times:0-----------
+Total Time: 12.856283903121948
+Average Number of literals_obj 995.691
+Average Number of States 481.2
+Average Number of Actions 514.13
+Average Number of Act Pred 10.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 1.49 std= 0.9288502369934363
+*** Average Number of States: 6.04 3.33
+*** Average total_for_times: 4.51 2.92
+Planning Time Total: 3.8623175621032715
+*** Total Tree Size: mean= 13.91 std= 11.09
+*** Planning Time mean=: 0.0019 std= 0.0015
+*** Average Number of Ticks 23.452 std= 21.877
+*** Average Number of Cond Ticks 22.186 std= 17.09
+*** Average Cost of Execution: 60.366 std= 52.115
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 1.47 std= 0.947627562915937
+*** Average Number of States: 7.48 6.12
+*** Average total_for_times: 2.03 2.32
+Planning Time Total: 2.5372939109802246
+*** Total Tree Size: mean= 22.39 std= 20.57
+*** Planning Time mean=: 0.0013 std= 0.0018
+*** Average Number of Ticks 30.124 std= 39.519
+*** Average Number of Cond Ticks 34.063 std= 47.003
+*** Average Cost of Execution: 73.152 std= 58.726
+
+------depth:10,obj: 500,cond_pred:50,act_pred:40,max_copy_times:0-----------
+Total Time: 670.5148949623108
+Average Number of literals_obj 25000.0
+Average Number of States 22391.397
+Average Number of Actions 12471.024
+Average Number of Act Pred 50.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.197 std= 1.872885126936166
+*** Average Number of States: 29.1 25.14
+*** Average total_for_times: 20.36 21.59
+Planning Time Total: 1316.9097909927368
+*** Total Tree Size: mean= 87.49 std= 99.62
+*** Planning Time mean=: 0.6585 std= 0.7296
+*** Average Number of Ticks 123.439 std= 155.89
+*** Average Number of Cond Ticks 309.827 std= 344.568
+*** Average Cost of Execution: 132.391 std= 102.704
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.24 std= 1.9955907351915578
+*** Average Number of States: 39.8 54.85
+*** Average total_for_times: 13.52 25.47
+Planning Time Total: 976.968430519104
+*** Total Tree Size: mean= 130.92 std= 188.55
+*** Planning Time mean=: 0.4885 std= 0.9194
+*** Average Number of Ticks 191.874 std= 414.76
+*** Average Number of Cond Ticks 832.318 std= 1837.944
+*** Average Cost of Execution: 158.666 std= 112.74
+
+------depth:10,obj: 100,cond_pred:10,act_pred:0,max_copy_times:5-----------
+Total Time: 10.235475540161133
+Average Number of literals_obj 1005.192
+Average Number of States 479.194
+Average Number of Actions 535.844
+Average Number of Act Pred 10.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 1.419 std= 0.9635182236820264
+*** Average Number of States: 17.05 11.86
+*** Average total_for_times: 8.42 8.25
+Planning Time Total: 8.44165325164795
+*** Total Tree Size: mean= 22.2 std= 25.51
+*** Planning Time mean=: 0.0042 std= 0.0059
+*** Average Number of Ticks 23.958 std= 28.658
+*** Average Number of Cond Ticks 22.676 std= 21.457
+*** Average Cost of Execution: 26.817 std= 29.551
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 1.368 std= 0.9248953624229237
+*** Average Number of States: 21.06 19.45
+*** Average total_for_times: 1.77 1.96
+Planning Time Total: 3.499457359313965
+*** Total Tree Size: mean= 62.86 std= 60.17
+*** Planning Time mean=: 0.0017 std= 0.0032
+*** Average Number of Ticks 33.635 std= 61.367
+*** Average Number of Cond Ticks 40.763 std= 85.116
+*** Average Cost of Execution: 69.288 std= 60.609
+
+------depth:10,obj: 100,cond_pred:50,act_pred:0,max_copy_times:5-----------
+Total Time: 25.845664739608765
+Average Number of literals_obj 5027.002
+Average Number of States 508.429
+Average Number of Actions 534.615
+Average Number of Act Pred 10.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 4.692 std= 2.7456647054355843
+*** Average Number of States: 39.08 25.64
+*** Average total_for_times: 25.61 21.55
+Planning Time Total: 69.24056196212769
+*** Total Tree Size: mean= 99.54 std= 91.72
+*** Planning Time mean=: 0.0346 std= 0.0307
+*** Average Number of Ticks 183.604 std= 181.274
+*** Average Number of Cond Ticks 482.118 std= 449.124
+*** Average Cost of Execution: 118.817 std= 87.875
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 4.688 std= 2.7688124389929927
+*** Average Number of States: 50.21 47.35
+*** Average total_for_times: 8.59 8.02
+Planning Time Total: 35.59891653060913
+*** Total Tree Size: mean= 157.21 std= 149.23
+*** Planning Time mean=: 0.0178 std= 0.0185
+*** Average Number of Ticks 264.653 std= 488.67
+*** Average Number of Cond Ticks 1245.217 std= 2600.4
+*** Average Cost of Execution: 230.741 std= 147.392
+
+------depth:10,obj: 100,cond_pred:50,act_pred:20,max_copy_times:5-----------
+Total Time: 92.56156659126282
+Average Number of literals_obj 5050.499
+Average Number of States 2532.632
+Average Number of Actions 1547.721
+Average Number of Act Pred 30.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.842 std= 2.3703701514013913
+*** Average Number of States: 45.92 32.92
+*** Average total_for_times: 27.66 25.87
+Planning Time Total: 197.4340615272522
+*** Total Tree Size: mean= 111.75 std= 112.43
+*** Planning Time mean=: 0.0987 std= 0.0973
+*** Average Number of Ticks 170.219 std= 209.243
+*** Average Number of Cond Ticks 424.751 std= 459.897
+*** Average Cost of Execution: 99.418 std= 76.655
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.801 std= 2.4226572742070367
+*** Average Number of States: 63.25 68.89
+*** Average total_for_times: 11.29 14.56
+Planning Time Total: 105.72584390640259
+*** Total Tree Size: mean= 199.05 std= 219.5
+*** Planning Time mean=: 0.0529 std= 0.0697
+*** Average Number of Ticks 247.355 std= 455.426
+*** Average Number of Cond Ticks 1157.153 std= 2255.204
+*** Average Cost of Execution: 190.716 std= 135.267
+
+------depth:10,obj: 100,cond_pred:50,act_pred:40,max_copy_times:5-----------
+Total Time: 141.04880928993225
+Average Number of literals_obj 5050.55
+Average Number of States 4521.565
+Average Number of Actions 2543.009
+Average Number of Act Pred 50.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.387 std= 2.0266569365184472
+*** Average Number of States: 55.12 47.81
+*** Average total_for_times: 30.98 35.79
+Planning Time Total: 355.8022174835205
+*** Total Tree Size: mean= 128.05 std= 162.03
+*** Planning Time mean=: 0.1779 std= 0.2045
+*** Average Number of Ticks 155.563 std= 210.047
+*** Average Number of Cond Ticks 377.906 std= 468.375
+*** Average Cost of Execution: 84.248 std= 64.286
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.312 std= 2.0685586612264433
+*** Average Number of States: 79.31 110.52
+*** Average total_for_times: 14.3 27.3
+Planning Time Total: 208.01718091964722
+*** Total Tree Size: mean= 250.22 std= 356.56
+*** Planning Time mean=: 0.104 std= 0.2004
+*** Average Number of Ticks 298.533 std= 813.334
+*** Average Number of Cond Ticks 1407.388 std= 4000.89
+*** Average Cost of Execution: 166.008 std= 118.368
+
+------depth:10,obj: 300,cond_pred:50,act_pred:40,max_copy_times:5-----------
+Total Time: 411.79978489875793
+Average Number of literals_obj 15050.15
+Average Number of States 13530.193
+Average Number of Actions 7557.488
+Average Number of Act Pred 50.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.46 std= 2.102574807425605
+*** Average Number of States: 55.52 49.35
+*** Average total_for_times: 32.17 37.49
+Planning Time Total: 1274.3944149017334
+*** Total Tree Size: mean= 133.52 std= 165.39
+*** Planning Time mean=: 0.6372 std= 0.7677
+*** Average Number of Ticks 170.231 std= 247.74
+*** Average Number of Cond Ticks 416.495 std= 534.971
+*** Average Cost of Execution: 87.21 std= 68.368
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.403 std= 2.1696309129200517
+*** Average Number of States: 87.11 133.47
+*** Average total_for_times: 16.34 35.0
+Planning Time Total: 786.3585805892944
+*** Total Tree Size: mean= 275.66 std= 432.42
+*** Planning Time mean=: 0.3932 std= 1.149
+*** Average Number of Ticks 329.623 std= 832.882
+*** Average Number of Cond Ticks 1499.284 std= 3700.81
+*** Average Cost of Execution: 169.364 std= 122.114
+
+------depth:10,obj: 500,cond_pred:50,act_pred:40,max_copy_times:5-----------
+Total Time: 1320.9995789527893
+Average Number of literals_obj 25050.046
+Average Number of States 22447.018
+Average Number of Actions 12514.876
+Average Number of Act Pred 50.0
+============= OptBT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.409 std= 2.0697833227183478
+*** Average Number of States: 55.67 52.51
+*** Average total_for_times: 31.47 40.52
+Planning Time Total: 2124.244330406189
+*** Total Tree Size: mean= 130.29 std= 178.5
+*** Planning Time mean=: 1.0621 std= 1.3999
+*** Average Number of Ticks 166.945 std= 261.16
+*** Average Number of Cond Ticks 406.05 std= 563.442
+*** Average Cost of Execution: 84.226 std= 63.999
+============= XiaoCai BT Test ==============
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+success: 1000 failure: 0
+Total Steps Num: mean= 3.271 std= 2.082761843537781
+*** Average Number of States: 82.34 119.12
+*** Average total_for_times: 14.44 27.04
+Planning Time Total: 1110.9286274909973
+*** Total Tree Size: mean= 259.46 std= 381.1
+*** Planning Time mean=: 0.5555 std= 1.0462
+*** Average Number of Ticks 288.565 std= 723.487
+*** Average Number of Cond Ticks 1363.752 std= 3891.492
+*** Average Cost of Execution: 160.985 std= 112.137
+CSV文件已生成: bt_result_1logic=20240116 010035.csv
+
+Process finished with exit code 0

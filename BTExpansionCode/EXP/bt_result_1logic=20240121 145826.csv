@@ -1,0 +1,3 @@
+,depth,obj_num,cond_pred,act_pred,max_copy_times,literals_obj_count,state_avg,act_avg,btalgorithm,tree_size_avg,tree_size_std,ticks_avg,ticks_std,cond_tick_avg,cond_tick_std,wm_cond_tick_avg,wm_cond_tick_std,cost_avg,cost_std,step_avg,step_std,expand_num_avg,expand_num_std,for_num_avg,for_num_std,plan_time_avg,plan_time_std,plan_time_total
+0,10,100,50,10.0,0,4974.161,501.518,503.23,OBTEA,35.309,30.324,141.517,132.87,724.998,744.593,372.257,318.866,222.804,152.711,4.578,2.751,12.201,10.053,12.19,10.06,0.01364,0.01191,27.28502
+1,10,100,50,10.0,0,4974.161,501.518,503.23,Baseline,50.29,44.47,177.046,218.784,0.0,0.0,738.367,977.664,229.896,152.552,4.563,2.772,14.698,12.532,8.2,7.34,0.01169,0.01084,23.38555

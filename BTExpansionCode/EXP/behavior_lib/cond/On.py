@@ -5,7 +5,7 @@ from EXP.behavior_lib._base.Cond import Cond
 class On(Cond):
     can_be_expanded = True
     num_params = 2
-    valid_params = [tuple(Cond.all_object),
+    valid_args = [tuple(Cond.all_object),
             tuple(Cond.tables_for_placement)]
 
 

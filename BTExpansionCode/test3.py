@@ -4,8 +4,9 @@ from sympy.parsing.sympy_parser import parse_expr
 from sympy import symbols, Not, Or, And, to_dnf
 
 
-goal = "(On_Coffee_Bar | On_Yogur_Bar) & At_Robot_Bar"
+# goal = "(On_Coffee_Bar | On_Yogur_Bar) & At_Robot_Bar"
 # goal = "On(Coffee,WaterTable),On(Coffee,BrightTable6)"
+goal = "Not (On_Coffee_Bar | On_Yogur_Bar) & At_Robot_Bar"
 
 goal_dnf = str(to_dnf(goal, simplify=True))
 # print(goal_dnf)

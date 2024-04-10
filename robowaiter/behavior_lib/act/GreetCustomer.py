@@ -28,10 +28,10 @@ class GreetCustomer(Act):
         else:
             self.scene.walk_to(goal[0] - 5, goal[1], 180, 180, 0)
 
-        if self.scene.show_bubble:
-            # self.scene.chat_bubble("欢迎光临！")
-            # self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
-            self.scene.chat_bubble("Welcome! How can I help you?")
+        # if self.scene.show_bubble:
+        #     # self.scene.chat_bubble("欢迎光临！")
+        #     # self.scene.chat_bubble("欢迎光临！请问有什么可以帮您？")
+        #     self.scene.chat_bubble("Welcome! How can I help you?")
 
         customer_name = self.scene.state['attention']['customer']
         self.scene.state['greeted_customers'].add(customer_name)

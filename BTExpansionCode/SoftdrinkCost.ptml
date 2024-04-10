@@ -1,43 +1,23 @@
 selector{
-cond On(Softdrink,WaterTable)
+cond c_goal
 sequence{
-cond At(Robot,WaterTable)
- cond Holding(Softdrink)
-act PutDown(Softdrink,WaterTable)
-}
-sequence{
-cond At(Robot,WaterTable)
- cond At(Robot,Softdrink)
-selector{
-sequence{
-cond Holding(Nothing)
-act PickUp(Softdrink)
-}
-act PutDown(Anything,Anywhere)
-}
+cond 1
+ cond 4
+act a1()
 }
 sequence{
-cond Holding(Softdrink)
-act MoveTo(WaterTable)
+cond 1
+ cond 2
+ cond 3
+act a2()
 }
 sequence{
-cond At(Robot,Softdrink)
-selector{
-sequence{
-cond Holding(Nothing)
-act PickUp(Softdrink)
-}
-act PutDown(Anything,Anywhere)
-}
+cond 1
+ cond 2
+act a3()
 }
 sequence{
-cond Exist(Softdrink)
-selector{
-sequence{
-cond Holding(Nothing)
-act MoveTo(Softdrink)
-}
-act MoveTo(Softdrink)
-}
+cond c_start
+act a4()
 }
 }

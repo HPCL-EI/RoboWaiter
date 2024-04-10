@@ -1,0 +1,3 @@
+,literals_num,depth,iters,state,act,tree_size_avg,tree_size_std,ticks_avg,ticks_std,cost_avg,cost_std,plan_time_avg,plan_time_std,plan_time_total
+0,100,10,100,116.298,120.0,223.768,382.051,209.247,407.703,21.472,29.758,0.04832,0.09835,96.64462
+1,100,10,100,116.298,120.0,365.255,596.224,289.579,548.141,92.563,69.492,0.04629,0.12737,92.58797

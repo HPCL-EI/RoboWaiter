@@ -1,0 +1,2 @@
+,obj_num,cond_pred,act_pred,max_copy_times,literals_obj_count,state_avg,act_avg,Cond_B,Cond_WM,Cond_OUR,Cost_B,Cost_OUR
+0,100,50,50.0,5,5000.0,4501.615,2531.486,1584.397,2848.044,971.793,169.383,85.078

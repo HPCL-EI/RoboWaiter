@@ -1,29 +1,46 @@
-[Condition]
-Near_Robot_<food_place>, On_<food>_<place>, Holding_<food>, Exist_<food>, Is_<furniture>_<furniture_state>
+[Condition Predicates]
+RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, IsClean_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
 
-[Object]
-<food>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater']
-<place>=['Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3','BrightTable6']
-<food_place>=<food>+<place>
-<furniture>=['AC','TubeLight','HallLight','Curtain','ACTemperature','Table1','Floor','Chairs']
-<furniture_state>=['On','Off','Up','Down','Clean','Dirty']
 
-[Examples]
-Instruction: Please put the soft drink on the watertable.
-On_Softdrink_WaterTable
+[Objects]
+<items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', 'Apple', 'Banana', 'Mangosteen', 'Orange','Kettle', 'PaperCup', 'Bread', 'LunchBox','Teacup', 'Chocolate', 'Sandwiches', 'Mugs','Watermelon', 'Tomato', 'CleansingFoam','CocountMilk','SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup','Tissue', 'YogurtDrink', 'Newspaper', 'Box','PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake','Tray', 'Bread','Glass', 'Door','Mug', 'Machine','PackagedCoffee', 'CubeSugar','Apple', 'Spoon','Drinks', 'Drink','Ice', 'Saucer','TrashBin', 'Knife','Cube']
+<place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6','WindowTable4', 'WindowTable5','QuietTable7', 'QuietTable8', 'QuietTable9', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats','VIPLounge', 'MerchZone']
+<items_place>=<items>+<place>
+<furniture>=['Table1','Floor','Chairs']
+<appliance>=['AC','TubeLight','HallLight']
+<furnishing>=['Curtain']
+<control>=['ACTemperature']
 
-Instruction: Please deliver the coffee to table number one and turn on the hall light.
-On_Coffee_Table & Is_HallLight_On
 
-Instruction: Do not place the water on the bar counter, and please remember to deliver coffee or bernachonto table 2
-~On_Water_Bar & (On_Coffee_Table2 | On_Bernachon_Table2)
+[Few-shot Demonstrations]
 
-Instruction: Please raise the air conditioning temperature and tidy up the chairs.
-Is_ACTemperature_On & Is_Chairs_Clean
+Instruction: "Would you be able to provide some chips at the third table?"
+Goal: On_Chips_Table3
 
-[Prompt]
+Instruction: If the curtains are already closed or the AC is running, could you please grab me a hot milk?
+( Closed_Curtain | Active_AC ) & Holding_Milk
+
+Instruction: Please turn up the air conditioning and come to the bar counter.
+RobotNear_Bar & ~Low_ACTemperature
+
+Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.
+Exists_Water & On_Yogurt_Table1
+
+Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple or a banana to the reading nook??
+IsClean_Chairs & ( On_Apple_ReadingNook | On_Banana_ReadingNook )
+
+
+[System]
 [Condition] Lists all predicates representing conditions and their optional parameter sets.
 [Object] Lists all parameter sets.
 [Examples] Provide several examples of Instruction to Goal mapping.
-Please follow the predicate format requirements strictly and, based on the given Instructions, generate Goals that comply with the specifications in predicate formula format. Please generate directly interpretable predicate formulas without additional explanations.
-For example, if the Instruction is: "Please raise the air conditioning temperature and tidy up the chairs," your output should only be: Is_ACTemperature_On & Is_Chairs_Clean, without any additional information.
+Your task is to interpret the input instructions into a goal represented as well-formed formula in first-order logic.
+Utilize [Conditions] and [Objects] to construct this goal, and apply logical operators (&, |, ~) appropriately to combine these elements.
+& (AND Operator): Combines conditions such that the result is true only if both conditions are true.
+| (OR Operator): Combines conditions such that the result is true if at least one of the conditions is true.
+~ (NOT Operator): Negates or reverses the truth value of a single condition.
+Please generate directly interpretable predicate formulas without additional explanations.
+The predicate formulas can be converted into disjunctive paradigms (DNFs) using the python package sympy.to_dnf.
+
+
+

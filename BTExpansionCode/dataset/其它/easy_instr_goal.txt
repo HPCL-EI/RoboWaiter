@@ -1,0 +1,89 @@
+Instruction: "Could you please bring my vacuum cup to the water table?"
+Goal: On_VacuumCup_WaterTable
+
+Instruction: "I'd like a glass of water at Table 1, please."
+Goal: On_Water_Table1
+
+Instruction: "Can you deliver yogurt to Table 2?"
+Goal: On_Yogurt_Table2
+
+Instruction: "Please turn on the air conditioning."
+Goal: Active_AC
+
+Instruction: "Please bring a bottled drink to Table 3."
+Goal: On_BottledDrink_Table3
+
+Instruction: "I would like a dessert at the bar, please."
+Goal: On_Dessert_Bar
+
+Instruction: "Could you serve chips at Table 3?"
+Goal: On_Chips_Table3
+
+Instruction: "Could you turn on the tube light, please?"
+Goal: Active_TubeLight
+
+Instruction: "Could you close the curtains, please? "
+Goal: Closed_Curtain
+
+Instruction: "Can you make sure that Table 1 is clean?"
+Goal: IsClean_Table1
+
+Instruction: "I'd like bernachon served at the bright table 6."
+Goal: On_Bernachon_BrightTable6
+
+Instruction: "Please bring a milk drink to Bar 2."
+Goal: On_MilkDrink_Bar2
+
+Instruction: "It's too hot in here, could you please turn on the air conditioning?"
+Goal: Active_AC
+
+Instruction: "Could you please check if the hall light is on?"
+Goal: Active_HallLight
+
+Instruction: "Could you bring NFCJuice to Table 2?"
+Goal: On_NFCJuice_Table2
+
+Instruction: "I'd like some spring water at Table 1."
+Goal: On_SpringWater_Table1
+
+Instruction: "Please make sure the floor is clean."
+Goal: IsClean_Floor
+
+Instruction: "Can you check if the chairs are clean?"
+Goal: IsClean_Chairs
+
+Instruction: "Could you lower the air conditioning temperature?"
+Goal: Low_ACTemperature
+
+Instruction: "I need ADMilk at the coffee table."
+Goal: On_ADMilk_CoffeeTable
+
+Instruction: "Can you bring milk to the bar?"
+Goal: On_Milk_Bar
+
+Instruction: "The sun is quite strong, please close the curtains."
+Goal: Closed_Curtain
+
+Instruction: "Could you turn on the tube light?"
+Goal: Active_TubeLight
+
+Instruction: "Please serve a soft drink at Table 3."
+Goal: On_Softdrink_Table3
+
+Instruction: "Could you make sure the chairs at Bar are clean?"
+Goal: IsClean_Chairs
+
+Instruction: "I'd like a dessert at the bar, please."
+Goal: On_Dessert_Bar
+
+Instruction: "Please prepare some coffee."
+Goal: Exists_Coffee
+
+Instruction: "It's really hot in here, could you please lower the air conditioning temperature?"
+Goal: Low_ACTemperature
+
+Instruction: "Please bring coffee to the bright table 6."
+Goal: On_Coffee_BrightTable6
+
+Instruction: "I'd like a glass of water at Bar 2."
+Goal: On_Water_Bar2

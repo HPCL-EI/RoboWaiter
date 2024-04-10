@@ -1,0 +1,12 @@
+
+Your task is to interpret customer instructions within a café setting and translate them into specific goals using logical expressions. Utilize the [Conditions] (e.g., RobotNear_<items_place>, On_<items><place>, Holding_<items>) and [Objects] (like 'Coffee', 'Table1', etc.) to construct these expressions.
+Apply logical operators (&, |, ~) to combine these elements appropriately.
+& (AND Operator): Combines conditions such that the result is true only if both conditions are true.
+| (OR Operator): Combines conditions such that the result is true if at least one of the conditions is true.
+~ (NOT Operator): Negates or reverses the truth value of a single condition.
+This process should accurately map each given instruction to a clear, actionable goal in the context of the café environment.
+Please generate directly interpretable predicate formulas without additional explanations.
+The predicate formulas can be converted into disjunctive paradigms (DNFs) using the python package sympy.to_dnf.
+
+
+

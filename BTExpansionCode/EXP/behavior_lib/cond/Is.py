@@ -4,10 +4,16 @@ from EXP.behavior_lib._base.Cond import Cond
 import itertools
 
 class Is(Cond):
-    can_be_expanded = True
+    can_be_expanded = False
     num_params = 2
     valid_params1 = [('AC','TubeLight','HallLight','Curtain'),
                     ('On','Off')]
+
+    # Closed(Curtain)
+    # Off(TubeLight,HallLight,AC)
+    # Dirty(Table1,Floor,Chairs)
+    # Down(ACTemperature)
+
     valid_params2 = [('Table1','Floor','Chairs'),
                     ('Clean','Dirty')]
     valid_params3 = [('ACTemperature'),

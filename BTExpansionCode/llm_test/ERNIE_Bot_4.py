@@ -13,6 +13,7 @@ import re
 API_KEY = []
 SECRET_KEY = []
 key_file = "ERNIE_KEYS.txt"
+# key_file = "C:\Users\caiyi\Desktop\BTExpansionCode\llm_test\ERNIE_KEYS.txt"
 with open(key_file, 'r', encoding="utf-8") as f:
     keys = f.read().strip()
 sections = re.split(r'\n\s*\n', keys)

@@ -1,0 +1,328 @@
+Instruction: "Could you please bring my vacuum cup to the water station?"
+Goal: On_VacuumCup_WaterStation
+
+Instruction: "I'd like a glass of water at Table 1, please."
+Goal: On_Water_Table1
+
+Instruction: "Can you deliver yogurt to Table 2?"
+Goal: On_Yogurt_Table2
+
+Instruction: "Please turn on the air conditioning."
+Goal: Active_AC
+
+Instruction: "Please bring a bottled drink to Table 3."
+Goal: On_BottledDrink_Table3
+
+Instruction: "I would like a dessert at the bar, please."
+Goal: On_Dessert_Bar
+
+Instruction: "Could you serve chips at Table 3?"
+Goal: On_Chips_Table3
+
+Instruction: "Could you turn on the tube light, please?"
+Goal: Active_TubeLight
+
+Instruction: "Could you close the curtains, please? "
+Goal: Closed_Curtain
+
+Instruction: "Can you make sure that Table 1 is clean?"
+Goal: IsClean_Table1
+
+Instruction: "I'd like bernachon served at the window table 6."
+Goal: On_Bernachon_WindowTable6
+
+Instruction: "Please bring a milk drink to Bar 2."
+Goal: On_MilkDrink_Bar2
+
+Instruction: "It's too hot in here, could you please turn on the air conditioning?"
+Goal: Active_AC
+
+Instruction: "Could you please check if the hall light is on?"
+Goal: Active_HallLight
+
+Instruction: "Could you bring NFCJuice to Table 2?"
+Goal: On_NFCJuice_Table2
+
+Instruction: "I'd like some spring water at Table 1."
+Goal: On_SpringWater_Table1
+
+Instruction: "Please make sure the floor is clean."
+Goal: IsClean_Floor
+
+Instruction: "Can you check if the chairs are clean?"
+Goal: IsClean_Chairs
+
+Instruction: "Could you lower the air conditioning temperature?"
+Goal: Low_ACTemperature
+
+Instruction: "I need ADMilk at the coffee table."
+Goal: On_ADMilk_CoffeeTable
+Instruction: I would like some fries, and for drinks, milk or yogurt is fine. I'm at Table 6.
+Goal: On_Chips_WindowTable6 & (On_Milk_WindowTable6 | On_Yogurt_WindowTable6 )
+
+Instruction: Please open the curtains or turn on the air conditioner.
+Goal: ~Closed_Curtain | Active_AC
+
+Instruction: Could you turn up the air conditioning and come to Bar No. 2?
+Goal: RobotNear_Bar2 & ~Low_ACTemperature
+
+Instruction: Please deliver the yogurt to table number one and turn off the hall light.
+Goal: On_Yogurt_Table1 & ~Active_HallLight
+
+Instruction: Please remember to deliver coffee or bernachonto or Yogurt table 2.
+Goal: On_Coffee_Table2 | On_Bernachon_Table2 | On_Yogurt_Table2
+
+Instruction: Please prepare some water, dessert and coffee.
+Goal: Exists_Water & Exists_Dessert & Exists_Coffee
+
+Instruction: Don't leave the water on the bar counter.
+Goal: ~On_Water_Bar
+
+Instruction: Please do not place the coffee on Table 2.
+Goal: ~On_Coffee_Table2
+
+Instruction: Deliver bernachon to Table1 and make sure either the tube light is off or the AC is not too low.
+Goal: On_Bernachon_Table1 & (~Active_TubeLight | ~Low_ACTemperature)
+
+Instruction: Don't put the dessert on the window table 6.
+Goal: ~On_Dessert_WindowTable6
+
+Instruction: Ensure the yogurt is not on Table 1.
+Goal: ~On_Yogurt_Table1
+
+Instruction: Do not leave the milk drink at the water table.
+Goal: ~On_MilkDrink_WaterStation
+
+Instruction: Make sure the bottled drink is not on Bar2.
+Goal: ~On_BottledDrink_Bar2
+
+Instruction: Don't place the chips on Coffee Table.
+Goal: ~On_Chips_CoffeeTable
+
+Instruction: Put down the NFCJuice you're holding and either sweep the floor or arrange the chairs.
+Goal: ~Holding_NFCJuice & (IsClean_Floor | IsClean_Chairs)
+
+Instruction: Don't always be at Table 1 and Table 2.
+Goal: ~RobotNear_Table1 &  ~RobotNear_Table2
+
+Instruction: Don’t set the air conditioning too low, turn off all the tube light, and just open the curtains.
+Goal: ~Low_ACTemperature & ~Active_TubeLight & ~Closed_Curtain
+
+Instruction: Do not place the water on the bar counter, and please remember to deliver coffee or bernachonto table 2
+Goal: ~On_Water_Bar & (On_Coffee_Table2 | On_Bernachon_Table2)
+
+Instruction: Could you please bring some coffee to Table 3 and make sure the curtains are open?
+Goal: On_Coffee_Table3 & ~Closed_Curtain
+
+Instruction: Please bring coffee to Bar and don't stand near Table2 or Table3.
+Goal: On_Coffee_Bar & ~RobotNear_Table2 & ~RobotNear_Table3
+
+Instruction: Either bring dessert to Table1 or water to Table2, but don't turn on the hall light.
+Goal: (On_Dessert_Table1 | On_Water_Table2) & ~Active_HallLight
+
+Instruction: Do not bring water to Bar, and ensure either the curtains are open or the hall light is on.
+Goal: ~On_Water_Bar & (~Closed_Curtain | Active_HallLight)
+
+Instruction: Make sure not to be near Table2 and either bring chips to Table1 or NFCJuice to Bar.
+Goal: ~RobotNear_Table2 & (On_Chips_Table1 | On_NFCJuice_Bar)
+
+Instruction: Please put down any chips you're holding and clean the chairs.
+Goal: ~Holding_Chips & IsClean_Chairs
+
+Instruction: Put down the bottled drink you're holding and either clean the floor or the chairs.
+Goal: ~Holding_BottledDrink & (IsClean_Floor | IsClean_Chairs)
+
+Instruction: Please turn off the hall light and either activate the AC or the tube light.
+Goal: ~Active_HallLight & (Active_AC | Active_TubeLight)
+
+Instruction: Please don't set the AC temperature too low, and ensure the tube light is on but the hall light is off.
+Goal: ~Low_ACTemperature & Active_TubeLight & ~Active_HallLight
+
+Instruction: Please deliver coffee to Table 2, and don't stay near either Table 1 or Table 3.
+Goal: On_Coffee_Table2 & ~(RobotNear_Table1 | RobotNear_Table3)
+
+Instruction: Make sure dessert is available, do not hold any yogurt, and keep the AC running.
+Goal: Exists_Dessert & ~Holding_Yogurt & Active_AC
+
+Instruction: Have water ready, don't hold onto the chips, and turn off the tube light.
+Goal: Exists_Water & ~Holding_Chips & ~Active_TubeLight
+
+Instruction: Could you bring me a soft drink to Table 3 or a bottled drink to Bar?
+Goal: On_Softdrink_Table3 | On_BottledDrink_Bar
+
+Instruction: Please ensure the curtains are open or the AC is not too low.
+Goal: ~Closed_Curtain | ~Low_ACTemperature
+
+Instruction: Can you turn off the tube light and deliver chips to Table 1?
+Goal: On_Chips_Table1 & ~Active_TubeLight
+
+Instruction: Please either clean the table or turn off the hall light.
+Goal: IsClean_Table1 | ~Active_HallLight
+
+Instruction: Ensure either the AC is on or the tube light is off.
+Goal: Active_AC | ~Active_TubeLight
+
+Instruction: Please bring chips to Table1 and either coffee to Table2 or yogurt to Table3.
+Goal: On_Chips_Table1 & (On_Coffee_Table2 | On_Yogurt_Table3)
+
+Instruction: Deliver dessert to CoffeeTable and ensure either the AC is off or the tube light is on.
+Goal: On_Dessert_CoffeeTable & (~Active_AC | Active_TubeLight)
+
+Instruction: Ensure the floor is clean and do not hold either a vacuum cup or NFCJuice.
+Goal: IsClean_Floor & ~Holding_VacuumCup & ~Holding_NFCJuice
+
+Instruction: Deliver milk drink to Table3 and either keep the curtains open or turn off the hall light.
+Goal: On_MilkDrink_Table3 & (~Closed_Curtain | ~Active_HallLight)
+
+Instruction: Bring ADMilk to Bar and either the floor should be clean or the chairs should be arranged.
+Goal: On_ADMilk_Bar & (IsClean_Floor | IsClean_Chairs)
+
+Instruction: "Can you bring milk to the bar?"
+Goal: On_Milk_Bar
+
+Instruction: "The sun is quite strong, please close the curtains."
+Goal: Closed_Curtain
+
+Instruction: "Could you turn on the tube light?"
+Goal: Active_TubeLight
+
+Instruction: "Please serve a soft drink at Table 3."
+Goal: On_Softdrink_Table3
+
+Instruction: "Could you make sure the chairs at Bar are clean?"
+Goal: IsClean_Chairs
+
+Instruction: "I'd like a dessert at the bar, please."
+Goal: On_Dessert_Bar
+
+Instruction: "Please prepare some coffee."
+Goal: Exists_Coffee
+
+Instruction: "It's really hot in here, could you please lower the air conditioning temperature?"
+Goal: Low_ACTemperature
+
+Instruction: "Please bring coffee to the window table 6."
+Goal: On_Coffee_WindowTable6
+
+Instruction: "I'd like a glass of water at Bar 2."
+Goal: On_Water_Bar2
+
+Instruction: I would like some fries, and for drinks, milk or yogurt is fine. I'm at Table 6.
+Goal: On_Chips_WindowTable6 & (On_Milk_WindowTable6 | On_Yogurt_WindowTable6 )
+
+Instruction: Please open the curtains or turn on the air conditioner.
+Goal: ~Closed_Curtain | Active_AC
+
+Instruction: Could you turn up the air conditioning and come to Bar No. 2?
+Goal: RobotNear_Bar2 & ~Low_ACTemperature
+
+Instruction: Please deliver the yogurt to table number one and turn off the hall light.
+Goal: On_Yogurt_Table1 & ~Active_HallLight
+
+Instruction: Please remember to deliver coffee or bernachonto or Yogurt table 2.
+Goal: On_Coffee_Table2 | On_Bernachon_Table2 | On_Yogurt_Table2
+
+Instruction: Please prepare some water, dessert and coffee.
+Goal: Exists_Water & Exists_Dessert & Exists_Coffee
+
+Instruction: Don't leave the water on the bar counter.
+Goal: ~On_Water_Bar
+
+Instruction: Please do not place the coffee on Table 2.
+Goal: ~On_Coffee_Table2
+
+Instruction: Deliver bernachon to Table1 and make sure either the tube light is off or the AC is not too low.
+Goal: On_Bernachon_Table1 & (~Active_TubeLight | ~Low_ACTemperature)
+
+Instruction: Don't put the dessert on the window table 6.
+Goal: ~On_Dessert_WindowTable6
+
+Instruction: Ensure the yogurt is not on Table 1.
+Goal: ~On_Yogurt_Table1
+
+Instruction: Do not leave the milk drink at the water table.
+Goal: ~On_MilkDrink_WaterStation
+
+Instruction: Make sure the bottled drink is not on Bar2.
+Goal: ~On_BottledDrink_Bar2
+
+Instruction: Don't place the chips on Coffee Table.
+Goal: ~On_Chips_CoffeeTable
+
+Instruction: Put down the NFCJuice you're holding and either sweep the floor or arrange the chairs.
+Goal: ~Holding_NFCJuice & (IsClean_Floor | IsClean_Chairs)
+
+Instruction: Don't always be at Table 1 and Table 2.
+Goal: ~RobotNear_Table1 &  ~RobotNear_Table2
+
+Instruction: Don’t set the air conditioning too low, turn off all the tube light, and just open the curtains.
+Goal: ~Low_ACTemperature & ~Active_TubeLight & ~Closed_Curtain
+
+Instruction: Do not place the water on the bar counter, and please remember to deliver coffee or bernachonto table 2
+Goal: ~On_Water_Bar & (On_Coffee_Table2 | On_Bernachon_Table2)
+
+Instruction: Could you please bring some coffee to Table 3 and make sure the curtains are open?
+Goal: On_Coffee_Table3 & ~Closed_Curtain
+
+Instruction: Please bring coffee to Bar and don't stand near Table2 or Table3.
+Goal: On_Coffee_Bar & ~RobotNear_Table2 & ~RobotNear_Table3
+
+Instruction: Either bring dessert to Table1 or water to Table2, but don't turn on the hall light.
+Goal: (On_Dessert_Table1 | On_Water_Table2) & ~Active_HallLight
+
+Instruction: Do not bring water to Bar, and ensure either the curtains are open or the hall light is on.
+Goal: ~On_Water_Bar & (~Closed_Curtain | Active_HallLight)
+
+Instruction: Make sure not to be near Table2 and either bring chips to Table1 or NFCJuice to Bar.
+Goal: ~RobotNear_Table2 & (On_Chips_Table1 | On_NFCJuice_Bar)
+
+Instruction: Please put down any chips you're holding and clean the chairs.
+Goal: ~Holding_Chips & IsClean_Chairs
+
+Instruction: Put down the bottled drink you're holding and either clean the floor or the chairs.
+Goal: ~Holding_BottledDrink & (IsClean_Floor | IsClean_Chairs)
+
+Instruction: Please turn off the hall light and either activate the AC or the tube light.
+Goal: ~Active_HallLight & (Active_AC | Active_TubeLight)
+
+Instruction: Please don't set the AC temperature too low, and ensure the tube light is on but the hall light is off.
+Goal: ~Low_ACTemperature & Active_TubeLight & ~Active_HallLight
+
+Instruction: Please deliver coffee to Table 2, and don't stay near either Table 1 or Table 3.
+Goal: On_Coffee_Table2 & ~(RobotNear_Table1 | RobotNear_Table3)
+
+Instruction: Make sure dessert is available, do not hold any yogurt, and keep the AC running.
+Goal: Exists_Dessert & ~Holding_Yogurt & Active_AC
+
+Instruction: Have water ready, don't hold onto the chips, and turn off the tube light.
+Goal: Exists_Water & ~Holding_Chips & ~Active_TubeLight
+
+Instruction: Could you bring me a soft drink to Table 3 or a bottled drink to Bar?
+Goal: On_Softdrink_Table3 | On_BottledDrink_Bar
+
+Instruction: Please ensure the curtains are open or the AC is not too low.
+Goal: ~Closed_Curtain | ~Low_ACTemperature
+
+Instruction: Can you turn off the tube light and deliver chips to Table 1?
+Goal: On_Chips_Table1 & ~Active_TubeLight
+
+Instruction: Please either clean the table or turn off the hall light.
+Goal: IsClean_Table1 | ~Active_HallLight
+
+Instruction: Ensure either the AC is on or the tube light is off.
+Goal: Active_AC | ~Active_TubeLight
+
+Instruction: Please bring chips to Table1 and either coffee to Table2 or yogurt to Table3.
+Goal: On_Chips_Table1 & (On_Coffee_Table2 | On_Yogurt_Table3)
+
+Instruction: Deliver dessert to CoffeeTable and ensure either the AC is off or the tube light is on.
+Goal: On_Dessert_CoffeeTable & (~Active_AC | Active_TubeLight)
+
+Instruction: Ensure the floor is clean and do not hold either a vacuum cup or NFCJuice.
+Goal: IsClean_Floor & ~Holding_VacuumCup & ~Holding_NFCJuice
+
+Instruction: Deliver milk drink to Table3 and either keep the curtains open or turn off the hall light.
+Goal: On_MilkDrink_Table3 & (~Closed_Curtain | ~Active_HallLight)
+
+Instruction: Bring ADMilk to Bar and either the floor should be clean or the chairs should be arranged.
+Goal: On_ADMilk_Bar & (IsClean_Floor | IsClean_Chairs)

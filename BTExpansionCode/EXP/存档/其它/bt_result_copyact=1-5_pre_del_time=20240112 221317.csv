@@ -1,0 +1,3 @@
+,max_actcopy,literals_num,depth,iters,state,act,btalgorithm,tree_size_avg,tree_size_std,ticks_avg,ticks_std,cost_avg,cost_std,state_num_avg,state_num_std,expand_num_avg,expand_num_std,plan_time_avg,plan_time_std,plan_time_total
+0,5,10,10,100,89.67,439.38,OBTEA,46.68,86.782,15.79,13.673,0.89,0.373,96.29,46.909,14.57,26.779,0.00723,0.01359,1.44541
+1,5,10,10,100,89.67,439.38,Baseline,316.65,166.068,38.95,45.397,26.37,30.432,105.97,54.913,0.87,0.336,0.00075,0.00059,0.15004

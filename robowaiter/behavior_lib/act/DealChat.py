@@ -15,7 +15,7 @@ translator.from_lang = 'en'
 translator.to_lang = 'zh-cn'
 
 import spacy
-# nlp = spacy.load('en_core_web_lg')
+nlp = spacy.load('en_core_web_lg')
 nlp_zh = spacy.load('zh_core_web_lg')
 
 
@@ -51,7 +51,7 @@ class DealChat(Act):
             self.create_sub_task(goal=sentence)
             self.scene.ui_func(("new_history", "System", {
                 "role": "user",
-                "content": "set goal: " + sentence
+                 "content": "set goal: " + sentence
             }))
 
             return ptree.common.Status.RUNNING
@@ -168,12 +168,16 @@ class DealChat(Act):
             # 场景中现有物品
             cur_things = set()
             for item in self.scene.status.objects:
-                cur_things.add(self.scene.objname_en2zh_dic[item.name])
+                # cur_things.add(self.scene.objname_en2zh_dic[item.name])
+                cur_things.add(item.name)
             # obj与现有物品进行相似度匹配 中文的匹配
             # print("==========obj==========:",obj)
-            query_token = nlp_zh(obj)
+            # query_token = nlp_zh(obj)
+            query_token = nlp(obj)
             for w in cur_things:
-                word_token = nlp_zh(w)
+                # word_token = nlp_zh(w)
+                word_token = nlp(w)
+                print("w:",w)
                 similarity = query_token.similarity(word_token)
                 # print("similarity:", similarity, w)
                 if similarity > max_similarity:

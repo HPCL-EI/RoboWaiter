@@ -14,7 +14,7 @@ class Bahavior(ptree.behaviour.Behaviour):
         '''
     scene = None
     print_name_prefix = ""
-    tables_for_placement = {'Bar', 'Bar2', 'WaterTable', 'CoffeeTable', 'Table1', 'Table2', 'Table3','BrightTable6'}
+    tables_for_placement = {'Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3','BrightTable6'}
     all_object = {
         'Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk','VacuumCup',
         'Chips', 'NFCJuice', 'Bernachon', 'SpringWater'}
@@ -22,16 +22,20 @@ class Bahavior(ptree.behaviour.Behaviour):
                           "BrightTable1","BrightTable2","BrightTable3","BrightTable4","BrightTable5","BrightTable6",
                           'CoffeeTable','WaterTable','Table1', 'Table2', 'Table3'}
 
+    all_place = tables_for_guiding | tables_for_placement
 
     # tables_for_placement = {'Bar', 'CoffeeTable', 'Table2',"BrightTable6", 'WaterTable'}
     # all_object = {'Coffee', 'Yogurt'}
 
 
+
+
+
     num_of_obj_on_place={
         'Bar': 0,  # (247.0, 520.0, 100.0)
         'Bar2': 0,
-        'WaterTable': 0,
-        'CoffeeTable': 0,
+        'WaterStation': 0,
+        'CoffeeStation': 0,
         'Table1': 0,
         'Table2': 0,
         'Table3': 0,
@@ -41,8 +45,8 @@ class Bahavior(ptree.behaviour.Behaviour):
     place_xyz_dic={
         'Bar': (247.0, 520.0, 100.0), #(247.0, 520.0, 100.0)
         'Bar2': (240.0, 40.0, 100.0),
-        'WaterTable':(-70.0, 500.0, 107),
-        'CoffeeTable':(250.0, 310.0, 100.0),
+        'WaterStation':(-70.0, 500.0, 107),
+        'CoffeeStation':(250.0, 310.0, 100.0),
         'Table1': (340.0, 900.0, 99.0),
         'Table2': (-55.0, 0.0, 107),
         'Table3':(-55.0, 150.0, 107),
@@ -63,8 +67,8 @@ class Bahavior(ptree.behaviour.Behaviour):
     place_en2zh_name={
         'Bar': "吧台",
         'Bar2': "另一侧的吧台",
-        'WaterTable': "大厅的茶水桌",
-        'CoffeeTable': "咖啡桌",
+        'WaterStation': "大厅的茶水桌",
+        'CoffeeStation': "咖啡桌",
         'Table1': "前门斜桌子",
         'Table2': "大厅长桌子西侧",
         'Table3': "大厅长桌子东侧",
@@ -81,8 +85,8 @@ class Bahavior(ptree.behaviour.Behaviour):
     place_xy_yaw_dic={
         'Bar': (247.0, 520.0, 180),  # (247.0, 520.0, 100.0)
         'Bar2': (240.0, 40.0, 100.0),
-        'WaterTable': (-70.0, 500.0, 107),
-        'CoffeeTable': (250.0, 310.0, 100.0),
+        'WaterStation': (-70.0, 500.0, 107),
+        'CoffeeStation': (250.0, 310.0, 100.0),
         'Table1': (340.0, 900.0, 99.0),
         'Table2': (-55.0, 0.0, 107),
         'Table3': (-55.0, 150.0, 107),

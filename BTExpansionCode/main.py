@@ -3,9 +3,9 @@ import numpy as np
 import copy
 import time
 from BehaviorTree import Leaf,ControlBT # 行为结点类：叶子结点和非叶子节点
-from OptimalBTExpansionAlgorithm_single_goal import Action,OptBTExpAlgorithm # 调用最优行为树扩展算法
+from OptimalBTExpansionAlgorithm import Action,OptBTExpAlgorithm # 调用最优行为树扩展算法
 from BTExpansionAlgorithm import BTExpAlgorithm
-from OptimalBTExpansionAlgorithm_single_goal import generate_random_state,state_transition
+from OptimalBTExpansionAlgorithm import generate_random_state,state_transition
 from tools import print_action_data_table,BTTest,BTTest_act_start_goal,get_act_start_goal
 from Examples import MoveBtoB_num,MoveBtoB,Cond2BelongsToCond3 # 导入三个例子
 from Examples import *
@@ -58,7 +58,7 @@ if __name__ == '__main__' :
     # goal, start, actions = MakeCoffeeCost()
     # print_action_data_table(goal,start,actions) # 打印所有变量
 
-    '''
+
     # todo: 运行算法得到行为树为 algo.bt
     algo = OptBTExpAlgorithm(verbose=True)
     algo.clear()
@@ -96,32 +96,32 @@ if __name__ == '__main__' :
 
     '''
     # 新增测试 cost
-    algo = OptBTExpAlgorithm(verbose=False)
-    algo.clear()
-    algo.run_algorithm(start, goal, actions)
-    # algo.print_solution() # 打印行为树
-    print("=========== Run OptBT ============")
-    state = start
-    steps = 0
-    cost_tatol = 0
-    val, obj,cost,ticks = algo.bt.cost_tick(state,0,0)
-    cost_tatol+=cost
-    while val != 'success' and val != 'failure':
-        state = state_transition(state, obj)
-        print (obj.name)
-        val, obj,cost,ticks = algo.bt.cost_tick(state,0,ticks)
-        cost_tatol += cost
-        if (val == 'failure'):
-            print("bt fails at step", steps)
-        steps += 1
-    if not goal <= state:
-        print ("wrong solution steps",steps)
-    else:
-        print ("right solution steps",steps)
-    algo.clear()
-    print("OptBT cost:", cost_tatol)
-    print("OptBT ticks:", ticks)
-    print("============ End Run OptBT ===========\n")
+    # algo = OptBTExpAlgorithm(verbose=False)
+    # algo.clear()
+    # algo.run_algorithm(start, goal, actions)
+    # # algo.print_solution() # 打印行为树
+    # print("=========== Run OptBT ============")
+    # state = start
+    # steps = 0
+    # cost_tatol = 0
+    # val, obj,cost,ticks = algo.bt.cost_tick(state,0,0)
+    # cost_tatol+=cost
+    # while val != 'success' and val != 'failure':
+    #     state = state_transition(state, obj)
+    #     print (obj.name)
+    #     val, obj,cost,ticks = algo.bt.cost_tick(state,0,ticks)
+    #     cost_tatol += cost
+    #     if (val == 'failure'):
+    #         print("bt fails at step", steps)
+    #     steps += 1
+    # if not goal <= state:
+    #     print ("wrong solution steps",steps)
+    # else:
+    #     print ("right solution steps",steps)
+    # algo.clear()
+    # print("OptBT cost:", cost_tatol)
+    # print("OptBT ticks:", ticks)
+    # print("============ End Run OptBT ===========\n")
 
     
     algo2 = BTExpAlgorithm(verbose=False)
@@ -150,21 +150,21 @@ if __name__ == '__main__' :
     print("XiaoCaiBT cost:", cost_tatol2)
     print("XiaoCaiBT ticks:", ticks)
     print("============ End Run XiaoCaiBT ===========\n")
-    '''
+
 
 
     # todo: 行为树鲁棒性测试，随机生成规划问题
     # # 设置生成规划问题集的超参数：文字数、解深度、迭代次数
-    seed=1
-    literals_num= 10
-    depth = 10
-    iters= 10
+    # seed=1
+    # literals_num= 3
+    # depth = 3
+    # iters= 3
 
 
-    act_list, start_list, goal_list = get_act_start_goal(seed=seed,literals_num=literals_num,depth=depth,iters=iters,total_count=1)
-    BTTest_act_start_goal(bt_algo_opt=True,act_list=act_list, start_list=start_list, goal_list=goal_list)
-    print("\n")
-    BTTest_act_start_goal(bt_algo_opt=False, act_list=act_list, start_list=start_list, goal_list=goal_list)
+    # act_list, start_list, goal_list = get_act_start_goal(seed=seed,literals_num=literals_num,depth=depth,iters=iters,total_count=1)
+    # BTTest_act_start_goal(bt_algo_opt=True,act_list=act_list, start_list=start_list, goal_list=goal_list)
+    # print("\n")
+    # BTTest_act_start_goal(bt_algo_opt=False, act_list=act_list, start_list=start_list, goal_list=goal_list)
 
     # BTTest(bt_algo_opt=True,seed=seed,literals_num=literals_num,depth=depth,iters=iters)
     # print("\n")

@@ -1,0 +1,62 @@
+[Condition]
+RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, IsClean_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
+
+
+[Object]
+<items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', 'Apple', 'Banana', 'Mangosteen', 'Orange','Kettle', 'PaperCup', 'Bread', 'LunchBox','Teacup', 'Chocolate', 'Sandwiches', 'Mugs','Watermelon', 'Tomato', 'CleansingFoam','CocountMilk','SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup','Tissue', 'YogurtDrink', 'Newspaper', 'Box','PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake','Tray', 'Bread','Glass', 'Door','Mug', 'Machine','PackagedCoffee', 'CubeSugar','Apple', 'Spoon','Drinks', 'Drink','Ice', 'Saucer','TrashBin', 'Knife','Cube']
+<place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6','WindowTable4', 'WindowTable5','QuietTable1', 'QuietTable2', 'QuietTable3', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats','VIPLounge', 'MerchZone']
+<items_place>=<items>+<place>
+<furniture>=['Table1','Floor','Chairs']
+<appliance>=['AC','TubeLight','HallLight']
+<furnishing>=['Curtain']
+<control>=['ACTemperature']
+
+
+[Examples]
+
+Instruction: "Would you be able to provide some chips at the third table?"
+Goal: On_Chips_Table3
+
+Instruction: If you have time, could you please hold the milk for me, or pull the curtains, or perhaps switch on the AC?
+Closed_Curtain | Active_AC | Holding_Milk
+
+Instruction: Please turn up the air conditioning and come to the bar counter.
+RobotNear_Bar & ~Low_ACTemperature
+
+Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.
+Exists_Water & On_Yogurt_Table1
+
+Instruction: Let's not have the AC too cold. Could you turn off these tube lights and open the curtains for some natural light?
+~Low_ACTemperature & ~Active_TubeLight & ~Closed_Curtain
+
+
+
+
+[Prompt]
+[Condition] Lists all predicates representing conditions and their optional parameter sets.
+[Object] Lists all parameter sets.
+[Examples] Provide several examples of Instruction to Goal mapping.
+
+Your task is to interpret customer instructions within a café setting and translate them into specific goals using logical expressions. Utilize the [Conditions] (e.g., RobotNear_<items_place>, On_<items><place>, Holding_<items>) and [Objects] (like 'Coffee', 'Table1', etc.) to construct these expressions.
+Apply logical operators (&, |, ~) to combine these elements appropriately.
+& (AND Operator): Combines conditions such that the result is true only if both conditions are true.
+| (OR Operator): Combines conditions such that the result is true if at least one of the conditions is true.
+~ (NOT Operator): Negates or reverses the truth value of a single condition.
+This process should accurately map each given instruction to a clear, actionable goal in the context of the café environment.
+Please generate directly interpretable predicate formulas without additional explanations.
+The predicate formulas can be converted into disjunctive paradigms (DNFs) using the python package sympy.to_dnf.
+
+% 不要出现 [Blacklist] 中单词，若出现<Illegal Condition>中的单词，Please select the closest predicates from the [Condition] table to form the answer。若出现<Illegal Object>中的单词，Please select the closest parameter from the [Object] table to form the answer.
+
+
+
+[Blacklist]
+<Illegal Condition>=[]
+<Illegal Object>=[Fries, Table6]
+<Other Illegal Words or Characters>=[]
+[Blacklist] Contains restricted elements.
+Do not include words from the [Blacklist] in the predicate formulas.
+If a word from <Illegal Condition> is encountered, select the most relevant predicates from the [Condition] table to construct the answer.
+If a word from <Illegal Object> is encountered, choose the nearest parameter from the [Object] table to formulate the answer.
+
+

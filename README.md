@@ -56,9 +56,24 @@ pip install -e .
    pip install zh_core_web_lg-3.7.0-py3-none-any.whl
    ```
 
-## 2.4 快速入门
+## 2.4 部署大模型
 
-1. 安装 UE 及 Harix 插件，打开默认项目并运行
+可采用本地部署大模型或调用在线大模型API的方式。
+
+1. 本地部署
+比赛中使用的是ChatGLM3模型，并部署在本地集群上。
+可参考 https://github.com/THUDM/ChatGLM3 官方链接进行部署，并根据[该小节](https://github.com/THUDM/ChatGLM3?tab=readme-ov-file#openai-api--zhipu-api-demo)来开放API。
+
+2. 使用在线大模型API
+若不方便本地部署大模型，建议直接调用在线大模型的API，如GLM4，文心一言, GPT4 等。
+
+无论是本地部署还是直接使用在线大模型API，最终都要在 robowaiter/llm_client/single_round.py 文件中修改相应的API地址，以便机器人与大模型通信。
+
+
+
+## 2.5 快速入门
+
+1. 下载[仿真器](https://drive.google.com/file/d/1ZQ_Muf3b8kPgit-cIsf0VxsrMGKX8cx7/view)，解压并运行CafeSimulator.exe，即可打开仿真器，此时显示空场景，等待代码端生成场景并完成机器人交互。
 
 2. 不使用 UI 界面 ：运行 tasks_no_ui 文件夹下的任意场景即可实现机器人控制端与仿真器的交互
 

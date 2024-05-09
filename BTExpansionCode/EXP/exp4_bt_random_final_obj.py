@@ -240,43 +240,46 @@ np.random.seed(1)
 # #Condition Predicates
 # cond_pred_ls= 9* [10] + 9* [30] + 9*[50]
 
-obj_num_ls =  [10] #9* [100,300,500]
+# obj_num_ls =  [10] #9* [100,300,500]
+# obj_num_ls = [100,100,500,\
+#               100,100,100,100,100,300,500]
 # Iterations  Action Predicates
-act_pred_ls= [10]
-act_pred_ls = 3*act_pred_ls
+# cond_pred_ls = [10,10,50,\
+#                10,30,50,\
+#                50,50,50,50]
+# act_pred_ls= [10]
+# act_pred_ls = 3*act_pred_ls
 #Condition Predicates
-cond_pred_ls= [10]
+# act_pred_ls= [0,40,40,\
+#               0,0,0,\
+#               20,40,40,40]
 #
 #
 # max_copy_times_ls= [0,0] + 6*[5]  #[5]*27
-
+# max_copy_times_ls = [0]*3 + [5]*7
 # obj_num_ls = [300]
 # # Iterations  Action Predicates
 # act_pred_ls= [40]
 # #Condition Predicates
 # cond_pred_ls= [50]
 
-max_copy_times_ls= 27*[0]
+# max_copy_times_ls= 27*[0]
+
+# obj_num_ls = [100]*5+[10,300,500]
+# cond_pred_ls=[10,30]+[50]*5
+# act_pred_ls=[0]*3+[20]+[40]*3
+# max_copy_times_ls=[5]*7
+#
+# depth_ls=[10]*27
+
+
+obj_num_ls = [300]
+cond_pred_ls=[50]
+act_pred_ls=[40]
+max_copy_times_ls=[5]*7
+
 depth_ls=[10]*27
 
-# obj_num_ls = [500]
-# # Iterations  Action Predicates
-# act_pred_ls= [40]
-# #Condition Predicates
-# cond_pred_ls= [50]
-# max_copy_times_ls= [5]
-#
-# depth_ls=[10]*8
-
-
-# 文字数量 Cond Predicate
-# literals_num_ls= 5*[10]
-# literals_num_ls= [100,500,1000]
-# literals_num_ls= 4*[100]
-
-# depth_ls= 100 * [10]
-
-# max_copy_times_ls=[5,5]
 
 
 all_result=[]
@@ -302,8 +305,8 @@ for cond_pred,depth,act_pred,max_copy_times,obj_num in zip(cond_pred_ls, depth_l
     obt_result = BTTest_act_start_goal(bt_algo_opt=True, act_list=act_list, start_list=start_list, goal_list=goal_list,literals_num=literals_num)
 
 
-    # baseline_result = BTTest_act_start_goal(bt_algo_opt=False, act_list=act_list, start_list=start_list,
-    #                                         goal_list=goal_list,literals_num=literals_num)
+    baseline_result = BTTest_act_start_goal(bt_algo_opt=False, act_list=act_list, start_list=start_list,
+                                            goal_list=goal_list,literals_num=literals_num)
 
 
     a_result=[]
@@ -319,28 +322,28 @@ for cond_pred,depth,act_pred,max_copy_times,obj_num in zip(cond_pred_ls, depth_l
     all_result.append(a_result)
 
 
-# import pandas as pd
-# df = pd.DataFrame(all_result, columns=[
-#                     # 'max_actcopy',
-#                     # 'literals_num','depth','iters','state','act',
-#                     # 'copy_act',
-#                     # 'depth', 'obj_num','iters','act_pred_num','literals_num','act_avg',
-# 'depth','obj_num', 'cond_pred', 'act_pred', 'max_copy_times', 'literals_obj_count', 'state_avg','act_avg',
-#                     'btalgorithm',
-#
-#                     'tree_size_avg', 'tree_size_std',
-#                      'ticks_avg', 'ticks_std',
-# 'wm_cond_tick_avg','wm_cond_tick_std',
-#                     'cond_tick_avg','cond_tick_std',
-#                     'cost_avg', 'cost_std',
-#                     'step_avg','step_std',
-#                     # 'state_num_avg','state_num_std',
-#                     'expand_num_avg','expand_num_std',
-#                     'for_num_avg','for_num_std',
-#                     'plan_time_avg', 'plan_time_std', 'plan_time_total'])
-#
-# time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()).replace("-","").replace(":","")
-# csv_file_path = f'bt_randon_o={obj_num_ls[0]}_cp={cond_pred_ls[0]}_ap={act_pred_ls[0]+10}_MAE={max_copy_times_ls[0]}_time={time_str}.csv'
-# # param_ls = [depth, obj_num, cond_pred, act_pred_num, max_copy_times, literals_obj_count, state_avg, act_avg]
-# df.to_csv(csv_file_path, index=True)
-# print("CSV文件已生成:", csv_file_path)
+    import pandas as pd
+    df = pd.DataFrame(all_result, columns=[
+                        # 'max_actcopy',
+                        # 'literals_num','depth','iters','state','act',
+                        # 'copy_act',
+                        # 'depth', 'obj_num','iters','act_pred_num','literals_num','act_avg',
+    'depth','obj_num', 'cond_pred', 'act_pred', 'max_copy_times', 'literals_obj_count', 'state_avg','act_avg',
+                        'btalgorithm',
+
+                        'tree_size_avg', 'tree_size_std',
+                         'ticks_avg', 'ticks_std',
+    'wm_cond_tick_avg','wm_cond_tick_std',
+                        'cond_tick_avg','cond_tick_std',
+                        'cost_avg', 'cost_std',
+                        'step_avg','step_std',
+                        # 'state_num_avg','state_num_std',
+                        'expand_num_avg','expand_num_std',
+                        'for_num_avg','for_num_std',
+                        'plan_time_avg', 'plan_time_std', 'plan_time_total'])
+
+    time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()).replace("-","").replace(":","")
+    csv_file_path = f'bt_randon_o={obj_num}_cp={cond_pred}_ap={act_pred+10}_MAE={max_copy_times}_time={time_str}.csv'
+    # param_ls = [depth, obj_num, cond_pred, act_pred_num, max_copy_times, literals_obj_count, state_avg, act_avg]
+    df.to_csv(csv_file_path, index=True)
+    print("CSV文件已生成:", csv_file_path)

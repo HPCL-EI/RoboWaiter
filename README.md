@@ -2,9 +2,9 @@
 
 本项目为参加达闼杯“机器人大模型与具身智能挑战赛”的参赛作品。我们的目标是结合前沿的大模型技术和具身智能技术，开发能在模拟的咖啡厅场景中承担服务员角色并自主完成各种具身任务的智能机器人。这里是我们的参赛作品《基于大模型和行为树和生成式具身智能体》的机器人控制端代码。
 
-✨️ 我们已经将这项工作进一步扩展为一篇论文，并成功被 IJCAI2024 录用。有关论文的详细信息可以访问我们的网站：https://dids-ei.github.io/Project/LLM-OBTEA/。代码可以在 https://github.com/DIDS-EI/LLM-OBTEA 获取。
+✨️ 我们已经将这项工作进一步扩展为一篇论文，并成功被 IJCAI2024 录用。有关论文的详细信息可以访问我们的网站：https://dids-ei.github.io/Project/LLM-OBTEA/。
 
-✨️ 论文的预印版可通过以下链接查看：https://arxiv.org/pdf/2405.07474。
+✨️ 论文的预印版可通过以下链接查看：https://arxiv.org/pdf/2405.07474。代码可以在 https://github.com/DIDS-EI/LLM-OBTEA 获取。
 
 # 1. 技术简介
 

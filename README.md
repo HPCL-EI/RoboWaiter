@@ -4,7 +4,7 @@
 
 ✨️ 我们已经将这项工作进一步扩展为一篇论文，并成功被 IJCAI2024 录用。有关论文的详细信息可以访问我们的网站：https://dids-ei.github.io/Project/LLM-OBTEA/。
 
-✨️ 论文的预印版可通过以下链接查看：https://arxiv.org/pdf/2405.07474。代码可以在 https://github.com/DIDS-EI/LLM-OBTEA 获取。
+✨️ 论文的预印版可通过以下链接查看：[arXiv](https://arxiv.org/pdf/2405.07474)。代码可以在 [GitHub](https://github.com/DIDS-EI/LLM-OBTEA) 获取。
 
 # 1. 技术简介
 

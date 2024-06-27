@@ -1,0 +1,28 @@
+[Condition Predicates]
+RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Dirty_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
+
+[Objects]
+<items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', 'Apple', 'Banana', 'Mangosteen', 'Orange','Kettle', 'PaperCup', 'Bread', 'LunchBox','Teacup', 'Chocolate', 'Sandwiches', 'Mugs','Watermelon', 'Tomato', 'CleansingFoam','CocountMilk','SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup','Tissue', 'YogurtDrink', 'Newspaper', 'Box','PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake','Tray', 'Bread','Glass', 'Door','Mug', 'Machine','PackagedCoffee', 'CubeSugar','Apple', 'Spoon','Drinks', 'Drink','Ice', 'Saucer','TrashBin', 'Knife','Cube']
+<place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6', 'WindowTable4', 'WindowTable5', 'QuietTable7', 'QuietTable8', 'QuietTable9', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats', 'VIPLounge', 'MerchZone']
+<items_place>=<items>+<place>
+<furniture>=['Table1','Floor','Chairs']
+<appliance>=['AC','TubeLight','HallLight']
+<furnishing>=['Curtain']
+<control>=['ACTemperature']
+
+[Few-shot Demonstrations]
+Instruction: Would you be able to provide some chips at the third table?
+On_Chips_Table3
+Instruction: If the curtains are already closed or the AC is running, could you please grab me a hot milk?
+( Closed_Curtain | Active_AC ) & Holding_Milk
+Instruction: Please turn up the air conditioning and come to the bar counter.
+RobotNear_Bar & ~Low_ACTemperature
+Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.
+Exists_Water & On_Yogurt_Table1
+Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple or a banana to the reading nook?
+~Dirty_Chairs & ( On_Apple_ReadingNook | On_Banana_ReadingNook )
+
+[System]
+[Condition Predicates] Lists all predicates representing conditions and their optional parameter sets.
+[Objects] Lists all parameter sets.
+[Few-shot Demonstrations] Provide several examples of Instruction to Goal mapping.

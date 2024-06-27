@@ -216,6 +216,12 @@ GR_ls=np.zeros(6)
 while finish_num < total_num:
     result = llm.get_result()
 
+    print(
+        "======= result ========\n",
+        result,
+        "\n======= result ========"
+    )
+
     if result:
         # print(result)
         id,question,answer = result

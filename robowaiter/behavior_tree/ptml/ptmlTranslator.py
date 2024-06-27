@@ -39,20 +39,19 @@ class ptmlTranslator(ptmlListener):
     def enterTree(self, ctx: ptmlParser.TreeContext):
         type = str(ctx.internal_node().children[0])
 
-        match type:
-            case "sequence":
-                node = Sequence(name="Sequence", memory=False)
-            case "selector":
-                node = Selector(name="Selector", memory=False)
-            case "parallel":
-                tag = "parallel_" + short_uuid()
-                # threshold = int(ctx.children[1])
-                # default policy, success on all
-                node = ptree.composites.Parallel(
-                    name=tag, policy=ptree.common.ParallelPolicy.SuccessOnAll
-                )
-            case _:
-                raise TypeError("Unknown Composite Type: {}".format(type))
+        if type == "sequence":
+            node = Sequence(name="Sequence", memory=False)
+        elif type == "selector":
+            node = Selector(name="Selector", memory=False)
+        elif type == "parallel":
+            tag = "parallel_" + short_uuid()
+            # threshold = int(ctx.children[1])
+            # default policy, success on all
+            node = ptree.composites.Parallel(
+                name=tag, policy=ptree.common.ParallelPolicy.SuccessOnAll
+            )
+        else:
+            raise TypeError("Unknown Composite Type: {}".format(type))
 
         self.stack.append(node)
 

@@ -28,11 +28,6 @@ class SceneOT(Scene):
     def _reset(self):
         # self.add_walkers([[0, 880], [250, 1200]])
         self.gen_obj_tmp()
-
-
-
-
-
         pass
 
 

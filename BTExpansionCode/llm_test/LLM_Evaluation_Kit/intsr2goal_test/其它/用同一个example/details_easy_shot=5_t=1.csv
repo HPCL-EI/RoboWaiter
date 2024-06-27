@@ -1,0 +1,31 @@
+ID,Instruction,Correct Goal,Model Output 1,Feedback Given 1,Model Output 2,Feedback Given 2,Model Output 3,Feedback Given 3,Model Output 4,Feedback Given 4,Model Output 5,Feedback Given 5,Model Output 6,Feedback Count,Grammar Correct,Content Correct
+0,Instruction: Please prepare some coffee.,Exists_Coffee,Exists_Coffee,,,,,,,,,,,0,True,True
+4,Instruction: Would you mind turning on the air conditioning?,Active_AC,Active_AC,,,,,,,,,,,0,True,True
+3,Instruction: Would it be possible to send some yoghurt over to the second table?,On_Yogurt_Table2,Exists_Yogurt & On_Yogurt_Table2,,,,,,,,,,,0,True,True
+10,Instruction: Can you make sure that table 1 is clean?,IsClean_Table1,IsClean_Table1,,,,,,,,,,,0,True,True
+8,"Instruction: Could you turn on the tube light, please?",Active_TubeLight,Active_TubeLight,,,,,,,,,,,0,True,True
+9,"Instruction: Could you close the curtains, please?",Closed_Curtain,Closed_Curtain,,,,,,,,,,,0,True,True
+11,Instruction: Please place the Bernachon on window table 6.,On_Bernachon_WindowTable6,On_Bernachon_WindowTable6,,,,,,,,,,,0,True,True
+1,Instruction: Would you mind fetching my vacuum cup to the hydration area?,On_VacuumCup_WaterStation,Holding_VacuumCup & On_VacuumCup_WaterStation,,,,,,,,,,,0,True,True
+7,Instruction: Could you serve crisps at Table 3?,On_Chips_Table3,On_Chips_Table3,,,,,,,,,,,0,True,True
+15,Instruction: Could you place the NFC juice on Table 2?,On_NFCJuice_Table2,On_NFCJuice_Table2,,,,,,,,,,,0,True,True
+5,Instruction: I'd appreciate it if you could deliver a bottled drink to the third table.,On_BottledDrink_Table3,On_BottledDrink_Table3,,,,,,,,,,,0,True,True
+16,Instruction: I'd like some spring water at Table 1.,On_SpringWater_Table1,On_SpringWater_Table1,,,,,,,,,,,0,True,True
+12,Instruction: Please bring a milk drink to bar 2.,On_MilkDrink_Bar2,On_MilkDrink_Bar2,,,,,,,,,,,0,True,True
+17,Instruction: Please make sure the floor is clean.,IsClean_Floor,IsClean_Floor,,,,,,,,,,,0,True,True
+13,Instruction: Please ensure the air conditioning is activated.,Active_AC,Active_AC,,,,,,,,,,,0,True,True
+14,Instruction: Could you please check if the hall light is on?,Active_HallLight,Active_HallLight,,,,,,,,,,,0,True,True
+2,"Instruction: Can I have some water served at the first table, please?",On_Water_Table1,Exists_Water & On_Water_Table1,,,,,,,,,,,0,True,True
+19,Instruction: Could you lower the air conditioning temperature?,Low_ACTemperature,~Low_ACTemperature,,,,,,,,,,,0,True,False
+21,Instruction: Can you bring milk to the bar?,On_Milk_Bar,Exists_Milk & RobotNear_Bar,,,,,,,,,,,0,True,False
+25,Instruction: Could you make sure the chairs are clean?,IsClean_Chairs,IsClean_Chairs,,,,,,,,,,,0,True,True
+20,Instruction: I need ADMilk at the coffee station.,On_ADMilk_CoffeeStation,Exists_ADMilk & On_ADMilk_CoffeeStation,,,,,,,,,,,0,True,True
+23,Instruction: Could you turn on the tube light?,Active_TubeLight,Active_TubeLight,,,,,,,,,,,0,True,True
+27,"Instruction: It's quite toasty inside, could you please lower the air conditioning temperature?",Low_ACTemperature,~Low_ACTemperature,,,,,,,,,,,0,True,False
+24,Instruction: Please serve a soft drink at Table 3.,On_Softdrink_Table3,On_Softdrink_Table3,,,,,,,,,,,0,True,True
+18,Instruction: Can you check if the chairs are clean?,IsClean_Chairs,IsClean_Chairs,,,,,,,,,,,0,True,True
+28,Instruction: Could you convey some coffee to the table six?,On_Coffee_WindowTable6,On_Coffee_Table3,,,,,,,,,,,0,True,False
+26,"Instruction: I'd like a dessert at the bar, please.",On_Dessert_Bar,Exists_Dessert & On_Bar,,,,,,,,,,,0,True,False
+29,Instruction: I'd like a glass of water at Bar 2.,On_Water_Bar2,Exists_Water & On_Glass_Bar2,,,,,,,,,,,0,True,False
+6,"Instruction: I would like a dessert at the bar, please.",On_Dessert_Bar,Exists_Dessert & On_Dessert_Bar,,,,,,,,,,,0,True,True
+22,Instruction: Please close the curtains.,Closed_Curtain,Closed_Curtain,,,,,,,,,,,0,True,True

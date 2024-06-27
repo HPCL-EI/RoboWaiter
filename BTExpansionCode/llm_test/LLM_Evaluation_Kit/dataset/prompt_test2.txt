@@ -1,0 +1,10 @@
+1. Your task is to interpret the input instructions into a goal represented as a well-formed formula in first-order logic.
+2. Utilize [Conditions] and [Objects] to construct this goal, and apply logical operators (&, |, ~) appropriately to combine these elements.
+    & (AND Operator): Combines conditions such that the result is true only if both conditions are true.
+    | (OR Operator): Combines conditions such that the result is true if at least one of the conditions is true.
+    ~ (NOT Operator): Negates or reverses the truth value of a single condition.
+3. The predicate formulas can be converted into disjunctive paradigms (DNFs) using the python package sympy.to_dnf.
+4. Please generate directly interpretable predicate formulas without any additional explanations.
+5. Provide only a single line goal formula without specifying any steps.
+
+

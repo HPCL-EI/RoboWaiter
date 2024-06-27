@@ -1,0 +1,70 @@
+
+
+[Condition]
+IsNear_self_<ALL>, IsOn_<GRABBABLE>_<SURFACES>, IsIn_<GRABBABLE>_<CONTAINERS>, IsOpen_<CAN_OPEN>, IsClose_<CAN_OPEN>,
+IsSwitchedOn_<HAS_SWITCH>, IsSwitchedOff_<HAS_SWITCH>, IsClean_<ALL>, IsHoldingCleaningTool, IsHoldingKnife,
+IsPlugged_<HAS_PLUG>, IsUnplugged_<HAS_PLUG>, IsCut_<CUTABLE>
+
+
+[Action]
+Walk_<ALL>, RightGrab_<GRABBABLE>, LeftGrab_<GRABBABLE>, RightPut_<GRABBABLE>_<SURFACES>, LeftPut_<GRABBABLE>_<SURFACES>,
+RightPutIn_<GRABBABLE>_<CONTAINERS>, LeftPutIn_<GRABBABLE>_<CONTAINERS>, RightGrabFrom_<GRABBABLE>_<CONTAINERS>, LeftGrabFrom_<GRABBABLE>_<CONTAINERS>,
+Open_<CAN_OPEN>, Close_<CAN_OPEN>, SwitchOn_<HAS_SWITCH>, SwitchOff_<HAS_SWITCH>,
+Wipe_<ALL>, PlugIn_<HAS_PLUG>, PlugOut_<HAS_PLUG>, Cut_<CUTABLE>, Wash_<WASHABLE>
+
+
+[Object]
+<GRABBABLE>=["sundae", "toothpaste", "clothesshirt", "crackers", "pudding", "alcohol", "boardgame", "wallphone","remotecontrol",
+                 "whippedcream", "hanger", "cutlets", "candybar", "wine", "toiletpaper", "slippers", "cereal", "apple","magazine",
+                 "wineglass", "milk", "cupcake", "folder", "wallpictureframe", "cellphone", "coffeepot", "crayons","box",
+                 "fryingpan", "radio", "chips", "cuttingboard", "lime", "mug", "rug", "carrot", "cutleryfork","clothespile",
+                 "notes", "plum", "cookingpot", "toy", "salmon", "peach", "condimentbottle", "hairproduct", "salad","mouse",
+                 "clock", "washingsponge", "bananas", "dishbowl", "oventray", "chocolatesyrup", "creamybuns", "pear","chair",
+                 "condimentshaker", "bellpepper", "paper", "plate", "facecream", "breadslice", "candle", "towelrack","pancake",
+                 "cutleryknife", "kitchenknife",""milkshake", "dishwashingliquid", "keyboard", "towel", "toothbrush", "book", "juice","waterglass",
+                 "barsoap", "mincedmeat", "clothespants", "chicken", "poundcake", "pillow", "pie",
+                 "rag","duster","papertowel","brush"]
+<SURFACES>=["kitchentable", "towelrack", "bench", "kitchencabinet", "mousemat", "boardgame", "coffeetable","fryingpan",
+                "radio", "cuttingboard", "floor", "tvstand", "bathroomcounter", "oventray", "chair", "kitchencounter","rug",
+                "bookshelf", "nightstand", "cabinet", "desk", "stove", "bed", "sofa", "plate", "bathroomcabinet"]
+<CONTAINERS>=["coffeemaker", "kitchencabinet", "washingmachine", "printer", "toaster", "closet", "box", "microwave",
+                  "dishwasher", "fryingpan", "fridge", "toilet", "garbagecan", "sink", "bookshelf", "nightstand","cabinet",
+                  "stove", "folder", "clothespile", "bathroomcabinet"]
+<HAS_SWITCH>=["coffeemaker", "cellphone", "candle", "faucet", "washingmachine", "printer", "wallphone","remotecontrol",
+                  "computer", "toaster", "microwave", "dishwasher", "clock", "radio", "lightswitch", "fridge",
+                  "tablelamp", "stove", "tv"]
+<CAN_OPEN>=["coffeemaker", "cookingpot", "toothpaste", "coffeepot", "kitchencabinet", "washingmachine", "window","printer",
+                "curtains", "closet", "box", "microwave", "hairproduct", "dishwasher", "radio", "fridge", "toilet","book",
+                "garbagecan", "magazine", "nightstand", "cabinet", "milk", "desk", "stove", "door", "folder",
+                "clothespile", "bathroomcabinet"]
+<HAS_PLUG>=["wallphone", "coffeemaker", "lightswitch", "cellphone", "fridge", "toaster", "tablelamp", "microwave", "tv",
+                "clock", "radio", "washingmachine","mouse", "keyboard", "printer"]
+<CUTABLE> = ["apple","bananas","breadslice", "cutlets","poundcake","pancake","pie","carrot","chicken","lime","salmon", "peach",\
+               "pear","plum"]
+<WASHABLE> = ["apple","bananas","carrot","chicken","lime","salmon", "peach","pear","plum","rag","brush"]
+<TOOLS> = ['kitchenknife','faucet','rag']
+<ALL>=<GRABBABLE>+<SURFACES>+<CONTAINERS>+<HAS_SWITCH>+<CAN_OPEN>+<HAS_PLUG>+<CUTABLE>+<WASHABLE>+<TOOLS>
+
+
+[Examples]
+
+
+[Prompt]
+[Condition] Lists all predicates representing conditions and their optional parameter sets.
+[Action] Lists all the actions, specifying their associated costs in parentheses.
+[Object] Lists all parameter sets.
+[Example] Illustrates mappings from goals to Optimal Actions, Vital Action Predicates, and Vital Objects, which are essential for completing the tasks outlined in the instructions.
+- Optimal Actions: The sequence of actions with the lowest total cost to achieve the goals.
+- Vital Action Predicates: Action predicates representing the actions required to achieve the goals.
+- Vital Objects: Nouns representing all items or entities involved in accomplishing the goals.
+
+
+1. Your task is to analyze the given goal to identify the optimal actions, vital action predicates, and vital objects necessary for achieving the goals. The goal is presented in first-order logic, consisting of [Condition].
+2. List all actions needed to accomplish these goals. Begin with 'Optimal Actions:' followed by a comma-separated list of actions, using an underscore between the verb and the object. Ensure that the action sequence minimizes the total cost.
+3. Do not start with '[Optimal Actions]', but start with 'Optimal Actions:'.
+3. Identify the essential action predicates used in these actions. These should only be the verbs representing each action. Begin with 'Vital Action Predicates:', followed by a comma-separated list of these verbs.
+4. List all crucial objects used in these actions. These should only include the nouns representing items or entities interacted with. Begin with 'Vital Objects:', followed by a comma-separated list of these nouns.
+5. The actions, predicates, and objects should come from the provided lists above. If an item does not exist, replace it with the closest available match.
+6. Refer directly to the examples in [Example], using "Optimal Actions:", "Vital Action Predicates:", and "Vital Objects:" in the given format. Exclude any additional explanations, strictly following the example format without extra headings or line breaks.
+
+Now, the given goals are

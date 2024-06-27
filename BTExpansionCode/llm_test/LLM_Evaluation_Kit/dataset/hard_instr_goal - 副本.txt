@@ -1,0 +1,119 @@
+Instruction: Please, don't forget to turn on the hall light. And, can you either deliver some dessert to Table 1 or bring water to Table 2?
+Goal: (On_Dessert_Table1 | On_Water_Table2) & Active_HallLight
+
+Instruction: Please make sure the air conditioner is running or the tube light is off. Also, avoid placing the Vacuum cup on Table 1.
+Goal: (Active_AC | ~Active_TubeLight) & ~On_VacuumCup_Table1
+
+Instruction: Please bring a serving of chips to Table 6 by the window, and along with it, either a glass of milk or some yogurt.
+Goal: On_Chips_WindowTable6 & (On_Milk_WindowTable6 | On_Yogurt_WindowTable6 )
+
+Instruction:  Please turn on the AC but don't set the temperature too low, or open the curtains.
+Goal: ~Closed_Curtain | Active_AC & ~Low_ACTemperature
+
+Instruction: Can you bring the yogurt to the first table, please? And, could you then move close the water table or coffee table.
+Goal: On_Yogurt_Table1 & (RobotNear_WaterStation | RobotNear_CoffeeStation )
+
+Instruction: Could you please place either coffee, bernachon, or yogurt on  table number 2.
+Goal: On_Coffee_Table2 | On_Bernachon_Table2 | On_Yogurt_Table2
+
+Instruction: Please prepare some water, dessert and coffee.
+Goal: Exists_Water & Exists_Dessert & Exists_Coffee
+
+Instruction: Please take the bernachon to Table 1. Also, check that the tube lights are off, or at least that the air conditioner isn't set on a very low setting.
+Goal: On_Bernachon_Table1 & (~Active_TubeLight | ~Low_ACTemperature)
+
+Instruction: Could you bring water and some chips to the sixth table by the window, and also check if the air conditioning is on?
+Goal: On_Water_WindowTable6 & On_Chips_WindowTable6 & Active_AC
+
+Instruction: Please come near the third table. I would appreciate it if you could deliver a coffee to the third table and also ensure that the curtains are open. Thank you.
+Goal: RobotNear_Table3 & On_Coffee_Table3 & ~Closed_Curtain
+
+Instruction: Please place a coffee either at Bar or Bar2, and make sure the robot is not near the Bar.
+Goal: (On_Coffee_Bar | On_Coffee_Bar2) & ~RobotNear_Bar
+
+Instruction: Please increase the air conditioning temperature, and then join me at bar No. 2 or bar.
+Goal: ( RobotNear_Bar2 | RobotNear_Bar ) & ~Low_ACTemperature
+
+Instruction: Please make sure you are not holding NFC juice, and verify that either the ground or the chairs are clean.
+Goal: ~Holding_NFCJuice & (IsClean_Floor | IsClean_Chairs)
+
+Instruction: Try not to hang around Bar and Bar2 all the time, and oh, do remember to pick up and hold a bottle of spring water.
+Goal: ~RobotNear_Bar &  ~RobotNear_Bar2 & Holding_SpringWater
+
+Instruction: Don’t set the air conditioning too low,  switch off the tube lights, and could you draw back the curtains, please?
+Goal: ~Low_ACTemperature & ~Active_TubeLight & ~Closed_Curtain
+
+Instruction: Please avoid putting the chips on the bar2 counter. Also, could you bring either a coffee or bernachon to table number 2?
+Goal: ~On_Chips_Bar2 & (On_Coffee_Table2 | On_Bernachon_Table2)
+
+Instruction: Do not open the curtain , and ensure either open the tube light or the hall light .
+Goal: ~Closed_Curtain & ( Active_TubeLight | Active_HallLight)
+
+Instruction: Please activate the air conditioner, and could you bring chips to Table 1 or NFC Juice to Table 2?
+Goal: Active_AC & (On_Chips_Table1 | On_NFCJuice_Bar)
+
+Instruction: Please make sure you are not holding chips, and either the chairs are clean or Table 1 is clean.
+Goal: ~Holding_Chips & (IsClean_Chairs | IsClean_Table1)
+
+Instruction: Can you put down the bottled drink for now? And, could you either sweep the floor or tidy up the chairs, please?
+Goal: ~Holding_BottledDrink & (IsClean_Floor | IsClean_Chairs)
+
+Instruction: Could you switch off the light in the hall and then either get the air conditioning going or turn on the tube light?
+Goal: ~Active_HallLight & (Active_AC | Active_TubeLight)
+
+Instruction: Keep the AC at a moderate temperature, please. Also, could you make sure the tube light is on and the hall light is turned off?
+Goal: ~Low_ACTemperature & Active_TubeLight & ~Active_HallLight
+
+Instruction: I'd appreciate a coffee delivery to Table 2. Also, try to avoid lingering around Tables 1 and 3, if you could.
+Goal: On_Coffee_Table2 & ~(RobotNear_Table1 | RobotNear_Table3)
+
+Instruction: Ensure we have desserts ready for serving, please refrain from holding onto any yogurt, and keep the air conditioner on.
+Goal: Exists_Dessert & ~Holding_Yogurt & Active_AC
+
+Instruction: Make sure there's water available, avoid holding the chips for now, and could you turn off the tube light?
+Goal: Exists_Water & ~Holding_Chips & ~Active_TubeLight
+
+Instruction: I'd like a bottled beverage or a milk-based drink at Table 3, or perhaps a soft drink delivered to the bar area, please.
+Goal: On_BottledDrink_Table3 | On_MilkDrink_Table3 |On_Softdrink_Bar
+
+Instruction: Could you make sure the curtains are open or the AC temperature isn't too cold? Also, please bring a dessert to Table 6 by the window.
+Goal: (~Closed_Curtain | ~Low_ACTemperature) & On_Dessert_WindowTable6
+
+Instruction: Could you dim the overhead fluorescent light or hall light and also deliver a bag of crisps to Bar?
+Goal: On_Chips_Bar & ~(Active_TubeLight | Active_HallLight)
+
+Instruction: Please ensure that either the first table is clean or the main light is off, and make sure you are holding water.
+Goal: (IsClean_Table1 | ~Active_HallLight) & Holding_Water
+
+Instruction: Please bring chips to Table1 and either coffee to Table2 or yogurt to Table3.
+Goal: On_Chips_Table1 & (On_Coffee_Table2 | On_Yogurt_Table3)
+
+Instruction: Deliver dessert to CoffeeStation and ensure either the AC is off or the tube light is on.
+Goal: On_Dessert_CoffeeStation & (~Active_AC | Active_TubeLight)
+
+Instruction: Please ensure the ground is spotless. Additionally, confirm that you are not carrying a vacuum cup or NFC juice.
+Goal: IsClean_Floor & ~Holding_VacuumCup & ~Holding_NFCJuice
+
+Instruction: Deliver milk drink to Table3 and either keep the curtains open or do not stand near bat.
+Goal: On_MilkDrink_Table3 & (~Closed_Curtain | ~RobotNear_Bar)
+
+Instruction: Can you make sure we have either some desserts or coffee available for serving? Also, I'd like some almond milk brought to the bar counter.
+Goal: (Exists_Dessert | Exists_Coffee) & On_ADMilk_Bar
+
+Instruction: Please place a coffee on Bar 2, ensure there is a dessert available, and make sure the dessert is not placed on Bar.
+Goal: On_Coffee_Bar2 & Exists_Dessert & ~On_Dessert_Bar
+
+Instruction: Please place the milk on Table 2 and the dessert on Bar 2. Also, make sure there is no NFC juice on Table 2.
+Goal: On_Milk_Table2 & On_Dessert_Bar2 & ~On_NFCJuice_Table2
+
+Instruction: Ensure that chips are not on bar and bar2 and please deliver the ADMilk to bar.
+Goal: ~On_Chips_Bar & ~On_Chips_Bar2 & On_ADMilk_Bar
+
+Instruction: Please place either milk or a soft drink on Bar 2, and make sure no robots are near the bar.
+Goal: (On_Milk_Bar2 | On_Softdrink_Bar2) & ~RobotNear_Bar
+
+Instruction: Deliver yogurt to Table3 and bernachon to Table2, and make sure the vacuum cup is on the coffee station.
+Goal: On_Yogurt_Table3 & On_Bernachon_Table2 & On_VacuumCup_CoffeeStation
+
+Instruction: Make sure to deliver milk and dessert to bar, and check that Juice is not at the table 2.
+Goal: On_Milk_Bar & On_Dessert_Bar & ~On_NFCJuice_Table2

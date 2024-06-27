@@ -1,0 +1,89 @@
+Instruction: Please ensure that the chairs are clean, or deliver some sour milk to the coffee station.
+Goal: IsClean_Chairs | On_Yogurt_CoffeeStation
+
+Instruction: I'd like either a soft drink or a refreshing bottled beverage delivered to my table at Table 3.
+Goal: On_Softdrink_Table3 | On_BottledDrink_Table3
+
+Instruction: It's too dark. Can you turn on the downlight or the hall light?
+Goal: Active_HallLight | Active_TubeLight
+
+Instruction: The floor seems a bit dusty, could you give it a good sweep? Also, I'd love a refreshing bottled beverage at Table 1 when you have a moment
+Goal: IsClean_Floor & On_BottledDrink_Table1
+
+Instruction: Can you serve bernachon at the bright table 6 or bring chips to Table 2?
+Goal: On_Bernachon_WindowTable6 | On_Chips_Table2
+
+Instruction: I'm at table 3, please bring me either fries or dessert.
+Goal: On_Chips_Table3 | On_Dessert_Table3
+
+Instruction: It's so dirty, please wipe the table and mop the floor.
+Goal: IsClean_Table1 & IsClean_Floor
+
+Instruction: I dropped my vacuum cup, can you hold it ? And, bring milk drink to table 2?
+Goal: Holding_VacuumCup & On_MilkDrink_Table2
+
+Instruction: Please turn on the AC and bring me Juice at Bar.
+Goal: Active_AC & On_NFCJuice_Bar
+
+Instruction: Can you lower the heating and check if there are any dessert available?
+Goal: Low_ACTemperature & Exists_Dessert
+
+Instruction: It's so hot. I want to close the curtains and turn on the air conditioning.
+Goal: Closed_Curtain & Active_AC
+
+Instruction: Would you kindly proceed to either bar 2 or the main bar?
+Goal: RobotNear_Bar2 | RobotNear_Bar
+
+Instruction: Can you send a cup of coffee and dessert to table 3?
+Goal: On_Coffee_Table3 & On_Dessert_Table3
+
+Instruction: Please place a bottle of spring water on table 2 and turn on the AC since it's warm.
+Goal: On_SpringWater_Table2 & Active_AC
+
+Instruction: Please bring yogurt to table 1 and check if the tube light is working.
+Goal: On_Yogurt_Table1 & Active_TubeLight
+
+Instruction: Please deliver the yogurt to table number one and turn on the hall light.
+Goal: On_Yogurt_Table1 & Active_HallLight
+
+Instruction: Please make sure there's either a cup of coffee or a bottled beverage treat ready at Table 2.
+Goal: On_Coffee_Table2 | On_BottledDrink_Table2
+
+Instruction: Please make sure the water or dessert are ready and available.
+Goal: Exists_Water | Exists_Dessert
+
+Instruction: Could you bring some chips to Table 1 or a dessert to Window Table 6?
+Goal: On_Chips_Table1 | On_Dessert_WindowTable6
+
+Instruction: Come to table No. 6 by the window and grab my vacuum cup.
+Goal: RobotNear_WindowTable6 & Holding_VacuumCup
+
+Instruction: Please do not turn down the air conditioning temperature and tidy up the chairs.
+Goal: Low_ACTemperature & IsClean_Chairs
+
+Instruction: Turn on the hall light and clean the floor.
+Goal: Active_HallLight & IsClean_Floor
+
+Instruction: Turn on the tube light and bring chips to Table 3.
+Goal: Active_TubeLight & On_Chips_Table3
+
+Instruction: Please close the curtains and bring milk to Table2.
+Goal: Closed_Curtain & On_Milk_Table2
+
+Instruction: Clean the chairs and deliver coffee to the coffee table.
+Goal: IsClean_Chairs & On_Coffee_CoffeeStation
+
+Instruction: Could you activate the air cooling system and also bring some yoghurt to the bar?
+Goal: Active_AC & On_Yogurt_Bar
+
+Instruction: Please make sure the first table is spotless and illuminate the area with the tube light.
+Goal: IsClean_Table1 & Active_TubeLight
+
+Instruction: Please bring me coffee or water to table 1.
+Goal: On_Coffee_Table1 | On_Water_Table1
+
+Instruction: Would you mind either tidying up the flooring or delivering a sweet treat to the second table?
+Goal: IsClean_Floor | On_Dessert_Table2
+
+Instruction: I'd like natural fruit juice  served at the third table, or alternatively, could you switch on the air conditioner?
+Goal: On_NFCJuice_Table3 | Active_AC

@@ -1,0 +1,123 @@
+ID,Instruction,Correct Goal,Model Output 1,Feedback Given 1,Model Output 2,Feedback Given 2,Model Output 3,Feedback Given 3,Model Output 4,Feedback Given 4,Model Output 5,Feedback Given 5,Model Output 6,Feedback Count,Grammar Correct,Content Correct
+9,"Instruction: Could you close the curtains, please?",Closed_Curtain,Closed_Curtain,,,,,,,,,,,0,True,True
+10,Instruction: Can you make sure that table 1 is clean?,IsClean_Table1,IsClean_Table1,,,,,,,,,,,0,True,True
+6,"Instruction: I would like a dessert at the bar, please.",On_Dessert_Bar,Exists_Dessert & RobotNear_Dessert_Bar,,,,,,,,,,,0,True,False
+0,Instruction: Please prepare some coffee.,Exists_Coffee,Exists_Coffee & (RobotNear_CoffeeStation | RobotNear_Bar),,,,,,,,,,,0,True,True
+4,Instruction: Would you mind turning on the air conditioning?,Active_AC,Active_AC & ~Low_ACTemperature,,,,,,,,,,,0,True,True
+8,"Instruction: Could you turn on the tube light, please?",Active_TubeLight,Active_TubeLight & Closed_Curtain,,,,,,,,,,,0,True,True
+15,Instruction: Could you place the NFC juice on Table 2?,On_NFCJuice_Table2,Exists_NFCJuice & RobotNear_Table2,,,,,,,,,,,0,True,False
+12,Instruction: Please bring a milk drink to bar 2.,On_MilkDrink_Bar2,Holding_MilkDrink & RobotNear_Bar2,,,,,,,,,,,0,True,False
+16,Instruction: I'd like some spring water at Table 1.,On_SpringWater_Table1,Exists_SpringWater & On_SpringWater_Table1,,,,,,,,,,,0,True,True
+1,Instruction: Would you mind fetching my vacuum cup to the hydration area?,On_VacuumCup_WaterStation,Exists_vacuumCup(items_place) & On_vacuumCup_WaterStation(items_place),It contains syntax errors or illegal characters.,Holding_VacuumCup & RobotNear_WaterStation,,,,,,,,,1,True,False
+7,Instruction: Could you serve crisps at Table 3?,On_Chips_Table3,Exists_Holding_Chips & On_Chips_Table3,"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] Holding
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Holding_Chips & On_Chips_Table3,,,,,,,,,1,True,True
+14,Instruction: Could you please check if the hall light is on?,Active_HallLight,Active_HallLight,,,,,,,,,,,0,True,True
+18,Instruction: Can you check if the chairs are clean?,IsClean_Chairs,IsClean_Chairs,,,,,,,,,,,0,True,True
+13,Instruction: Please ensure the air conditioning is activated.,Active_AC,`Active_AC`,It contains syntax errors or illegal characters.,Active_AC,,,,,,,,,1,True,True
+5,Instruction: I'd appreciate it if you could deliver a bottled drink to the third table.,On_BottledDrink_Table3,Exists_BottledDrink(items_place) & On_BottledDrink_Table3(items_place),It contains syntax errors or illegal characters.,Holding_BottledDrink & Exists_Table3,,,,,,,,,1,True,False
+17,Instruction: Please make sure the floor is clean.,IsClean_Floor,IsClean_Floor,,,,,,,,,,,0,True,True
+23,Instruction: Could you turn on the tube light?,Active_TubeLight,Active_TubeLight & ~Active_AC,,,,,,,,,,,0,True,True
+24,Instruction: Please serve a soft drink at Table 3.,On_Softdrink_Table3,Exists_Softdrink & On_Softdrink_Table3,,,,,,,,,,,0,True,True
+26,"Instruction: I'd like a dessert at the bar, please.",On_Dessert_Bar,Exists_Dessert & RobotNear_Bar,,,,,,,,,,,0,True,False
+21,Instruction: Can you bring milk to the bar?,On_Milk_Bar,Holding_Milk & RobotNear_Bar,,,,,,,,,,,0,True,False
+19,Instruction: Could you lower the air conditioning temperature?,Low_ACTemperature,Exists_Active_AC & ~Low_ACTemperature,"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] Active
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Exists_ACTemperature & Active_AC & Low_ACTemperature,,,,,,,,,1,True,True
+29,Instruction: I'd like a glass of water at Bar 2.,On_Water_Bar2,Exists_Glass & Exists_Water & RobotNear_Glass_Bar2,,,,,,,,,,,0,True,False
+20,Instruction: I need ADMilk at the coffee station.,On_ADMilk_CoffeeStation,Exists_ADMilk(items_place='CoffeeStation'),It contains syntax errors or illegal characters.,Holding_ADMilk & RobotNear_CoffeeStation,,,,,,,,,1,True,False
+2,"Instruction: Can I have some water served at the first table, please?",On_Water_Table1,Exists_Table1 & Exists_Water & Active_WaterStation & ~Holding_Water & (RobotNear_Table1 | RobotNear_WaterStation),"
+[Syntax Blacklist] Active_WaterStation
+[]Condition Predicate Blacklist] 
+[Object Blacklist] 
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Exists_Water & RobotNear_WaterStation & On_Water_Table1,,,,,,,,,1,True,True
+25,Instruction: Could you make sure the chairs are clean?,IsClean_Chairs,IsClean_Chairs & Exists_CleansingFoam,"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] CleansingFoam
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",IsClean_Chairs,,,,,,,,,1,True,True
+11,Instruction: Please place the Bernachon on window table 6.,On_Bernachon_WindowTable6,Exists_items(Bernachon) & Exists_place(WindowTable6),It contains syntax errors or illegal characters.,Holding_Bernachon & RobotNear_WindowTable6\[ \text{Holding\_Bernachon} \land \text{RobotNear\_WindowTable6} \],It contains syntax errors or illegal characters.,Exists_Bernachon & RobotNear_WindowTable6,,,,,,,2,True,False
+22,Instruction: Please close the curtains.,Closed_Curtain,`(Exists_furnishing & Active_Curtain & ~Closed_Curtain)`,It contains syntax errors or illegal characters.,"```python
+Closed_Curtain(Entrance) | Closed_Curtain(Exit) | Closed_Curtain(LoungeArea) | Closed_Curtain(HighSeats) | Closed_Curtain(VIPLounge)
+```",It contains syntax errors or illegal characters.,Closed_Curtain,,,,,,,2,True,True
+3,Instruction: Would it be possible to send some yoghurt over to the second table?,On_Yogurt_Table2,Exists_yogurt & RobotNear_Table2Exists_yogurt ∧ RobotNear_Table2,It contains syntax errors or illegal characters.,"Exists_items_place(items='Yogurt', place='Table2')",It contains syntax errors or illegal characters.,Holding_Yogurt & Exists_SecondTable & ~On_Yogurt_SecondTable,"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] SecondTable
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.","Exists_items_place(yogurt, Table2)","
+[Syntax Blacklist] yogurt,, Table2
+[]Condition Predicate Blacklist] 
+[Object Blacklist] items, place, SecondTable
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Exists_yogurt & RobotNear_yogurt_Table2,"
+[Syntax Blacklist] yogurt,, Table2
+[]Condition Predicate Blacklist] 
+[Object Blacklist] yogurt, items, place, SecondTable
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.","Exists_items_place(items='Yogurt', place='Table2')",6,False,False
+28,Instruction: Could you convey some coffee to the table six?,On_Coffee_WindowTable6,Holding_Coffee & RobotNear_Table6 | Exists_Coffee & (RobotNear_CoffeeStation & RobotNear_Table6),"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] Table6
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Exists_Coffee & RobotNear_Table6 | Exists_Coffee & RobotNear_WindowTable6,"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] Table6
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Holding_Coffee & RobotNear_Table6 => On_Coffee_Table6,It contains syntax errors or illegal characters.,Holding_Coffee & RobotNear_Table6 -> On_Coffee_Table6,It contains syntax errors or illegal characters.,Exists_x (RobotNear_x & Holding_Coffee & On_Coffee_WindowTable6),"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] Table6, x
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Holding_Coffee & RobotNear_Table6 -> Exists_Coffee & On_Coffee_Table6,6,False,False
+27,"Instruction: It's quite toasty inside, could you please lower the air conditioning temperature?",Low_ACTemperature,Active_AC & Low_ACTemperature,,,,,,,,,,,0,True,True

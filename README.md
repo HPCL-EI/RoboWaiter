@@ -79,7 +79,10 @@ pip install -e .
 
 ## 2.5 快速入门
 
-1. 下载[仿真器]([https://drive.google.com/file/d/1ZQ_Muf3b8kPgit-cIsf0VxsrMGKX8cx7/view](https://drive.google.com/file/d/1ayAQZbPOyQV2W-V_ZdYv6AoqLOg0zvm1/view?usp=sharing))，解压并运行CafeSimulator.exe，即可打开仿真器，此时显示空场景，等待代码端生成场景并完成机器人交互。
+1. 下载[仿真器]([https://drive.google.com/file/d/1ZQ_Muf3b8kPgit-cIsf0VxsrMGKX8cx7/view](https://drive.google.com/file/d/1ayAQZbPOyQV2W-V_ZdYv6AoqLOg0zvm1/view?usp=sharing))，解压并运行CafeSimulator.exe，即可打开仿真器，此时显示空场景，等待代码端生成场景并完成机器人交互。如果链接打不开，可以用百度网盘：
+链接：https://pan.baidu.com/s/1WvyYcnTTsSNNFHGCCvryCw 
+提取码：1wft 
+--来自百度网盘超级会员V7的分享
 
 2. 不使用 UI 界面 ：运行 tasks_no_ui 文件夹下的任意场景即可实现机器人控制端与仿真器的交互
 

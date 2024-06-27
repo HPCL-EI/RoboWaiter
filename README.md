@@ -6,6 +6,8 @@
 
 ✨️ 论文的预印版可通过以下链接查看：[arXiv](https://arxiv.org/pdf/2405.07474)。代码可以在 [GitHub](https://github.com/DIDS-EI/LLM-OBTEA) 获取。
 
+✨️ “日常服务机器人行为树规划平台与基准”（Platform and Benchmark for Behavior Tree Planning in Everyday Service Robots）已进行升级更新并开放源代码。最新版本现已可在 https://github.com/DIDS-EI/BTPG 获取。
+
 # 1. 技术简介
 
 我们提出基于大模型和行为树的生成式具身智能体系统框架

@@ -6,7 +6,7 @@ from openai import OpenAI
 class LLMGPT3():
     def __init__(self):
         self.client = OpenAI(
-            base_url="https://api.chatgptid.net/v1",            api_key="sk-U3lHYdKBlISo2gssCa715e292bF5463bAb5898638eC3D0Ea"
+            base_url="",            api_key=""
         )
 
     def request(self,message): # question

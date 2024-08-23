@@ -56,7 +56,7 @@ if __name__ == '__main__' :
     goal, start, actions = Cond2BelongsToCond3()  # Examples里的例子: MoveBtoB_num,MoveBtoB,Cond2BelongsToCond3,SoftdrinkCost
     # goal, start, actions = Test()
     # goal, start, actions = MakeCoffeeCost()
-    # print_action_data_table(goal,start,actions) # 打印所有变量
+    print_action_data_table(goal,start,actions) # 打印所有变量
 
 
     # todo: 运行算法得到行为树为 algo.bt

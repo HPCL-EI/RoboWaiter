@@ -132,6 +132,13 @@ Of course! I'll lower the air conditioning for you.
 create_sub_task
 {"goal":"Low_ACTemperature"}
 
+
+
+It's quite toasty inside, could you please lower the air conditioning temperature?
+Of course! I'll lower the air conditioning for you.
+create_sub_task
+{"goal":"Low_ACTemperature"}
+
 Could you please not put the carton drink on table one and close the curtain?
 Sure, I'll do that now.
 create_sub_task
@@ -142,3 +149,25 @@ Could you please turn on the coffee machine at the bar, and make sure the floor 
 Sure, I'll do that now.
 create_sub_task
 {"goal":"On_Coffee_Bar & IsClean_Floor"}
+
+
+
+Turn on the hall light.
+The hall light is already off.
+
+Turn on the hall light..
+Sure, I'll do that now.
+create_sub_task
+{"goal":"Active(HallLight)"}
+
+
+I'm at table three, please bring yogurt and close the curtains. If there's no yogurt, coffee is fine.
+Of course, please wait a moment!
+create_sub_task
+{"goal":"Closed_Curtain & On_Coffee_WaterStation"}
+
+
+One NFC Juice, table 3.
+Of course, please wait a moment!
+create_sub_task
+{"goal":"On(MilkDrink,WaterTable)"}

@@ -832,7 +832,7 @@ class Scene:
         return camera_data
 
     def chat_bubble(self, message):
-        self.stub.ControlRobot(
+        self.stub.ControlRobot( # 到这里暂停，等顾客说完
             GrabSim_pb2.ControlInfo(
                 scene=self.sceneID, type=0, action=1, content=message #message.strip()
             )
@@ -841,6 +841,7 @@ class Scene:
     def walker_bubble(self, name, message):
         talk_content = name + ":" + message
         self.control_robot_action(0, 3, talk_content)
+        # self.control_robot_action(0, 3, talk_content)
 
     def customer_say(self, name, sentence, show_bubble=True):
         if isinstance(name, int):
@@ -1258,7 +1259,7 @@ class Scene:
     # 执行过程: Robot输出"开始(任务名)" -> 按步骤数执行任务 -> Robot输出成功或失败的对话
     def op_task_execute(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         #id = 196  # Glass = 188+x, Plate = 150+x
-        self.control_robot_action(0, 1, "Start " + self.op_dialog[op_type])  # 输出正在执行的任务
+        # self.control_robot_action(0, 1, "Start " + self.op_dialog[op_type])  # 输出正在执行的任务
         if op_type < 8:
             if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)

@@ -160,14 +160,46 @@ Sure, I'll do that now.
 create_sub_task
 {"goal":"Active(HallLight)"}
 
+Please turn on the hall light, find my thermos, and grab me a piece of bread.
+Sure, right away!
+create_sub_task
+{"goal":"Active_HallLight & On_Dessert_Bar & On_VacuumCup_Bar"}
+
+
+Please wipe table 1 and bring a yogurt.
+Got it.
+create_sub_task
+{"goal":"IsClean_Table1 & On_Yogurt_Table1"}
+
+
+Please bring me bread, chips, and a soft drink.
+Sure, right away!
+create_sub_task
+{"goal":"On_Softdrink_Bar & On_Dessert_Bar"}
 
 I'm at table three, please bring yogurt and close the curtains. If there's no yogurt, coffee is fine.
 Of course, please wait a moment!
 create_sub_task
 {"goal":"Closed_Curtain & On_Coffee_WaterStation"}
 
+If there's no yogurt, coffee is fine.
+Of course, please wait a moment!
+create_sub_task
+{"goal":"Closed_Curtain & (On_Coffee_WaterStation | On_Yogurt_WaterStation)"}
+
+
+I'm at table three, please bring yogurt. If there's no yogurt, coffee is fine.
+Of course, please wait a moment!
+create_sub_task
+{"goal":"On_Coffee_WaterStation"}
+
 
 One NFC Juice, table 3.
 Of course, please wait a moment!
 create_sub_task
 {"goal":"On(MilkDrink,WaterTable)"}
+
+dessert.
+Of course, please wait a moment!
+create_sub_task
+{"goal":"On(Dessert,Bar)"}

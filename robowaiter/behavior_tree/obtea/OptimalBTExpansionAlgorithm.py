@@ -890,7 +890,7 @@ class OptBTExpAlgorithm:
             if isinstance(child, Leaf):
                 if child.type == 'cond':
 
-                    if is_root and len(child.content) > 1:
+                    if is_root or len(child.content) > 1:
                         # 把多个 cond 串起来
                         self.ptml_string += "sequence{\n"
                         self.ptml_string += "cond "

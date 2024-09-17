@@ -18,20 +18,16 @@ class SceneOT(Scene):
         super().__init__(robot)
         # 在这里加入场景中发生的事件
         self.signal_event_list = [
-            (3, self.add_walker, (48, 0, 700)),
-            # (1, self.customer_say, (0, "I'm at table three, please bring yogurt and close the curtains. If there's no yogurt, coffee is fine.")),
-            # (1, self.control_walkers_and_say, ([[[0, False, 100, 60, 520, 0, "I'm at table three, please bring yogurt and close the curtains. If there's no yogurt, coffee is fine."]]])),
-            (1, self.control_walkers_and_say, ([[[0, False, 100, 60, 520, 0,
-                                                  "If there's no yogurt, coffee is fine."]]])),
-
-            # (1, self.control_walker, (0, False, 100, 60, 520, 0)),
-            (4, self.control_walker, (0, False, 50, -250, 480, 0)),
+            (3, self.add_walker, (3, 0, 700)),
+            (1, self.control_walker, (0, False, 100, 60, 520, 0)),
+            (1, self.customer_say, (0, "Please turn on the hall light, find my thermos, and grab me a piece of bread.")),
+            # (5, self.control_walker, (0, False, 100, -250, 480, 0)),
         ]
 
 
     def _reset(self):
         # self.add_walkers([[0, 880], [250, 1200]])
-        self.gen_obj_tmp()
+        self.gen_obj()
         start_robowaiter = self.default_state["condition_set"]
 
         all_obj_place = Bahavior.all_object | Bahavior.tables_for_placement | Bahavior.tables_for_guiding
@@ -60,7 +56,6 @@ class SceneOT(Scene):
 
         self.state["condition_set"] = start_robowaiter
         pass
-
 
 
     def _run(self):

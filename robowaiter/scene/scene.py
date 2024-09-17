@@ -1260,6 +1260,7 @@ class Scene:
     def op_task_execute(self, op_type, obj_id=0, release_pos=[247.0, 520.0, 100.0]):
         #id = 196  # Glass = 188+x, Plate = 150+x
         # self.control_robot_action(0, 1, "Start " + self.op_dialog[op_type])  # 输出正在执行的任务
+        # time.sleep(1.0)
         if op_type < 8:
             if self.show_ui:
                 self.get_obstacle_point(self.db, self.status, map_ratio=self.map_ratio)

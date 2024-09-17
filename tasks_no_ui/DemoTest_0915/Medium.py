@@ -22,7 +22,7 @@ class SceneOT(Scene):
             # (1, self.customer_say, (0, "I'm at table three, please bring yogurt and close the curtains. If there's no yogurt, coffee is fine.")),
             # (1, self.control_walkers_and_say, ([[[0, False, 100, 60, 520, 0, "I'm at table three, please bring yogurt and close the curtains. If there's no yogurt, coffee is fine."]]])),
             (1, self.control_walkers_and_say, ([[[0, False, 100, 60, 520, 0,
-                                                  "If there's no yogurt, coffee is fine."]]])),
+                                                  "I'm at table three, please bring yogurt. If there's no yogurt, coffee is fine."]]])),
 
             # (1, self.control_walker, (0, False, 100, 60, 520, 0)),
             (4, self.control_walker, (0, False, 50, -250, 480, 0)),

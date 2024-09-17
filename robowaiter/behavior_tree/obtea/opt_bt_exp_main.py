@@ -35,7 +35,7 @@ class BTOptExpInterface:
         """
         self.goal = goal
         if self.bt_algo_opt:
-            self.algo = OptBTExpAlgorithm(verbose=True)
+            self.algo = OptBTExpAlgorithm(verbose=False)
         else:
             self.algo = BTalgorithm(verbose=False)
 

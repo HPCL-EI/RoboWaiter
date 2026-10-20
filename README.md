@@ -31,15 +31,39 @@ RoboWaiter 是参加 **达闼杯"机器人大模型与具身智能挑战赛"** �
 
 我们围绕该系统持续开展研究，并将其拓展为完整的算法体系 ——
 覆盖 **单机器人行为树规划 → 多机器人协作 → 启发式 LLM 推理** 的全链路工作，
-相关成果陆续发表于 **IJCAI 2024、AAAI 2025、ICRA 2025** 等顶级会议。
+相关成果陆续发表于 **IJCAI 2024、AAAI 2025、ICRA 2025、NeuS 2025、ACL 2026、PLDI 2026** 等顶级会议与期刊。
 
 ---
 
 ## 📰 News
 
+- **🧠 [2026-07] 新工作 `CDR` (ACL 2026 Oral) 已发表！**
+  *Conflict-Aware Memory for Embodied Agents: Enhancing Vector Data Quality via Detection Rules* ——
+  针对具身智能体记忆中向量数据质量问题，提出 **冲突检测规则 (CDRs)**，
+  识别并管理向量知识库中"上下文相似但语义冲突"的句子与高度相似图像，修正索引结构。
+  相比基础 LLM planner，语法准确率 (GA) 与解释准确率 (IA) 平均提升 **15.25% / 14.25%**。
+  🔗 [Paper](https://aclanthology.org/2026.acl-long.1306/) ·
+  [PDF](https://aclanthology.org/2026.acl-long.1306.pdf) ·
+  [DOI](https://doi.org/10.18653/v1/2026.acl-long.1306)
+
+- **🔗 [2026-06] 新工作 `NeuSy-HL` (PACMPL / PLDI 2026) 已发表！**
+  *Neuro-symbolic Hierarchical Learning for Long-Horizon Robotic Tasks* ——
+  提出**闭环、反例引导的神经符号综合框架**：将自然语言任务描述转为 PDDL，
+  经 *Guess-Check-Critique* 循环结合 SMT 形式化验证生成可靠高层规划，
+  并与可微分行为树 (BT) 综合协同优化，用于长程稀疏奖励机器人任务。
+  🔗 [Paper](https://dl.acm.org/doi/10.1145/3808338) ·
+  [DOI](https://doi.org/10.1145/3808338)
+
 - **🎉 [2026-06] `MRBTP-demo` 精简版上线！**
   MRBTP 的精简教程版本已开源，提供最小可运行示例，便于快速上手多机器人行为树规划。
   🔗 <https://github.com/DIDS-EI/MRBTP-demo>
+
+- **🧬 [2025-07] 新工作 `Diff-BT` (NeuS 2025) 已发表！**
+  *Differentiable Synthesis of Behavior Tree Architectures and Execution Nodes* ——
+  首个**端到端可微分行为树综合框架**，仅凭环境奖励同时生成 BT 的**结构**与**执行节点**，
+  通过架构搜索空间的连续松弛与可微分语义近似，实现可解释策略的自动合成与泛化。
+  🔗 [Paper](https://proceedings.mlr.press/v288/huang25a.html) ·
+  [PDF](https://raw.githubusercontent.com/mlresearch/v288/main/assets/huang25a/huang25a.pdf)
 
 - **🏆 [2025-02] `MRBTP` (AAAI 2025 Oral, Top 4.6%) 已开源！**
   首个具有 *soundness & completeness* 理论保证的 **多机器人行为树规划算法**，
@@ -71,6 +95,9 @@ RoboWaiter 是参加 **达闼杯"机器人大模型与具身智能挑战赛"** �
 
 | 项目 | 描述 | 会议 | 链接 |
 |------|------|:----:|------|
+| **🧠 CDR** | 冲突感知记忆：用冲突检测规则 (CDRs) 提升具身智能体向量数据质量 | **ACL 2026 (Oral)** | [Paper](https://aclanthology.org/2026.acl-long.1306/) · [PDF](https://aclanthology.org/2026.acl-long.1306.pdf) |
+| **🔗 NeuSy-HL** | 神经符号分层学习：闭环反例引导综合，融合 LLM 规划 / SMT 验证 / 可微分 BT，求解长程机器人任务 | **PACMPL (PLDI 2026)** | [Paper](https://dl.acm.org/doi/10.1145/3808338) |
+| **🧬 Diff-BT** | 可微分行为树综合：仅凭环境奖励端到端生成 BT 结构与执行节点 | **NeuS 2025** | [Paper](https://proceedings.mlr.press/v288/huang25a.html) · [PDF](https://raw.githubusercontent.com/mlresearch/v288/main/assets/huang25a/huang25a.pdf) |
 | **🥇 MRBTP** | 多机器人行为树规划与协作，首个 sound & complete 的多机算法 | **AAAI 2025 (Oral)** | [Project](https://dids-ei.github.io/Project/MRBTP/) · [Code](https://github.com/DIDS-EI/MRBTP) · [arXiv](https://arxiv.org/abs/2502.18072) |
 | **🎓 MRBTP-demo** | MRBTP 的精简教程版，最小可运行示例 | — | [Code](https://github.com/DIDS-EI/MRBTP-demo) |
 | **🥇 LLM-OBTEA** | LLM 意图理解 + 最优行为树扩展，从自然语言指令生成 BT | **IJCAI 2024** | [Project](https://dids-ei.github.io/Project/LLM-OBTEA/) · [Code](https://github.com/DIDS-EI/LLM-OBTEA) · [arXiv](https://arxiv.org/abs/2405.07474) |
@@ -232,6 +259,36 @@ python multi_rounds.py
 如果本项目对你的研究有帮助，欢迎引用我们的相关工作：
 
 ```bibtex
+@inproceedings{huang2026neurosymbolic,
+  title     = {Neuro-symbolic Hierarchical Learning for Long-Horizon Robotic Tasks},
+  author    = {Huang, Yu and Wu, Ziji and Ma, Zhengyi and Ma, Kexin and Wang, Ji},
+  booktitle = {Proceedings of the ACM on Programming Languages (PACMPL)},
+  volume    = {10},
+  number    = {PLDI},
+  pages     = {2277--2302},
+  year      = {2026},
+  doi       = {10.1145/3808338}
+}
+
+@inproceedings{huang2025differentiable,
+  title     = {Differentiable Synthesis of Behavior Tree Architectures and Execution Nodes},
+  author    = {Huang, Yu and Wu, Ziji and Ma, Kexin and Wang, Ji},
+  booktitle = {Proceedings of the 2nd International Conference on Neuro-symbolic Systems (NeuS)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {288},
+  pages     = {231--259},
+  year      = {2025},
+  publisher = {PMLR}
+}
+
+@inproceedings{ma2026conflict,
+  title     = {Conflict-Aware Memory for Embodied Agents: Enhancing Vector Data Quality via Detection Rules},
+  author    = {Ma, Kexin and Wang, Haotian and Chen, Shenglin and Cai, Yishuai and Huangyuyu and Jin, Ruochun},
+  booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (ACL)},
+  pages     = {28328--28347},
+  year      = {2026}
+}
+
 @inproceedings{chen2024llmobtea,
   title     = {Integrating Intent Understanding and Optimal Behavior Planning for Behavior Tree Generation from Human Instructions},
   author    = {Chen, Xinglin and Cai, Yishuai and Mao, Yunxin and Li, Minglong and Yang, Wenjing and Xu, Weixia and Wang, Ji},

@@ -125,7 +125,8 @@ RoboWaiter 是参加 **达闼杯"机器人大模型与具身智能挑战赛"** �
 
 ### 2.1 环境要求
 
-- **Python ≥ 3.10**
+- **Python == 3.10**
+- **（注意，目前 3.10 确定可以跑通，如果出现 DLL load failed while importing GrabSim_pb2: 找不到指定的模块， 请尝试更改 python 版本）**
 
 ### 2.2 安装步骤
 

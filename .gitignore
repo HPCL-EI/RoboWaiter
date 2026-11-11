@@ -163,12 +163,14 @@ cython_debug/
 # antlr tempory files
 .antlr/
 
-# pyc files
+# pyc files / macOS 系统文件
 __pycache__/
-BTExpansionCode/llm_test/LLM_Evaluation_Kit/llms/gpt3.py
-BTExpansionCode/llm_test/LLM_Evaluation_Kit_最终存档0627/apis/ERNIE_KEYS.txt
-BTExpansionCode/llm_test/LLM_Evaluation_Kit_最终存档0627/llms/gpt3.py
-BTExpansionCode/llm_test/LLM_Evaluation_Kit/llms/gpt3_old.py
-BTExpansionCode/llm_test/LLM_Evaluation_Kit/apis/ERNIE_KEYS.txt
-BTExpansionCode/llm_test/LLM_Evaluation_Kit/apis/gpt3.txt
-BTExpansionCode/llm_test/LLM_Evaluation_Kit/apis/gpt4.txt
+.DS_Store
+# 论文复现实验存档中含 API 凭据的文件（随 repro/ 一起移动，勿提交）
+repro/BTExpansionCode/llm_test/LLM_Evaluation_Kit/llms/gpt3.py
+repro/BTExpansionCode/llm_test/LLM_Evaluation_Kit_最终存档0627/apis/ERNIE_KEYS.txt
+repro/BTExpansionCode/llm_test/LLM_Evaluation_Kit_最终存档0627/llms/gpt3.py
+repro/BTExpansionCode/llm_test/LLM_Evaluation_Kit/llms/gpt3_old.py
+repro/BTExpansionCode/llm_test/LLM_Evaluation_Kit/apis/ERNIE_KEYS.txt
+repro/BTExpansionCode/llm_test/LLM_Evaluation_Kit/apis/gpt3.txt
+repro/BTExpansionCode/llm_test/LLM_Evaluation_Kit/apis/gpt4.txt

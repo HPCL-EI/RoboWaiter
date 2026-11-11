@@ -22,6 +22,11 @@
   <a href="#-6-引用">📚 引用</a>
 </p>
 
+<p>
+  👉 <a href="https://drive.google.com/file/d/1ayAQZbPOyQV2W-V_ZdYv6AoqLOg0zvm1/view?usp=sharing"><b>Download Simulator</b></a>
+  · <a href="https://pan.baidu.com/s/1WvyYcnTTsSNNFHGCCvryCw">国内备用（提取码：1wft）</a>
+</p>
+
 </div>
 
 RoboWaiter 是参加 **达闼杯"机器人大模型与具身智能挑战赛"** 的参赛作品 ——
@@ -179,7 +184,9 @@ pip install -e .
 
 ### 3.1 下载并启动仿真器
 
-下载 [CafeSimulator](https://drive.google.com/file/d/1ayAQZbPOyQV2W-V_ZdYv6AoqLOg0zvm1/view?usp=sharing)，解压并运行 `CafeSimulator.exe`。
+下载 [CafeSimulator](https://drive.google.com/file/d/1ayAQZbPOyQV2W-V_ZdYv6AoqLOg0zvm1/view?usp=sharing)，解压并运行 `CafeSimulator.exe`（Windows 程序）。
+仿真器可解压到**任意目录**，项目代码不依赖其存放路径：代码端通过 gRPC `localhost:30001` 与仿真器通信，
+因此需**先启动仿真器并保持运行**，再执行下文 3.2 / 3.3 的脚本。
 仿真器启动后显示空场景，等待代码端生成场景并完成机器人交互。
 
 > 国内备用链接：<https://pan.baidu.com/s/1WvyYcnTTsSNNFHGCCvryCw> · 提取码：`1wft`
@@ -189,6 +196,8 @@ pip install -e .
 ```shell
 python tasks_no_ui/<任意场景脚本>.py
 ```
+
+> 📖 该目录共 12 类任务、47 个可独立运行的场景脚本。该跑哪一个、需要哪些前置条件、各脚本之间的关系，见 **[tasks_no_ui/README.md](tasks_no_ui/README.md)**。
 
 ### 3.3 启动 UI 界面
 
@@ -205,7 +214,7 @@ python run_ui.py
 
 ## 📂 4. 代码框架
 
-> 📌 `BTExpansionCode/` 为实验数据存档，可忽略。
+> 📌 `repro/` 为论文复现实验存档（实验代码、原始数据与结果），与系统主程序解耦；论文、目录与图表结果的对应关系见 [repro/README.md](repro/README.md)，运行主程序时可忽略。
 
 ```
 robowaiter/
@@ -219,6 +228,10 @@ robowaiter/
 └── ...
 
 tasks_no_ui/           # 无 UI 场景定义与运行代码
+
+repro/                  # 论文复现实验存档
+├── BTExpansionCode/    # 行为树扩展 / OBTEA 实验代码与原始数据
+└── LLM_Evaluation_Kit/  # LLM 意图理解评测与论文 Table 1 原始输出
 ```
 
 ### 主要任务一览

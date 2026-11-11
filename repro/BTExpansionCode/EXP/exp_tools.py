@@ -18,6 +18,8 @@ from utils.bt.load import load_bt_from_ptml
 from EXP.behavior_lib._base.Behavior import Bahavior
 from EXP.behavior_lib.cond import Holding
 
+# 基准目录是本实验存档的父目录（当前为 repro/），下方按 "BTExpansionCode/EXP/..." 拼接；
+# 整体移动 BTExpansionCode/ 时无需改动此相对层级与路径串。
 root_path = os.path.abspath(
         os.path.join(__file__, "../../..")
     )
